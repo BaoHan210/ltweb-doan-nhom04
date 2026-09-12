@@ -1,76 +1,189 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Danh mục công thức nấu ăn, thời gian chế biến và mức độ khó của các món ăn trên Cook with me.">
-  <title>Danh Sách Công Thức Món Ăn | Cook with me</title>
+  <meta
+    name="description"
+    content="Khám phá các danh mục món ăn và tìm kiếm những công thức phù hợp trên Cook with me."
+  >
+  <title>Khám phá | Cook with me</title>
 </head>
+
 <body>
 
   <header>
-    <p>Cook with me - Khơi Nguồn Cảm Hứng Vào Bếp</p>
-    <nav aria-label="Điều hướng chính">
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="danh-sach.html">Danh sách món ăn</a></li>
-        <li><a href="chi-tiet.html">Món ăn tiêu biểu</a></li>
-        <li><a href="gioi-thieu.html">Giới thiệu nhóm</a></li>
-        <li><a href="lien-he.html">Liên hệ &amp; Góp ý</a></li>
-      </ul>
-    </nav>
+    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+
+    <form action="#" method="get">
+      <label for="search">Tìm kiếm</label>
+      <input
+        type="search"
+        id="search"
+        name="keyword"
+        placeholder="Tìm kiếm món ăn, công thức..."
+      >
+      <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <p>
+      <a href="#">Đăng ký</a> /
+      <a href="#">Đăng nhập</a>
+    </p>
   </header>
 
+  <nav aria-label="Điều hướng chính">
+    <ul>
+      <li>
+        <a href="index.html">Trang chủ</a>
+      </li>
+
+      <li>
+        <a href="danh-sach.html">Khám phá</a>
+      </li>
+
+      <li>
+        <a href="#">Gợi ý món ăn</a>
+      </li>
+
+      <li>
+        <a href="#">Cài đặt</a>
+      </li>
+    </ul>
+  </nav>
+
   <main>
-    <h1>Bảng Tổng Hợp Công Thức Món Ăn Mới Nhất</h1>
+
+    <h1>Khám phá món ăn</h1>
 
     <section>
-      <h2>Danh Mục Món Ăn Tiêu Biểu</h2>
-      <table border="1">
-        <caption>Bảng thống kê thực đơn, độ khó và thời gian thực hiện</caption>
-        <thead>
-          <tr>
-            <th scope="col">Mã công thức</th>
-            <th scope="col">Tên món ăn</th>
-            <th scope="col">Khẩu phần</th>
-            <th scope="col">Thời gian chuẩn bị</th>
-            <th scope="col">Độ khó</th>
-            <th scope="col">Chi tiết</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CT-CLAU-01</td>
-            <td>Cao Lầu Đặc Sản Hội An</td>
-            <td>3 người</td>
-            <td>90 phút</td>
-            <td>Trung bình</td>
-            <td><a href="chi-tiet.html">Xem cách làm Cao Lầu</a></td>
-          </tr>
-          <tr>
-            <td>CT-MQUANG-02</td>
-            <td>Mì Quảng Tôm Thịt Đậm Đà</td>
-            <td>4 người</td>
-            <td>60 phút</td>
-            <td>Dễ</td>
-            <td><a href="chi-tiet.html">Xem cách làm Mì Quảng</a></td>
-          </tr>
-          <tr>
-            <td>CT-PHOB-03</td>
-            <td>Phở Bò Tái Nạm Hà Nội</td>
-            <td>4 người</td>
-            <td>180 phút</td>
-            <td>Nâng cao</td>
-            <td><a href="chi-tiet.html">Xem cách nấu Phở Bò</a></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Danh mục</h2>
+
+      <ul>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-chinh.jpg"
+              alt="Hình ảnh món chính"
+              width="180"
+              height="120"
+            >
+            <span>Món chính</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-canh.jpg"
+              alt="Hình ảnh món canh"
+              width="180"
+              height="120"
+            >
+            <span>Món canh</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-an-vat.jpg"
+              alt="Hình ảnh món ăn vặt"
+              width="180"
+              height="120"
+            >
+            <span>Món ăn vặt</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/do-uong.jpg"
+              alt="Hình ảnh đồ uống"
+              width="180"
+              height="120"
+            >
+            <span>Đồ uống</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-xao.jpg"
+              alt="Hình ảnh món xào"
+              width="180"
+              height="120"
+            >
+            <span>Món xào</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-chien.jpg"
+              alt="Hình ảnh món chiên"
+              width="180"
+              height="120"
+            >
+            <span>Món chiên</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-an-nhanh.jpg"
+              alt="Hình ảnh món ăn nhanh"
+              width="180"
+              height="120"
+            >
+            <span>Món ăn nhanh</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-trang-mieng.jpg"
+              alt="Hình ảnh món tráng miệng"
+              width="180"
+              height="120"
+            >
+            <span>Món tráng miệng</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <img
+              src="images/mon-chay.jpg"
+              alt="Hình ảnh món chay"
+              width="180"
+              height="120"
+            >
+            <span>Món chay</span>
+          </a>
+        </li>
+
+      </ul>
     </section>
 
     <section>
-      <h2>Lưu Ý Cho Người Mới Bắt Đầu</h2>
-      <p>Các công thức đều được đo lường bằng đơn vị gam (g) và mililit (ml) tiêu chuẩn để đảm bảo món ăn lên hương vị chuẩn nhất.</p>
+      <h2>Cách khám phá công thức</h2>
+
+      <ol>
+        <li>Chọn một danh mục món ăn.</li>
+        <li>Chọn món ăn muốn nấu.</li>
+        <li>Xem danh sách các công thức của món ăn.</li>
+        <li>Chọn một công thức để xem chi tiết.</li>
+      </ol>
     </section>
+
   </main>
 
   <footer>
@@ -78,4 +191,5 @@
   </footer>
 
 </body>
+
 </html>
