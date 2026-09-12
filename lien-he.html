@@ -31,19 +31,16 @@
         <fieldset>
           <legend>Thông tin cá nhân hội viên</legend>
 
-          <!-- Control 1: Kiểu text -->
           <p>
             <label for="cook-name">Họ và tên của bạn (*):</label><br>
             <input type="text" id="cook-name" name="fullname" required placeholder="Ví dụ: Nguyễn Thị Mai">
           </p>
 
-          <!-- Control 2: Kiểu email -->
           <p>
             <label for="cook-email">Hộp thư điện tử (*):</label><br>
             <input type="email" id="cook-email" name="email" required placeholder="mai.nguyen@example.com">
           </p>
 
-          <!-- Control 3: Kiểu tel kèm định dạng regex pattern 10 số -->
           <p>
             <label for="cook-phone">Số điện thoại liên lạc (*):</label><br>
             <input type="tel" id="cook-phone" name="phone" required pattern="[0-9]{10}" placeholder="0912345678">
@@ -53,19 +50,16 @@
         <fieldset>
           <legend>Thông tin đăng ký lớp học</legend>
 
-          <!-- Control 4: Kiểu number kèm min, max -->
           <p>
-            <label for="experience-months">Số tháng bạn đã có kinh nghiệm nấu ăn (từ 0 đến 120 tháng):</label><br>
+            <label for="experience-months">Số tháng bạn đã có kinh nghiệm nấu ăn (0 đến 120 tháng):</label><br>
             <input type="number" id="experience-months" name="experience" min="0" max="120" value="6" required>
           </p>
 
-          <!-- Control 5: Kiểu date -->
           <p>
-            <label for="start-date">Ngày mong muốn bắt đầu buổi học đầu tiên (*):</label><br>
+            <label for="start-date">Ngày mong muốn bắt đầu học (*):</label><br>
             <input type="date" id="start-date" name="start_date" required>
           </p>
 
-          <!-- Control 6: Textarea có nhãn -->
           <p>
             <label for="dish-interest">Món ăn hoặc phong cách ẩm thực bạn muốn học nhất:</label><br>
             <textarea id="dish-interest" name="dish_interest" rows="4" cols="45" placeholder="Ví dụ: Kỹ thuật nướng thịt, nấu món chay thanh đạm..."></textarea>
@@ -78,7 +72,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Nhóm ZZ – Khoa Toán – Tin</p>
+    <p>&copy; 2026 Nhóm 04 – Khoa Toán – Tin</p>
   </footer>
 
 </body>
