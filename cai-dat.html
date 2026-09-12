@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Trang cài đặt tài khoản, sở thích và bảo mật dành cho người dùng Cook with me."
+  >
+  <title>Cài đặt | Cook with me</title>
+</head>
+
+<body>
+
+  <header>
+    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+
+    <form action="#" method="get">
+      <label for="search">Tìm kiếm</label>
+      <input
+        type="search"
+        id="search"
+        name="keyword"
+        placeholder="Tìm kiếm món ăn, công thức..."
+      >
+      <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <p>
+      <a href="#">Đăng ký</a> /
+      <a href="#">Đăng nhập</a>
+    </p>
+  </header>
+
+  <nav aria-label="Điều hướng chính">
+    <ul>
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="danh-sach.html">Khám phá</a></li>
+      <li><a href="goi-y-mon-an.html">Gợi ý món ăn</a></li>
+      <li><a href="cai-dat.html">Cài đặt</a></li>
+      <li><a href="chi-tiet.html">Chi tiết công thức</a></li>
+      <li><a href="gioi-thieu.html">Giới thiệu</a></li>
+      <li><a href="lien-he.html">Liên hệ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <h1>Cài đặt</h1>
+
+    <form action="#" method="post">
+
+      <section>
+        <h2>Thông tin tài khoản</h2>
+
+        <fieldset>
+          <legend>Thông tin cá nhân</legend>
+
+          <p>
+            <label for="fullname">Họ và tên</label>
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="phone">Số điện thoại</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              pattern="[0-9]{10}"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="avatar">Ảnh đại diện</label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+            >
+          </p>
+        </fieldset>
+      </section>
+
+      <section>
+        <h2>Tùy chỉnh sở thích</h2>
+
+        <fieldset>
+          <legend>Thông tin ưu tiên</legend>
+
+          <p>
+            <label for="favorite-category">Danh mục món ăn yêu thích</label>
+            <select id="favorite-category" name="favorite_category">
+              <option value="">-- Chọn danh mục --</option>
+              <option value="mon-chinh">Món chính</option>
+              <option value="mon-canh">Món canh</option>
+              <option value="mon-xao">Món xào</option>
+              <option value="mon-chien">Món chiên</option>
+              <option value="mon-an-vat">Món ăn vặt</option>
+              <option value="mon-an-nhanh">Món ăn nhanh</option>
+              <option value="mon-chay">Món chay</option>
+              <option value="mon-trang-mieng">Món tráng miệng</option>
+              <option value="do-uong">Đồ uống</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="preferred-budget">Ngân sách thường sử dụng (VNĐ)</label>
+            <input
+              type="number"
+              id="preferred-budget"
+              name="preferred_budget"
+              min="10000"
+            >
+          </p>
+
+          <p>
+            <label for="preferred-time">Thời gian nấu ưu tiên (phút)</label>
+            <input
+              type="number"
+              id="preferred-time"
+              name="preferred_time"
+              min="10"
+              max="180"
+            >
+          </p>
+
+          <p>
+            <label for="preferred-servings">Số người ăn thường xuyên</label>
+            <input
+              type="number"
+              id="preferred-servings"
+              name="preferred_servings"
+              min="1"
+              max="20"
+            >
+          </p>
+        </fieldset>
+      </section>
+
+      <section>
+        <h2>Tài khoản và bảo mật</h2>
+
+        <fieldset>
+          <legend>Thiết lập tài khoản</legend>
+
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                name="comment_notification"
+                value="yes"
+              >
+              Nhận thông báo khi có bình luận
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                name="like_notification"
+                value="yes"
+              >
+              Nhận thông báo khi có lượt thích
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                name="follow_notification"
+                value="yes"
+              >
+              Nhận thông báo khi có người theo dõi mới
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                name="recipe_notification"
+                value="yes"
+              >
+              Nhận thông báo về công thức mới
+            </label>
+          </p>
+
+          <p>
+            <a href="#">Đổi mật khẩu</a>
+          </p>
+
+          <p>
+            <a href="#">Đăng xuất</a>
+          </p>
+
+          <p>
+            <a href="#">Xóa tài khoản</a>
+          </p>
+        </fieldset>
+      </section>
+
+      <p>
+        <button type="submit">Lưu cài đặt</button>
+        <button type="reset">Khôi phục</button>
+      </p>
+
+    </form>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Nhóm 04 – Khoa Toán – Tin</p>
+  </footer>
+
+</body>
+
+</html>
