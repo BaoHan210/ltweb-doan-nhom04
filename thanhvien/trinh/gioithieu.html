@@ -3,24 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Trang thông tin cá nhân của thành viên Trinh - Đồ án Cook with me.">
-  <title>Thông Tin Cá Nhân - Trinh | Cook with me</title>
+  <meta name="description" content="Trang giới thiệu cá nhân thành viên Trinh tham gia phát triển đồ án website ẩm thực Cook with me - Nhóm 04.">
+  <title>Giới Thiệu Thành Viên Trinh | Cook with me</title>
 </head>
 <body>
 
   <header>
-    <p>Cook with me - Thông Tin Thành Viên</p>
+    <p>Cook with me - Trang Thông Tin Thành Viên</p>
+    <nav aria-label="Điều hướng trang cá nhân">
+      <ul>
+        <!-- Liên kết tương đối 2 chiều quay về trang chủ và trang giới thiệu nhóm -->
+        <li><a href="../../index.html">Về trang chủ Cook with me</a></li>
+        <li><a href="../../gioi-thieu.html">Về trang giới thiệu nhóm 04</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main>
-    <h1>Hồ Sơ Thành Viên: Trinh</h1>
+    <h1>Hồ Sơ Cá Nhân: Thành Viên Trinh</h1>
+
+    <!-- Section giới thiệu bản thân -->
     <section>
-      <h2>Thông Tin Chung</h2>
+      <h2>Giới Thiệu Bản Thân</h2>
+      <figure>
+        <img src="../../images/avatar-trinh.jpg" alt="Ảnh chân dung thành viên Trinh" width="220" height="280">
+        <figcaption>Hình 1: Ảnh chân dung thành viên Trinh - Nhóm 04.</figcaption>
+      </figure>
+      <p>Xin chào! Tôi là Trinh, thành viên của Nhóm 04. Trong dự án này, tôi chịu trách nhiệm chính về xây dựng cấu trúc HTML5 ngữ nghĩa và thực hiện kiểm chuẩn chất lượng mã nguồn.</p>
+      
+      <h3>Danh Sách Kỹ Năng</h3>
       <ul>
-        <li><strong>Vai trò:</strong> Thành viên phát triển mã nguồn HTML5</li>
-        <li><strong>Nhiệm vụ chính:</strong> Xây dựng trang danh sách món ăn, chi tiết món ăn tiêu biểu và thực hiện kiểm chuẩn W3C Validator &amp; Lighthouse.</li>
+        <li>Ngôn ngữ HTML5 chuẩn ngữ nghĩa W3C</li>
+        <li>Sử dụng hệ thống quản lý mã nguồn Git và GitHub</li>
+        <li>Kiểm thử khả năng tiếp cận (Accessibility) và SEO bằng Google Lighthouse</li>
+        <li>Làm việc nhóm và thiết kế giao diện web cơ bản</li>
       </ul>
-      <p><a href="../../gioi-thieu.html">Quay lại trang giới thiệu nhóm</a></p>
+    </section>
+
+    <!-- Article dự án / sở thích -->
+    <article>
+      <h2>Dự Án Đang Tham Gia &amp; Sở Thích</h2>
+      <p><strong>Dự án "Cook with me":</strong> Cùng nhóm xây dựng website chia sẻ công thức ẩm thực truyền thống, chú trọng cấu trúc chuẩn để người dùng dễ tiếp cận thông tin.</p>
+      <p><strong>Sở thích cá nhân:</strong> Nghiên cứu công nghệ web, trải nghiệm ẩm thực các vùng miền và chạy bộ thể thao.</p>
+    </article>
+
+    <!-- Bảng thời khóa biểu tuần chuẩn caption, thead, th scope -->
+    <section>
+      <h2>Thời Khóa Biểu Tuần</h2>
+      <table border="1">
+        <caption>Thời khóa biểu học tập và nghiên cứu đồ án trong tuần</caption>
+        <thead>
+          <tr>
+            <th scope="col">Khung giờ</th>
+            <th scope="col">Thứ Hai</th>
+            <th scope="col">Thứ Tư</th>
+            <th scope="col">Thứ Sáu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Buổi Sáng</th>
+            <td>Lập trình Web (Lý thuyết)</td>
+            <td>Tự học HTML5 ngữ nghĩa</td>
+            <td>Cơ sở dữ liệu</td>
+          </tr>
+          <tr>
+            <th scope="row">Buổi Chiều</th>
+            <td>Họp tiến độ Nhóm 04</td>
+            <td>Thực hành Lập trình Web</td>
+            <td>Kiểm thử W3C &amp; Lighthouse</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </main>
 
