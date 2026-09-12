@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Đăng ký tham gia câu lạc bộ nấu ăn hoặc gửi công thức ẩm thực mới cho ban biên tập Cook with me.">
+  <title>Liên Hệ &amp; Đăng Ký Hội Viên | Cook with me</title>
+</head>
+<body>
+
+  <header>
+    <p>Cook with me - Khơi Nguồn Cảm Hứng Vào Bếp</p>
+    <nav aria-label="Điều hướng chính">
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="danh-sach.html">Danh sách món ăn</a></li>
+        <li><a href="chi-tiet.html">Món ăn tiêu biểu</a></li>
+        <li><a href="gioi-thieu.html">Giới thiệu nhóm</a></li>
+        <li><a href="lien-he.html">Liên hệ &amp; Góp ý</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Liên Hệ Với Ban Biên Tập Cook with me</h1>
+
+    <section>
+      <h2>Đăng Ký Khóa Học Nấu Ăn Trực Tuyến</h2>
+      <form action="#" method="post">
+        
+        <fieldset>
+          <legend>Thông tin cá nhân hội viên</legend>
+
+          <!-- Control 1: Kiểu text -->
+          <p>
+            <label for="cook-name">Họ và tên của bạn (*):</label><br>
+            <input type="text" id="cook-name" name="fullname" required placeholder="Ví dụ: Nguyễn Thị Mai">
+          </p>
+
+          <!-- Control 2: Kiểu email -->
+          <p>
+            <label for="cook-email">Hộp thư điện tử (*):</label><br>
+            <input type="email" id="cook-email" name="email" required placeholder="mai.nguyen@example.com">
+          </p>
+
+          <!-- Control 3: Kiểu tel kèm định dạng regex pattern 10 số -->
+          <p>
+            <label for="cook-phone">Số điện thoại liên lạc (*):</label><br>
+            <input type="tel" id="cook-phone" name="phone" required pattern="[0-9]{10}" placeholder="0912345678">
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Thông tin đăng ký lớp học</legend>
+
+          <!-- Control 4: Kiểu number kèm min, max -->
+          <p>
+            <label for="experience-months">Số tháng bạn đã có kinh nghiệm nấu ăn (từ 0 đến 120 tháng):</label><br>
+            <input type="number" id="experience-months" name="experience" min="0" max="120" value="6" required>
+          </p>
+
+          <!-- Control 5: Kiểu date -->
+          <p>
+            <label for="start-date">Ngày mong muốn bắt đầu buổi học đầu tiên (*):</label><br>
+            <input type="date" id="start-date" name="start_date" required>
+          </p>
+
+          <!-- Control 6: Textarea có nhãn -->
+          <p>
+            <label for="dish-interest">Món ăn hoặc phong cách ẩm thực bạn muốn học nhất:</label><br>
+            <textarea id="dish-interest" name="dish_interest" rows="4" cols="45" placeholder="Ví dụ: Kỹ thuật nướng thịt, nấu món chay thanh đạm..."></textarea>
+          </p>
+        </fieldset>
+
+        <button type="submit">Gửi Đơn Đăng Ký</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Nhóm ZZ – Khoa Toán – Tin</p>
+  </footer>
+
+</body>
+</html>
