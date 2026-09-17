@@ -7,7 +7,7 @@
 
   <meta
     name="description"
-    content="Trang thông tin cá nhân của Bảo Hân, thành viên Nhóm 04 thực hiện đồ án Cook with me."
+    content="Trang thông tin cá nhân của Phan Thị Bảo Hân, thành viên Nhóm 04 thực hiện đồ án Cook with me."
   >
 
   <title>Thông tin cá nhân - Bảo Hân | Cook with me</title>
@@ -16,7 +16,24 @@
 <body>
 
   <header>
-    <p>Cook with me - Trang giới thiệu thành viên</p>
+    <h1>Cook with me</h1>
+
+    <form action="#" method="get">
+      <label for="search">Tìm kiếm món ăn hoặc công thức:</label>
+      <input
+        type="search"
+        id="search"
+        name="search"
+        placeholder="Tìm kiếm..."
+      >
+      <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <p>
+      <a href="../../lien-he.html">Đăng ký</a>
+      |
+      <a href="../../cai-dat.html">Đăng nhập</a>
+    </p>
   </header>
 
   <nav aria-label="Điều hướng chính">
@@ -26,28 +43,37 @@
       </li>
 
       <li>
-        <a href="../../gioi-thieu.html">Giới thiệu nhóm</a>
+        <a href="../../danh-sach.html">Khám phá</a>
       </li>
 
       <li>
-        <a href="../../danh-sach.html">Khám phá</a>
+        <a href="../../goi-y-mon-an.html">Gợi ý món ăn</a>
+      </li>
+
+      <li>
+        <a href="../../cai-dat.html">Cài đặt</a>
       </li>
     </ul>
   </nav>
 
   <main>
 
-    <h1>Hồ sơ thành viên: Bảo Hân</h1>
+    <h2>Hồ sơ thành viên: Bảo Hân</h2>
 
     <section>
-      <h2>Thông tin chung</h2>
+      <h3>Thông tin chung</h3>
 
-      <img
-        src="../../images/avatar-baohan.jpg"
-        alt="Ảnh chân dung thành viên Phan Thị Bảo Hân"
-        width="200"
-        height="200"
-      >
+      <figure>
+        <img
+          src="../../images/avatar-baohan.jpg"
+          alt="Ảnh chân dung thành viên Phan Thị Bảo Hân"
+          width="200"
+          height="200"
+        >
+        <figcaption>
+          Ảnh chân dung thành viên Phan Thị Bảo Hân - Nhóm 04.
+        </figcaption>
+      </figure>
 
       <ul>
         <li>
@@ -67,7 +93,7 @@
     </section>
 
     <article>
-      <h2>Dự án và sở thích</h2>
+      <h3>Dự án và sở thích</h3>
 
       <p>
         Bảo Hân tham gia xây dựng website Cook with me,
@@ -86,7 +112,7 @@
     </article>
 
     <section>
-      <h2>Kỹ năng</h2>
+      <h3>Kỹ năng</h3>
 
       <ul>
         <li>HTML5</li>
@@ -98,10 +124,12 @@
     </section>
 
     <section>
-      <h2>Thời khóa biểu tuần</h2>
+      <h3>Thời khóa biểu tuần</h3>
 
       <table>
-        <caption>Thời khóa biểu học tập và hoạt động trong tuần</caption>
+        <caption>
+          Thời khóa biểu học tập và hoạt động trong tuần
+        </caption>
 
         <thead>
           <tr>
@@ -172,7 +200,19 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Nhóm 04 – Khoa Toán – Tin</p>
+    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+
+    <nav aria-label="Điều hướng phụ">
+      <ul>
+        <li>
+          <a href="../../gioi-thieu.html">Giới thiệu nhóm</a>
+        </li>
+
+        <li>
+          <a href="../../lien-he.html">Liên hệ</a>
+        </li>
+      </ul>
+    </nav>
   </footer>
 
 </body>
