@@ -1,5 +1,257 @@
-</ul>
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Gợi ý món ăn theo nguyên liệu, ngân sách, thời gian nấu và số người ăn với tính năng Tủ lạnh của tôi trên Cook with me."
+  >
+
+  <title>Gợi ý món ăn | Cook with me</title>
+</head>
+
+<body>
+
+  <header>
+    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+
+    <form action="#" method="get">
+      <label for="search">Tìm kiếm</label>
+
+      <input
+        type="search"
+        id="search"
+        name="keyword"
+        placeholder="Tìm kiếm món ăn, công thức..."
+      >
+
+      <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <p>
+      <button type="button">Đăng ký</button> /
+      <button type="button">Đăng nhập</button>
+    </p>
+  </header>
+
+  <nav aria-label="Điều hướng chính">
+    <ul>
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="danh-sach.html">Khám phá</a></li>
+      <li><a href="goi-y-mon-an.html">Gợi ý món ăn</a></li>
+      <li><a href="cai-dat.html">Cài đặt</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <h1>Gợi ý món ăn</h1>
+
+    <section>
+      <h2>Tủ lạnh của tôi - Hôm nay ăn gì?</h2>
+
+      <p>
+        Nhập các thông tin về nguyên liệu hiện có và nhu cầu bữa ăn
+        để nhận được gợi ý món ăn phù hợp.
+      </p>
+
+      <form action="#" method="get">
+
+        <fieldset>
+          <legend>Nguyên liệu hiện có</legend>
+
+          <p>
+            <label for="ingredients">Nguyên liệu</label>
+          </p>
+
+          <p>
+            <textarea
+              id="ingredients"
+              name="ingredients"
+              rows="5"
+              cols="50"
+              placeholder="Ví dụ: thịt heo, trứng, cà chua..."
+              required
+            ></textarea>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Thông tin bữa ăn</legend>
+
+          <p>
+            <label for="budget">Ngân sách (VNĐ)</label>
+            <input
+              type="number"
+              id="budget"
+              name="budget"
+              min="10000"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="cooking-time">
+              Thời gian nấu tối đa (phút)
+            </label>
+            <input
+              type="number"
+              id="cooking-time"
+              name="cooking_time"
+              min="10"
+              max="180"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="servings">Số người ăn</label>
+            <input
+              type="number"
+              id="servings"
+              name="servings"
+              min="1"
+              max="20"
+              required
+            >
+          </p>
+        </fieldset>
+<p>
+<button type="submit">Tìm món phù hợp</button>
+          <button type="reset">Nhập lại</button>
+        </p>
+
+      </form>
+    </section>
+
+    <section>
+      <h2>Món ăn được gợi ý</h2>
+
+      <article>
+        <h3>Cá kho tộ</h3>
+
+        <img
+          src="images/ca-kho-to.jpg"
+          alt="Món cá kho tộ với thịt cá và nước kho màu nâu đậm"
+          width="300"
+          height="200"
+        >
+
+        <p>
+          Món ăn phù hợp với nguyên liệu cá và các gia vị cơ bản.
+          Thời gian nấu khoảng 60 phút, phù hợp cho bữa ăn gia đình.
+        </p>
+
+        <p>
+          <strong>Thời gian:</strong> 60 phút
+        </p>
+
+        <p>
+          <strong>Ngân sách dự kiến:</strong> 100.000 VNĐ
+        </p>
+
+        <p>
+          <strong>Khẩu phần:</strong> 4 người
+        </p>
+
+        <p>
+          <a href="chi-tiet.html#ca-kho-to">
+            Xem chi tiết công thức
+          </a>
+        </p>
       </article>
+
+      <article>
+        <h3>Bánh xèo</h3>
+
+        <img
+          src="images/banh-xeo.jpg"
+          alt="Bánh xèo vàng giòn ăn kèm rau sống"
+          width="300"
+          height="200"
+        >
+
+        <p>
+          Món ăn có thể điều chỉnh nguyên liệu và khẩu phần
+          theo nhu cầu của người dùng.
+        </p>
+
+        <p>
+          <strong>Thời gian:</strong> 40 phút
+        </p>
+
+        <p>
+          <strong>Ngân sách dự kiến:</strong> 80.000 VNĐ
+        </p>
+
+        <p>
+          <strong>Khẩu phần:</strong> 3 người
+        </p>
+
+        <p>
+          <a href="chi-tiet.html#banh-xeo">
+            Xem chi tiết công thức
+          </a>
+        </p>
+      </article>
+
+      <article>
+        <h3>Gỏi ngó sen</h3>
+
+        <img
+          src="images/goi-ngo-sen.jpg"
+          alt="Món gỏi ngó sen với rau củ và nguyên liệu trộn"
+          width="300"
+          height="200"
+        >
+
+        <p>
+          Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
+          thời gian chế biến ngắn và ngân sách vừa phải.
+        </p>
+
+        <p>
+          <strong>Thời gian:</strong> 30 phút
+        </p>
+
+        <p>
+          <strong>Ngân sách dự kiến:</strong> 70.000 VNĐ
+        </p>
+
+        <p>
+          <strong>Khẩu phần:</strong> 4 người
+        </p>
+
+        <p>
+          <a href="chi-tiet.html#goi-ngo-sen">
+            Xem chi tiết công thức
+          </a>
+        </p>
+      </article>
+
+    </section>
+
+    <section>
+      <h2>Danh sách đi chợ</h2>
+
+      <p>
+        Sau khi xác định món ăn phù hợp, hệ thống xác định các nguyên liệu
+        còn thiếu để chuẩn bị cho việc nấu ăn.
+      </p>
+
+      <article>
+        <h3>Nguyên liệu còn thiếu cho món cá kho tộ</h3>
+
+        <ul>
+          <li>Hành lá</li>
+          <li>Tiêu</li>
+          <li>Nước mắm</li>
+<li>Ớt</li>
+</ul>
+</article>
 
       <p>
         <button type="button">
