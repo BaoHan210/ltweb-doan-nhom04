@@ -1,0 +1,27 @@
+/* ==============================
+   05-tien-ich.css
+   Các lớp tiện ích dùng lại
+   ============================== */
+
+.bao {
+    width: min(100% - 32px, var(--do-rong-toi-da));
+    margin: 0 auto;
+}
+
+.chi-hien-tren-may-tinh {
+    display: none;
+}
+
+.chi-hien-tren-dien-thoai {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .chi-hien-tren-may-tinh {
+        display: block;
+    }
+
+    .chi-hien-tren-dien-thoai {
+        display: none;
+    }
+}
