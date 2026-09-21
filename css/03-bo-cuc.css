@@ -1,78 +1,152 @@
 /* ==============================
-   Lưới Bảng tin
+   03-bo-cuc.css
+   Bố cục trang bằng CSS Grid
    ============================== */
 
-.luoi-bai-dang {
+/* Khung tổng thể */
+.trang {
+    width: min(100% - 32px, var(--do-rong-toi-da));
+    margin: 0 auto;
+
     display: grid;
-    gap: 20px;
+    grid-template-columns: 200px minmax(0, 1fr);
+
+    grid-template-areas:
+        "dau dau"
+        "menu chinh"
+        "chan chan";
+
+    gap: 0;
 }
 
-.luoi-bai-dang > h2 {
-    grid-column: 1 / -1;
+/* Header */
+.trang > header {
+    grid-area: dau;
 }
 
-.the-bai-dang {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* Sidebar điều hướng */
+.trang > nav {
+    grid-area: menu;
+}
 
-    padding: 16px;
-    border: 1px solid var(--mau-vien);
-    border-radius: var(--bo-goc);
-    background-color: var(--mau-nen);
+/* Nội dung chính */
+.trang > main {
+    grid-area: chinh;
+}
+
+/* Footer */
+.trang > footer {
+    grid-area: chan;
 }
 
 
 /* ==============================
-   Lưới Món ăn nổi bật
+   Bố cục bên trong main
    ============================== */
 
-.luoi-mon-noi-bat {
+.noi-dung-trang {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 220px;
+
+    grid-template-areas:
+        "tieude tieude"
+        "chia-se noi-bat"
+        "bang-tin noi-bat"
+        "bang-tin goi-y";
+
+    gap: 20px;
+    padding: 20px;
+}
+
+.tieu-de-trang {
+    grid-area: tieude;
+}
+
+.chia-se-cong-thuc {
+    grid-area: chia-se;
+}
+
+.bang-tin {
+    grid-area: bang-tin;
+}
+
+.mon-noi-bat {
+    grid-area: noi-bat;
+}
+
+.goi-y-theo-doi {
+    grid-area: goi-y;
+}
+
+
+/* ==============================
+   Lưới bài đăng
+   ============================== */
+
+.bang-tin {
     display: grid;
     gap: 20px;
 }
 
-.luoi-mon-noi-bat > h2 {
+.bang-tin > h2 {
     grid-column: 1 / -1;
 }
 
 
 /* ==============================
-   Lưới Gợi ý người theo dõi
+   Lưới món ăn nổi bật
    ============================== */
 
-.luoi-nguoi-theo-doi {
+.mon-noi-bat {
     display: grid;
-    gap: 20px;
+    gap: 16px;
 }
 
-.luoi-nguoi-theo-doi > h2 {
+.mon-noi-bat > h2 {
     grid-column: 1 / -1;
-}
-
-.the-nguoi-dung {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    padding: 16px;
-    border: 1px solid var(--mau-vien);
-    border-radius: var(--bo-goc);
-    background-color: var(--mau-nen);
 }
 
 
 /* ==============================
-   Responsive
+   Lưới gợi ý người theo dõi
    ============================== */
 
-@media (min-width: 768px) {
-    .luoi-bai-dang {
-        grid-template-columns: repeat(2, 1fr);
+.goi-y-theo-doi {
+    display: grid;
+    gap: 16px;
+}
+
+.goi-y-theo-doi > h2 {
+    grid-column: 1 / -1;
+}
+
+
+/* ==============================
+   Responsive - màn hình nhỏ
+   ============================== */
+
+@media (max-width: 767px) {
+    .trang {
+        width: min(100% - 20px, var(--do-rong-toi-da));
+
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+            "dau"
+            "menu"
+            "chinh"
+            "chan";
     }
 
-    .luoi-mon-noi-bat,
-    .luoi-nguoi-theo-doi {
-        grid-template-columns: repeat(3, 1fr);
+    .noi-dung-trang {
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+            "tieude"
+            "chia-se"
+            "bang-tin"
+            "noi-bat"
+            "goi-y";
     }
 }
