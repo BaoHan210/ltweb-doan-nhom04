@@ -1,0 +1,78 @@
+/* ==============================
+   Lưới Bảng tin
+   ============================== */
+
+.luoi-bai-dang {
+    display: grid;
+    gap: 20px;
+}
+
+.luoi-bai-dang > h2 {
+    grid-column: 1 / -1;
+}
+
+.the-bai-dang {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 16px;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+    background-color: var(--mau-nen);
+}
+
+
+/* ==============================
+   Lưới Món ăn nổi bật
+   ============================== */
+
+.luoi-mon-noi-bat {
+    display: grid;
+    gap: 20px;
+}
+
+.luoi-mon-noi-bat > h2 {
+    grid-column: 1 / -1;
+}
+
+
+/* ==============================
+   Lưới Gợi ý người theo dõi
+   ============================== */
+
+.luoi-nguoi-theo-doi {
+    display: grid;
+    gap: 20px;
+}
+
+.luoi-nguoi-theo-doi > h2 {
+    grid-column: 1 / -1;
+}
+
+.the-nguoi-dung {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 16px;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+    background-color: var(--mau-nen);
+}
+
+
+/* ==============================
+   Responsive
+   ============================== */
+
+@media (min-width: 768px) {
+    .luoi-bai-dang {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .luoi-mon-noi-bat,
+    .luoi-nguoi-theo-doi {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
