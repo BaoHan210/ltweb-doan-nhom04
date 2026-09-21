@@ -3,12 +3,17 @@
    Bố cục trang bằng CSS Grid
    ============================== */
 
-/* Khung tổng thể */
+
+/* ==============================
+   1. KHUNG TỔNG THỂ
+   ============================== */
+
 .trang {
     width: min(100% - 32px, var(--do-rong-toi-da));
     margin: 0 auto;
 
     display: grid;
+
     grid-template-columns: 200px minmax(0, 1fr);
 
     grid-template-areas:
@@ -19,20 +24,25 @@
     gap: 0;
 }
 
+
 /* Header */
 .trang > header {
     grid-area: dau;
 }
 
-/* Sidebar điều hướng */
+
+/* Thanh điều hướng bên trái */
 .trang > nav {
     grid-area: menu;
 }
 
+
 /* Nội dung chính */
 .trang > main {
     grid-area: chinh;
+    min-width: 0;
 }
+
 
 /* Footer */
 .trang > footer {
@@ -41,13 +51,15 @@
 
 
 /* ==============================
-   Bố cục bên trong main
+   2. BỐ CỤC BÊN TRONG MAIN
    ============================== */
 
 .noi-dung-trang {
     display: grid;
 
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns:
+        minmax(0, 1fr)
+        220px;
 
     grid-template-areas:
         "tieude tieude"
@@ -55,38 +67,58 @@
         "bang-tin noi-bat"
         "bang-tin goi-y";
 
+    align-items: start;
+
     gap: 20px;
+
     padding: 20px;
+
+    min-width: 0;
 }
 
-.tieu-de-trang {
+
+/* Tiêu đề trang */
+.noi-dung-trang > .tieu-de-trang {
     grid-area: tieude;
 }
 
-.chia-se-cong-thuc {
+
+/* Chia sẻ công thức */
+.noi-dung-trang > .chia-se-cong-thuc {
     grid-area: chia-se;
 }
 
-.bang-tin {
+
+/* Bảng tin */
+.noi-dung-trang > .bang-tin {
     grid-area: bang-tin;
 }
 
-.mon-noi-bat {
+
+/* Món ăn nổi bật */
+.noi-dung-trang > .mon-noi-bat {
     grid-area: noi-bat;
 }
 
-.goi-y-theo-doi {
+
+/* Gợi ý người theo dõi */
+.noi-dung-trang > .goi-y-theo-doi {
     grid-area: goi-y;
 }
 
 
 /* ==============================
-   Lưới bài đăng
+   3. LƯỚI BẢNG TIN
    ============================== */
 
 .bang-tin {
     display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
     gap: 20px;
+
+    min-width: 0;
 }
 
 .bang-tin > h2 {
@@ -95,12 +127,17 @@
 
 
 /* ==============================
-   Lưới món ăn nổi bật
+   4. LƯỚI MÓN ĂN NỔI BẬT
    ============================== */
 
 .mon-noi-bat {
     display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
     gap: 16px;
+
+    min-width: 0;
 }
 
 .mon-noi-bat > h2 {
@@ -109,12 +146,17 @@
 
 
 /* ==============================
-   Lưới gợi ý người theo dõi
+   5. LƯỚI GỢI Ý NGƯỜI THEO DÕI
    ============================== */
 
 .goi-y-theo-doi {
     display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
     gap: 16px;
+
+    min-width: 0;
 }
 
 .goi-y-theo-doi > h2 {
@@ -123,10 +165,12 @@
 
 
 /* ==============================
-   Responsive - màn hình nhỏ
+   6. RESPONSIVE - ĐIỆN THOẠI
    ============================== */
 
 @media (max-width: 767px) {
+
+    /* Khung tổng thể */
     .trang {
         width: min(100% - 20px, var(--do-rong-toi-da));
 
@@ -139,6 +183,8 @@
             "chan";
     }
 
+
+    /* Main */
     .noi-dung-trang {
         grid-template-columns: 1fr;
 
@@ -148,5 +194,29 @@
             "bang-tin"
             "noi-bat"
             "goi-y";
+
+        gap: 16px;
+
+        padding: 12px 0;
+    }
+}
+
+
+/* ==============================
+   7. TABLET
+   ============================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .trang {
+        grid-template-columns: 170px minmax(0, 1fr);
+    }
+
+    .noi-dung-trang {
+        grid-template-columns:
+            minmax(0, 1fr)
+            190px;
+
+        gap: 16px;
     }
 }
