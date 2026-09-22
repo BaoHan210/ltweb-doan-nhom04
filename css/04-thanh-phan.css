@@ -1,0 +1,67 @@
+/* ==============================
+   04-thanh-phan.css
+   Thành phần giao diện - Flexbox
+   ============================== */
+
+/* Thanh điều hướng */
+.thanh-dieu-huong {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--khoang-cach);
+    flex-wrap: wrap;
+}
+
+/* Danh sách menu */
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu a {
+    display: block;
+}
+
+.menu a:hover,
+.menu a:focus {
+    color: var(--mau-nhan);
+}
+
+/* Nút */
+.nut {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+
+    cursor: pointer;
+}
+
+.nut:hover,
+.nut:focus {
+    opacity: 0.9;
+}
+
+/* Thẻ món ăn / nội dung */
+.the-mon-an {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 16px;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+    background-color: var(--mau-nen);
+}
