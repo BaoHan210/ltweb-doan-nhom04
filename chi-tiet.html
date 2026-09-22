@@ -11,14 +11,23 @@
   >
 
   <title>Chi tiết công thức | Cook with me</title>
+
+  <link rel="stylesheet" href="css/01-bien.css">
+  <link rel="stylesheet" href="css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="css/03-bo-cuc.css">
+  <link rel="stylesheet" href="css/04-thanh-phan.css">
+  <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
-<body>
+<body class="trang">
 
-  <header>
-    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+  <header class="dau-trang">
 
-    <form action="#" method="get">
+    <p class="thuong-hieu">
+      Cook with me - Khơi nguồn cảm hứng vào bếp
+    </p>
+
+    <form class="o-tim-kiem" action="#" method="get">
       <label for="search">Tìm kiếm</label>
 
       <input
@@ -28,17 +37,21 @@
         placeholder="Tìm kiếm món ăn, công thức..."
       >
 
-      <button type="submit">Tìm kiếm</button>
+      <button class="nut" type="submit">Tìm kiếm</button>
     </form>
 
-    <p>
-      <button type="button">Đăng ký</button> /
-      <button type="button">Đăng nhập</button>
+    <p class="tai-khoan">
+      <button class="nut" type="button">Đăng ký</button> /
+      <button class="nut" type="button">Đăng nhập</button>
     </p>
+
   </header>
 
-  <nav aria-label="Điều hướng chính">
-    <ul>
+
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+    <ul class="menu">
+
       <li>
         <a href="index.html">Trang chủ</a>
       </li>
@@ -48,7 +61,9 @@
       </li>
 
       <li>
-        <a href="chi-tiet.html">Chi tiết công thức</a>
+        <a class="dang-chon" href="chi-tiet.html">
+          Chi tiết công thức
+        </a>
       </li>
 
       <li>
@@ -66,19 +81,28 @@
       <li>
         <a href="lien-he.html">Liên hệ</a>
       </li>
+
     </ul>
+
   </nav>
 
-  <main>
+
+  <main class="chi-tiet-trang">
 
     <h1>Chi tiết công thức</h1>
 
-    <!-- Cao lầu Hội An -->
-    <article id="cao-lau">
 
-      <h2>Cao lầu Hội An</h2>
+    <!-- ==============================
+         CAO LẦU HỘI AN
+         ============================== -->
 
-      <section>
+    <article id="cao-lau" class="chi-tiet-mon-an">
+
+      <h2 class="tieu-de-mon-an">Cao lầu Hội An</h2>
+
+
+      <section class="thong-tin-bai-chia-se">
+
         <h3>Thông tin bài chia sẻ</h3>
 
         <p>
@@ -91,17 +115,19 @@
         </p>
 
         <p>
-          <button type="button">Thích</button>
-          <button type="button">Bình luận</button>
-          <button type="button">Chia sẻ</button>
-          <button type="button">Lưu</button>
+          <button class="nut" type="button">Thích</button>
+          <button class="nut" type="button">Bình luận</button>
+          <button class="nut" type="button">Chia sẻ</button>
+          <button class="nut" type="button">Lưu</button>
         </p>
-      </section>
 
-      <section>
+      </section>
+<section class="hinh-anh-mon-an">
+
         <h3>Hình ảnh món ăn</h3>
 
         <figure>
+
           <img
             src="images/cao-lau.jpg"
             alt="Tô Cao lầu Hội An với sợi mì, thịt xá xíu, rau sống và tóp mỡ"
@@ -112,14 +138,21 @@
           <figcaption>
             Cao lầu Hội An sau khi hoàn thiện và trình bày.
           </figcaption>
+
         </figure>
+
       </section>
 
-      <section>
+
+      <section class="thong-tin-cong-thuc">
+
         <h3>Thông tin công thức</h3>
 
         <table>
-          <caption>Thông tin cơ bản của công thức Cao lầu</caption>
+
+          <caption>
+            Thông tin cơ bản của công thức Cao lầu
+          </caption>
 
           <thead>
             <tr>
@@ -129,6 +162,7 @@
           </thead>
 
           <tbody>
+
             <tr>
               <th scope="row">Thời gian chuẩn bị</th>
               <td>30 phút</td>
@@ -153,14 +187,20 @@
               <th scope="row">Ngân sách dự kiến</th>
               <td>120.000 đồng</td>
             </tr>
+
           </tbody>
+
         </table>
+
       </section>
 
-      <section>
+
+      <section class="nguyen-lieu">
+
         <h3>Nguyên liệu</h3>
 
         <ul>
+
           <li>300 g sợi cao lầu</li>
           <li>500 g thịt heo</li>
           <li>200 g rau sống</li>
@@ -169,47 +209,85 @@
           <li>Mật ong</li>
           <li>Ngũ vị hương</li>
           <li>Các gia vị cần thiết</li>
+
         </ul>
+
       </section>
 
-      <section>
+
+      <section class="cach-thuc-hien">
+
         <h3>Cách thực hiện</h3>
 
         <ol>
+
           <li>Sơ chế và làm sạch các nguyên liệu.</li>
-          <li>Ướp thịt với nước tương, mật ong, ngũ vị hương và gia vị.</li>
-          <li>Chế biến thịt xá xíu đến khi chín mềm.</li>
-          <li>Chần sợi cao lầu và để ráo.</li>
-          <li>Rửa sạch và chuẩn bị rau sống ăn kèm.</li>
-          <li>Cho sợi cao lầu, thịt xá xíu và rau sống vào tô.</li>
-          <li>Thêm nước sốt và các nguyên liệu ăn kèm.</li>
-          <li>Hoàn thiện món ăn và thưởng thức.</li>
+
+          <li>
+            Ướp thịt với nước tương, mật ong, ngũ vị hương và gia vị.
+          </li>
+
+          <li>
+            Chế biến thịt xá xíu đến khi chín mềm.
+          </li>
+
+          <li>
+            Chần sợi cao lầu và để ráo.
+          </li>
+
+          <li>
+            Rửa sạch và chuẩn bị rau sống ăn kèm.
+          </li>
+
+          <li>
+            Cho sợi cao lầu, thịt xá xíu và rau sống vào tô.
+          </li>
+
+          <li>
+            Thêm nước sốt và các nguyên liệu ăn kèm.
+          </li>
+
+          <li>
+            Hoàn thiện món ăn và thưởng thức.
+          </li>
+
         </ol>
+
       </section>
 
-      <section>
+
+      <section class="video-huong-dan">
+
         <h3>Video hướng dẫn công thức</h3>
 
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube-nocookie.com/embed/Fmebc_dqPnM"
+src="https://www.youtube-nocookie.com/embed/Fmebc_dqPnM"
           title="Video hướng dẫn thực hiện công thức Cao lầu Hội An"
           allowfullscreen
         ></iframe>
+
       </section>
 
     </article>
 
-    <!-- Cá kho tộ -->
-    <article id="ca-kho-to">
 
-      <h2>Cá kho tộ</h2>
+    <!-- ==============================
+         CÁ KHO TỘ
+         ============================== -->
 
-      <section>
+    <article id="ca-kho-to" class="chi-tiet-mon-an">
+
+      <h2 class="tieu-de-mon-an">Cá kho tộ</h2>
+
+
+      <section class="thong-tin-cong-thuc">
+
         <h3>Thông tin công thức</h3>
 
         <figure>
+
           <img
             src="images/ca-kho-to.jpg"
             alt="Món cá kho tộ với thịt cá và nước kho màu nâu đậm"
@@ -220,10 +298,15 @@
           <figcaption>
             Cá kho tộ sau khi hoàn thiện.
           </figcaption>
+
         </figure>
 
+
         <table>
-          <caption>Thông tin cơ bản của công thức Cá kho tộ</caption>
+
+          <caption>
+            Thông tin cơ bản của công thức Cá kho tộ
+          </caption>
 
           <thead>
             <tr>
@@ -233,6 +316,7 @@
           </thead>
 
           <tbody>
+
             <tr>
               <th scope="row">Thời gian thực hiện</th>
               <td>60 phút</td>
@@ -252,14 +336,20 @@
               <th scope="row">Ngân sách dự kiến</th>
               <td>100.000 đồng</td>
             </tr>
+
           </tbody>
+
         </table>
+
       </section>
 
-      <section>
+
+      <section class="nguyen-lieu">
+
         <h3>Nguyên liệu</h3>
 
         <ul>
+
           <li>500 g cá</li>
           <li>Hành lá</li>
           <li>Tiêu</li>
@@ -268,33 +358,63 @@
           <li>Đường</li>
           <li>Dầu ăn</li>
           <li>Các gia vị cần thiết</li>
+
         </ul>
+
       </section>
 
-      <section>
+
+      <section class="cach-thuc-hien">
+
         <h3>Cách thực hiện</h3>
 
         <ol>
-          <li>Làm sạch cá và cắt thành từng khúc vừa ăn.</li>
-          <li>Ướp cá với nước mắm, đường, tiêu và gia vị.</li>
-          <li>Đun nóng dầu và làm caramel từ đường.</li>
-          <li>Cho cá vào nồi và kho với lửa nhỏ.</li>
-          <li>Thêm gia vị và tiếp tục kho đến khi cá thấm đều.</li>
-          <li>Thêm hành lá, tiêu và hoàn thiện món ăn.</li>
+
+          <li>
+            Làm sạch cá và cắt thành từng khúc vừa ăn.
+          </li>
+
+          <li>
+            Ướp cá với nước mắm, đường, tiêu và gia vị.
+          </li>
+
+          <li>
+            Đun nóng dầu và làm caramel từ đường.
+          </li>
+
+          <li>
+            Cho cá vào nồi và kho với lửa nhỏ.
+          </li>
+
+          <li>
+            Thêm gia vị và tiếp tục kho đến khi cá thấm đều.
+          </li>
+
+          <li>
+            Thêm hành lá, tiêu và hoàn thiện món ăn.
+          </li>
+
         </ol>
+
       </section>
 
     </article>
 
-    <!-- Bánh xèo -->
-    <article id="banh-xeo">
 
-      <h2>Bánh xèo</h2>
+    <!-- ==============================
+         BÁNH XÈO
+         ============================== -->
 
-      <section>
+    <article id="banh-xeo" class="chi-tiet-mon-an">
+<h2 class="tieu-de-mon-an">Bánh xèo</h2>
+
+
+      <section class="thong-tin-cong-thuc">
+
         <h3>Thông tin công thức</h3>
 
         <figure>
+
           <img
             src="images/banh-xeo.jpg"
             alt="Bánh xèo vàng giòn ăn kèm rau sống"
@@ -305,10 +425,15 @@
           <figcaption>
             Bánh xèo vàng giòn sau khi hoàn thiện.
           </figcaption>
+
         </figure>
 
+
         <table>
-          <caption>Thông tin cơ bản của công thức Bánh xèo</caption>
+
+          <caption>
+            Thông tin cơ bản của công thức Bánh xèo
+          </caption>
 
           <thead>
             <tr>
@@ -318,6 +443,7 @@
           </thead>
 
           <tbody>
+
             <tr>
               <th scope="row">Thời gian thực hiện</th>
               <td>40 phút</td>
@@ -337,14 +463,20 @@
               <th scope="row">Ngân sách dự kiến</th>
               <td>80.000 đồng</td>
             </tr>
+
           </tbody>
+
         </table>
+
       </section>
 
-      <section>
+
+      <section class="nguyen-lieu">
+
         <h3>Nguyên liệu</h3>
 
         <ul>
+
           <li>200 g bột bánh xèo</li>
           <li>200 g tôm</li>
           <li>150 g thịt heo</li>
@@ -353,48 +485,86 @@
           <li>Rau sống</li>
           <li>Dầu ăn</li>
           <li>Nước mắm</li>
+
         </ul>
+
       </section>
 
-      <section>
+
+      <section class="cach-thuc-hien">
+
         <h3>Cách thực hiện</h3>
 
         <ol>
-          <li>Sơ chế tôm, thịt và các loại rau.</li>
-          <li>Pha bột bánh xèo theo tỉ lệ phù hợp.</li>
-          <li>Xào sơ tôm và thịt.</li>
-          <li>Làm nóng chảo và thêm một lượng dầu vừa đủ.</li>
-          <li>Đổ bột vào chảo, thêm tôm, thịt và giá đỗ.</li>
-          <li>Chiên đến khi bánh vàng giòn.</li>
-          <li>Gấp đôi bánh và trình bày cùng rau sống.</li>
+
+          <li>
+            Sơ chế tôm, thịt và các loại rau.
+          </li>
+
+          <li>
+            Pha bột bánh xèo theo tỉ lệ phù hợp.
+          </li>
+
+          <li>
+            Xào sơ tôm và thịt.
+          </li>
+
+          <li>
+            Làm nóng chảo và thêm một lượng dầu vừa đủ.
+          </li>
+
+          <li>
+            Đổ bột vào chảo, thêm tôm, thịt và giá đỗ.
+          </li>
+
+          <li>
+            Chiên đến khi bánh vàng giòn.
+          </li>
+
+          <li>
+            Gấp đôi bánh và trình bày cùng rau sống.
+          </li>
+
         </ol>
+
       </section>
 
     </article>
 
-    <!-- Gỏi ngó sen -->
-    <article id="goi-ngo-sen">
 
-      <h2>Gỏi ngó sen</h2>
+    <!-- ==============================
+         GỎI NGÓ SEN
+         ============================== -->
 
-      <section>
+    <article id="goi-ngo-sen" class="chi-tiet-mon-an">
+
+      <h2 class="tieu-de-mon-an">Gỏi ngó sen</h2>
+
+
+      <section class="thong-tin-cong-thuc">
+
         <h3>Thông tin công thức</h3>
 
         <figure>
+
           <img
             src="images/goi-ngo-sen.jpg"
             alt="Món gỏi ngó sen với rau củ và nguyên liệu trộn"
             width="400"
             height="260"
           >
-
-          <figcaption>
+<figcaption>
             Gỏi ngó sen sau khi trộn và trình bày.
           </figcaption>
+
         </figure>
 
+
         <table>
-          <caption>Thông tin cơ bản của công thức Gỏi ngó sen</caption>
+
+          <caption>
+            Thông tin cơ bản của công thức Gỏi ngó sen
+          </caption>
 
           <thead>
             <tr>
@@ -404,6 +574,7 @@
           </thead>
 
           <tbody>
+
             <tr>
               <th scope="row">Thời gian thực hiện</th>
               <td>30 phút</td>
@@ -423,14 +594,20 @@
               <th scope="row">Ngân sách dự kiến</th>
               <td>70.000 đồng</td>
             </tr>
+
           </tbody>
+
         </table>
+
       </section>
 
-      <section>
+
+      <section class="nguyen-lieu">
+
         <h3>Nguyên liệu</h3>
 
         <ul>
+
           <li>300 g ngó sen</li>
           <li>Cà rốt</li>
           <li>Rau thơm</li>
@@ -439,40 +616,78 @@
           <li>Nước mắm</li>
           <li>Đường</li>
           <li>Ớt</li>
+
         </ul>
+
       </section>
 
-      <section>
+
+      <section class="cach-thuc-hien">
+
         <h3>Cách thực hiện</h3>
 
         <ol>
-          <li>Rửa sạch và cắt ngó sen thành đoạn vừa ăn.</li>
-          <li>Ngâm ngó sen trong nước có pha chanh.</li>
-          <li>Sơ chế cà rốt và rau thơm.</li>
-          <li>Pha nước trộn với nước mắm, đường, chanh và ớt.</li>
-          <li>Trộn đều ngó sen với các nguyên liệu.</li>
-          <li>Thêm đậu phộng và rau thơm.</li>
-          <li>Trình bày và thưởng thức.</li>
+
+          <li>
+            Rửa sạch và cắt ngó sen thành đoạn vừa ăn.
+          </li>
+
+          <li>
+            Ngâm ngó sen trong nước có pha chanh.
+          </li>
+
+          <li>
+            Sơ chế cà rốt và rau thơm.
+          </li>
+
+          <li>
+            Pha nước trộn với nước mắm, đường, chanh và ớt.
+          </li>
+
+          <li>
+            Trộn đều ngó sen với các nguyên liệu.
+          </li>
+
+          <li>
+            Thêm đậu phộng và rau thơm.
+          </li>
+
+          <li>
+            Trình bày và thưởng thức.
+          </li>
+
         </ol>
+
       </section>
 
     </article>
 
-    <section>
+
+    <!-- ==============================
+         BÌNH LUẬN
+         ============================== -->
+
+    <section class="binh-luan">
+
       <h2>Bình luận</h2>
 
       <p>
         Đăng nhập để bình luận và chia sẻ trải nghiệm nấu món ăn.
       </p>
+
     </section>
 
   </main>
 
+
   <footer>
+
     <p>&copy; 2026 Cook with me - Nhóm 04</p>
 
     <nav aria-label="Điều hướng phụ">
-      <ul>
+
+      <ul class="menu">
+
         <li>
           <a href="gioi-thieu.html">Giới thiệu</a>
         </li>
@@ -480,8 +695,11 @@
         <li>
           <a href="lien-he.html">Liên hệ</a>
         </li>
+
       </ul>
+
     </nav>
+
   </footer>
 
 </body>
