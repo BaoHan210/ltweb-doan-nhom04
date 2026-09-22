@@ -11,14 +11,24 @@
   >
 
   <title>Gợi ý món ăn | Cook with me</title>
+
+  <link rel="stylesheet" href="css/01-bien.css">
+  <link rel="stylesheet" href="css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="css/03-bo-cuc.css">
+  <link rel="stylesheet" href="css/04-thanh-phan.css">
+  <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
-<body>
+<body class="trang">
 
-  <header>
-    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+  <header class="dau-trang">
 
-    <form action="#" method="get">
+    <p class="thuong-hieu">
+      Cook with me - Khơi nguồn cảm hứng vào bếp
+    </p>
+
+    <form class="o-tim-kiem" action="#" method="get">
+
       <label for="search">Tìm kiếm</label>
 
       <input
@@ -28,17 +38,25 @@
         placeholder="Tìm kiếm món ăn, công thức..."
       >
 
-      <button type="submit">Tìm kiếm</button>
+      <button class="nut" type="submit">Tìm kiếm</button>
+
     </form>
 
-    <p>
-      <button type="button">Đăng ký</button> /
-      <button type="button">Đăng nhập</button>
+    <p class="tai-khoan">
+
+      <button class="nut" type="button">Đăng ký</button> /
+
+      <button class="nut" type="button">Đăng nhập</button>
+
     </p>
+
   </header>
 
-  <nav aria-label="Điều hướng chính">
-    <ul>
+
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+    <ul class="menu">
+
       <li>
         <a href="index.html">Trang chủ</a>
       </li>
@@ -52,7 +70,9 @@
       </li>
 
       <li>
-        <a href="goi-y-mon-an.html">Gợi ý món ăn</a>
+        <a class="dang-chon" href="goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
       </li>
 
       <li>
@@ -66,24 +86,31 @@
       <li>
         <a href="lien-he.html">Liên hệ</a>
       </li>
+
     </ul>
+
   </nav>
 
-  <main>
 
-    <h1>Gợi ý món ăn</h1>
+  <main class="goi-y-trang">
 
-    <section>
+    <h1 class="tieu-de-goi-y">Gợi ý món ăn</h1>
+
+
+    <section class="tu-lanh-cua-toi">
+
       <h2>Tủ lạnh của tôi - Hôm nay ăn gì?</h2>
 
-      <p>
+      <p class="mo-ta-goi-y">
         Nhập các thông tin về nguyên liệu hiện có và nhu cầu bữa ăn
         để nhận được gợi ý món ăn phù hợp.
       </p>
 
-      <form action="#" method="get">
 
-        <fieldset>
+      <form class="form-goi-y" action="#" method="get">
+
+        <fieldset class="nhom-nguyen-lieu">
+
           <legend>Nguyên liệu hiện có</legend>
 
           <p>
@@ -95,17 +122,18 @@
               id="ingredients"
               name="ingredients"
               rows="5"
-              cols="50"
               placeholder="Ví dụ: thịt heo, trứng, cà chua..."
               required
             ></textarea>
           </p>
+
         </fieldset>
 
-        <fieldset>
-          <legend>Thông tin bữa ăn</legend>
 
-          <p>
+        <fieldset class="nhom-thong-tin">
+
+          <legend>Thông tin bữa ăn</legend>
+<p>
             <label for="budget">Ngân sách (VNĐ)</label>
 
             <input
@@ -133,7 +161,7 @@
           </p>
 
           <p>
-<label for="servings">Số người ăn</label>
+            <label for="servings">Số người ăn</label>
 
             <input
               type="number"
@@ -144,20 +172,34 @@
               required
             >
           </p>
+
         </fieldset>
 
-        <p>
-          <button type="submit">Tìm món phù hợp</button>
-          <button type="reset">Nhập lại</button>
+
+        <p class="hanh-dong-goi-y">
+
+          <button class="nut nut-chinh" type="submit">
+            Tìm món phù hợp
+          </button>
+
+          <button class="nut nut-phu" type="reset">
+            Nhập lại
+          </button>
+
         </p>
 
       </form>
+
     </section>
 
-    <section>
+
+    <section class="mon-duoc-goi-y">
+
       <h2>Món ăn được gợi ý</h2>
 
-      <article>
+
+      <article class="the-goi-y">
+
         <h3>Cá kho tộ</h3>
 
         <img
@@ -172,16 +214,8 @@
           Thời gian nấu khoảng 60 phút, phù hợp cho bữa ăn gia đình.
         </p>
 
-        <p>
-          <strong>Thời gian:</strong> 60 phút
-        </p>
-
-        <p>
-          <strong>Ngân sách dự kiến:</strong> 100.000 VNĐ
-        </p>
-
-        <p>
-          <strong>Khẩu phần:</strong> 4 người
+        <p class="thong-tin-ngan">
+          <strong>60 phút</strong> · 100.000 VNĐ · 4 người
         </p>
 
         <p>
@@ -189,9 +223,12 @@
             Xem chi tiết công thức
           </a>
         </p>
+
       </article>
 
-      <article>
+
+      <article class="the-goi-y">
+
         <h3>Bánh xèo</h3>
 
         <img
@@ -206,16 +243,8 @@
           theo nhu cầu của người dùng.
         </p>
 
-        <p>
-          <strong>Thời gian:</strong> 40 phút
-        </p>
-
-        <p>
-          <strong>Ngân sách dự kiến:</strong> 80.000 VNĐ
-        </p>
-
-        <p>
-          <strong>Khẩu phần:</strong> 3 người
+        <p class="thong-tin-ngan">
+          <strong>40 phút</strong> · 80.000 VNĐ · 3 người
         </p>
 
         <p>
@@ -223,9 +252,12 @@
             Xem chi tiết công thức
           </a>
         </p>
+
       </article>
 
-      <article>
+
+      <article class="the-goi-y">
+
         <h3>Gỏi ngó sen</h3>
 
         <img
@@ -237,19 +269,11 @@
 
         <p>
           Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
-          thời gian chế biến ngắn và ngân sách vừa phải.
+thời gian chế biến ngắn và ngân sách vừa phải.
         </p>
 
-        <p>
-          <strong>Thời gian:</strong> 30 phút
-        </p>
-
-        <p>
-          <strong>Ngân sách dự kiến:</strong> 70.000 VNĐ
-        </p>
-
-        <p>
-          <strong>Khẩu phần:</strong> 4 người
+        <p class="thong-tin-ngan">
+          <strong>30 phút</strong> · 70.000 VNĐ · 4 người
         </p>
 
         <p>
@@ -257,19 +281,23 @@
             Xem chi tiết công thức
           </a>
         </p>
+
       </article>
 
     </section>
 
-    <section>
+
+    <section class="danh-sach-di-cho">
+
       <h2>Danh sách đi chợ</h2>
 
       <p>
-Sau khi xác định món ăn phù hợp, hệ thống xác định các nguyên liệu
+        Sau khi xác định món ăn phù hợp, hệ thống xác định các nguyên liệu
         còn thiếu để chuẩn bị cho việc nấu ăn.
       </p>
 
-      <article>
+      <article class="the-danh-sach">
+
         <h3>Nguyên liệu còn thiếu cho món cá kho tộ</h3>
 
         <ul>
@@ -278,26 +306,34 @@ Sau khi xác định món ăn phù hợp, hệ thống xác định các nguyên
           <li>Nước mắm</li>
           <li>Ớt</li>
         </ul>
+
       </article>
 
-      <p>
-        <button type="button">
+      <p class="hanh-dong-danh-sach">
+
+        <button class="nut nut-chinh" type="button">
           Thêm vào danh sách đi chợ
         </button>
+
+        <button class="nut nut-phu" type="button">
+          Xóa danh sách
+        </button>
+
       </p>
 
-      <p>
-        <button type="button">Xóa danh sách</button>
-      </p>
     </section>
 
   </main>
 
+
   <footer>
+
     <p>&copy; 2026 Cook with me - Nhóm 04</p>
 
     <nav aria-label="Điều hướng phụ">
-      <ul>
+
+      <ul class="menu">
+
         <li>
           <a href="gioi-thieu.html">Giới thiệu</a>
         </li>
@@ -305,8 +341,11 @@ Sau khi xác định món ăn phù hợp, hệ thống xác định các nguyên
         <li>
           <a href="lien-he.html">Liên hệ</a>
         </li>
+
       </ul>
+
     </nav>
+
   </footer>
 
 </body>
