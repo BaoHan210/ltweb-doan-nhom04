@@ -11,14 +11,29 @@
   >
 
   <title>Thông tin cá nhân - Nguyễn Thị Trinh | Cook with me</title>
+
+  <!-- CSS chung của nhóm -->
+  <link rel="stylesheet" href="../../css/01-bien.css">
+  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+  <link rel="stylesheet" href="../../css/05-tien-ich.css">
+
+  <!-- CSS dùng chung cho các trang cá nhân -->
+  <link rel="stylesheet" href="../../css/06-trang-ca-nhan.css">
 </head>
 
-<body>
+<body class="trang">
 
-  <header>
-    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+  <!-- HEADER -->
+  <header class="dau-trang">
 
-    <form action="#" method="get">
+    <p class="thuong-hieu">
+      Cook with me - Khơi nguồn cảm hứng vào bếp
+    </p>
+
+    <form class="o-tim-kiem" action="#" method="get">
+
       <label for="search">Tìm kiếm</label>
 
       <input
@@ -28,163 +43,347 @@
         placeholder="Tìm kiếm món ăn, công thức..."
       >
 
-      <button type="submit">Tìm kiếm</button>
+      <button class="nut" type="submit">
+        Tìm kiếm
+      </button>
+
     </form>
 
-    <p>
-      <button type="button">Đăng ký</button> /
-      <button type="button">Đăng nhập</button>
+    <p class="tai-khoan">
+
+      <button class="nut" type="button">
+        Đăng ký
+      </button>
+
+      /
+
+      <button class="nut" type="button">
+        Đăng nhập
+      </button>
+
     </p>
+
   </header>
 
-  <nav aria-label="Điều hướng chính">
-    <ul>
+
+  <!-- ĐIỀU HƯỚNG CHÍNH -->
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+    <ul class="menu">
+
       <li>
-        <a href="../../index.html">Trang chủ</a>
+        <a href="../../index.html">
+          Trang chủ
+        </a>
       </li>
 
       <li>
-        <a href="../../danh-sach.html">Khám phá</a>
+        <a href="../../danh-sach.html">
+          Khám phá
+        </a>
       </li>
 
       <li>
-        <a href="../../chi-tiet.html">Chi tiết công thức</a>
+        <a href="../../chi-tiet.html">
+          Chi tiết công thức
+        </a>
       </li>
 
       <li>
-        <a href="../../goi-y-mon-an.html">Gợi ý món ăn</a>
+        <a href="../../goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
       </li>
 
       <li>
-        <a href="../../cai-dat.html">Cài đặt</a>
+        <a href="../../cai-dat.html">
+          Cài đặt
+        </a>
       </li>
 
       <li>
-        <a href="../../gioi-thieu.html">Giới thiệu</a>
+        <a class="dang-chon" href="../../gioi-thieu.html">
+          Giới thiệu
+        </a>
       </li>
 
       <li>
-        <a href="../../lien-he.html">Liên hệ</a>
+        <a href="../../lien-he.html">
+          Liên hệ
+        </a>
       </li>
+
     </ul>
+
   </nav>
 
-  <main>
 
-    <h1>Hồ sơ thành viên: Nguyễn Thị Trinh</h1>
+  <!-- NỘI DUNG CHÍNH -->
+  <main class="ho-so-trang">
 
-    <section>
-      <h2>Thông tin chung</h2>
+    <h1 class="tieu-de-ho-so">
+      Hồ sơ thành viên: Nguyễn Thị Trinh
+    </h1>
 
-      <figure>
+
+    <!-- THÔNG TIN CHUNG -->
+    <section class="thong-tin-chung">
+
+      <h2>
+        Thông tin chung
+      </h2>
+
+      <figure class="anh-dai-dien">
+
         <img
           src="../../images/avatar-trinh.jpg"
           alt="Ảnh chân dung thành viên Nguyễn Thị Trinh"
           width="200"
           height="200"
-        >
+>
 
         <figcaption>
           Ảnh chân dung thành viên Nguyễn Thị Trinh - Nhóm 04.
         </figcaption>
+
       </figure>
 
-      <p>
-        Xin chào! Tôi là Trinh, thành viên của Nhóm 04.
-        Trong dự án này, tôi chịu trách nhiệm chính về xây dựng cấu trúc
-        HTML5 ngữ nghĩa và thực hiện kiểm chuẩn chất lượng mã nguồn.
-      </p>
-    </section>
 
-    <section>
-      <h2>Kỹ năng</h2>
+      <ul class="thong-tin-ca-nhan">
 
-      <ul>
-        <li>Ngôn ngữ HTML5 chuẩn ngữ nghĩa W3C</li>
-        <li>Sử dụng hệ thống quản lý mã nguồn Git và GitHub</li>
-        <li>Kiểm thử khả năng tiếp cận (Accessibility) và SEO bằng Google Lighthouse</li>
-        <li>Làm việc nhóm và thiết kế giao diện web cơ bản</li>
+        <li>
+          <strong>Họ và tên:</strong>
+          Nguyễn Thị Trinh
+        </li>
+
+        <li>
+          <strong>Vai trò:</strong>
+          Thành viên
+        </li>
+
+        <li>
+          <strong>Nhiệm vụ chính:</strong>
+          Xây dựng cấu trúc HTML5 ngữ nghĩa
+          và thực hiện kiểm chuẩn chất lượng mã nguồn.
+        </li>
+
       </ul>
+
     </section>
 
-    <article>
-      <h2>Dự án và sở thích</h2>
+
+    <!-- DỰ ÁN VÀ SỞ THÍCH -->
+    <article class="du-an-so-thich">
+
+      <h2>
+        Dự án và sở thích
+      </h2>
 
       <p>
-        <strong>Dự án Cook with me:</strong>
-        Cùng nhóm xây dựng website chia sẻ công thức ẩm thực truyền thống,
-        chú trọng cấu trúc chuẩn để người dùng dễ tiếp cận thông tin.
+        Nguyễn Thị Trinh cùng các thành viên xây dựng website Cook with me,
+        một mạng xã hội chia sẻ công thức ẩm thực.
       </p>
 
       <p>
-<strong>Sở thích cá nhân:</strong>
-        Nghiên cứu công nghệ web, trải nghiệm ẩm thực các vùng miền
-        và chạy bộ thể thao.
+        Trong dự án, công việc tập trung vào xây dựng cấu trúc HTML5
+        theo hướng ngữ nghĩa và kiểm chuẩn chất lượng mã nguồn,
+        giúp nội dung được tổ chức rõ ràng và dễ tiếp cận.
       </p>
+
+      <p>
+        Sở thích cá nhân gồm nghiên cứu công nghệ web,
+        trải nghiệm ẩm thực các vùng miền và chạy bộ thể thao.
+      </p>
+
     </article>
 
-    <section>
-      <h2>Thời khóa biểu tuần</h2>
 
-      <table>
-        <caption>
-          Thời khóa biểu học tập và nghiên cứu đồ án trong tuần
-        </caption>
+    <!-- KỸ NĂNG -->
+    <section class="ky-nang">
 
-        <thead>
-          <tr>
-            <th scope="col">Khung giờ</th>
-            <th scope="col">Thứ Hai</th>
-            <th scope="col">Thứ Tư</th>
-            <th scope="col">Thứ Sáu</th>
-          </tr>
-        </thead>
+      <h2>
+        Kỹ năng
+      </h2>
 
-        <tbody>
-          <tr>
-            <th scope="row">Buổi sáng</th>
-            <td>Lập trình Web (Lý thuyết)</td>
-            <td>Tự học HTML5 ngữ nghĩa và Cơ sở dữ liệu</td>
-            <td>Nghiên cứu tài liệu đồ án</td>
-          </tr>
+      <ul class="danh-sach-ky-nang">
 
-          <tr>
-            <th scope="row">Buổi chiều</th>
-            <td>Họp tiến độ Nhóm 04</td>
-            <td>Thực hành Lập trình Web - Kiểm thử W3C và Lighthouse</td>
-            <td>Tổng hợp báo cáo tuần</td>
-          </tr>
+        <li>
+          Ngôn ngữ HTML5 chuẩn ngữ nghĩa W3C
+        </li>
 
-          <tr>
-            <th scope="row">Buổi tối</th>
-            <td>Ôn tập</td>
-            <td>Kiểm tra W3C</td>
-            <td>Kiểm tra Lighthouse</td>
-          </tr>
-        </tbody>
-      </table>
+        <li>
+          Sử dụng hệ thống quản lý mã nguồn Git và GitHub
+        </li>
+
+        <li>
+          Kiểm thử khả năng tiếp cận (Accessibility)
+          và SEO bằng Google Lighthouse
+        </li>
+
+        <li>
+          Làm việc nhóm và thiết kế giao diện web cơ bản
+        </li>
+
+      </ul>
+
     </section>
 
-    <p>
-      <a href="../../index.html">Quay lại trang chủ</a>
+
+    <!-- THỜI KHÓA BIỂU -->
+    <section class="thoi-khoa-bieu">
+
+      <h2>
+        Thời khóa biểu tuần
+      </h2>
+
+      <p>
+        Bảng thời khóa biểu có thể cuộn ngang trên màn hình nhỏ.
+      </p>
+
+      <div class="khung-bang">
+
+        <table>
+
+          <caption>
+            Thời khóa biểu học tập và nghiên cứu đồ án trong tuần
+          </caption>
+
+          <thead>
+
+            <tr>
+
+              <th scope="col">
+                Khung giờ
+              </th>
+
+              <th scope="col">
+                Thứ Hai
+              </th>
+
+              <th scope="col">
+                Thứ Tư
+              </th>
+
+              <th scope="col">
+                Thứ Sáu
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr>
+
+              <th scope="row">
+                Buổi sáng
+              </th>
+
+              <td>
+                Lập trình Web (Lý thuyết)
+              </td>
+
+              <td>
+                Tự học HTML5 ngữ nghĩa và Cơ sở dữ liệu
+              </td>
+<td>
+                Nghiên cứu tài liệu đồ án
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <th scope="row">
+                Buổi chiều
+              </th>
+
+              <td>
+                Họp tiến độ Nhóm 04
+              </td>
+
+              <td>
+                Thực hành Lập trình Web - Kiểm thử W3C và Lighthouse
+              </td>
+
+              <td>
+                Tổng hợp báo cáo tuần
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <th scope="row">
+                Buổi tối
+              </th>
+
+              <td>
+                Ôn tập
+              </td>
+
+              <td>
+                Kiểm tra W3C
+              </td>
+
+              <td>
+                Kiểm tra Lighthouse
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUAY LẠI -->
+    <p class="quay-lai">
+
+      <a href="../../index.html">
+        Quay lại trang chủ
+      </a>
+
     </p>
 
   </main>
 
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
 
     <nav aria-label="Điều hướng phụ">
-      <ul>
+
+      <ul class="menu">
+
         <li>
-          <a href="../../gioi-thieu.html">Giới thiệu</a>
+          <a href="../../gioi-thieu.html">
+            Giới thiệu
+          </a>
         </li>
 
         <li>
-          <a href="../../lien-he.html">Liên hệ</a>
+          <a href="../../lien-he.html">
+            Liên hệ
+          </a>
         </li>
+
       </ul>
+
     </nav>
+
   </footer>
 
 </body>
