@@ -1,67 +1,2495 @@
 /* ==============================
    04-thanh-phan.css
-   Thành phần giao diện - Flexbox
+   Kiểu dáng các thành phần giao diện
+   Thiết kế theo hướng mobile-first
    ============================== */
 
-/* Thanh điều hướng */
-.thanh-dieu-huong {
+
+/* ==============================
+   1. HEADER
+   ============================== */
+
+/* Mặc định: điện thoại */
+.dau-trang {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--khoang-cach);
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    border-bottom: 1px solid var(--mau-vien);
+
+    background-color: var(--mau-nen);
 }
 
-/* Danh sách menu */
-.menu {
+
+/* ==============================
+   2. THƯƠNG HIỆU
+   ============================== */
+
+.thuong-hieu {
+    min-width: 0;
+
+    margin: 0;
+
+    font-size: 0;
+    line-height: 1.3;
+
+    text-align: center;
+}
+
+
+.thuong-hieu::before {
+    content: "Cook with me";
+
+    display: block;
+
+    color: var(--mau-chinh);
+
+    font-size: 26px;
+    font-weight: 700;
+}
+
+
+.thuong-hieu::after {
+    content: "Khơi nguồn cảm hứng vào bếp";
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+
+/* ==============================
+   3. FORM TÌM KIẾM
+   ============================== */
+
+.o-tim-kiem {
     display: flex;
     align-items: center;
-    gap: 20px;
+
+    gap: 8px;
+
+    width: 100%;
+    max-width: none;
+
+    min-width: 0;
+}
+
+
+.o-tim-kiem label {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+.o-tim-kiem input {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+
+    padding: 0 18px;
+
+    border: 2px solid var(--mau-chu);
+    border-radius: 24px;
+
+    background-color: var(--mau-nen);
+    color: var(--mau-chu);
+}
+
+
+.o-tim-kiem input::placeholder {
+    color: var(--mau-chu-phu);
+}
+
+
+.o-tim-kiem input:focus-visible {
+    border-color: var(--mau-chinh);
+
+    outline: 2px solid rgba(66, 107, 31, 0.18);
+    outline-offset: 2px;
+}
+
+
+/*
+   Trên điện thoại ưu tiên ô nhập.
+   Nút tìm kiếm vẫn được giữ trong HTML
+   nhưng ẩn để tiết kiệm không gian.
+*/
+.o-tim-kiem .nut {
+    display: none;
+    flex: 0 0 auto;
+}
+
+
+/* ==============================
+   4. KHU VỰC TÀI KHOẢN
+   ============================== */
+
+.tai-khoan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
+
+    gap: 6px;
+
+    flex: 0 0 auto;
+
+    margin: 0;
+}
+
+
+/* ==============================
+   5. THANH ĐIỀU HƯỚNG
+   ============================== */
+
+/* Mobile: menu xếp dọc */
+.thanh-dieu-huong {
+    min-height: 100%;
+
+    padding: 12px 8px;
+
+    border-right: none;
+    border-bottom: 1px solid var(--mau-vien);
+
+    background-color: var(--mau-nen);
+}
+
+
+.thanh-dieu-huong > .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 6px;
 
     margin: 0;
     padding: 0;
+
     list-style: none;
 }
 
-.menu a {
-    display: block;
+
+.thanh-dieu-huong > .menu li {
+    width: 100%;
 }
 
-.menu a:hover,
-.menu a:focus {
+
+.thanh-dieu-huong > .menu a {
+    display: block;
+
+    padding: 9px 12px;
+
+    border-radius: var(--bo-goc);
+
+    color: var(--mau-chu);
+
+    font-size: 14px;
+
+    white-space: normal;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.thanh-dieu-huong > .menu a:hover {
+    color: var(--mau-nhan);
+    background-color: var(--mau-nen-phu);
+}
+
+
+.thanh-dieu-huong > .menu a:focus-visible {
+    color: var(--mau-nhan);
+    background-color: var(--mau-nen-phu);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+.thanh-dieu-huong > .menu a:active,
+.trang > footer .menu a:active,
+.mon-noi-bat .the-mon-an a:active,
+.danh-sach-mon a:active,
+.the-thanh-vien a:active {
     color: var(--mau-nhan);
 }
 
-/* Nút */
+
+.thanh-dieu-huong > .menu a.dang-chon {
+    color: var(--mau-nhan);
+    background-color: var(--mau-nen-phu);
+
+    font-weight: 600;
+}
+
+
+/* ==============================
+   6. FOOTER
+   ============================== */
+
+/* Mobile: footer xếp dọc */
+.trang > footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    border-top: 1px solid var(--mau-vien);
+
+    background-color: var(--mau-nen);
+
+    text-align: center;
+}
+
+
+.trang > footer > p {
+    margin: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.trang > footer .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.trang > footer .menu a {
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+
+    transition: color 0.2s ease;
+}
+
+
+.trang > footer .menu a:hover {
+    color: var(--mau-chinh);
+}
+
+
+.trang > footer .menu a:focus-visible {
+    color: var(--mau-chinh);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+/* ==============================
+   7. NÚT CHUNG
+   ============================== */
+
 .nut {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
+    min-height: 36px;
+
     padding: 8px 16px;
-    border: none;
+
+    border: 1px solid transparent;
     border-radius: var(--bo-goc);
 
     background-color: var(--mau-chinh);
     color: #FFFFFF;
 
+    font-size: 14px;
+    font-weight: 600;
+
     cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+        transform 0.2s ease;
 }
 
-.nut:hover,
-.nut:focus {
+
+.nut:hover {
     opacity: 0.9;
 }
 
-/* Thẻ món ăn / nội dung */
-.the-mon-an {
+.nut:active {
+    opacity: 0.8;
+    transform: translateY(1px);
+}
+
+.nut:focus-visible {
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+/* Nút chính */
+
+.nut-chinh {
+    border-color: var(--mau-chinh);
+
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+}
+
+
+/* Nút phụ */
+
+.nut-phu {
+    border-color: var(--mau-chinh);
+
+    background-color: var(--mau-nen);
+    color: var(--mau-chinh);
+}
+
+
+.nut-phu:hover {
+    border-color: var(--mau-chinh);
+
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+
+    opacity: 1;
+}
+
+
+.nut-phu:focus-visible {
+    border-color: var(--mau-chinh);
+
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+
+    opacity: 1;
+}
+
+
+/* Nút nguy hiểm */
+
+.nut-nguy-hiem {
+    border-color: #efc4c0;
+
+    background-color: var(--mau-nen);
+    color: #b42318;
+}
+
+
+.nut-nguy-hiem:hover {
+    border-color: #efc4c0;
+
+    background-color: #fff5f4;
+    color: #b42318;
+
+    opacity: 1;
+}
+
+
+.nut-nguy-hiem:focus-visible {
+    border-color: #efc4c0;
+
+    background-color: #fff5f4;
+    color: #b42318;
+
+    opacity: 1;
+
+    outline: 2px solid #b42318;
+    outline-offset: 2px;
+}
+
+
+/* ==============================
+   8. TIÊU ĐỀ CHUNG
+   ============================== */
+
+.noi-dung-trang h1,
+.chi-tiet-trang h1 {
+    color: var(--mau-chu);
+
+    font-size: var(--co-chu-tieu-de);
+}
+
+
+.noi-dung-trang h2,
+.chi-tiet-trang h2 {
+    color: var(--mau-chu);
+
+    font-size: 20px;
+}
+
+
+.noi-dung-trang h3,
+.chi-tiet-trang h3 {
+    color: var(--mau-chu);
+}
+
+
+/* ==============================
+   9. CHIA SẺ CÔNG THỨC
+   ============================== */
+
+.chia-se-cong-thuc {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
 
-    padding: 16px;
+    gap: 4px;
+
+    padding: 12px;
+
     border: 1px solid var(--mau-vien);
     border-radius: var(--bo-goc);
+
     background-color: var(--mau-nen);
+
+    text-align: center;
+}
+
+
+.chia-se-cong-thuc h2 {
+    margin: 0;
+
+    color: var(--mau-chinh);
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+
+.chia-se-cong-thuc p {
+    margin: 4px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.45;
+}
+
+
+.chia-se-cong-thuc .nut {
+    min-width: 90px;
+
+    padding: 7px 14px;
+}
+
+
+/* ==============================
+   10. THẺ BÀI ĐĂNG
+   ============================== */
+
+.the-bai-dang {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.the-bai-dang h3 {
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: 18px;
+}
+
+
+.the-bai-dang p {
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.the-bai-dang img {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    border-radius: var(--bo-goc);
+}
+
+
+.the-bai-dang > p:last-child {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 4px;
+}
+
+
+.the-bai-dang > p:last-child .nut {
+    padding: 7px 12px;
+
+    font-size: 13px;
+}
+
+
+/* ==============================
+   11. MÓN ĂN NỔI BẬT
+   ============================== */
+
+.mon-noi-bat .the-mon-an {
+    display: grid;
+
+    grid-template-columns: 70px minmax(0, 1fr);
+
+    column-gap: 10px;
+
+    align-items: center;
+
+    min-width: 0;
+
+    padding: 8px 0;
+
+    border-bottom: 1px solid var(--mau-vien);
+
+    background-color: transparent;
+}
+
+
+.mon-noi-bat .the-mon-an img {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+
+    width: 70px;
+    height: 52px;
+
+    object-fit: cover;
+
+    border-radius: 5px;
+}
+
+
+.mon-noi-bat .the-mon-an h3 {
+    grid-column: 2;
+
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.mon-noi-bat .the-mon-an p:first-of-type {
+    grid-column: 2;
+
+    margin: 0;
+
+    color: #8A6500;
+
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+
+.mon-noi-bat .the-mon-an p:last-of-type {
+    grid-column: 2;
+
+    margin: 0;
+}
+
+
+.mon-noi-bat .the-mon-an a {
+    color: var(--mau-chu);
+
+    font-size: 12px;
+
+    transition: color 0.2s ease;
+}
+
+
+.mon-noi-bat .the-mon-an a:hover {
+    color: var(--mau-chinh);
+}
+
+
+.mon-noi-bat .the-mon-an a:focus-visible {
+    color: var(--mau-chinh);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+/* ==============================
+   12. GỢI Ý NGƯỜI THEO DÕI
+   ============================== */
+
+.the-nguoi-dung {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 7px;
+
+    min-width: 0;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid var(--mau-vien);
+
+    background-color: var(--mau-nen);
+}
+
+
+.the-nguoi-dung h3 {
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.the-nguoi-dung p {
+    margin: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+.the-nguoi-dung .nut {
+    padding: 7px 12px;
+
+    font-size: 13px;
+}
+
+
+/* ==============================
+   13. TRANG KHÁM PHÁ
+   ============================== */
+
+.tieu-de-kham-pha {
+    margin: 0 0 18px;
+
+    color: var(--mau-chu);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 26px;
+    font-weight: 400;
+
+    text-align: center;
+}
+
+
+.the-danh-muc > summary {
+    min-height: 80px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: 16px;
+
+    background-color: var(--mau-nen-phu);
+
+    cursor: pointer;
+
+    list-style: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.the-danh-muc > summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.the-danh-muc > summary span {
+    color: var(--mau-chu);
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.the-danh-muc > summary:hover {
+    border-color: #BFD4B7;
+    background-color: #F8FBF6;
+}
+
+
+.the-danh-muc > summary:focus-visible {
+    border-color: var(--mau-chinh);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+.the-danh-muc[open] > summary {
+    border-color: var(--mau-chinh);
+
+    background-color: #F8FBF6;
+}
+
+
+.the-danh-muc[open] > summary span {
+    color: var(--mau-chinh);
+}
+
+
+.danh-sach-mon a {
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.danh-sach-mon a:hover {
+    color: var(--mau-chinh);
+
+    background-color: var(--mau-nen-phu);
+}
+
+
+.danh-sach-mon a:focus-visible {
+    color: var(--mau-chinh);
+
+    background-color: var(--mau-nen-phu);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+.the-danh-muc > p {
+    line-height: 1.5;
+}
+
+
+.cach-kham-pha h2 {
+    margin-top: 0;
+}
+
+
+.cach-kham-pha ol {
+    margin-bottom: 0;
+}
+
+
+/* ==============================
+   14. CHI TIẾT MÓN ĂN
+   ============================== */
+
+.tieu-de-mon-an {
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+
+.thong-tin-bai-chia-se,
+.hinh-anh-mon-an,
+.thong-tin-cong-thuc,
+.nguyen-lieu,
+.cach-thuc-hien,
+.video-huong-dan,
+.binh-luan {
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.chi-tiet-mon-an h3 {
+    margin: 0 0 10px;
+
+    color: var(--mau-chinh);
+
+    font-size: 17px;
+}
+
+
+.thong-tin-bai-chia-se p {
+    margin: 8px 0;
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.thong-tin-bai-chia-se > p:last-child {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.hinh-anh-mon-an figure {
+    margin: 0;
+}
+
+
+.hinh-anh-mon-an img {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    border-radius: var(--bo-goc);
+}
+
+
+.hinh-anh-mon-an figcaption {
+    margin-top: 6px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+.thong-tin-cong-thuc {
+    overflow-x: auto;
+}
+
+
+.thong-tin-cong-thuc table {
+    width: 100%;
+    min-width: 360px;
+
+    border-collapse: collapse;
+
+    font-size: 14px;
+}
+
+
+.thong-tin-cong-thuc caption {
+    margin-bottom: 8px;
+
+    color: var(--mau-chu);
+
+    font-weight: 600;
+
+    text-align: left;
+}
+
+
+.thong-tin-cong-thuc th,
+.thong-tin-cong-thuc td {
+    padding: 8px;
+
+    border: 1px solid var(--mau-vien);
+
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+.thong-tin-cong-thuc th {
+    background-color: var(--mau-nen-phu);
+}
+
+
+.nguyen-lieu ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+
+.nguyen-lieu li {
+    margin-bottom: 7px;
+
+    line-height: 1.5;
+}
+
+
+.cach-thuc-hien ol {
+    margin: 0;
+    padding-left: 24px;
+}
+
+
+.cach-thuc-hien li {
+    margin-bottom: 8px;
+
+    line-height: 1.5;
+}
+
+
+.video-huong-dan iframe {
+    display: block;
+
+    width: 100%;
+    max-width: 560px;
+
+    aspect-ratio: 16 / 9;
+
+    height: auto;
+
+    border: none;
+    border-radius: var(--bo-goc);
+}
+
+
+.binh-luan {
+    margin-top: 20px;
+}
+
+
+.binh-luan h2 {
+    margin-top: 0;
+
+    color: var(--mau-chinh);
+}
+
+
+/* ==============================
+   15. GỢI Ý MÓN ĂN
+   ============================== */
+
+.tu-lanh-cua-toi {
+    padding: 12px;
+
+    border: 1px solid #DDE8D8;
+    border-radius: var(--bo-goc);
+
+    background-color: #F8FBF6;
+}
+
+
+.tu-lanh-cua-toi h2 {
+    margin: 0 0 4px;
+
+    color: var(--mau-chinh);
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+}
+
+
+.mo-ta-goi-y {
+    margin: 0 0 12px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+.form-goi-y fieldset {
+    min-width: 0;
+
+    margin: 0;
+    padding: 10px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: 6px;
+
+    background-color: var(--mau-nen);
+}
+
+
+.form-goi-y legend {
+    padding: 0 4px;
+
+    color: var(--mau-chinh);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.form-goi-y label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 11px;
+}
+
+
+.form-goi-y textarea,
+.form-goi-y input,
+.form-goi-y select {
+    width: 100%;
+    min-width: 0;
+
+    padding: 7px 9px;
+
+    border: 1px solid #D8DED5;
+    border-radius: 5px;
+
+    background-color: var(--mau-nen);
+    color: var(--mau-chu);
+
+    font-size: 12px;
+}
+
+
+.form-goi-y textarea {
+    min-height: 82px;
+
+    resize: vertical;
+}
+
+
+.form-goi-y textarea:focus-visible,
+.form-goi-y input:focus-visible,
+.form-goi-y select:focus-visible {
+    border-color: var(--mau-chinh);
+
+    outline: 2px solid rgba(66, 107, 31, 0.18);
+    outline-offset: 1px;
+}
+
+
+.nhom-thong-tin p {
+    margin: 0;
+}
+
+
+.hanh-dong-goi-y {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 2px 0 0;
+}
+
+
+.the-goi-y {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+
+    padding: 6px;
+
+    border: 1px solid #DDE3D8;
+    border-radius: 7px;
+
+    background-color: var(--mau-nen);
+
+    overflow: hidden;
+}
+
+
+.the-goi-y img {
+    width: 100%;
+    height: 140px;
+
+    object-fit: cover;
+
+    border-radius: 5px;
+}
+
+
+.the-goi-y h3 {
+    margin: 2px 0;
+
+    color: var(--mau-chu);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.the-goi-y p {
+    margin: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+
+.the-goi-y .thong-tin-ngan {
+    color: var(--mau-chinh);
+
+    font-size: 10px;
+}
+
+
+.the-goi-y p:last-child a {
+    display: inline-block;
+
+    width: fit-content;
+
+    margin-top: 3px;
+    padding: 3px 6px;
+
+    border: 1px solid #D8E6D1;
+    border-radius: 5px;
+
+    background-color: #F5FAF2;
+    color: var(--mau-chinh);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.the-goi-y p:last-child a:hover {
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+}
+
+
+.the-goi-y p:last-child a:focus-visible {
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+.the-goi-y p:last-child a:active,
+.quay-lai a:active {
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+}
+
+.danh-sach-di-cho {
+    padding: 16px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.danh-sach-di-cho h2 {
+    margin-top: 0;
+
+    color: var(--mau-chinh);
+}
+
+
+.the-danh-sach {
+    padding: 12px;
+
+    border-radius: 6px;
+
+    background-color: var(--mau-nen-phu);
+}
+
+
+.the-danh-sach h3 {
+    margin-top: 0;
+
+    font-size: 14px;
+}
+
+
+.the-danh-sach ul {
+    margin: 0;
+
+    padding-left: 20px;
+}
+
+
+.the-danh-sach li {
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+
+.hanh-dong-danh-sach {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 0;
+}
+
+
+/* ==============================
+   16. CÀI ĐẶT
+   ============================== */
+
+.tieu-de-cai-dat {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--mau-chu);
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.tieu-de-cai-dat::before {
+    content: "⚙";
+
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: 50%;
+
+    color: var(--mau-chinh);
+
+    font-size: 18px;
+
+    background-color: var(--mau-nen-phu);
+}
+
+
+.khu-vuc-cai-dat {
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.khu-vuc-cai-dat > h2 {
+    color: var(--mau-chu);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.khung-cai-dat {
+    margin: 0;
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+}
+
+
+.khung-cai-dat legend {
+    padding: 0 6px;
+
+    color: var(--mau-chinh);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.dong-cai-dat {
+    margin: 10px 0;
+}
+
+
+.dong-cai-dat > label {
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.dong-cai-dat input[type="text"],
+.dong-cai-dat input[type="email"],
+.dong-cai-dat input[type="tel"],
+.dong-cai-dat input[type="number"],
+.dong-cai-dat input[type="date"],
+.dong-cai-dat input[type="file"],
+.dong-cai-dat select,
+.dong-cai-dat textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 36px;
+
+    padding: 7px 10px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: 4px;
+
+    background-color: var(--mau-nen);
+    color: var(--mau-chu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.dong-cai-dat input:focus-visible,
+.dong-cai-dat select:focus-visible,
+.dong-cai-dat textarea:focus-visible {
+    border-color: var(--mau-chinh);
+
+    outline: 2px solid rgba(66, 107, 31, 0.18);
+    outline-offset: 1px;
+}
+
+
+.dong-cai-dat input[type="file"] {
+    padding: 6px;
+}
+
+
+.dong-thong-bao {
+    margin: 8px 0;
+}
+
+
+.dong-thong-bao > label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.dong-thong-bao input[type="checkbox"] {
+    appearance: none;
+
+    width: 36px;
+    height: 20px;
+
+    flex: 0 0 auto;
+
+    margin: 0;
+
+    border: 1px solid #bcc5bf;
+    border-radius: 999px;
+
+    background-color: #e8ece9;
+
+    background-image: radial-gradient(
+        circle,
+        #ffffff 0 5px,
+        transparent 5.5px
+    );
+
+    background-position: 3px 50%;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+
+    cursor: pointer;
+}
+
+
+.dong-thong-bao input[type="checkbox"]:checked {
+    border-color: var(--mau-chinh);
+
+    background-color: var(--mau-chinh);
+
+    background-position: 20px 50%;
+}
+
+
+.dong-thong-bao input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+.hanh-dong-bao-mat {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+
+.hanh-dong-cai-dat {
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin: 0;
+
+    padding-top: 2px;
+}
+
+
+.hanh-dong-cai-dat .nut {
+    flex: 1 1 140px;
+
+    min-width: 120px;
+}
+
+
+/* ==============================
+   17. TRANG LIÊN HỆ
+   ============================== */
+
+.tieu-de-lien-he {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 14px;
+
+    border-radius: var(--bo-goc);
+
+    color: var(--mau-chinh);
+
+    background-color: #F8FBF6;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.tieu-de-lien-he::before {
+    content: "✉";
+
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    border: 2px solid var(--mau-chinh);
+    border-radius: 8px;
+
+    color: var(--mau-chinh);
+
+    font-size: 20px;
+}
+
+
+.khu-vuc-lien-he {
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.khu-vuc-lien-he > h2 {
+    color: var(--mau-chinh);
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.mo-ta-lien-he {
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.form-lien-he fieldset {
+    margin: 0;
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.form-lien-he legend {
+    padding: 0 6px;
+
+    color: var(--mau-chinh);
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.form-lien-he fieldset p {
+    margin: 10px 0;
+}
+
+
+.form-lien-he label {
+    color: var(--mau-chu);
+
+    font-size: var(--co-chu-nho);
+    font-weight: 600;
+}
+
+
+.form-lien-he input[type="text"],
+.form-lien-he input[type="email"],
+.form-lien-he input[type="tel"],
+.form-lien-he input[type="number"],
+.form-lien-he input[type="date"],
+.form-lien-he select,
+.form-lien-he textarea {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 5px;
+    padding: 9px 10px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: 5px;
+
+    background-color: var(--mau-nen);
+    color: var(--mau-chu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.form-lien-he textarea {
+    min-height: 130px;
+
+    resize: vertical;
+}
+
+
+.form-lien-he input:focus-visible,
+.form-lien-he select:focus-visible,
+.form-lien-he textarea:focus-visible {
+    border-color: var(--mau-chinh);
+
+    outline: 2px solid rgba(66, 107, 31, 0.18);
+    outline-offset: 1px;
+}
+
+
+.form-lien-he input::placeholder,
+.form-lien-he textarea::placeholder {
+    color: var(--mau-chu-phu);
+}
+
+
+.hanh-dong-lien-he {
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    padding-top: 2px;
+}
+
+
+.hanh-dong-lien-he .nut {
+    flex: 1 1 140px;
+
+    min-width: 130px;
+}
+
+
+/* ==============================
+   18. TRANG GIỚI THIỆU
+   ============================== */
+
+.tieu-de-gioi-thieu {
+    padding: 12px 14px;
+
+    border: 1px solid #DDE8D8;
+    border-radius: var(--bo-goc);
+
+    color: var(--mau-chinh);
+
+    background-color: #F8FBF6;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.gioi-thieu-website,
+.muc-tieu-do-an,
+.khu-vuc-thanh-vien {
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.gioi-thieu-website > h2,
+.muc-tieu-do-an > h2,
+.khu-vuc-thanh-vien > h2 {
+    margin: 0 0 12px;
+
+    color: var(--mau-chinh);
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.gioi-thieu-website > h2::before {
+    content: "✦";
+
+    display: inline-block;
+
+    margin-right: 8px;
+
+    color: var(--mau-chinh);
+}
+
+
+.muc-tieu-do-an > h2::before {
+    content: "◎";
+
+    display: inline-block;
+
+    margin-right: 8px;
+
+    color: var(--mau-chinh);
+}
+
+
+.khu-vuc-thanh-vien > h2::before {
+    content: "♧";
+
+    display: inline-block;
+
+    margin-right: 8px;
+
+    color: var(--mau-chinh);
+}
+
+
+.gioi-thieu-website p {
+    margin: 8px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.7;
+}
+
+
+.muc-tieu-do-an ul {
+    margin: 0;
+
+    padding-left: 22px;
+}
+
+
+.muc-tieu-do-an li {
+    margin: 8px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.muc-tieu-do-an li::marker {
+    color: var(--mau-chinh);
+}
+
+
+.the-thanh-vien {
+    padding: 16px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: #F8FBF6;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.the-thanh-vien:hover {
+    border-color: #BFD4B7;
+
+    transform: translateY(-2px);
+}
+
+
+.the-thanh-vien h3 {
+    margin: 0 0 8px;
+
+    color: var(--mau-chinh);
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+}
+
+
+.the-thanh-vien p {
+    margin: 6px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.5;
+}
+
+
+.the-thanh-vien a {
+    display: inline-block;
+
+    margin-top: 4px;
+
+    color: var(--mau-chinh);
+
+    font-size: var(--co-chu-nho);
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+
+.the-thanh-vien a:hover {
+    color: var(--mau-nhan);
+}
+
+
+.the-thanh-vien a:focus-visible {
+    color: var(--mau-nhan);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+/* ==============================
+   19. HỒ SƠ THÀNH VIÊN
+   ============================== */
+
+.tieu-de-ho-so {
+    margin: 0;
+
+    padding: 12px 14px;
+
+    border: 1px solid #DDE8D8;
+    border-radius: var(--bo-goc);
+
+    color: var(--mau-chinh);
+
+    background-color: #F8FBF6;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.thong-tin-chung,
+.du-an-so-thich,
+.ky-nang,
+.thoi-khoa-bieu {
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.thong-tin-chung > h2,
+.du-an-so-thich > h2,
+.ky-nang > h2,
+.thoi-khoa-bieu > h2 {
+    margin: 0 0 14px;
+
+    color: var(--mau-chinh);
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.thong-tin-chung > h2::before {
+    content: "♙";
+
+    margin-right: 8px;
+}
+
+
+.du-an-so-thich > h2::before {
+    content: "✦";
+
+    margin-right: 8px;
+}
+
+
+.ky-nang > h2::before {
+    content: "◆";
+
+    margin-right: 8px;
+}
+
+
+.thoi-khoa-bieu > h2::before {
+    content: "▣";
+
+    margin-right: 8px;
+}
+
+
+.anh-dai-dien {
+    text-align: center;
+}
+
+
+.anh-dai-dien img {
+    display: block;
+
+    width: 150px;
+    height: 150px;
+
+    margin: 0 auto;
+
+    object-fit: cover;
+
+    border: 4px solid #EAF2E7;
+    border-radius: 50%;
+}
+
+
+.anh-dai-dien figcaption {
+    margin-top: 8px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+.thong-tin-ca-nhan {
+    min-width: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.7;
+}
+
+
+.thong-tin-ca-nhan li {
+    margin: 10px 0;
+
+    padding-left: 4px;
+}
+
+
+.thong-tin-ca-nhan strong {
+    color: var(--mau-chu);
+}
+
+
+.du-an-so-thich p {
+    margin: 9px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.7;
+}
+
+
+.danh-sach-ky-nang {
+    margin: 0;
+
+    padding-left: 22px;
+}
+
+
+.danh-sach-ky-nang li {
+    margin: 9px 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.danh-sach-ky-nang li::marker {
+    color: var(--mau-chinh);
+}
+
+
+.thoi-khoa-bieu {
+    overflow-x: auto;
+}
+
+
+.thoi-khoa-bieu table {
+    width: 100%;
+    min-width: 650px;
+
+    border-collapse: collapse;
+
+    font-size: var(--co-chu-nho);
+}
+
+
+.thoi-khoa-bieu caption {
+    margin-bottom: 10px;
+
+    color: var(--mau-chu-phu);
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    text-align: left;
+}
+
+
+.thoi-khoa-bieu th,
+.thoi-khoa-bieu td {
+    padding: 10px 12px;
+
+    border: 1px solid var(--mau-vien);
+
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+.thoi-khoa-bieu thead th {
+    color: #FFFFFF;
+
+    background-color: var(--mau-chinh);
+
+    font-weight: 700;
+}
+
+
+.thoi-khoa-bieu tbody th {
+    color: var(--mau-chu);
+
+    background-color: #F8FBF6;
+
+    font-weight: 700;
+}
+
+
+.thoi-khoa-bieu tbody td {
+    color: var(--mau-chu-phu);
+
+    background-color: var(--mau-nen);
+}
+
+
+.thoi-khoa-bieu tbody tr:hover th,
+.thoi-khoa-bieu tbody tr:hover td {
+    background-color: #F8FBF6;
+}
+
+
+.quay-lai {
+    margin: 0;
+
+    text-align: left;
+}
+
+
+.quay-lai a {
+    display: inline-block;
+
+    padding: 9px 14px;
+
+    border: 1px solid var(--mau-chinh);
+    border-radius: var(--bo-goc);
+
+    color: var(--mau-chinh);
+
+    background-color: var(--mau-nen);
+
+    font-size: var(--co-chu-nho);
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.quay-lai a:hover {
+    color: #FFFFFF;
+
+    background-color: var(--mau-chinh);
+}
+
+
+.quay-lai a:focus-visible {
+    color: #FFFFFF;
+
+    background-color: var(--mau-chinh);
+
+    outline: 2px solid var(--mau-chinh);
+    outline-offset: 2px;
+}
+
+
+/* ==============================
+   20. RESPONSIVE - TABLET
+   ============================== */
+
+@media (min-width: 768px) {
+
+    /* ==========================
+       Header
+       ========================== */
+
+    .dau-trang {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: var(--khoang-cach);
+
+        padding: 16px 20px;
+    }
+
+
+    .thuong-hieu {
+        text-align: left;
+    }
+
+
+    .thuong-hieu::before {
+        font-size: 28px;
+    }
+
+
+    .o-tim-kiem {
+        flex: 1;
+
+        width: auto;
+        max-width: 320px;
+    }
+
+
+    .o-tim-kiem .nut {
+        display: inline-flex;
+    }
+
+
+    .tai-khoan {
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+
+    /* ==========================
+       Thanh điều hướng
+       ========================== */
+
+    .thanh-dieu-huong {
+        padding: 20px 10px;
+
+        border-right: 1px solid var(--mau-vien);
+        border-bottom: none;
+    }
+
+
+    .thanh-dieu-huong > .menu {
+        flex-direction: column;
+    }
+
+
+    .thanh-dieu-huong > .menu a {
+        padding: 10px 8px;
+
+        font-size: 14px;
+    }
+
+
+    /* ==========================
+       Footer
+       ========================== */
+
+    .trang > footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 16px 20px;
+
+        text-align: left;
+    }
+
+
+    .trang > footer .menu {
+        justify-content: flex-end;
+    }
+
+
+    /* ==========================
+       Chia sẻ
+       ========================== */
+
+    .chia-se-cong-thuc {
+        padding: 16px;
+    }
+
+
+    /* ==========================
+       Bài đăng
+       ========================== */
+
+    .the-bai-dang {
+        padding: 16px;
+    }
+
+
+    /* ==========================
+       Khám phá
+       ========================== */
+
+    .tieu-de-kham-pha {
+        font-size: 28px;
+    }
+
+
+    .the-danh-muc > summary {
+        min-height: 90px;
+    }
+
+
+    .the-danh-muc > summary img {
+        flex-basis: 90px;
+
+        width: 90px;
+        height: 90px;
+    }
+
+
+    .the-danh-muc > summary span {
+        padding: 12px 16px;
+    }
+
+
+    /* ==========================
+       Chi tiết
+       ========================== */
+
+    .tieu-de-mon-an {
+        font-size: 26px;
+    }
+
+
+    .thong-tin-bai-chia-se,
+    .hinh-anh-mon-an,
+    .thong-tin-cong-thuc,
+    .nguyen-lieu,
+    .cach-thuc-hien,
+    .video-huong-dan,
+    .binh-luan {
+        padding: 14px;
+    }
+
+
+    /* ==========================
+       Gợi ý món ăn
+       ========================== */
+
+    .tu-lanh-cua-toi {
+        padding: 16px;
+    }
+
+
+    .the-goi-y img {
+        height: 90px;
+    }
+
+
+    /* ==========================
+       Cài đặt
+       ========================== */
+
+    .tieu-de-cai-dat {
+        font-size: 26px;
+    }
+
+
+    .tieu-de-cai-dat::before {
+        width: 36px;
+        height: 36px;
+
+        font-size: 20px;
+    }
+
+
+    .khu-vuc-cai-dat {
+        padding: 16px;
+    }
+
+
+    .khung-cai-dat {
+        padding: 14px;
+    }
+
+
+    /* ==========================
+       Liên hệ
+       ========================== */
+
+    .tieu-de-lien-he {
+        padding: 14px 18px;
+
+        font-size: 26px;
+    }
+
+
+    .tieu-de-lien-he::before {
+        width: 42px;
+        height: 42px;
+
+        font-size: 24px;
+    }
+
+
+    .khu-vuc-lien-he {
+        padding: 18px;
+    }
+
+
+    .form-lien-he fieldset {
+        padding: 16px;
+    }
+
+
+    .form-lien-he textarea {
+        min-height: 150px;
+    }
+
+
+    /* ==========================
+       Giới thiệu
+       ========================== */
+
+    .tieu-de-gioi-thieu {
+        padding: 14px 18px;
+
+        font-size: 26px;
+    }
+
+
+    .gioi-thieu-website,
+    .muc-tieu-do-an,
+    .khu-vuc-thanh-vien {
+        padding: 18px;
+    }
+
+
+    .gioi-thieu-website > h2,
+    .muc-tieu-do-an > h2,
+    .khu-vuc-thanh-vien > h2 {
+        font-size: 20px;
+    }
+
+
+    /* ==========================
+       Hồ sơ
+       ========================== */
+
+    .tieu-de-ho-so {
+        padding: 14px 18px;
+
+        font-size: 26px;
+    }
+
+
+    .thong-tin-chung,
+    .du-an-so-thich,
+    .ky-nang,
+    .thoi-khoa-bieu {
+        padding: 18px;
+    }
+
+
+    .thong-tin-chung > h2,
+    .du-an-so-thich > h2,
+    .ky-nang > h2,
+    .thoi-khoa-bieu > h2 {
+        font-size: 20px;
+    }
+
+
+    .anh-dai-dien img {
+        width: 180px;
+        height: 180px;
+    }
+
+
+    .quay-lai {
+        text-align: right;
+    }
+
+}
+
+
+/* ==============================
+   21. RESPONSIVE - DESKTOP
+   ============================== */
+
+@media (min-width: 992px) {
+
+    /* ==========================
+       Header
+       ========================== */
+
+    .dau-trang {
+        padding: 20px 28px;
+    }
+
+
+    .o-tim-kiem {
+        max-width: 420px;
+    }
+
+
+    /* ==========================
+       Thanh điều hướng
+       ========================== */
+
+    .thanh-dieu-huong {
+        padding: 28px 16px;
+    }
+
+
+    .thanh-dieu-huong > .menu {
+        gap: 8px;
+    }
+
+
+    .thanh-dieu-huong > .menu a {
+        padding: 11px 14px;
+
+        font-size: 15px;
+    }
+
+
+    /* ==========================
+       Footer
+       ========================== */
+
+    .trang > footer {
+        padding: 16px 28px;
+    }
+
+
+    /* ==========================
+       Gợi ý món ăn
+       ========================== */
+
+    .the-goi-y img {
+        height: 105px;
+    }
+
 }
