@@ -22,15 +22,22 @@
 
 <body class="trang">
 
+  <!-- ==============================
+       HEADER
+       ============================== -->
+
   <header class="dau-trang">
 
     <p class="thuong-hieu">
       Cook with me - Khơi nguồn cảm hứng vào bếp
     </p>
 
+
     <form class="o-tim-kiem" action="#" method="get">
 
-      <label for="search">Tìm kiếm</label>
+      <label for="search">
+        Tìm kiếm
+      </label>
 
       <input
         type="search"
@@ -45,7 +52,8 @@
 
     </form>
 
-    <p class="tai-khoan">
+
+    <div class="tai-khoan">
 
       <button class="nut" type="button">
         Đăng ký
@@ -57,10 +65,14 @@
         Đăng nhập
       </button>
 
-    </p>
+    </div>
 
   </header>
 
+
+  <!-- ==============================
+       NAVIGATION
+       ============================== -->
 
   <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
 
@@ -113,6 +125,10 @@
   </nav>
 
 
+  <!-- ==============================
+       MAIN
+       ============================== -->
+
   <main class="lien-he-trang">
 
     <h1 class="tieu-de-lien-he">
@@ -132,8 +148,12 @@
       </p>
 
 
-      <form class="form-lien-he" action="#" method="post">
+      <!-- ==============================
+           FORM LIÊN HỆ
+           ============================== -->
+<form class="form-lien-he" action="#" method="post">
 
+        <!-- THÔNG TIN NGƯỜI GỬI -->
         <fieldset class="thong-tin-nguoi-gui">
 
           <legend>
@@ -141,7 +161,7 @@
           </legend>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="full-name">
               Họ và tên:
@@ -153,12 +173,12 @@
               name="full_name"
               required
               placeholder="Nhập họ và tên"
-                  >
+            >
 
-          </p>
+          </div>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="email">
               Email:
@@ -172,10 +192,10 @@
               placeholder="example@email.com"
             >
 
-          </p>
+          </div>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="phone">
               Số điện thoại:
@@ -190,11 +210,12 @@
               placeholder="0123456789"
             >
 
-          </p>
+          </div>
 
         </fieldset>
 
 
+        <!-- THÔNG TIN CÔNG THỨC -->
         <fieldset class="thong-tin-cong-thuc">
 
           <legend>
@@ -202,7 +223,7 @@
           </legend>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="dish-name">
               Tên món ăn:
@@ -216,10 +237,10 @@
               placeholder="Ví dụ: Mì Quảng tôm thịt"
             >
 
-          </p>
+          </div>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="servings">
               Số người ăn:
@@ -235,10 +256,10 @@
               placeholder="Nhập số người"
             >
 
-          </p>
+          </div>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="share-date">
               Ngày dự kiến chia sẻ:
@@ -251,10 +272,10 @@
               required
             >
 
-          </p>
+          </div>
 
 
-          <p>
+          <div class="truong-form">
 
             <label for="category">
               Danh mục món ăn:
@@ -277,8 +298,7 @@
               <option value="mon-canh">
                 Món canh
               </option>
-
-              <option value="mon-an-vat">
+<option value="mon-an-vat">
                 Món ăn vặt
               </option>
 
@@ -307,9 +327,13 @@
               </option>
 
             </select>
-     <p>
-          </p>
-              <label for="recipe-content">
+
+          </div>
+
+
+          <div class="truong-form">
+
+            <label for="recipe-content">
               Nội dung công thức:
             </label>
 
@@ -322,12 +346,13 @@
               placeholder="Nhập nguyên liệu và cách thực hiện món ăn..."
             ></textarea>
 
-          </p>
+          </div>
 
         </fieldset>
 
 
-        <p class="hanh-dong-lien-he">
+        <!-- NÚT THAO TÁC -->
+        <div class="hanh-dong-lien-he">
 
           <button
             class="nut nut-chinh"
@@ -343,7 +368,7 @@
             Xóa nội dung
           </button>
 
-        </p>
+        </div>
 
       </form>
 
@@ -352,11 +377,16 @@
   </main>
 
 
+  <!-- ==============================
+       FOOTER
+       ============================== -->
+
   <footer>
 
     <p>
       &copy; 2026 Cook with me - Nhóm 04
     </p>
+
 
     <nav aria-label="Điều hướng phụ">
 
@@ -383,5 +413,3 @@
 </body>
 
 </html>
-
-          <p>
