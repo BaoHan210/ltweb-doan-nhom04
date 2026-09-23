@@ -3,20 +3,46 @@
    Các lớp tiện ích dùng lại
    ============================== */
 
+
+/* ==============================
+   1. KHUNG NỘI DUNG
+   ============================== */
+
+/*
+   Giới hạn chiều rộng nội dung và
+   căn giữa trong khu vực hiển thị.
+*/
 .bao {
     width: min(100% - 32px, var(--do-rong-toi-da));
     margin: 0 auto;
 }
 
+
+/* ==============================
+   2. HIỂN THỊ THEO THIẾT BỊ
+   ============================== */
+
+/*
+   Nội dung chỉ hiển thị trên
+   màn hình máy tính.
+*/
 .chi-hien-tren-may-tinh {
     display: none;
 }
 
+
+/*
+   Nội dung chỉ hiển thị trên
+   điện thoại.
+*/
 .chi-hien-tren-dien-thoai {
     display: block;
 }
 
+
+/* Máy tính bảng và máy tính */
 @media (min-width: 768px) {
+
     .chi-hien-tren-may-tinh {
         display: block;
     }
@@ -24,4 +50,76 @@
     .chi-hien-tren-dien-thoai {
         display: none;
     }
+
+}
+
+
+/* ==============================
+   3. ẨN NỘI DUNG
+   ============================== */
+
+/*
+   Ẩn nội dung trực quan nhưng
+   vẫn giữ phần tử trong tài liệu.
+*/
+.an-truc-quan {
+    visibility: hidden;
+}
+
+
+/* ==============================
+   4. HIỂN THỊ NỘI DUNG DÀI
+   ============================== */
+
+/*
+   Cho phép nội dung dài xuống dòng
+   và không gây tràn ngang.
+*/
+.cho-xuong-dong {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* ==============================
+   5. CUỘN NGANG KHI CẦN
+   ============================== */
+
+/*
+   Dùng cho nội dung có chiều rộng lớn
+   như bảng trên màn hình nhỏ.
+*/
+.cho-cuon-ngang {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+/* ==============================
+   6. CĂN CHỈNH NỘI DUNG
+   ============================== */
+
+.can-giua {
+    text-align: center;
+}
+
+.can-trai {
+    text-align: left;
+}
+
+.can-phai {
+    text-align: right;
+}
+
+
+/* ==============================
+   7. KHOẢNG CÁCH
+   ============================== */
+
+.khong-margin {
+    margin: 0;
+}
+
+.khong-padding {
+    padding: 0;
 }
