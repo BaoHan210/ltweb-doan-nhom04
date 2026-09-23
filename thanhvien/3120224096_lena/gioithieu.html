@@ -2,7 +2,6 @@
 <html lang="vi">
 
 <head>
-<<<<<<< HEAD:thanhvien/lena/gioithieu.html
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -12,21 +11,29 @@
   >
 
   <title>Thông tin cá nhân - Lê Thị A Na | Cook with me</title>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Giới thiệu cá nhân của Lê Thị A Na, thành viên nhóm thực hiện website Cook with Me.">
-    <title>Giới thiệu cá nhân | Lê Thị A Na</title>
-    <link rel="stylesheet" href="style.css">
->>>>>>> fa5c480 (Hoan thien trang ca nhan Le Thi A Na):thanhvien/3120224096_lena/gioithieu.html
+
+  <!-- CSS chung của nhóm -->
+  <link rel="stylesheet" href="../../css/01-bien.css">
+  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
+  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
+  <link rel="stylesheet" href="../../css/05-tien-ich.css">
+
+  <!-- CSS dùng chung cho các trang cá nhân -->
+  <link rel="stylesheet" href="../../css/06-trang-ca-nhan.css">
 </head>
 
-<body>
+<body class="trang">
 
-  <header>
-    <p>Cook with me - Khơi nguồn cảm hứng vào bếp</p>
+  <!-- HEADER -->
+  <header class="dau-trang">
 
-    <form action="#" method="get">
+    <p class="thuong-hieu">
+      Cook with me - Khơi nguồn cảm hứng vào bếp
+    </p>
+
+    <form class="o-tim-kiem" action="#" method="get">
+
       <label for="search">Tìm kiếm</label>
 
       <input
@@ -36,55 +43,98 @@
         placeholder="Tìm kiếm món ăn, công thức..."
       >
 
-      <button type="submit">Tìm kiếm</button>
+      <button class="nut" type="submit">
+        Tìm kiếm
+      </button>
+
     </form>
 
-    <p>
-      <button type="button">Đăng ký</button> /
-      <button type="button">Đăng nhập</button>
+    <p class="tai-khoan">
+
+      <button class="nut" type="button">
+        Đăng ký
+      </button>
+
+      /
+
+      <button class="nut" type="button">
+        Đăng nhập
+      </button>
+
     </p>
+
   </header>
 
-  <nav aria-label="Điều hướng chính">
-    <ul>
+
+  <!-- ĐIỀU HƯỚNG CHÍNH -->
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+    <ul class="menu">
+
       <li>
-        <a href="../../index.html">Trang chủ</a>
+        <a href="../../index.html">
+          Trang chủ
+        </a>
       </li>
 
       <li>
-        <a href="../../danh-sach.html">Khám phá</a>
+        <a href="../../danh-sach.html">
+          Khám phá
+        </a>
       </li>
 
       <li>
-        <a href="../../chi-tiet.html">Chi tiết công thức</a>
+        <a href="../../chi-tiet.html">
+          Chi tiết công thức
+        </a>
       </li>
 
       <li>
-        <a href="../../goi-y-mon-an.html">Gợi ý món ăn</a>
+        <a href="../../goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
       </li>
 
       <li>
-        <a href="../../cai-dat.html">Cài đặt</a>
+        <a href="../../cai-dat.html">
+          Cài đặt
+        </a>
       </li>
 
       <li>
-        <a href="../../gioi-thieu.html">Giới thiệu</a>
+        <a class="dang-chon" href="../../gioi-thieu.html">
+          Giới thiệu
+        </a>
       </li>
 
       <li>
-        <a href="../../lien-he.html">Liên hệ</a>
+        <a href="../../lien-he.html">
+          Liên hệ
+        </a>
       </li>
+
     </ul>
+
   </nav>
 
-  <main>
 
-    <h1>Hồ sơ thành viên: Lê Thị A Na</h1>
+  <!-- NỘI DUNG CHÍNH -->
+  <main class="ho-so-trang">
 
-    <section>
-      <h2>Thông tin chung</h2>
+    <h1 class="tieu-de-ho-so">
+      Hồ sơ thành viên: Lê Thị A Na
+    </h1>
 
-      <figure>
+
+    <!-- THÔNG TIN CHUNG -->
+    <section class="thong-tin-chung">
+
+      <h2>
+        Thông tin chung
+      </h2>
+
+      <figure class="anh-dai-dien">
+
         <img
           src="../../images/avatar-lena.jpg"
           alt="Ảnh chân dung thành viên Lê Thị A Na"
@@ -93,109 +143,251 @@
         >
 
         <figcaption>
-          Ảnh chân dung thành viên Lê Thị A Na - Nhóm 04.
+Ảnh chân dung thành viên Lê Thị A Na - Nhóm 04.
         </figcaption>
+
       </figure>
 
-      <p>
-        Xin chào! Tôi là Lê Thị A Na, thành viên của Nhóm 04.
-        Trong dự án này, tôi cùng các thành viên xây dựng website
-        Cook with me - mạng xã hội chia sẻ công thức, hình ảnh
-        và trải nghiệm nấu ăn dành cho người đam mê ẩm thực.
-      </p>
-    </section>
 
-    <section>
-      <h2>Kỹ năng</h2>
+      <ul class="thong-tin-ca-nhan">
 
-      <ul>
-        <li>HTML5 và xây dựng trang web theo cấu trúc ngữ nghĩa</li>
-        <li>Sử dụng Git và GitHub</li>
-        <li>Kiểm tra website bằng W3C Validator</li>
-        <li>Kiểm tra Accessibility và SEO bằng Google Lighthouse</li>
-        <li>Làm việc nhóm và thiết kế giao diện web cơ bản</li>
+        <li>
+          <strong>Họ và tên:</strong>
+          Lê Thị A Na
+        </li>
+
+        <li>
+          <strong>Vai trò:</strong>
+          Thành viên
+        </li>
+
+        <li>
+          <strong>Tham gia dự án:</strong>
+          Cùng các thành viên xây dựng website Cook with me,
+          mạng xã hội chia sẻ công thức, hình ảnh và trải nghiệm nấu ăn.
+        </li>
+
       </ul>
+
     </section>
 
-    <article>
-      <h2>Dự án và sở thích</h2>
+
+    <!-- DỰ ÁN VÀ SỞ THÍCH -->
+    <article class="du-an-so-thich">
+
+      <h2>
+        Dự án và sở thích
+      </h2>
 
       <p>
-        <strong>Dự án Cook with me:</strong>
-        Cùng nhóm xây dựng website chia sẻ công thức ẩm thực,
-        hình ảnh và trải nghiệm nấu ăn, giúp người dùng khám phá
-món ăn và kết nối với cộng đồng yêu thích ẩm thực.
+        Lê Thị A Na cùng các thành viên xây dựng website Cook with me,
+        mạng xã hội chia sẻ công thức, hình ảnh và trải nghiệm nấu ăn
+        dành cho người đam mê ẩm thực.
       </p>
 
       <p>
-        <strong>Sở thích cá nhân:</strong>
-        Nghiên cứu công nghệ web, tìm hiểu các công thức nấu ăn mới
-        và khám phá ẩm thực.
+        Dự án hướng đến việc giúp người dùng khám phá món ăn,
+        chia sẻ công thức và kết nối với cộng đồng yêu thích ẩm thực.
       </p>
+
+      <p>
+        Sở thích cá nhân gồm nghiên cứu công nghệ web,
+        tìm hiểu các công thức nấu ăn mới và khám phá ẩm thực.
+      </p>
+
     </article>
 
-    <section>
-      <h2>Thời khóa biểu tuần</h2>
 
-      <table>
-        <caption>
-          Thời khóa biểu học tập và nghiên cứu đồ án trong tuần
-        </caption>
+    <!-- KỸ NĂNG -->
+    <section class="ky-nang">
 
-        <thead>
-          <tr>
-            <th scope="col">Thời gian</th>
-            <th scope="col">Thứ Hai</th>
-            <th scope="col">Thứ Tư</th>
-            <th scope="col">Thứ Sáu</th>
-          </tr>
-        </thead>
+      <h2>
+        Kỹ năng
+      </h2>
 
-        <tbody>
-          <tr>
-            <th scope="row">Buổi sáng</th>
-            <td>Lập trình Web</td>
-            <td>Tự học HTML5</td>
-            <td>Nghiên cứu cơ sở dữ liệu</td>
-          </tr>
+      <ul class="danh-sach-ky-nang">
 
-          <tr>
-            <th scope="row">Buổi chiều</th>
-            <td>Thực hành Web</td>
-            <td>Họp tiến độ nhóm</td>
-            <td>Thực hành Web</td>
-          </tr>
+        <li>
+          HTML5 và xây dựng trang web theo cấu trúc ngữ nghĩa
+        </li>
 
-          <tr>
-            <th scope="row">Buổi tối</th>
-            <td>Ôn tập</td>
-            <td>Kiểm tra W3C</td>
-            <td>Kiểm tra Lighthouse</td>
-          </tr>
-        </tbody>
-      </table>
+        <li>
+          Sử dụng Git và GitHub
+        </li>
+
+        <li>
+          Kiểm tra website bằng W3C Validator
+        </li>
+
+        <li>
+          Kiểm tra Accessibility và SEO bằng Google Lighthouse
+        </li>
+
+        <li>
+          Làm việc nhóm và thiết kế giao diện web cơ bản
+        </li>
+
+      </ul>
+
     </section>
 
-    <p>
-      <a href="../../index.html">Quay lại trang chủ</a>
+
+    <!-- THỜI KHÓA BIỂU -->
+    <section class="thoi-khoa-bieu">
+
+      <h2>
+        Thời khóa biểu tuần
+      </h2>
+
+      <p>
+        Bảng thời khóa biểu có thể cuộn ngang trên màn hình nhỏ.
+      </p>
+
+      <div class="khung-bang">
+
+        <table>
+
+          <caption>
+            Thời khóa biểu học tập và nghiên cứu đồ án trong tuần
+          </caption>
+
+          <thead>
+
+            <tr>
+
+              <th scope="col">
+                Thời gian
+              </th>
+
+              <th scope="col">
+                Thứ Hai
+              </th>
+
+              <th scope="col">
+                Thứ Tư
+              </th>
+
+              <th scope="col">
+                Thứ Sáu
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr>
+
+              <th scope="row">
+                Buổi sáng
+              </th>
+
+              <td>
+                Lập trình Web
+              </td>
+
+              <td>
+                Tự học HTML5
+              </td>
+
+              <td>
+Nghiên cứu cơ sở dữ liệu
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <th scope="row">
+                Buổi chiều
+              </th>
+
+              <td>
+                Thực hành Web
+              </td>
+
+              <td>
+                Họp tiến độ nhóm
+              </td>
+
+              <td>
+                Thực hành Web
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <th scope="row">
+                Buổi tối
+              </th>
+
+              <td>
+                Ôn tập
+              </td>
+
+              <td>
+                Kiểm tra W3C
+              </td>
+
+              <td>
+                Kiểm tra Lighthouse
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUAY LẠI -->
+    <p class="quay-lai">
+
+      <a href="../../index.html">
+        Quay lại trang chủ
+      </a>
+
     </p>
 
   </main>
 
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
 
     <nav aria-label="Điều hướng phụ">
-      <ul>
+
+      <ul class="menu">
+
         <li>
-          <a href="../../gioi-thieu.html">Giới thiệu</a>
+          <a href="../../gioi-thieu.html">
+            Giới thiệu
+          </a>
         </li>
 
         <li>
-          <a href="../../lien-he.html">Liên hệ</a>
+          <a href="../../lien-he.html">
+            Liên hệ
+          </a>
         </li>
+
       </ul>
+
     </nav>
+
   </footer>
 
 </body>
