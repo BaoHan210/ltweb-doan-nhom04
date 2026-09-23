@@ -1,0 +1,56 @@
+/* ==========================================
+   bootstrap-custom.css
+   Tùy biến Bootstrap 5
+   ========================================== */
+
+:root {
+    --bs-primary: #426B1F;
+
+    --bs-link-color: #426B1F;
+    --bs-link-color-rgb: 66, 107, 31;
+
+    --bs-link-hover-color: #C43D47;
+    --bs-link-hover-color-rgb: 196, 61, 71;
+
+    --bs-body-color: #222222;
+    --bs-body-bg: #FFFFFF;
+}
+
+.btn-primary {
+    --bs-btn-bg: #426B1F;
+    --bs-btn-border-color: #426B1F;
+    --bs-btn-hover-bg: #355619;
+    --bs-btn-hover-border-color: #355619;
+    --bs-btn-active-bg: #2E4B15;
+    --bs-btn-active-border-color: #2E4B15;
+}
+
+.navbar-brand {
+    color: var(--bs-primary);
+}
+
+.navbar-brand:hover {
+    color: var(--bs-link-hover-color);
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.the-danh-muc summary {
+    cursor: pointer;
+}
+
+.the-danh-muc summary::-webkit-details-marker {
+    display: none;
+}
+
+.the-danh-muc summary::marker {
+    display: none;
+}
+.mon-an-img {
+    width: 70px;
+    height: 50px;
+    object-fit: cover;
+}
