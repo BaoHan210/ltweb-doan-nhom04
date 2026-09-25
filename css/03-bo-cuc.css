@@ -65,10 +65,11 @@
 
     grid-template-areas:
         "tieude"
-        "chia-se"
+        "hero"
+        "gioi-thieu"
         "bang-tin"
-        "goi-y"
-        "noi-bat";
+        "noi-bat"
+        "goi-y";
 
     gap: 16px;
 
@@ -86,9 +87,9 @@
 }
 
 
-/* Chia sẻ công thức */
-.noi-dung-trang > .chia-se-cong-thuc {
-    grid-area: chia-se;
+/* Hero */
+.noi-dung-trang > .hero {
+    grid-area: hero;
 
     min-width: 0;
 
@@ -96,11 +97,21 @@
 }
 
 
-/* Bảng tin trên mobile */
-.noi-dung-trang > .bang-tin {
-    display: block;
+/* Ba thẻ giới thiệu */
+.noi-dung-trang > .the-gioi-thieu {
+    grid-area: gioi-thieu;
 
+    min-width: 0;
+
+    margin: 0;
+}
+
+
+/* Bảng tin */
+.noi-dung-trang > .bang-tin {
     grid-area: bang-tin;
+
+    display: block;
 
     min-width: 0;
 }
@@ -144,6 +155,7 @@
 }
 
 
+/* Tiêu đề món ăn nổi bật */
 .mon-noi-bat > h2 {
     flex: 0 0 100%;
 
@@ -151,6 +163,7 @@
 }
 
 
+/* Thẻ món ăn */
 .mon-noi-bat > .the-mon-an {
     flex: 1 1 220px;
 
@@ -164,10 +177,14 @@
 
     display: grid;
 
-    grid-template-columns:
-        minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
 
-    gap: 12px;
+    grid-auto-rows: max-content;
+
+    align-content: start;
+    align-self: start;
+
+    gap: 6px;
 
     width: 100%;
 
@@ -175,6 +192,7 @@
 }
 
 
+/* Tiêu đề gợi ý theo dõi */
 .goi-y-theo-doi > h2 {
     grid-column: 1 / -1;
 
@@ -277,6 +295,7 @@
     gap: 12px;
 
     margin: 12px 0 0;
+
     padding: 12px;
 
     min-width: 0;
@@ -309,6 +328,7 @@
 /* Hướng dẫn */
 .cach-kham-pha {
     margin-top: 20px;
+
     padding: 16px;
 
     min-width: 0;
@@ -376,42 +396,49 @@
 /* Các khu vực */
 .chi-tiet-mon-an > .tieu-de-mon-an {
     grid-area: tieude;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .thong-tin-bai-chia-se {
     grid-area: chia;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .hinh-anh-mon-an {
     grid-area: anh;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .thong-tin-cong-thuc {
     grid-area: congthuc;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .nguyen-lieu {
     grid-area: nguyen;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .cach-thuc-hien {
     grid-area: cach;
+
     min-width: 0;
 }
 
 
 .chi-tiet-mon-an > .video-huong-dan {
     grid-area: video;
+
     min-width: 0;
 }
 
@@ -743,6 +770,7 @@
     gap: 12px;
 
     margin: 0;
+
     padding: 0;
 
     list-style: none;
@@ -883,24 +911,20 @@
        ========================== */
 
     .noi-dung-trang {
+        /*
+           Main của trang chủ nằm ở phần nội dung
+           bên phải của thanh điều hướng.
+        */
         grid-template-columns:
             minmax(0, 1fr)
             210px;
 
-        grid-template-rows:
-            auto
-            auto
-            auto
-            auto
-            auto;
-
         grid-template-areas:
-            "tieude    tieude"
-            "chia-se   chia-se"
-            "bang-tieu goi"
-            "bai1      goi"
-            "bai2      goi"
-            "mon       mon";
+            "tieude     tieude"
+            "hero       hero"
+            "gioi-thieu gioi-thieu"
+            "bang-tin   noi-bat"
+            "bang-tin   goi-y";
 
         column-gap: 16px;
         row-gap: 14px;
@@ -909,45 +933,117 @@
     }
 
 
-    /*
-       Từ tablet trở lên,
-       bài đăng tham gia trực tiếp vào Grid cha.
-    */
+    /* ==========================
+       Trang chủ - Hero
+       ========================== */
+
+    .noi-dung-trang > .hero {
+        grid-area: hero;
+    }
+
+
+    /* ==========================
+       Trang chủ - Ba thẻ giới thiệu
+       ========================== */
+
+    .noi-dung-trang > .the-gioi-thieu {
+        grid-area: gioi-thieu;
+    }
+
+
+    /* ==========================
+       Trang chủ - Bảng tin
+       ========================== */
+
     .noi-dung-trang > .bang-tin {
-        display: contents;
+        grid-area: bang-tin;
     }
 
 
     .bang-tin > h2 {
-        grid-area: bang-tieu;
+        margin: 0 0 12px;
+    }
+
+
+    .bang-tin > .the-bai-dang {
+        min-width: 0;
+
+        margin-bottom: 16px;
+    }
+
+
+    .bang-tin > .the-bai-dang:last-of-type {
+        margin-bottom: 0;
+    }
+
+
+    /* ==========================
+       Trang chủ - Món ăn nổi bật
+       ========================== */
+
+    .noi-dung-trang > .mon-noi-bat {
+        grid-area: noi-bat;
+
+        display: flex;
+
+        flex-direction: column;
+
+        flex-wrap: nowrap;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+        width: 100%;
 
         min-width: 0;
+    }
+
+
+    .mon-noi-bat > h2 {
+        flex: none;
 
         margin: 0;
     }
 
 
-    .bang-tin > .the-bai-dang:nth-of-type(1) {
-        grid-area: bai1;
+    .mon-noi-bat > .the-mon-an {
+        flex: none;
+
+        width: 100%;
 
         min-width: 0;
     }
 
 
-    .bang-tin > .the-bai-dang:nth-of-type(2) {
-        grid-area: bai2;
-
-        min-width: 0;
-    }
-
-
-    .noi-dung-trang > .mon-noi-bat {
-        grid-area: mon;
-    }
-
+    /* ==========================
+       Trang chủ - Gợi ý theo dõi
+       ========================== */
 
     .noi-dung-trang > .goi-y-theo-doi {
-        grid-area: goi;
+        grid-area: goi-y;
+
+        display: grid;
+
+        grid-template-columns: minmax(0, 1fr);
+
+        grid-auto-rows: max-content;
+
+        align-content: start;
+        align-self: start;
+
+        gap: 6px;
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .goi-y-theo-doi > h2 {
+        grid-column: 1 / -1;
+
+        margin: 0;
     }
 
 
@@ -1117,12 +1213,14 @@
 
     .thong-tin-nguoi-gui {
         grid-column: 1;
+
         grid-row: 1;
     }
 
 
     .thong-tin-cong-thuc {
         grid-column: 2;
+
         grid-row: 1;
     }
 
@@ -1207,6 +1305,11 @@
         grid-template-columns:
             200px
             minmax(0, 1fr);
+
+        grid-template-areas:
+            "dau dau"
+            "menu chinh"
+            "chan chan";
     }
 
 
@@ -1219,10 +1322,69 @@
             minmax(0, 1fr)
             280px;
 
+        grid-template-areas:
+            "tieude     tieude"
+            "hero       hero"
+            "gioi-thieu gioi-thieu"
+            "bang-tin   noi-bat"
+            "bang-tin   goi-y";
+
         column-gap: 18px;
+
         row-gap: 14px;
 
         padding: 16px;
+    }
+
+
+    /* ==========================
+       Hero
+       ========================== */
+
+    .noi-dung-trang > .hero {
+        grid-area: hero;
+    }
+
+
+    /* ==========================
+       Ba thẻ giới thiệu
+       ========================== */
+
+    .noi-dung-trang > .the-gioi-thieu {
+        grid-area: gioi-thieu;
+    }
+
+
+    /* ==========================
+       Món ăn nổi bật
+       ========================== */
+
+    .noi-dung-trang > .mon-noi-bat {
+        display: flex;
+
+        flex-direction: column;
+
+        flex-wrap: nowrap;
+
+        gap: 12px;
+    }
+
+
+    .mon-noi-bat > .the-mon-an {
+        flex: none;
+
+        width: 100%;
+    }
+
+
+    /* ==========================
+       Gợi ý theo dõi
+       ========================== */
+
+    .noi-dung-trang > .goi-y-theo-doi {
+        grid-area: goi-y;
+
+        align-self: start;
     }
 
 

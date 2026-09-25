@@ -231,6 +231,7 @@
     outline-offset: 2px;
 }
 
+
 .thanh-dieu-huong > .menu a:active,
 .trang > footer .menu a:active,
 .mon-noi-bat .the-mon-an a:active,
@@ -354,10 +355,13 @@
     opacity: 0.9;
 }
 
+
 .nut:active {
     opacity: 0.8;
+
     transform: translateY(1px);
 }
+
 
 .nut:focus-visible {
     outline: 2px solid var(--mau-chinh);
@@ -465,7 +469,130 @@
 
 
 /* ==============================
-   9. CHIA SẺ CÔNG THỨC
+   9. HERO TRANG CHỦ
+   ============================== */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    padding: 20px 16px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen-phu);
+
+    text-align: center;
+}
+
+
+.hero h2 {
+    margin: 0;
+
+    color: var(--mau-chinh);
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.hero p {
+    max-width: 65ch;
+
+    margin: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.hero .nut {
+    margin-top: 4px;
+}
+
+
+/* ==============================
+   10. BA THẺ GIỚI THIỆU
+   ============================== */
+
+.the-gioi-thieu {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: var(--khoang-cach);
+
+    min-width: 0;
+}
+
+
+.the-gioi-thieu > h2 {
+    flex: 0 0 100%;
+
+    margin: 0;
+
+    color: var(--mau-chu);
+
+    font-size: 20px;
+}
+
+
+.the-gioi-thieu-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    flex: 1 1 250px;
+
+    min-width: 0;
+
+    padding: 16px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.the-gioi-thieu-item h3 {
+    margin: 0;
+
+    color: var(--mau-chinh);
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.the-gioi-thieu-item p {
+    margin: 0;
+
+    color: var(--mau-chu-phu);
+
+    font-size: var(--co-chu-nho);
+    line-height: 1.6;
+}
+
+
+.the-gioi-thieu-item .nut {
+    align-self: flex-start;
+
+    margin-top: 2px;
+}
+
+
+/* ==============================
+   11. CHIA SẺ CÔNG THỨC
    ============================== */
 
 .chia-se-cong-thuc {
@@ -514,7 +641,7 @@
 
 
 /* ==============================
-   10. THẺ BÀI ĐĂNG
+   12. THẺ BÀI ĐĂNG
    ============================== */
 
 .the-bai-dang {
@@ -557,8 +684,14 @@
     display: block;
 
     width: 100%;
-    max-width: 100%;
+    max-width: 480px;
+
+    aspect-ratio: 4 / 3;
     height: auto;
+
+    margin: 0 auto;
+
+    object-fit: cover;
 
     border-radius: var(--bo-goc);
 }
@@ -583,7 +716,7 @@
 
 
 /* ==============================
-   11. MÓN ĂN NỔI BẬT
+   13. MÓN ĂN NỔI BẬT
    ============================== */
 
 .mon-noi-bat .the-mon-an {
@@ -672,7 +805,7 @@
 
 
 /* ==============================
-   12. GỢI Ý NGƯỜI THEO DÕI
+   14. GỢI Ý NGƯỜI THEO DÕI
    ============================== */
 
 .the-nguoi-dung {
@@ -680,11 +813,11 @@
     flex-direction: column;
     align-items: flex-start;
 
-    gap: 7px;
+    gap: 5px;
 
     min-width: 0;
 
-    padding: 11px 0;
+    padding: 7px 0;
 
     border-bottom: 1px solid var(--mau-vien);
 
@@ -708,19 +841,19 @@
     color: var(--mau-chu-phu);
 
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
 
 .the-nguoi-dung .nut {
-    padding: 7px 12px;
+    padding: 6px 12px;
 
     font-size: 13px;
 }
 
 
 /* ==============================
-   13. TRANG KHÁM PHÁ
+   15. TRANG KHÁM PHÁ
    ============================== */
 
 .tieu-de-kham-pha {
@@ -834,7 +967,7 @@
 
 
 /* ==============================
-   14. CHI TIẾT MÓN ĂN
+   16. CHI TIẾT MÓN ĂN
    ============================== */
 
 .tieu-de-mon-an {
@@ -962,6 +1095,7 @@
 
 .nguyen-lieu ul {
     margin: 0;
+
     padding-left: 20px;
 }
 
@@ -975,6 +1109,7 @@
 
 .cach-thuc-hien ol {
     margin: 0;
+
     padding-left: 24px;
 }
 
@@ -1014,7 +1149,7 @@
 
 
 /* ==============================
-   15. GỢI Ý MÓN ĂN
+   17. GỢI Ý MÓN ĂN
    ============================== */
 
 .tu-lanh-cua-toi {
@@ -1225,11 +1360,13 @@
     outline-offset: 2px;
 }
 
+
 .the-goi-y p:last-child a:active,
 .quay-lai a:active {
     background-color: var(--mau-chinh);
     color: #FFFFFF;
 }
+
 
 .danh-sach-di-cho {
     padding: 16px;
@@ -1289,7 +1426,7 @@
 
 
 /* ==============================
-   16. CÀI ĐẶT
+   18. CÀI ĐẶT
    ============================== */
 
 .tieu-de-cai-dat {
@@ -1510,7 +1647,7 @@
 
 
 /* ==============================
-   17. TRANG LIÊN HỆ
+   19. TRANG LIÊN HỆ
    ============================== */
 
 .tieu-de-lien-he {
@@ -1678,7 +1815,7 @@
 
 
 /* ==============================
-   18. TRANG GIỚI THIỆU
+   20. TRANG GIỚI THIỆU
    ============================== */
 
 .tieu-de-gioi-thieu {
@@ -1692,6 +1829,7 @@
     background-color: #F8FBF6;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 24px;
     font-weight: 700;
 }
@@ -1719,6 +1857,7 @@
     color: var(--mau-chinh);
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 18px;
     font-weight: 700;
 }
@@ -1816,6 +1955,7 @@
     color: var(--mau-chinh);
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 17px;
 }
 
@@ -1858,7 +1998,7 @@
 
 
 /* ==============================
-   19. HỒ SƠ THÀNH VIÊN
+   21. HỒ SƠ THÀNH VIÊN
    ============================== */
 
 .tieu-de-ho-so {
@@ -1874,6 +2014,7 @@
     background-color: #F8FBF6;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 24px;
     font-weight: 700;
 }
@@ -1903,6 +2044,7 @@
     color: var(--mau-chinh);
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 18px;
     font-weight: 700;
 }
@@ -2135,8 +2277,14 @@
 }
 
 
+.quay-lai a:active {
+    background-color: var(--mau-chinh);
+    color: #FFFFFF;
+}
+
+
 /* ==============================
-   20. RESPONSIVE - TABLET
+   22. RESPONSIVE - TABLET
    ============================== */
 
 @media (min-width: 768px) {
@@ -2181,6 +2329,7 @@
 
     .tai-khoan {
         justify-content: center;
+
         flex-wrap: nowrap;
     }
 
@@ -2215,6 +2364,7 @@
 
     .trang > footer {
         flex-direction: row;
+
         align-items: center;
         justify-content: space-between;
 
@@ -2226,6 +2376,36 @@
 
     .trang > footer .menu {
         justify-content: flex-end;
+    }
+
+
+    /* ==========================
+       Hero
+       ========================== */
+
+    .hero {
+        padding: 28px 24px;
+    }
+
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+
+    /* ==========================
+       Ba thẻ giới thiệu
+       ========================== */
+
+    .the-gioi-thieu {
+        gap: 16px;
+    }
+
+
+    .the-gioi-thieu-item {
+        flex: 1 1 0;
+
+        padding: 18px;
     }
 
 
@@ -2435,7 +2615,7 @@
 
 
 /* ==============================
-   21. RESPONSIVE - DESKTOP
+   23. RESPONSIVE - DESKTOP
    ============================== */
 
 @media (min-width: 992px) {
@@ -2481,6 +2661,39 @@
 
     .trang > footer {
         padding: 16px 28px;
+    }
+
+
+    /* ==========================
+       Hero
+       ========================== */
+
+    .hero {
+        padding: 34px 28px;
+    }
+
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+
+    .hero p {
+        max-width: 70ch;
+    }
+
+
+    /* ==========================
+       Ba thẻ giới thiệu
+       ========================== */
+
+    .the-gioi-thieu {
+        gap: 16px;
+    }
+
+
+    .the-gioi-thieu-item {
+        padding: 20px;
     }
 
 

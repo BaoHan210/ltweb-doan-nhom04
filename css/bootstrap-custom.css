@@ -38,17 +38,18 @@
     object-fit: cover;
 }
 
-.the-danh-muc summary {
+.danh-muc-card summary {
     cursor: pointer;
 }
 
-.the-danh-muc summary::-webkit-details-marker {
+.danh-muc-card summary::-webkit-details-marker {
     display: none;
 }
 
-.the-danh-muc summary::marker {
+.danh-muc-card summary::marker {
     display: none;
 }
+
 .mon-an-img {
     width: 70px;
     height: 50px;
