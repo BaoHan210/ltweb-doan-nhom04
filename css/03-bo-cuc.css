@@ -11,7 +11,8 @@
 
 /* Mặc định: điện thoại */
 .trang {
-    width: min(100% - 20px, var(--do-rong-toi-da));
+    width: 100%;
+    max-width: var(--do-rong-toi-da);
     margin: 0 auto;
 
     display: grid;
@@ -893,7 +894,8 @@
        ========================== */
 
     .trang {
-        width: min(100% - 32px, var(--do-rong-toi-da));
+        width: 100%;
+        max-width: var(--do-rong-toi-da);
 
         grid-template-columns:
             170px
