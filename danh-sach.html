@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
-<body class="trang">
+<body class="trang trang-kham-pha">
 
   <header class="dau-trang">
 
@@ -83,13 +83,33 @@
 
   <main class="kham-pha">
 
-    <h1 class="tieu-de-kham-pha">Danh mục</h1>
+    <section class="hero-kham-pha" aria-labelledby="tieu-de-hero-kham-pha">
+      <div class="hero-kham-pha-noi-dung">
+        <p class="hero-kham-pha-nhan">Tủ lạnh của tôi</p>
+        <h1 id="tieu-de-hero-kham-pha">Hôm nay ăn gì?</h1>
+        <p>Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp.</p>
+      </div>
+    </section>
+
+    <h2 class="tieu-de-kham-pha">Món ăn</h2>
+
+    <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
+      <button class="nut-bo-loc dang-loc" type="button">Tất cả</button>
+      <button class="nut-bo-loc" type="button">Món chính</button>
+      <button class="nut-bo-loc" type="button">Món canh</button>
+      <button class="nut-bo-loc" type="button">Món xào</button>
+      <button class="nut-bo-loc" type="button">Món ăn vặt</button>
+      <button class="nut-bo-loc" type="button">Đồ uống</button>
+      <button class="nut-bo-loc" type="button">Món ăn nhanh</button>
+      <button class="nut-bo-loc" type="button">Món tráng miệng</button>
+      <button class="nut-bo-loc" type="button">Món chay</button>
+    </nav>
 
     <section class="danh-muc">
-      <h2>Các danh mục món ăn</h2>
+      <h3 class="tieu-de-danh-muc">Các danh mục món ăn</h3>
 
       <!-- Món chính -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-1">
         <summary>
           <img
             src="images/mon-chinh.jpg"
@@ -131,7 +151,7 @@ loading="lazy"
       </details>
 
       <!-- Món canh -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-2">
         <summary>
           <img
             src="images/mon-canh.jpg"
@@ -147,7 +167,7 @@ loading="lazy"
       </details>
 
       <!-- Món ăn vặt -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-3">
         <summary>
           <img
             src="images/mon-an-vat.jpg"
@@ -176,7 +196,7 @@ loading="lazy"
       </details>
 
       <!-- Đồ uống -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-4">
         <summary>
           <img
             src="images/do-uong.jpg"
@@ -192,7 +212,7 @@ loading="lazy"
       </details>
 
       <!-- Món xào -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-5">
         <summary>
           <img
             src="images/mon-xao.jpg"
@@ -208,7 +228,7 @@ loading="lazy"
       </details>
 
       <!-- Món chiên -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-6">
         <summary>
           <img
             src="images/mon-chien.jpg"
@@ -237,7 +257,7 @@ loading="lazy"
       </details>
 
       <!-- Món ăn nhanh -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-7">
         <summary>
           <img
             src="images/mon-an-nhanh.jpg"
@@ -246,14 +266,14 @@ width="180"
             height="120"
             loading="lazy"
           >
-          <span>Món ăn nhanh</span>
+          <span>Món nhanh</span>
         </summary>
 
         <p>Chưa có công thức được chia sẻ.</p>
       </details>
 
       <!-- Món tráng miệng -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-8">
         <summary>
           <img
             src="images/mon-trang-mieng.jpg"
@@ -269,7 +289,7 @@ width="180"
       </details>
 
       <!-- Món chay -->
-      <details class="the-danh-muc">
+      <details class="the-danh-muc danh-muc-9">
         <summary>
           <img
             src="images/mon-chay.jpg"

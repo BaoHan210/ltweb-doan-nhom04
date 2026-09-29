@@ -20,7 +20,7 @@
 </head>
 
 
-<body class="trang">
+<body class="trang trang-cai-dat">
 
   <header class="dau-trang">
 
@@ -99,15 +99,15 @@
     <form class="form-cai-dat" action="#" method="post">
 
 
-      <section class="khu-vuc-cai-dat thong-tin-tai-khoan">
+      <section class="khu-vuc-cai-dat thong-tin-tai-khoan card-thong-tin card-thong-tin-ca-nhan">
 
-        <h2>Thông tin tài khoản</h2>
+        <h2 class="tieu-de-thong-tin-tai-khoan">Thông tin tài khoản</h2>
 
-        <fieldset class="khung-cai-dat">
+        <fieldset class="khung-cai-dat khung-thong-tin-ca-nhan">
 
           <legend>Thông tin cá nhân</legend>
 
-          <p class="dong-cai-dat">
+          <p class="dong-cai-dat dong-ho-ten">
 
             <label for="fullname">Họ và tên</label>
 
@@ -121,7 +121,7 @@
           </p>
 
 
-          <p class="dong-cai-dat">
+          <p class="dong-cai-dat dong-email">
 
             <label for="email">Email</label>
 
@@ -135,7 +135,7 @@
           </p>
 
 
-          <p class="dong-cai-dat">
+          <p class="dong-cai-dat dong-so-dien-thoai">
 
             <label for="phone">Số điện thoại</label>
 
@@ -149,13 +149,14 @@
 </p>
 
 
-          <p class="dong-cai-dat">
+          <p class="dong-cai-dat anh-dai-dien dong-avatar">
 
             <label for="avatar">Ảnh đại diện</label>
 
             <input
               type="file"
               id="avatar"
+              class="o-anh-dai-dien"
               name="avatar"
               accept="image/*"
             >
@@ -167,7 +168,7 @@
       </section>
 
 
-      <section class="khu-vuc-cai-dat tuy-chinh-so-thich">
+      <section class="khu-vuc-cai-dat tuy-chinh-so-thich card-so-thich">
 
         <h2>Tùy chỉnh sở thích</h2>
 
@@ -256,15 +257,15 @@
       </section>
 
 
-      <section class="khu-vuc-cai-dat tai-khoan-bao-mat">
+      <section class="khu-vuc-cai-dat tai-khoan-bao-mat card-tai-khoan">
 
-        <h2>Tài khoản và bảo mật</h2>
+        <h2 class="tieu-de-tai-khoan">Tài khoản và bảo mật</h2>
 
-        <fieldset class="khung-cai-dat">
+        <fieldset class="khung-cai-dat khung-tai-khoan">
 
           <legend>Thiết lập tài khoản</legend>
 
-          <p class="dong-thong-bao">
+          <p class="dong-thong-bao dong-tai-khoan phan-tai-khoan">
 
             <label>
               Nhận thông báo khi có bình luận
@@ -280,7 +281,7 @@
           </p>
 
 
-          <p class="dong-thong-bao">
+          <p class="dong-thong-bao dong-tai-khoan phan-tai-khoan">
 
             <label>
               Nhận thông báo khi có lượt thích
@@ -297,7 +298,7 @@
           </p>
 
 
-          <p class="dong-thong-bao">
+          <p class="dong-thong-bao dong-tai-khoan phan-tai-khoan">
 
             <label>
               Nhận thông báo khi có người theo dõi mới
@@ -313,7 +314,7 @@
           </p>
 
 
-          <p class="dong-thong-bao">
+          <p class="dong-thong-bao dong-tai-khoan phan-tai-khoan">
 
             <label>
               Nhận thông báo về công thức mới
@@ -329,7 +330,7 @@
           </p>
 
 
-          <p class="hanh-dong-bao-mat">
+          <p class="hanh-dong-bao-mat card-bao-mat phan-bao-mat">
 
             <button class="nut nut-phu" type="button">
               Đổi mật khẩu

@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
-<body class="trang">
+<body class="trang trang-goi-y">
 
   <header class="dau-trang">
 
@@ -58,33 +58,33 @@
     <ul class="menu">
 
       <li>
-        <a href="index.html">Trang chủ</a>
+        <a class="icon-trang-chu" href="index.html">Trang chủ</a>
       </li>
 
       <li>
-        <a href="danh-sach.html">Khám phá</a>
+        <a class="icon-kham-pha" href="danh-sach.html">Khám phá</a>
       </li>
 
       <li>
-        <a href="chi-tiet.html">Chi tiết công thức</a>
+        <a class="icon-chi-tiet" href="chi-tiet.html">Chi tiết công thức</a>
       </li>
 
       <li>
-        <a class="dang-chon" href="goi-y-mon-an.html">
+        <a class="dang-chon icon-goi-y" href="goi-y-mon-an.html">
           Gợi ý món ăn
         </a>
       </li>
 
       <li>
-        <a href="cai-dat.html">Cài đặt</a>
+        <a class="icon-cai-dat" href="cai-dat.html">Cài đặt</a>
       </li>
 
       <li>
-        <a href="gioi-thieu.html">Giới thiệu</a>
+        <a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a>
       </li>
 
       <li>
-        <a href="lien-he.html">Liên hệ</a>
+        <a class="icon-lien-he" href="lien-he.html">Liên hệ</a>
       </li>
 
     </ul>
@@ -92,12 +92,12 @@
   </nav>
 
 
-  <main class="goi-y-trang">
+  <main class="goi-y-trang goi-y-trang-moi">
 
-    <h1 class="tieu-de-goi-y">Gợi ý món ăn</h1>
+    <h1 class="tieu-de-goi-y tieu-de-goi-y-an">Gợi ý món ăn</h1>
 
 
-    <section class="tu-lanh-cua-toi">
+    <section class="tu-lanh-cua-toi tu-lanh-goi-y">
 
       <h2>Tủ lạnh của tôi - Hôm nay ăn gì?</h2>
 
@@ -107,9 +107,9 @@
       </p>
 
 
-      <form class="form-goi-y" action="#" method="get">
+      <form class="form-goi-y form-goi-y-moi" action="#" method="get">
 
-        <fieldset class="nhom-nguyen-lieu">
+        <fieldset class="nhom-nguyen-lieu nhom-nguyen-lieu-moi">
 
           <legend>Nguyên liệu hiện có</legend>
 
@@ -118,7 +118,7 @@
           </p>
 
           <p>
-            <textarea
+            <textarea class="o-nguyen-lieu"
               id="ingredients"
               name="ingredients"
               rows="5"
@@ -130,13 +130,13 @@
         </fieldset>
 
 
-        <fieldset class="nhom-thong-tin">
+        <fieldset class="nhom-thong-tin nhom-thong-tin-moi">
 
           <legend>Thông tin bữa ăn</legend>
 <p>
             <label for="budget">Ngân sách (VNĐ)</label>
 
-            <input
+            <input class="o-ngan-sach"
               type="number"
               id="budget"
               name="budget"
@@ -150,7 +150,7 @@
               Thời gian nấu tối đa (phút)
             </label>
 
-            <input
+            <input class="o-thoi-gian"
               type="number"
               id="cooking-time"
               name="cooking_time"
@@ -163,7 +163,7 @@
           <p>
             <label for="servings">Số người ăn</label>
 
-            <input
+            <input class="o-so-nguoi"
               type="number"
               id="servings"
               name="servings"
@@ -176,9 +176,9 @@
         </fieldset>
 
 
-        <p class="hanh-dong-goi-y">
+        <p class="hanh-dong-goi-y hanh-dong-goi-y-moi">
 
-          <button class="nut nut-chinh" type="submit">
+          <button class="nut nut-chinh nut-goi-y" type="submit">
             Tìm món phù hợp
           </button>
 
@@ -193,12 +193,12 @@
     </section>
 
 
-    <section class="mon-duoc-goi-y">
+    <section class="mon-duoc-goi-y mon-duoc-goi-y-moi">
 
       <h2>Món ăn được gợi ý</h2>
 
 
-      <article class="the-goi-y">
+      <article class="the-goi-y the-goi-y-mau">
 
         <h3>Cá kho tộ</h3>
 
@@ -290,7 +290,7 @@ Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
     </section>
 
 
-    <section class="danh-sach-di-cho">
+    <section class="danh-sach-di-cho danh-sach-di-cho-moi">
 
       <h2>Danh sách đi chợ</h2>
 
@@ -312,7 +312,7 @@ Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
 
       </article>
 
-      <p class="hanh-dong-danh-sach">
+      <p class="hanh-dong-danh-sach hanh-dong-danh-sach-moi">
 
         <button class="nut nut-chinh" type="button">
           Thêm vào danh sách đi chợ
@@ -338,11 +338,11 @@ Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
       <ul class="menu">
 
         <li>
-          <a href="gioi-thieu.html">Giới thiệu</a>
+          <a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a>
         </li>
 
         <li>
-          <a href="lien-he.html">Liên hệ</a>
+          <a class="icon-lien-he" href="lien-he.html">Liên hệ</a>
         </li>
 
       </ul>
@@ -350,6 +350,7 @@ Món ăn phù hợp với nhu cầu sử dụng nguyên liệu tươi,
     </nav>
 
   </footer>
+
 
 </body>
 
