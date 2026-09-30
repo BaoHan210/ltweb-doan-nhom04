@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Cook with me là mạng xã hội chia sẻ và khám phá công thức nấu ăn dành cho những người yêu thích ẩm thực."
+  >
+
+  <title>Trang chủ | Cook with me</title>
+
+  <link rel="stylesheet" href="css/01-bien.css">
+  <link rel="stylesheet" href="css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="css/03-bo-cuc.css">
+  <link rel="stylesheet" href="css/04-thanh-phan.css">
+  <link rel="stylesheet" href="css/05-tien-ich.css">
+</head>
+
+<body class="trang trang-trang-chu">
+
+  <header class="dau-trang">
+
+    <p class="thuong-hieu">
+      <span class="ten-website">Cook with me</span>
+      <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+    </p>
+
+    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+
+      <label for="search">Tìm kiếm</label>
+
+      <input
+        type="search"
+        id="search"
+        name="keyword"
+        placeholder="Tìm kiếm món ăn, công thức..."
+        autocomplete="off"
+      >
+
+      <button class="nut" type="submit">
+        Tìm kiếm
+      </button>
+
+    </form>
+
+    <div class="khu-vuc-tai-khoan">
+
+  <a
+    href="dang-ky.html"
+    class="nut nut-dang-ky"
+  >
+    Đăng ký
+  </a>
+
+  <a
+    href="dang-nhap.html"
+    class="nut nut-dang-nhap"
+  >
+    Đăng nhập
+  </a>
+
+</div>
+
+  </header>
+
+
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+    <ul class="menu">
+
+      <li>
+        <a class="dang-chon icon-trang-chu" href="index.html">
+          Trang chủ
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-kham-pha" href="danh-sach.html">
+          Khám phá
+        </a>
+      </li>
+
+      <li>
+        <a class="menu-chi-tiet icon-chi-tiet" href="chi-tiet.html">
+          Chi tiết công thức
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-goi-y" href="goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-lien-he" href="lien-he.html">
+          Liên hệ
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-gioi-thieu" href="gioi-thieu.html">
+          Giới thiệu
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-cai-dat" href="cai-dat.html">
+          Cài đặt
+        </a>
+      </li>
+
+      <li>
+        <a class="icon-yeu-thich" href="danh-sach.html">
+          Yêu thích
+          <span class="so-luong-yeu-thich">0</span>
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+<main class="dang-bai-viet-trang">
+
+    <section class="khung-dang-bai-viet">
+
+        <article class="the-dang-bai-viet">
+
+            <!-- Thông tin người đăng -->
+            <header class="nguoi-dang-bai">
+
+                <div class="anh-dai-dien">
+                    <span>U</span>
+                </div>
+
+                <div class="thong-tin-nguoi-dang">
+                    <strong>Người dùng</strong>
+                    <span>Đang chia sẻ công thức</span>
+                </div>
+
+            </header>
+
+
+            <!-- Form đăng bài -->
+            <form
+                class="form-dang-bai-viet"
+                action="#"
+                method="post"
+                enctype="multipart/form-data"
+                novalidate
+            >
+
+                <!-- Caption -->
+                <section class="khu-vuc-caption">
+
+                    <label for="mo-ta-bai-viet">
+                        Bạn đang muốn chia sẻ món gì?
+                    </label>
+
+                    <textarea
+                        id="mo-ta-bai-viet"
+                        name="mo_ta_bai_viet"
+                        rows="4"
+                        placeholder="Chia sẻ câu chuyện hoặc kinh nghiệm nấu món ăn của bạn..."
+                    ></textarea>
+
+                </section>
+
+
+                <!-- Hình ảnh -->
+                <section class="khu-vuc-hinh-anh-dang-bai">
+
+                    <div class="tieu-de-khu-vuc-dang-bai">
+                        <h2>Hình ảnh món ăn</h2>
+
+                        <span>
+                            Thêm hình ảnh
+                        </span>
+                    </div>
+
+                    <label
+                        for="hinh-anh"
+                        class="o-them-hinh-anh"
+                    >
+
+                        <span class="bieu-tuong-them-anh">
+                            +
+                        </span>
+
+                        <strong>
+                            Thêm hình ảnh
+                        </strong>
+
+                        <small>
+                            Chọn một hoặc nhiều ảnh từ thiết bị
+                        </small>
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="hinh-anh"
+                        name="hinh_anh"
+                        accept="image/*"
+                        multiple
+                        hidden
+                    >
+
+                    <div
+                        class="xem-truoc-hinh-anh"
+                        aria-live="polite"
+                    ></div>
+
+                </section>
+
+
+                <!-- Thông tin món ăn -->
+                <section class="khu-vuc-thong-tin-mon-an">
+
+                    <h2>Thông tin món ăn</h2>
+
+
+                    <div class="nhom-truong">
+
+                        <label for="ten-mon">
+                            Tên món ăn
+                        </label>
+
+                        <input
+                            type="text"
+                            id="ten-mon"
+                            name="ten_mon"
+                            required
+                            placeholder="Ví dụ: Cao lầu Hội An"
+                        >
+
+                    </div>
+
+
+                    <div class="nhom-truong">
+
+                        <label for="danh-muc">
+                            Danh mục
+                        </label>
+
+                        <select
+                            id="danh-muc"
+                            name="danh_muc"
+                            required
+                        >
+
+                            <option value="">
+                                Chọn danh mục
+                            </option>
+
+                            <option value="mon-chinh">
+                                Món chính
+                            </option>
+
+                            <option value="mon-canh">
+                                Món canh
+                            </option>
+
+                            <option value="mon-xao">
+                                Món xào
+                            </option>
+
+                            <option value="mon-an-vat">
+                                Món ăn vặt
+                            </option>
+
+                            <option value="do-uong">
+                                Đồ uống
+                            </option>
+
+                            <option value="mon-an-nhanh">
+                                Món ăn nhanh
+                            </option>
+
+                            <option value="mon-trang-mieng">
+                                Món tráng miệng
+                            </option>
+
+                            <option value="mon-chay">
+                                Món chay
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="thong-tin-mon-an-grid">
+
+                        <div class="nhom-truong">
+
+                            <label for="thoi-gian-nau">
+                                Thời gian
+                            </label>
+
+                            <input
+                                type="number"
+                                id="thoi-gian-nau"
+                                name="thoi_gian_nau"
+                                min="1"
+                                max="300"
+                                required
+                                placeholder="Phút"
+                            >
+
+                        </div>
+
+
+                        <div class="nhom-truong">
+
+                            <label for="so-nguoi-an">
+                                Khẩu phần
+                            </label>
+
+                            <input
+                                type="number"
+                                id="so-nguoi-an"
+                                name="so_nguoi_an"
+                                min="1"
+                                max="20"
+                                required
+                                placeholder="Người"
+                            >
+
+                        </div>
+
+
+                        <div class="nhom-truong">
+
+                            <label for="ngan-sach">
+                                Ngân sách
+                            </label>
+
+                            <input
+                                type="number"
+                                id="ngan-sach"
+                                name="ngan_sach"
+                                min="0"
+                                required
+                                placeholder="Đồng"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Nguyên liệu -->
+                <section class="khu-vuc-nguyen-lieu-dang-bai">
+
+                    <h2>Nguyên liệu</h2>
+
+                    <label for="nguyen-lieu">
+                        Danh sách nguyên liệu
+                    </label>
+
+                    <textarea
+                        id="nguyen-lieu"
+                        name="nguyen_lieu"
+                        rows="7"
+                        required
+                        placeholder="Mỗi nguyên liệu viết trên một dòng..."
+                    ></textarea>
+
+                </section>
+
+
+                <!-- Cách chế biến -->
+                <section class="khu-vuc-cach-lam-dang-bai">
+
+                    <h2>Cách chế biến</h2>
+
+                    <label for="cach-lam">
+                        Các bước thực hiện
+                    </label>
+
+                    <textarea
+                        id="cach-lam"
+                        name="cach_lam"
+                        rows="9"
+                        required
+                        placeholder="Mỗi bước viết trên một dòng..."
+                    ></textarea>
+
+                </section>
+
+
+                <!-- Nút đăng -->
+                <footer class="khu-vuc-dang-bai">
+
+                    <button
+                        type="submit"
+                        class="nut nut-dang-bai"
+                    >
+                        Đăng bài viết
+                    </button>
+
+                </footer>
+
+            </form>
+
+        </article>
+
+    </section>
+
+</main>
+
+
+  <footer>
+
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
+
+    <nav aria-label="Điều hướng phụ">
+
+      <ul class="menu">
+
+        <li>
+          <a href="gioi-thieu.html">
+            Giới thiệu
+          </a>
+        </li>
+
+        <li>
+          <a href="lien-he.html">
+            Liên hệ
+          </a>
+        </li>
+
+      </ul>
+
+    </nav>
+
+  </footer>
+  
+  <script
+    type="module"
+    src="js/main.js"
+></script>
+
+<script
+    type="module"
+    src="js/trang-dang-bai-viet.js"
+></script>
+
+</body>
+
+</html>

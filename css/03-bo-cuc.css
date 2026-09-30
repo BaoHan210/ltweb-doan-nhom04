@@ -1513,3 +1513,555 @@
         padding: 20px;
     }
 }
+/* ============================================================
+   BÀI 3 - TRANG CHI TIẾT MÓN ĂN
+   Bố cục theo mẫu giao diện Cook with me.
+   Header, menu và footer dùng chung nên không thay đổi.
+   ============================================================ */
+
+
+/* ==============================
+   Khung trang chi tiết
+   ============================== */
+
+.chi-tiet-trang {
+    width: 100%;
+    min-width: 0;
+
+    padding: 18px 16px 32px;
+
+    overflow-x: clip;
+}
+
+
+/* Tiêu đề trang */
+
+.chi-tiet-trang > h1 {
+    margin: 0 0 20px;
+
+    text-align: left;
+
+    font-size: var(--co-chu-tieu-de);
+}
+
+
+/* ==============================
+   Khung nội dung món ăn
+   ============================== */
+
+.khung-chi-tiet {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* ==============================
+   Bố cục chính
+   ============================== */
+
+.khung-chi-tiet .chi-tiet-mon-an {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+        "anh"
+        "thongtin"
+        "nguyenlieu"
+        "cacbuoc"
+        "video";
+
+    gap: 18px;
+
+    min-width: 0;
+}
+
+
+/* ==============================
+   Khu vực hình ảnh
+   ============================== */
+
+.khu-vuc-hinh-anh {
+    grid-area: anh;
+
+    min-width: 0;
+}
+
+
+.hinh-anh-mon-an {
+    width: 100%;
+
+    margin: 0;
+
+    padding: 10px;
+
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.hinh-anh-mon-an img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: 350px;
+
+    object-fit: cover;
+
+    border-radius: var(--bo-goc);
+}
+
+
+.hinh-anh-mon-an figcaption {
+    margin-top: 6px;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+
+/* ==============================
+   Thông tin món ăn
+   ============================== */
+
+.thong-tin-mon-an {
+    grid-area: thongtin;
+
+    min-width: 0;
+}
+
+
+.tieu-de-mon-an {
+    margin: 0 0 8px;
+
+    font-size: 18px;
+}
+
+
+.thong-tin-danh-gia {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-bottom: 8px;
+}
+
+
+.danh-gia {
+    letter-spacing: 1px;
+
+    font-size: 13px;
+}
+
+
+.so-luot-danh-gia {
+    font-size: 12px;
+}
+
+
+.thong-tin-co-ban {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 4px 14px;
+
+    margin-bottom: 10px;
+}
+
+
+.thong-tin-item {
+    display: flex;
+
+    gap: 4px;
+
+    font-size: 12px;
+}
+
+
+.thong-tin-item span::after {
+    content: ":";
+}
+
+
+.thong-tin-item strong {
+    font-weight: 600;
+}
+
+
+.mo-ta-mon-an {
+    margin-top: 8px;
+}
+
+
+.mo-ta-mon-an h3 {
+    margin: 0 0 5px;
+
+    font-size: 13px;
+}
+
+
+.mo-ta-mon-an p {
+    margin: 0;
+
+    line-height: 1.5;
+
+    font-size: 12px;
+}
+
+
+/* ==============================
+   Khu vực nút
+   ============================== */
+
+.khu-vuc-hanh-dong {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+
+.khu-vuc-hanh-dong .nut {
+    padding: 6px 10px;
+
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   Nguyên liệu + bình luận
+   ============================== */
+
+.khu-vuc-nguyen-lieu {
+    grid-area: nguyenlieu;
+
+    min-width: 0;
+}
+
+
+.khu-vuc-nguyen-lieu > h2,
+.khu-vuc-cac-buoc > h2,
+.video-huong-dan > h2 {
+    margin: 0 0 10px;
+
+    font-size: 14px;
+}
+
+
+.danh-sach-nguyen-lieu {
+    margin: 0;
+
+    padding-left: 20px;
+
+    font-size: 12px;
+}
+
+
+.danh-sach-nguyen-lieu li {
+    margin-bottom: 4px;
+}
+
+
+/* ==============================
+   Bình luận
+   Bình luận nằm bên trong Nguyên liệu
+   ============================== */
+
+.khu-vuc-nguyen-lieu .binh-luan {
+    margin-top: 18px;
+
+    padding-left: 0;
+}
+
+
+.khu-vuc-nguyen-lieu .binh-luan h3 {
+    margin: 0 0 6px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+.so-luong-binh-luan {
+    margin: 0 0 8px;
+
+    font-size: 11px;
+}
+
+
+.o-nhap-binh-luan {
+    display: grid;
+
+    grid-template-columns: auto 1fr auto;
+
+    align-items: end;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+
+.o-nhap-binh-luan label {
+    font-size: 11px;
+}
+
+
+.o-nhap-binh-luan textarea {
+    width: 100%;
+    min-width: 0;
+
+    min-height: 55px;
+
+    padding: 6px;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+    font-size: 11px;
+}
+
+
+.o-nhap-binh-luan .nut {
+    padding: 6px 9px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   Các bước chế biến
+   ============================== */
+
+.khu-vuc-cac-buoc {
+    grid-area: cacbuoc;
+
+    min-width: 0;
+}
+
+
+.cac-buoc-che-bien {
+    margin: 0;
+
+    padding-left: 22px;
+
+    font-size: 12px;
+}
+
+
+.cac-buoc-che-bien li {
+    margin-bottom: 10px;
+
+    padding-left: 2px;
+}
+
+
+.cac-buoc-che-bien strong {
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+
+.cac-buoc-che-bien p {
+    margin: 0;
+
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   Video hướng dẫn
+   ============================== */
+
+.video-huong-dan {
+    grid-area: video;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--mau-vien);
+
+    border-radius: var(--bo-goc);
+
+    background-color: var(--mau-nen);
+}
+
+
+.khung-video {
+    width: 100%;
+}
+
+
+.khung-video iframe {
+    display: block;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    height: auto;
+
+    border: 0;
+
+    border-radius: var(--bo-goc);
+}
+
+
+/* ============================================================
+   TABLET + DESKTOP
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+    .chi-tiet-trang {
+        padding: 20px 18px 36px;
+    }
+
+
+    .chi-tiet-trang > h1 {
+        margin-bottom: 22px;
+    }
+
+
+    .khung-chi-tiet .chi-tiet-mon-an {
+        grid-template-columns:
+            minmax(0, 1.05fr)
+            minmax(0, 1fr);
+
+        grid-template-areas:
+            "anh thongtin"
+            "nguyenlieu cacbuoc"
+            "nguyenlieu video";
+
+        column-gap: 24px;
+
+        row-gap: 22px;
+
+        align-items: start;
+    }
+
+
+    .khu-vuc-hinh-anh {
+        align-self: start;
+    }
+
+
+    .hinh-anh-mon-an {
+        padding: 10px;
+    }
+
+
+    .hinh-anh-mon-an img {
+        height: 175px;
+
+        max-height: none;
+    }
+
+
+    .thong-tin-mon-an {
+        padding-top: 2px;
+    }
+
+
+    .tieu-de-mon-an {
+        font-size: 16px;
+    }
+
+
+    .khu-vuc-nguyen-lieu {
+        align-self: start;
+    }
+
+
+    .khu-vuc-cac-buoc {
+        align-self: start;
+    }
+
+
+    .video-huong-dan {
+        align-self: start;
+    }
+}
+
+
+/* ============================================================
+   DESKTOP LỚN
+   ============================================================ */
+
+@media (min-width: 992px) {
+
+    .chi-tiet-trang {
+        padding: 22px 22px 40px;
+    }
+
+
+    .khung-chi-tiet .chi-tiet-mon-an {
+        grid-template-columns:
+            minmax(0, 1.05fr)
+            minmax(0, 1fr);
+
+        column-gap: 28px;
+
+        row-gap: 24px;
+    }
+
+
+    .hinh-anh-mon-an {
+        padding: 10px;
+    }
+
+
+    .hinh-anh-mon-an img {
+        height: 185px;
+    }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+    .thong-tin-co-ban {
+        grid-template-columns: 1fr;
+    }
+
+
+    .o-nhap-binh-luan {
+        grid-template-columns: 1fr;
+    }
+
+
+    .o-nhap-binh-luan label {
+        margin-bottom: -2px;
+    }
+
+
+    .o-nhap-binh-luan .nut {
+        justify-self: start;
+    }
+}

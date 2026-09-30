@@ -1,0 +1,506 @@
+[
+    {
+        "id": "cao-lau",
+        "ten": "Cao lầu Hội An",
+        "danhMuc": "Món chính",
+        "thoiGian": 60,
+        "khauPhan": 3,
+        "doKho": "Trung bình",
+        "nganSach": 120000,
+        "hinhAnh": "images/cao-lau.jpg",
+        "danhGia": 4.8,
+        "soLuotDanhGia": 206,
+        "moTa": "Cao lầu là món ăn đặc trưng của Hội An với sợi mì đặc biệt, thịt xá xíu, rau sống và các nguyên liệu ăn kèm.",
+        "nguyenLieu": [
+            {
+                "ten": "300 g sợi cao lầu",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "500 g thịt heo",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "200 g rau sống",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Giá đỗ",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Nước tương",
+                "icon": "nguyen-lieu-nuoc-tuong.svg"
+            },
+            {
+                "ten": "Mật ong",
+                "icon": "nguyen-lieu-mat-ong.svg"
+            },
+            {
+                "ten": "Ngũ vị hương",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế và làm sạch các nguyên liệu.",
+            "Ướp thịt với nước tương, mật ong, ngũ vị hương và gia vị.",
+            "Chế biến thịt xá xíu đến khi chín mềm.",
+            "Chần sợi cao lầu và để ráo.",
+            "Cho sợi cao lầu, thịt xá xíu và rau sống vào tô rồi thưởng thức."
+        ],
+        "video": "Fmebc_dqPnM"
+    },
+    {
+        "id": "ca-kho-to",
+        "ten": "Cá kho tộ",
+        "danhMuc": "Món chính",
+        "thoiGian": 60,
+        "khauPhan": 4,
+        "doKho": "Dễ",
+        "nganSach": 100000,
+        "hinhAnh": "images/ca-kho-to.jpg",
+        "danhGia": 4.7,
+        "soLuotDanhGia": 184,
+        "moTa": "Cá kho tộ đậm đà với nước màu, nước mắm và các loại gia vị quen thuộc trong bữa cơm gia đình.",
+        "nguyenLieu": [
+            {
+                "ten": "500 g cá",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Nước mắm",
+                "icon": "nguyen-lieu-nuoc-tuong.svg"
+            },
+            {
+                "ten": "Tiêu",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Làm sạch cá và cắt thành từng khúc vừa ăn.",
+            "Ướp cá với nước mắm và gia vị.",
+            "Phi thơm tỏi rồi cho cá vào kho.",
+            "Kho cá với lửa nhỏ đến khi nước sốt sánh lại.",
+            "Nêm nếm và hoàn thiện món ăn."
+        ],
+        "video": ""
+    },
+    {
+        "id": "goi-ngo-sen",
+        "ten": "Gỏi ngó sen",
+        "danhMuc": "Món khai vị",
+        "thoiGian": 30,
+        "khauPhan": 4,
+        "doKho": "Dễ",
+        "nganSach": 70000,
+        "hinhAnh": "images/goi-ngo-sen.jpg",
+        "danhGia": 4.6,
+        "soLuotDanhGia": 132,
+        "moTa": "Gỏi ngó sen giòn mát, kết hợp rau củ và nước trộn chua ngọt hài hòa.",
+        "nguyenLieu": [
+            {
+                "ten": "300 g ngó sen",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "100 g cà rốt",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "100 g rau thơm",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Nước mắm",
+                "icon": "nguyen-lieu-nuoc-tuong.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế và ngâm ngó sen.",
+            "Cắt nhỏ cà rốt và rau thơm.",
+            "Pha nước trộn gỏi.",
+            "Trộn đều các nguyên liệu với nước trộn.",
+            "Trang trí và thưởng thức."
+        ],
+        "video": ""
+    },
+    {
+        "id": "banh-xeo",
+        "ten": "Bánh xèo",
+        "danhMuc": "Món chính",
+        "thoiGian": 40,
+        "khauPhan": 3,
+        "doKho": "Trung bình",
+        "nganSach": 80000,
+        "hinhAnh": "images/banh-xeo.jpg",
+        "danhGia": 4.9,
+        "soLuotDanhGia": 245,
+        "moTa": "Bánh xèo giòn vàng với nhân tôm thịt, giá đỗ và rau sống ăn kèm.",
+        "nguyenLieu": [
+            {
+                "ten": "200 g bột bánh xèo",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "200 g tôm",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "150 g thịt heo",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "100 g giá đỗ",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Rau sống",
+                "icon": "nguyen-lieu-rau.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Pha bột bánh xèo với nước.",
+            "Sơ chế tôm, thịt và rau củ.",
+            "Làm nóng chảo và cho một lớp bột mỏng vào chảo.",
+            "Thêm tôm, thịt và giá đỗ rồi chiên giòn.",
+            "Gấp bánh lại và dùng với rau sống."
+        ],
+        "video": ""
+    },
+    {
+        "id": "mi-quang",
+        "ten": "Mì Quảng",
+        "danhMuc": "Món chính",
+        "thoiGian": 50,
+        "khauPhan": 4,
+        "doKho": "Trung bình",
+        "nganSach": 110000,
+        "hinhAnh": "images/mi-quang.jpg",
+        "danhGia": 4.8,
+        "soLuotDanhGia": 198,
+        "moTa": "Mì Quảng với sợi mì vàng, thịt, tôm, rau sống và nước dùng đậm đà.",
+        "nguyenLieu": [
+            {
+                "ten": "400 g sợi mì Quảng",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "200 g thịt heo",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "200 g tôm",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "Rau sống",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Đậu phộng",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế thịt, tôm và rau sống.",
+            "Nấu nước dùng từ thịt và gia vị.",
+            "Xào thịt và tôm.",
+            "Trụng mì Quảng.",
+            "Cho mì vào tô, thêm nhân, rau sống và nước dùng."
+        ],
+        "video": ""
+    },
+    {
+        "id": "pho-bo",
+        "ten": "Phở bò",
+        "danhMuc": "Món chính",
+        "thoiGian": 120,
+        "khauPhan": 4,
+        "doKho": "Khó",
+        "nganSach": 150000,
+        "hinhAnh": "images/pho-bo.jpg",
+        "danhGia": 4.9,
+        "soLuotDanhGia": 321,
+        "moTa": "Phở bò với nước dùng trong, thơm mùi gia vị và thịt bò mềm.",
+        "nguyenLieu": [
+            {
+                "ten": "500 g bánh phở",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "500 g thịt bò",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "Hành lá",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Rau thơm",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Gia vị phở",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế xương và thịt bò.",
+            "Ninh xương để tạo nước dùng.",
+            "Nướng hoặc rang các loại gia vị thơm.",
+            "Nấu nước dùng cùng gia vị.",
+            "Trụng bánh phở, xếp thịt bò và chan nước dùng."
+        ],
+        "video": ""
+    },
+    {
+        "id": "canh-chua-ca",
+        "ten": "Canh chua cá",
+        "danhMuc": "Món canh",
+        "thoiGian": 35,
+        "khauPhan": 4,
+        "doKho": "Dễ",
+        "nganSach": 90000,
+        "hinhAnh": "images/mon-canh.jpg",
+        "danhGia": 4.6,
+        "soLuotDanhGia": 156,
+        "moTa": "Canh chua cá có vị chua thanh, kết hợp cá và các loại rau củ.",
+        "nguyenLieu": [
+            {
+                "ten": "400 g cá",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "100 g giá đỗ",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Cà chua",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Rau thơm",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế cá và rau củ.",
+            "Phi thơm tỏi rồi xào cà chua.",
+            "Thêm nước và đun sôi.",
+            "Cho cá vào nấu chín.",
+            "Thêm rau và nêm nếm vừa ăn."
+        ],
+        "video": ""
+    },
+    {
+        "id": "rau-muong-xao-toi",
+        "ten": "Rau muống xào tỏi",
+        "danhMuc": "Món rau",
+        "thoiGian": 20,
+        "khauPhan": 3,
+        "doKho": "Dễ",
+        "nganSach": 40000,
+        "hinhAnh": "images/mon-xao.jpg",
+        "danhGia": 4.5,
+        "soLuotDanhGia": 118,
+        "moTa": "Rau muống xào tỏi đơn giản, nhanh gọn với rau xanh giòn và tỏi thơm.",
+        "nguyenLieu": [
+            {
+                "ten": "500 g rau muống",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Dầu ăn",
+                "icon": "nguyen-lieu-mat-ong.svg"
+            },
+            {
+                "ten": "Gia vị",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Nhặt và rửa sạch rau muống.",
+            "Băm nhỏ tỏi.",
+            "Phi thơm tỏi với dầu.",
+            "Cho rau muống vào xào nhanh trên lửa lớn.",
+            "Nêm gia vị và hoàn thiện món ăn."
+        ],
+        "video": ""
+    },
+    {
+        "id": "cha-gio",
+        "ten": "Chả giò",
+        "danhMuc": "Món khai vị",
+        "thoiGian": 45,
+        "khauPhan": 4,
+        "doKho": "Trung bình",
+        "nganSach": 85000,
+        "hinhAnh": "images/mon-an-nhanh.jpg",
+        "danhGia": 4.7,
+        "soLuotDanhGia": 173,
+        "moTa": "Chả giò giòn rụm với nhân thịt và rau củ, thích hợp dùng trong các bữa ăn gia đình.",
+        "nguyenLieu": [
+            {
+                "ten": "200 g thịt heo xay",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "100 g cà rốt",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "100 g miến",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "Bánh tráng",
+                "icon": "nguyen-lieu-soi.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Sơ chế và cắt nhỏ các nguyên liệu.",
+            "Trộn thịt với rau củ và gia vị.",
+            "Cuốn nhân bằng bánh tráng.",
+            "Chiên chả giò đến khi vàng giòn.",
+            "Vớt ra để ráo dầu và thưởng thức."
+        ],
+        "video": ""
+    },
+    {
+        "id": "sinh-to-xoai",
+        "ten": "Sinh tố xoài",
+        "danhMuc": "Đồ uống",
+        "thoiGian": 10,
+        "khauPhan": 2,
+        "doKho": "Dễ",
+        "nganSach": 45000,
+        "hinhAnh": "images/do-uong.jpg",
+        "danhGia": 4.8,
+        "soLuotDanhGia": 142,
+        "moTa": "Sinh tố xoài thơm ngọt, mát lạnh và dễ thực hiện tại nhà.",
+        "nguyenLieu": [
+            {
+                "ten": "2 quả xoài",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Sữa tươi",
+                "icon": "nguyen-lieu-mat-ong.svg"
+            },
+            {
+                "ten": "Đá viên",
+                "icon": "nguyen-lieu-ngu-vi.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Gọt vỏ và cắt xoài.",
+            "Cho xoài vào máy xay.",
+            "Thêm sữa tươi và đá viên.",
+            "Xay nhuyễn hỗn hợp.",
+            "Rót ra ly và thưởng thức."
+        ],
+        "video": ""
+    },
+    {
+        "id": "che-dau-xanh",
+        "ten": "Chè đậu xanh",
+        "danhMuc": "Món tráng miệng",
+        "thoiGian": 60,
+        "khauPhan": 4,
+        "doKho": "Dễ",
+        "nganSach": 55000,
+        "hinhAnh": "images/mon-trang-mieng.jpg",
+        "danhGia": 4.6,
+        "soLuotDanhGia": 127,
+        "moTa": "Chè đậu xanh mềm thơm, có vị ngọt dịu và thích hợp dùng nóng hoặc lạnh.",
+        "nguyenLieu": [
+            {
+                "ten": "200 g đậu xanh",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "100 g đường",
+                "icon": "nguyen-lieu-mat-ong.svg"
+            },
+            {
+                "ten": "Nước cốt dừa",
+                "icon": "nguyen-lieu-mat-ong.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Ngâm đậu xanh.",
+            "Rửa sạch và nấu đậu đến khi mềm.",
+            "Thêm đường và khuấy đều.",
+            "Nấu thêm vài phút cho chè thấm vị.",
+            "Thêm nước cốt dừa và thưởng thức."
+        ],
+        "video": ""
+    },
+    {
+        "id": "dau-hu-sot-ca-chua",
+        "ten": "Đậu hũ sốt cà chua",
+        "danhMuc": "Món chay",
+        "thoiGian": 25,
+        "khauPhan": 3,
+        "doKho": "Dễ",
+        "nganSach": 50000,
+        "hinhAnh": "images/mon-chay.jpg",
+        "danhGia": 4.7,
+        "soLuotDanhGia": 136,
+        "moTa": "Đậu hũ sốt cà chua mềm béo, kết hợp với nước sốt cà chua đậm đà.",
+        "nguyenLieu": [
+            {
+                "ten": "400 g đậu hũ",
+                "icon": "nguyen-lieu-thit.svg"
+            },
+            {
+                "ten": "2 quả cà chua",
+                "icon": "nguyen-lieu-rau.svg"
+            },
+            {
+                "ten": "Tỏi",
+                "icon": "nguyen-lieu-toi.svg"
+            },
+            {
+                "ten": "Nước tương",
+                "icon": "nguyen-lieu-nuoc-tuong.svg"
+            }
+        ],
+        "cacBuoc": [
+            "Cắt đậu hũ thành miếng vừa ăn.",
+            "Chiên đậu hũ vàng nhẹ.",
+            "Băm nhỏ cà chua và tỏi.",
+            "Nấu sốt cà chua rồi cho đậu hũ vào.",
+            "Nêm nước tương và hoàn thiện món ăn."
+        ],
+        "video": ""
+    }
+]

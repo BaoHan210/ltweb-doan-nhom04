@@ -40,11 +40,23 @@
       <button class="nut" type="submit">Tìm kiếm</button>
     </form>
 
-    <p class="tai-khoan">
-      <button class="nut" type="button">Đăng ký</button> /
-      <button class="nut" type="button">Đăng nhập</button>
-    </p>
+    <div class="khu-vuc-tai-khoan">
 
+  <a
+    href="dang-ky.html"
+    class="nut nut-dang-ky"
+  >
+    Đăng ký
+  </a>
+
+  <a
+    href="dang-nhap.html"
+    class="nut nut-dang-nhap"
+  >
+    Đăng nhập
+  </a>
+
+</div>
   </header>
 
   <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
@@ -83,241 +95,158 @@
 
   <main class="kham-pha">
 
-    <section class="hero-kham-pha" aria-labelledby="tieu-de-hero-kham-pha">
-      <div class="hero-kham-pha-noi-dung">
-        <p class="hero-kham-pha-nhan">Tủ lạnh của tôi</p>
-        <h1 id="tieu-de-hero-kham-pha">Hôm nay ăn gì?</h1>
-        <p>Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp.</p>
-      </div>
-    </section>
+    <section class="khu-vuc-danh-sach-mon-an" aria-labelledby="tieu-de-mon-an">
 
-    <h2 class="tieu-de-kham-pha">Món ăn</h2>
+        <div class="tieu-de-danh-sach">
+            <div>
+                <p class="nhan-danh-sach">Khám phá</p>
+                <h1 id="tieu-de-mon-an">Món ăn</h1>
+            </div>
 
-    <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
-      <button class="nut-bo-loc dang-loc" type="button">Tất cả</button>
-      <button class="nut-bo-loc" type="button">Món chính</button>
-      <button class="nut-bo-loc" type="button">Món canh</button>
-      <button class="nut-bo-loc" type="button">Món xào</button>
-      <button class="nut-bo-loc" type="button">Món ăn vặt</button>
-      <button class="nut-bo-loc" type="button">Đồ uống</button>
-      <button class="nut-bo-loc" type="button">Món ăn nhanh</button>
-      <button class="nut-bo-loc" type="button">Món tráng miệng</button>
-      <button class="nut-bo-loc" type="button">Món chay</button>
-    </nav>
+            <form class="o-tim-mon-an" id="o-tim-mon-an" action="#" method="get">
+                <label for="tim-mon-an">Tìm món ăn</label>
 
-    <section class="danh-muc">
-      <h3 class="tieu-de-danh-muc">Các danh mục món ăn</h3>
+                <input
+                    type="search"
+                    id="tim-mon-an"
+                    name="keyword"
+                    placeholder="Tìm món ăn..."
+                    autocomplete="off"
+                >
+            </form>
+        </div>
 
-      <!-- Món chính -->
-      <details class="the-danh-muc danh-muc-1">
-        <summary>
-          <img
-            src="images/mon-chinh.jpg"
-            alt="Hình ảnh món chính"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món chính</span>
-        </summary>
+        <div class="thanh-cong-cu-mon-an">
 
-        <ul class="danh-sach-mon">
-          <li>
-            <a href="chi-tiet.html#cao-lau">
-              <img
-                src="images/cao-lau.jpg"
-                alt="Cao lầu Hội An"
-                width="180"
-                height="120"
-                loading="lazy"
-              >
-              <span>Cao lầu Hội An</span>
-            </a>
-          </li>
+            <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
 
-          <li>
-            <a href="chi-tiet.html#ca-kho-to">
-              <img
-                src="images/ca-kho-to.jpg"
-                alt="Cá kho tộ"
-                width="180"
-                height="120"
-loading="lazy"
-              >
-              <span>Cá kho tộ</span>
-            </a>
-          </li>
-        </ul>
-      </details>
+                <button
+                    class="nut-bo-loc dang-loc"
+                    type="button"
+                    data-danh-muc="tat-ca"
+                >
+                    Tất cả
+                </button>
 
-      <!-- Món canh -->
-      <details class="the-danh-muc danh-muc-2">
-        <summary>
-          <img
-            src="images/mon-canh.jpg"
-            alt="Hình ảnh món canh"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món canh</span>
-        </summary>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món chính"
+                >
+                    Món chính
+                </button>
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món canh"
+                >
+                    Món canh
+                </button>
 
-      <!-- Món ăn vặt -->
-      <details class="the-danh-muc danh-muc-3">
-        <summary>
-          <img
-            src="images/mon-an-vat.jpg"
-            alt="Hình ảnh món ăn vặt"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món ăn vặt</span>
-        </summary>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món xào"
+                >
+                    Món xào
+                </button>
 
-        <ul class="danh-sach-mon">
-          <li>
-            <a href="chi-tiet.html#goi-ngo-sen">
-              <img
-                src="images/goi-ngo-sen.jpg"
-                alt="Gỏi ngó sen"
-                width="180"
-                height="120"
-                loading="lazy"
-              >
-              <span>Gỏi ngó sen</span>
-            </a>
-          </li>
-        </ul>
-      </details>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món ăn vặt"
+                >
+                    Món ăn vặt
+                </button>
 
-      <!-- Đồ uống -->
-      <details class="the-danh-muc danh-muc-4">
-        <summary>
-          <img
-            src="images/do-uong.jpg"
-            alt="Hình ảnh đồ uống"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Đồ uống</span>
-        </summary>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Đồ uống"
+                >
+                    Đồ uống
+                </button>
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món ăn nhanh"
+                >
+                    Món ăn nhanh
+                </button>
 
-      <!-- Món xào -->
-      <details class="the-danh-muc danh-muc-5">
-        <summary>
-          <img
-            src="images/mon-xao.jpg"
-            alt="Hình ảnh món xào"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món xào</span>
-        </summary>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món tráng miệng"
+                >
+                    Món tráng miệng
+                </button>
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+                <button
+                    class="nut-bo-loc"
+                    type="button"
+                    data-danh-muc="Món chay"
+                >
+                    Món chay
+                </button>
 
-      <!-- Món chiên -->
-      <details class="the-danh-muc danh-muc-6">
-        <summary>
-          <img
-            src="images/mon-chien.jpg"
-            alt="Hình ảnh món chiên"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món chiên</span>
-        </summary>
+            </nav>
 
-        <ul class="danh-sach-mon">
-          <li>
-            <a href="chi-tiet.html#banh-xeo">
-              <img
-                src="images/banh-xeo.jpg"
-                alt="Bánh xèo"
-                width="180"
-                height="120"
-                loading="lazy"
-              >
-              <span>Bánh xèo</span>
-            </a>
-          </li>
-        </ul>
-      </details>
+            <div class="khu-vuc-sap-xep">
+                <label for="sap-xep">Sắp xếp</label>
 
-      <!-- Món ăn nhanh -->
-      <details class="the-danh-muc danh-muc-7">
-        <summary>
-          <img
-            src="images/mon-an-nhanh.jpg"
-            alt="Hình ảnh món ăn nhanh"
-width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món nhanh</span>
-        </summary>
+                <select id="sap-xep" name="sapXep">
+                    <option value="">Mặc định</option>
+                    <option value="danhGiaGiam">Đánh giá cao nhất</option>
+                    <option value="thoiGianTang">Thời gian ngắn nhất</option>
+                    <option value="nganSachTang">Ngân sách thấp nhất</option>
+                    <option value="tenTang">Tên A → Z</option>
+                </select>
+            </div>
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+        </div>
 
-      <!-- Món tráng miệng -->
-      <details class="the-danh-muc danh-muc-8">
-        <summary>
-          <img
-            src="images/mon-trang-mieng.jpg"
-            alt="Hình ảnh món tráng miệng"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món tráng miệng</span>
-        </summary>
+        <section class="khu-vuc-ket-qua" aria-labelledby="tieu-de-ket-qua">
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+            <div class="tieu-de-ket-qua">
+                <h2 id="tieu-de-ket-qua">Các món ăn</h2>
 
-      <!-- Món chay -->
-      <details class="the-danh-muc danh-muc-9">
-        <summary>
-          <img
-            src="images/mon-chay.jpg"
-            alt="Hình ảnh món chay"
-            width="180"
-            height="120"
-            loading="lazy"
-          >
-          <span>Món chay</span>
-        </summary>
+                <p class="so-luong-mon-an" id="so-luong-mon-an">
+                    Đang tải món ăn...
+                </p>
+            </div>
 
-        <p>Chưa có công thức được chia sẻ.</p>
-      </details>
+            <div
+                class="danh-sach-mon-an"
+                id="danh-sach-mon-an"
+            >
+                <p class="thong-bao-dang-tai">
+                    Đang tải món ăn...
+                </p>
+            </div>
+
+        </section>
+
+        <nav
+            class="phan-trang"
+            id="phan-trang"
+            aria-label="Phân trang danh sách món ăn"
+        >
+            <button
+                class="nut-phan-trang"
+                type="button"
+                data-trang="truoc"
+                aria-label="Trang trước"
+            >
+                ‹
+            </button>
+        </nav>
 
     </section>
 
-    <section class="cach-kham-pha">
-      <h2>Cách khám phá công thức</h2>
-
-      <ol>
-        <li>Chọn một danh mục món ăn.</li>
-        <li>Chọn món ăn muốn nấu.</li>
-        <li>Xem danh sách các công thức của món ăn.</li>
-        <li>Chọn một công thức để xem chi tiết.</li>
-      </ol>
-    </section>
-
-  </main>
+</main>
 
   <footer>
     <p>&copy; 2026 Cook with me - Nhóm 04</p>
@@ -334,6 +263,9 @@ width="180"
       </ul>
     </nav>
   </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/trang-danh-sach.js"></script>
 
 </body>
 
