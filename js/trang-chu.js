@@ -8,258 +8,41 @@ import { taiJSON } from './api.js';
 
 
 const khuVucDuLieuApi = document.querySelector(
-    '.du-lieu-api'
+    '.noi-dung-api'
 );
 
-
 /* ================================
-   TẠO NÚT TƯƠNG TÁC
+   TẠO THẺ MÓN ĂN TỪ API
    ================================ */
 
-const taoNutTuongTac = (
-    tenClass,
-    bieuTuong,
-    moTa
-) => {
+const taoTheMonAnApi = (monAn) => {
+    const theMonAn = document.createElement('article');
 
-    const nut =
-        document.createElement('button');
+    theMonAn.className = 'bai-viet-api';
 
-    nut.type = 'button';
+    const tieuDe = document.createElement('h3');
+    tieuDe.textContent = monAn.strMeal;
 
-    nut.className =
-        `nut-tuong-tac ${tenClass}`;
+    const thongTin = document.createElement('p');
 
-    nut.textContent =
-        bieuTuong;
+thongTin.className =
+    'thong-tin-mon-api';
 
-    nut.setAttribute(
-        'aria-label',
-        moTa
-    );
+thongTin.textContent =
+    `${monAn.strCategory || 'Món ăn'} · ${monAn.strArea || 'Ẩm thực quốc tế'}`;
 
-    nut.title =
-        moTa;
+    if (monAn.strMealThumb) {
+        const hinhAnh = document.createElement('img');
+        hinhAnh.src = monAn.strMealThumb;
+        hinhAnh.alt = monAn.strMeal;
+        hinhAnh.loading = 'lazy';
+        theMonAn.appendChild(hinhAnh);
+    }
 
-    return nut;
-};
+    theMonAn.appendChild(tieuDe);
+    theMonAn.appendChild(thongTin);
 
-
-/* ================================
-   TẠO KHU VỰC BÌNH LUẬN
-   ================================ */
-
-const taoKhuVucBinhLuan = (
-    idBaiViet
-) => {
-
-    const khuVuc =
-        document.createElement('div');
-
-    khuVuc.className =
-        'khu-vuc-binh-luan';
-
-    khuVuc.hidden = true;
-
-
-    const form =
-        document.createElement('form');
-
-    form.className =
-        'form-binh-luan';
-
-
-    const nhan =
-        document.createElement('label');
-
-    nhan.textContent =
-        'Bình luận';
-
-
-    const oNhap =
-        document.createElement('input');
-
-    oNhap.type = 'text';
-
-    oNhap.name =
-        'comment';
-
-    oNhap.placeholder =
-        'Viết bình luận...';
-
-    oNhap.maxLength = 200;
-
-    oNhap.autocomplete =
-        'off';
-
-
-    const nutGui =
-        document.createElement('button');
-
-    nutGui.type =
-        'submit';
-
-    nutGui.className =
-        'nut';
-
-    nutGui.textContent =
-        'Gửi';
-
-
-    const danhSach =
-        document.createElement('div');
-
-    danhSach.className =
-        'danh-sach-binh-luan';
-
-
-    form.dataset.baiVietId =
-        idBaiViet;
-
-    form.appendChild(nhan);
-    form.appendChild(oNhap);
-    form.appendChild(nutGui);
-
-    khuVuc.appendChild(form);
-    khuVuc.appendChild(danhSach);
-
-    return khuVuc;
-};
-
-
-/* ================================
-   TẠO BÀI VIẾT TỪ API
-   ================================ */
-
-const taoTheBangTin = (
-    baiViet
-) => {
-
-    const idBaiViet =
-        `api-${baiViet.id}`;
-
-
-    const baiVietItem =
-        document.createElement('article');
-
-    baiVietItem.className =
-        'bai-viet-api';
-
-    baiVietItem.dataset.baiVietId =
-        idBaiViet;
-
-
-    const tieuDe =
-        document.createElement('h3');
-
-    tieuDe.textContent =
-        baiViet.title;
-
-
-    const noiDung =
-        document.createElement('p');
-
-    noiDung.className =
-        'noi-dung-api';
-
-    noiDung.textContent =
-        baiViet.body;
-
-
-    const hanhDong =
-        document.createElement('div');
-
-    hanhDong.className =
-        'hanh-dong-bai-dang';
-
-
-    const nutThich =
-        taoNutTuongTac(
-            'nut-thich',
-            '♡',
-            'Thích bài viết'
-        );
-
-    nutThich.dataset.baiVietId =
-        idBaiViet;
-
-
-    const nutBinhLuan =
-        taoNutTuongTac(
-            'nut-binh-luan',
-            '💬',
-            'Bình luận'
-        );
-
-
-    const nutChiaSe =
-        taoNutTuongTac(
-            'nut-chia-se',
-            '↗',
-            'Chia sẻ bài viết'
-        );
-
-
-    const nutLuu =
-        taoNutTuongTac(
-            'nut-luu',
-            '🔖',
-            'Lưu bài viết'
-        );
-
-    nutLuu.dataset.baiVietId =
-        idBaiViet;
-
-
-    const nutXem =
-        taoNutTuongTac(
-            'nut-xem',
-            '⋯',
-            'Xem nội dung'
-        );
-
-
-    hanhDong.appendChild(
-        nutThich
-    );
-
-    hanhDong.appendChild(
-        nutBinhLuan
-    );
-
-    hanhDong.appendChild(
-        nutChiaSe
-    );
-
-    hanhDong.appendChild(
-        nutLuu
-    );
-
-    hanhDong.appendChild(
-        nutXem
-    );
-
-
-    baiVietItem.appendChild(
-        tieuDe
-    );
-
-    baiVietItem.appendChild(
-        noiDung
-    );
-
-    baiVietItem.appendChild(
-        hanhDong
-    );
-
-    baiVietItem.appendChild(
-        taoKhuVucBinhLuan(
-            idBaiViet
-        )
-    );
-
-
-    return baiVietItem;
+    return theMonAn;
 };
 
 
@@ -267,32 +50,28 @@ const taoTheBangTin = (
    HIỂN THỊ DỮ LIỆU API
    ================================ */
 
-const hienThiDuLieuApi = (
-    danhSachBaiViet
-) => {
-
+const hienThiDuLieuApi = (danhSachMonAn) => {
     if (khuVucDuLieuApi === null) {
         return;
     }
 
     khuVucDuLieuApi.replaceChildren();
 
+    if (
+        Array.isArray(danhSachMonAn) === false
+        || danhSachMonAn.length === 0
+    ) {
+        hienThiTrangThaiApi(
+            'Chưa có món ăn để hiển thị.'
+        );
 
-    danhSachBaiViet.forEach(
-        (baiViet) => {
+        return;
+    }
 
-            const baiVietItem =
-                taoTheBangTin(
-                    baiViet
-                );
-
-            khuVucDuLieuApi.appendChild(
-                baiVietItem
-            );
-        }
-    );
-
-    capNhatTrangThaiTuongTac();
+    danhSachMonAn.forEach((monAn) => {
+        const theMonAn = taoTheMonAnApi(monAn);
+        khuVucDuLieuApi.appendChild(theMonAn);
+    });
 };
 
 
@@ -487,9 +266,9 @@ const xuLyXemBaiViet = (
 
 
     const noiDungApi =
-        baiViet.querySelector(
-            '.noi-dung-api'
-        );
+    baiViet.querySelector(
+        '.thong-tin-mon-api'
+    );
 
     if (noiDungApi === null) {
         return;
@@ -950,29 +729,53 @@ const khoiTaoTuongTacBangTin = () => {
    HIỂN THỊ LỖI API
    ================================ */
 
-const hienThiLoiApi = () => {
+const hienThiTrangThaiApi = (
+    noiDung,
+    laLoi = false
+) => {
 
     if (khuVucDuLieuApi === null) {
         return;
     }
 
-
     khuVucDuLieuApi.replaceChildren();
-
 
     const thongBao =
         document.createElement('p');
 
     thongBao.className =
-        'thong-bao-loi';
+        laLoi
+            ? 'thong-bao-loi'
+            : 'thong-bao';
 
     thongBao.textContent =
-        'Không thể tải dữ liệu bảng tin lúc này.';
-
+        noiDung;
 
     khuVucDuLieuApi.appendChild(
         thongBao
     );
+};
+
+const hienThiLoiApi = () => {
+    if (khuVucDuLieuApi === null) {
+        return;
+    }
+
+    khuVucDuLieuApi.replaceChildren();
+
+    const thongBao = document.createElement('p');
+    thongBao.className = 'thong-bao-loi';
+    thongBao.textContent =
+        'Không thể tải dữ liệu món ăn lúc này.';
+
+    const nutThuLai = document.createElement('button');
+    nutThuLai.type = 'button';
+    nutThuLai.className = 'nut';
+    nutThuLai.textContent = 'Thử lại';
+    nutThuLai.addEventListener('click', taiDuLieuApi);
+
+    khuVucDuLieuApi.appendChild(thongBao);
+    khuVucDuLieuApi.appendChild(nutThuLai);
 };
 
 
@@ -981,20 +784,22 @@ const hienThiLoiApi = () => {
    ================================ */
 
 const taiDuLieuApi = async () => {
+    hienThiTrangThaiApi(
+        'Đang tải món ăn từ Public REST API...'
+    );
 
     try {
-
-        const danhSachBaiViet =
-            await taiJSON(
-                'https://jsonplaceholder.typicode.com/posts?_limit=3'
-            );
-
-        hienThiDuLieuApi(
-            danhSachBaiViet
+        const duLieu = await taiJSON(
+            'https://www.themealdb.com/api/json/v1/1/random.php'
         );
 
-    } catch (error) {
+        const danhSachMonAn =
+            Array.isArray(duLieu.meals)
+                ? duLieu.meals
+                : [];
 
+        hienThiDuLieuApi(danhSachMonAn);
+    } catch (error) {
         console.error(
             'Lỗi tải dữ liệu API:',
             error
@@ -1004,11 +809,131 @@ const taiDuLieuApi = async () => {
     }
 };
 
+/*
+ * Xử lý chức năng theo dõi người dùng.
+ * Trạng thái theo dõi được lưu trong localStorage.
+ */
+
+const KHOA_THEO_DOI = 'nguoiDungDangTheoDoi';
+
+const docDanhSachTheoDoi = () => {
+    const duLieu = localStorage.getItem(KHOA_THEO_DOI);
+
+    if (duLieu === null) {
+        return [];
+    }
+
+    try {
+        const danhSach = JSON.parse(duLieu);
+
+        if (!Array.isArray(danhSach)) {
+            return [];
+        }
+
+        return danhSach;
+    } catch (loi) {
+        return [];
+    }
+};
+
+const luuDanhSachTheoDoi = (danhSach) => {
+    localStorage.setItem(
+        KHOA_THEO_DOI,
+        JSON.stringify(danhSach)
+    );
+};
+
+const capNhatTrangThaiTheoDoi = () => {
+    const cacNutTheoDoi = document.querySelectorAll(
+        '.the-nguoi-dung .nut-phu'
+    );
+
+    const danhSachTheoDoi = docDanhSachTheoDoi();
+
+    cacNutTheoDoi.forEach((nut) => {
+        const theNguoiDung = nut.closest('.the-nguoi-dung');
+
+        if (theNguoiDung === null) {
+            return;
+        }
+
+        const nguoiDung = theNguoiDung.querySelector('h3');
+
+        if (nguoiDung === null) {
+            return;
+        }
+
+        const tenNguoiDung = nguoiDung.textContent.trim();
+
+        if (danhSachTheoDoi.includes(tenNguoiDung)) {
+            nut.textContent = 'Đang theo dõi';
+            nut.classList.add('dang-theo-doi');
+        } else {
+            nut.textContent = 'Theo dõi';
+            nut.classList.remove('dang-theo-doi');
+        }
+    });
+};
+
+const xuLyTheoDoi = (event) => {
+    const nutTheoDoi = event.target.closest(
+        '.the-nguoi-dung .nut-phu'
+    );
+
+    if (nutTheoDoi === null) {
+        return;
+    }
+
+    const theNguoiDung = nutTheoDoi.closest('.the-nguoi-dung');
+
+    if (theNguoiDung === null) {
+        return;
+    }
+
+    const nguoiDung = theNguoiDung.querySelector('h3');
+
+    if (nguoiDung === null) {
+        return;
+    }
+
+    const tenNguoiDung = nguoiDung.textContent.trim();
+
+    let danhSachTheoDoi = docDanhSachTheoDoi();
+
+    if (danhSachTheoDoi.includes(tenNguoiDung)) {
+        danhSachTheoDoi = danhSachTheoDoi.filter(
+            (ten) => ten !== tenNguoiDung
+        );
+    } else {
+        danhSachTheoDoi.push(tenNguoiDung);
+    }
+
+    luuDanhSachTheoDoi(danhSachTheoDoi);
+
+    capNhatTrangThaiTheoDoi();
+};
+
+const khoiTaoTheoDoi = () => {
+    const khuVucTheoDoi = document.querySelector(
+        '.goi-y-theo-doi'
+    );
+
+    if (khuVucTheoDoi === null) {
+        return;
+    }
+
+    khuVucTheoDoi.addEventListener(
+        'click',
+        xuLyTheoDoi
+    );
+
+    capNhatTrangThaiTheoDoi();
+};
 
 /* ================================
    KHỞI TẠO
    ================================ */
 
 khoiTaoTuongTacBangTin();
-
+khoiTaoTheoDoi();
 taiDuLieuApi();

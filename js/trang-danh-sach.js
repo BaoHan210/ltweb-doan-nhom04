@@ -6,17 +6,26 @@
 
 import { taiJSON } from './api.js';
 
+import {
+    kiemTraYeuThich,
+    doiTrangThaiYeuThich
+} from './yeu-thich.js';
+
+const SO_MON_MOI_TRANG = 8;
+
+let trangHienTai = 1;
 let danhSachMonAn = [];
 let danhSachMonAnHienThi = [];
 let danhMucDangChon = 'tat-ca';
 
-const SO_MON_MOI_TRANG = 8;
-let trangHienTai = 1;
-
 const layPhanTuTrang = () => {
     return {
-        danhSachMonAn: document.querySelector('#danh-sach-mon-an'),
-        soLuongMonAn: document.querySelector('#so-luong-mon-an')
+        danhSachMonAn: document.querySelector(
+            '#danh-sach-mon-an'
+        ),
+        soLuongMonAn: document.querySelector(
+            '#so-luong-mon-an'
+        )
     };
 };
 
@@ -36,10 +45,13 @@ const layTuKhoaTrenUrl = () => {
 };
 
 const timKiemVaLocMonAn = () => {
-    const oTimKiem = document.querySelector('#tim-mon-an');
+    const oTimKiem =
+        document.querySelector('#tim-mon-an');
 
     if (oTimKiem === null) {
-        danhSachMonAnHienThi = [...danhSachMonAn];
+        danhSachMonAnHienThi = [
+            ...danhSachMonAn
+        ];
 
         return;
     }
@@ -48,22 +60,29 @@ const timKiemVaLocMonAn = () => {
         oTimKiem.value.trim()
     );
 
-    danhSachMonAnHienThi = danhSachMonAn.filter((monAn) => {
-        const tenMonAn = boDauTiengViet(monAn.ten);
+    danhSachMonAnHienThi =
+        danhSachMonAn.filter((monAn) => {
+            const tenMonAn =
+                boDauTiengViet(monAn.ten);
 
-        const phuHopTuKhoa =
-            tuKhoa === '' || tenMonAn.includes(tuKhoa);
+            const phuHopTuKhoa =
+                tuKhoa === '' ||
+                tenMonAn.includes(tuKhoa);
 
-        const phuHopDanhMuc =
-            danhMucDangChon === 'tat-ca' ||
-            monAn.danhMuc === danhMucDangChon;
+            const phuHopDanhMuc =
+                danhMucDangChon === 'tat-ca' ||
+                monAn.danhMuc === danhMucDangChon;
 
-        return phuHopTuKhoa && phuHopDanhMuc;
-    });
+            return (
+                phuHopTuKhoa &&
+                phuHopDanhMuc
+            );
+        });
 };
 
 const sapXepMonAn = () => {
-    const oSapXep = document.querySelector('#sap-xep');
+    const oSapXep =
+        document.querySelector('#sap-xep');
 
     if (oSapXep === null) {
         return;
@@ -72,44 +91,61 @@ const sapXepMonAn = () => {
     const kieuSapXep = oSapXep.value;
 
     if (kieuSapXep === '') {
-        danhSachMonAnHienThi.sort((monAnA, monAnB) => {
-            return danhSachMonAn.indexOf(monAnA) -
-                danhSachMonAn.indexOf(monAnB);
-        });
+        danhSachMonAnHienThi.sort(
+            (monAnA, monAnB) => {
+                return (
+                    danhSachMonAn.indexOf(monAnA) -
+                    danhSachMonAn.indexOf(monAnB)
+                );
+            }
+        );
 
         return;
     }
 
-    danhSachMonAnHienThi.sort((monAnA, monAnB) => {
-        if (kieuSapXep === 'danhGiaGiam') {
-            return monAnB.danhGia - monAnA.danhGia;
-        }
+    danhSachMonAnHienThi.sort(
+        (monAnA, monAnB) => {
+            if (kieuSapXep === 'danhGiaGiam') {
+                return (
+                    monAnB.danhGia -
+                    monAnA.danhGia
+                );
+            }
 
-        if (kieuSapXep === 'thoiGianTang') {
-            return monAnA.thoiGian - monAnB.thoiGian;
-        }
+            if (kieuSapXep === 'thoiGianTang') {
+                return (
+                    monAnA.thoiGian -
+                    monAnB.thoiGian
+                );
+            }
 
-        if (kieuSapXep === 'nganSachTang') {
-            return monAnA.nganSach - monAnB.nganSach;
-        }
+            if (kieuSapXep === 'nganSachTang') {
+                return (
+                    monAnA.nganSach -
+                    monAnB.nganSach
+                );
+            }
 
-        if (kieuSapXep === 'tenTang') {
-            return monAnA.ten.localeCompare(
-                monAnB.ten,
-                'vi'
-            );
-        }
+            if (kieuSapXep === 'tenTang') {
+                return monAnA.ten.localeCompare(
+                    monAnB.ten,
+                    'vi'
+                );
+            }
 
-        return 0;
-    });
+            return 0;
+        }
+    );
 };
 
 const layMonAnTheoTrang = () => {
     const viTriBatDau =
-        (trangHienTai - 1) * SO_MON_MOI_TRANG;
+        (trangHienTai - 1) *
+        SO_MON_MOI_TRANG;
 
     const viTriKetThuc =
-        viTriBatDau + SO_MON_MOI_TRANG;
+        viTriBatDau +
+        SO_MON_MOI_TRANG;
 
     return danhSachMonAnHienThi.slice(
         viTriBatDau,
@@ -117,67 +153,84 @@ const layMonAnTheoTrang = () => {
     );
 };
 
-const xuLyChonDanhMuc = (event) => {
-    const nutBoLoc = event.currentTarget;
-
-    danhMucDangChon = nutBoLoc.dataset.danhMuc;
-
-    document.querySelectorAll('.nut-bo-loc').forEach((nut) => {
-        nut.classList.remove('dang-loc');
-    });
-
-    nutBoLoc.classList.add('dang-loc');
-
-    timKiemVaLocMonAn();
-    sapXepMonAn();
-
-    trangHienTai = 1;
-
-    hienThiDanhSachMonAn();
-};
-
 const dinhDangNganSach = (nganSach) => {
-    return new Intl.NumberFormat('vi-VN').format(nganSach) + ' đồng';
+    return (
+        new Intl.NumberFormat('vi-VN').format(
+            nganSach
+        ) + ' đồng'
+    );
 };
 
 const taoTheMonAn = (monAn) => {
-    const theMonAn = document.createElement('article');
+    const theMonAn =
+        document.createElement('article');
+
     theMonAn.className = 'the-mon-an';
 
-    const lienKet = document.createElement('a');
-    lienKet.href = `chi-tiet.html?id=${monAn.id}`;
+    const lienKet =
+        document.createElement('a');
 
-    const hinhAnh = document.createElement('img');
+    lienKet.href =
+        `chi-tiet.html?id=${monAn.id}`;
+
+    const hinhAnh =
+        document.createElement('img');
+
     hinhAnh.src = monAn.hinhAnh;
     hinhAnh.alt = monAn.ten;
     hinhAnh.width = 280;
     hinhAnh.height = 190;
     hinhAnh.loading = 'lazy';
 
-    const thongTin = document.createElement('div');
-    thongTin.className = 'thong-tin-the-mon-an';
+    const thongTin =
+        document.createElement('div');
 
-    const tenMonAn = document.createElement('h3');
+    thongTin.className =
+        'thong-tin-the-mon-an';
+
+    const tenMonAn =
+        document.createElement('h3');
+
     tenMonAn.textContent = monAn.ten;
 
-    const thongTinCoBan = document.createElement('div');
-    thongTinCoBan.className = 'thong-tin-co-ban';
+    const thongTinCoBan =
+        document.createElement('div');
 
-    const thoiGian = document.createElement('span');
-    thoiGian.textContent = `${monAn.thoiGian} phút`;
+    thongTinCoBan.className =
+        'thong-tin-co-ban';
 
-    const danhGia = document.createElement('span');
-    danhGia.textContent = `★ ${monAn.danhGia}`;
+    const thoiGian =
+        document.createElement('span');
 
-    const soLuotDanhGia = document.createElement('span');
-    soLuotDanhGia.textContent = `${monAn.soLuotDanhGia} đánh giá`;
+    thoiGian.textContent =
+        `${monAn.thoiGian} phút`;
 
-    const nganSach = document.createElement('span');
-    nganSach.textContent = dinhDangNganSach(monAn.nganSach);
+    const danhGia =
+        document.createElement('span');
 
-    const nhanDanhMuc = document.createElement('span');
-    nhanDanhMuc.className = 'nhan-danh-muc';
-    nhanDanhMuc.textContent = monAn.danhMuc;
+    danhGia.textContent =
+        `★ ${monAn.danhGia}`;
+
+    const soLuotDanhGia =
+        document.createElement('span');
+
+    soLuotDanhGia.textContent =
+        `${monAn.soLuotDanhGia} đánh giá`;
+
+    const nganSach =
+        document.createElement('span');
+
+    nganSach.textContent =
+        dinhDangNganSach(monAn.nganSach);
+
+    const nhanDanhMuc =
+        document.createElement('span');
+
+    nhanDanhMuc.className =
+        'nhan-danh-muc';
+
+    nhanDanhMuc.textContent =
+        monAn.danhMuc;
 
     thongTinCoBan.append(
         thoiGian,
@@ -197,13 +250,50 @@ const taoTheMonAn = (monAn) => {
         thongTin
     );
 
-    theMonAn.append(lienKet);
+    const nutYeuThich =
+        document.createElement('button');
+
+    nutYeuThich.type = 'button';
+    nutYeuThich.className =
+        'nut-yeu-thich';
+
+    nutYeuThich.dataset.idMonAn =
+        monAn.id;
+
+    const daYeuThich =
+        kiemTraYeuThich(monAn.id);
+
+    if (daYeuThich === true) {
+        nutYeuThich.textContent = '♥';
+
+        nutYeuThich.classList.add(
+            'da-luu'
+        );
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            `Bỏ ${monAn.ten} khỏi yêu thích`
+        );
+    } else {
+        nutYeuThich.textContent = '♡';
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            `Thêm ${monAn.ten} vào yêu thích`
+        );
+    }
+
+    theMonAn.append(
+        lienKet,
+        nutYeuThich
+    );
 
     return theMonAn;
 };
 
 const hienThiDanhSachMonAn = () => {
-    const phanTu = layPhanTuTrang();
+    const phanTu =
+        layPhanTuTrang();
 
     if (
         phanTu.danhSachMonAn === null ||
@@ -217,26 +307,37 @@ const hienThiDanhSachMonAn = () => {
     phanTu.soLuongMonAn.textContent =
         `${danhSachMonAnHienThi.length} món ăn`;
 
-    if (danhSachMonAnHienThi.length === 0) {
-        const thongBao = document.createElement('p');
+    if (
+        danhSachMonAnHienThi.length === 0
+    ) {
+        const thongBao =
+            document.createElement('p');
 
-        thongBao.className = 'thong-bao-khong-co-mon';
+        thongBao.className =
+            'thong-bao-khong-co-mon';
+
         thongBao.textContent =
             'Không tìm thấy món ăn phù hợp.';
 
-        phanTu.danhSachMonAn.append(thongBao);
+        phanTu.danhSachMonAn.append(
+            thongBao
+        );
 
         capNhatPhanTrang();
 
         return;
     }
 
-    const danhSachTheoTrang = layMonAnTheoTrang();
+    const danhSachTheoTrang =
+        layMonAnTheoTrang();
 
     danhSachTheoTrang.forEach((monAn) => {
-        const theMonAn = taoTheMonAn(monAn);
+        const theMonAn =
+            taoTheMonAn(monAn);
 
-        phanTu.danhSachMonAn.append(theMonAn);
+        phanTu.danhSachMonAn.append(
+            theMonAn
+        );
     });
 
     capNhatPhanTrang();
@@ -244,7 +345,9 @@ const hienThiDanhSachMonAn = () => {
 
 const capNhatPhanTrang = () => {
     const khuVucPhanTrang =
-        document.querySelector('#phan-trang');
+        document.querySelector(
+            '#phan-trang'
+        );
 
     if (khuVucPhanTrang === null) {
         return;
@@ -252,9 +355,11 @@ const capNhatPhanTrang = () => {
 
     khuVucPhanTrang.replaceChildren();
 
-    const tongSoTrang = Math.ceil(
-        danhSachMonAnHienThi.length / SO_MON_MOI_TRANG
-    );
+    const tongSoTrang =
+        Math.ceil(
+            danhSachMonAnHienThi.length /
+            SO_MON_MOI_TRANG
+        );
 
     if (tongSoTrang <= 1) {
         khuVucPhanTrang.hidden = true;
@@ -264,49 +369,71 @@ const capNhatPhanTrang = () => {
 
     khuVucPhanTrang.hidden = false;
 
-    const nutTrangTruoc = taoNutPhanTrang(
-        '‹',
-        'truoc'
+    const nutTrangTruoc =
+        taoNutPhanTrang(
+            '‹',
+            'truoc'
+        );
+
+    nutTrangTruoc.disabled =
+        trangHienTai === 1;
+
+    khuVucPhanTrang.append(
+        nutTrangTruoc
     );
-
-    nutTrangTruoc.disabled = trangHienTai === 1;
-
-    khuVucPhanTrang.append(nutTrangTruoc);
 
     for (
         let soTrang = 1;
         soTrang <= tongSoTrang;
         soTrang += 1
     ) {
-        const nutTrang = taoNutPhanTrang(
-            soTrang,
-            soTrang
-        );
+        const nutTrang =
+            taoNutPhanTrang(
+                soTrang,
+                soTrang
+            );
 
-        if (soTrang === trangHienTai) {
-            nutTrang.classList.add('dang-chon');
+        if (
+            soTrang === trangHienTai
+        ) {
+            nutTrang.classList.add(
+                'dang-chon'
+            );
         }
 
-        khuVucPhanTrang.append(nutTrang);
+        khuVucPhanTrang.append(
+            nutTrang
+        );
     }
 
-    const nutTrangSau = taoNutPhanTrang(
-        '›',
-        'sau'
-    );
+    const nutTrangSau =
+        taoNutPhanTrang(
+            '›',
+            'sau'
+        );
 
     nutTrangSau.disabled =
         trangHienTai === tongSoTrang;
 
-    khuVucPhanTrang.append(nutTrangSau);
+    khuVucPhanTrang.append(
+        nutTrangSau
+    );
 };
 
-const taoNutPhanTrang = (noiDung, giaTri) => {
-    const nut = document.createElement('button');
+const taoNutPhanTrang = (
+    noiDung,
+    giaTri
+) => {
+    const nut =
+        document.createElement('button');
 
-    nut.className = 'nut-phan-trang';
+    nut.className =
+        'nut-phan-trang';
+
     nut.type = 'button';
-    nut.textContent = noiDung;
+
+    nut.textContent =
+        noiDung;
 
     if (giaTri === 'truoc') {
         nut.setAttribute(
@@ -325,17 +452,24 @@ const taoNutPhanTrang = (noiDung, giaTri) => {
         );
     }
 
-    nut.addEventListener('click', () => {
-        xuLyChuyenTrang(giaTri);
-    });
+    nut.addEventListener(
+        'click',
+        () => {
+            xuLyChuyenTrang(giaTri);
+        }
+    );
 
     return nut;
 };
 
-const xuLyChuyenTrang = (giaTri) => {
-    const tongSoTrang = Math.ceil(
-        danhSachMonAnHienThi.length / SO_MON_MOI_TRANG
-    );
+const xuLyChuyenTrang = (
+    giaTri
+) => {
+    const tongSoTrang =
+        Math.ceil(
+            danhSachMonAnHienThi.length /
+            SO_MON_MOI_TRANG
+        );
 
     if (giaTri === 'truoc') {
         if (trangHienTai > 1) {
@@ -346,77 +480,270 @@ const xuLyChuyenTrang = (giaTri) => {
             trangHienTai += 1;
         }
     } else {
-        trangHienTai = Number(giaTri);
+        trangHienTai =
+            Number(giaTri);
     }
 
     hienThiDanhSachMonAn();
 };
 
-const taiDuLieuMonAn = async () => {
-    try {
-        danhSachMonAn = await taiJSON('data/mon-an.json');
+const hienThiTrangThaiTaiDuLieu = () => {
+    const phanTu =
+        layPhanTuTrang();
 
-        if (Array.isArray(danhSachMonAn) === false) {
-            throw new Error('Dữ liệu món ăn không đúng định dạng.');
-        }
-        danhSachMonAnHienThi = [...danhSachMonAn];
-
-timKiemVaLocMonAn();
-sapXepMonAn();
-
-hienThiDanhSachMonAn();
-    } catch (error) {
-        const phanTu = layPhanTuTrang();
-
-        if (phanTu.danhSachMonAn === null) {
-            return;
-        }
-
-        phanTu.danhSachMonAn.replaceChildren();
-
-        const thongBao = document.createElement('p');
-
-        thongBao.className = 'thong-bao-loi';
-        thongBao.textContent =
-            'Không thể tải danh sách món ăn. Vui lòng thử lại sau.';
-
-        phanTu.danhSachMonAn.append(thongBao);
-
-        console.error(error);
-    }
-};
-
-const xuLyTimKiemHeader = (event) => {
-    event.preventDefault();
-
-    const oTimKiemHeader =
-        document.querySelector('#search');
-
-    if (oTimKiemHeader === null) {
+    if (
+        phanTu.danhSachMonAn === null
+    ) {
         return;
     }
 
-    const tuKhoa = oTimKiemHeader.value.trim();
+    phanTu.danhSachMonAn.replaceChildren();
 
-    const url = new URL(
-        'danh-sach.html',
-        window.location.href
+    const thongBao =
+        document.createElement('p');
+
+    thongBao.className =
+        'thong-bao-dang-tai';
+
+    thongBao.textContent =
+        'Đang tải danh sách món ăn...';
+
+    phanTu.danhSachMonAn.append(
+        thongBao
     );
 
-    if (tuKhoa !== '') {
-        url.searchParams.set('keyword', tuKhoa);
+    if (
+        phanTu.soLuongMonAn !== null
+    ) {
+        phanTu.soLuongMonAn.textContent =
+            'Đang tải món ăn...';
+    }
+};
+
+const hienThiLoiTaiDuLieu = (
+    loi
+) => {
+    const phanTu =
+        layPhanTuTrang();
+
+    if (
+        phanTu.danhSachMonAn === null
+    ) {
+        return;
     }
 
-    window.location.href = url.toString();
+    phanTu.danhSachMonAn.replaceChildren();
+
+    const thongBao =
+        document.createElement('p');
+
+    thongBao.className =
+        'thong-bao-loi';
+
+    thongBao.textContent =
+        'Không thể tải danh sách món ăn. Vui lòng thử lại.';
+
+    const nutThuLai =
+        document.createElement('button');
+
+    nutThuLai.type = 'button';
+
+    nutThuLai.className = 'nut';
+
+    nutThuLai.textContent =
+        'Thử lại';
+
+    nutThuLai.addEventListener(
+        'click',
+        () => {
+            taiDuLieuMonAn();
+        }
+    );
+
+    phanTu.danhSachMonAn.append(
+        thongBao,
+        nutThuLai
+    );
+
+    if (
+        phanTu.soLuongMonAn !== null
+    ) {
+        phanTu.soLuongMonAn.textContent =
+            'Không thể tải dữ liệu';
+    }
+
+    console.error(loi);
+};
+
+const taiDuLieuMonAn = async () => {
+    hienThiTrangThaiTaiDuLieu();
+
+    try {
+        const duLieu =
+            await taiJSON(
+                'data/mon-an.json'
+            );
+
+        if (
+            Array.isArray(duLieu) === false
+        ) {
+            throw new Error(
+                'Dữ liệu món ăn không đúng định dạng.'
+            );
+        }
+
+        danhSachMonAn =
+            duLieu;
+
+        danhSachMonAnHienThi =
+            [...danhSachMonAn];
+
+        timKiemVaLocMonAn();
+        sapXepMonAn();
+
+        trangHienTai = 1;
+
+        hienThiDanhSachMonAn();
+    } catch (error) {
+        hienThiLoiTaiDuLieu(
+            error
+        );
+    }
+};
+
+const xuLyTimKiemHeader = (
+    event
+) => {
+    event.preventDefault();
+
+    const oTimKiemHeader =
+        document.querySelector(
+            '#search'
+        );
+
+    if (
+        oTimKiemHeader === null
+    ) {
+        return;
+    }
+
+    const tuKhoa =
+        oTimKiemHeader.value.trim();
+
+    const url =
+        new URL(
+            'danh-sach.html',
+            window.location.href
+        );
+
+    if (tuKhoa !== '') {
+        url.searchParams.set(
+            'keyword',
+            tuKhoa
+        );
+    }
+
+    window.location.href =
+        url.toString();
+};
+
+const xuLyChonDanhMuc = (
+    event
+) => {
+    const nutBoLoc =
+        event.currentTarget;
+
+    danhMucDangChon =
+        nutBoLoc.dataset.danhMuc;
+
+    document
+        .querySelectorAll(
+            '.nut-bo-loc'
+        )
+        .forEach((nut) => {
+            nut.classList.remove(
+                'dang-loc'
+            );
+        });
+
+    nutBoLoc.classList.add(
+        'dang-loc'
+    );
+
+    timKiemVaLocMonAn();
+    sapXepMonAn();
+
+    trangHienTai = 1;
+
+    hienThiDanhSachMonAn();
+};
+
+const xuLyYeuThich = (
+    event
+) => {
+    const nutYeuThich =
+        event.target.closest(
+            '.nut-yeu-thich'
+        );
+
+    if (
+        nutYeuThich === null
+    ) {
+        return;
+    }
+
+    const idMonAn =
+        nutYeuThich.dataset.idMonAn;
+
+    if (
+        idMonAn === undefined
+    ) {
+        return;
+    }
+
+    const daYeuThich =
+        doiTrangThaiYeuThich(
+            idMonAn
+        );
+
+    if (
+        daYeuThich === true
+    ) {
+        nutYeuThich.textContent =
+            '♥';
+
+        nutYeuThich.classList.add(
+            'da-luu'
+        );
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            'Bỏ khỏi yêu thích'
+        );
+    } else {
+        nutYeuThich.textContent =
+            '♡';
+
+        nutYeuThich.classList.remove(
+            'da-luu'
+        );
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            'Thêm vào yêu thích'
+        );
+    }
 };
 
 const khoiTaoTrangDanhSach = () => {
-
     const oTimKiem =
-        document.querySelector('#tim-mon-an');
+        document.querySelector(
+            '#tim-mon-an'
+        );
 
-    if (oTimKiem !== null) {
-
+    if (
+        oTimKiem !== null
+    ) {
         const tuKhoaTrenUrl =
             layTuKhoaTrenUrl();
 
@@ -426,7 +753,6 @@ const khoiTaoTrangDanhSach = () => {
         oTimKiem.addEventListener(
             'input',
             () => {
-
                 timKiemVaLocMonAn();
                 sapXepMonAn();
 
@@ -438,44 +764,55 @@ const khoiTaoTrangDanhSach = () => {
     }
 
     const danhSachNutBoLoc =
-        document.querySelectorAll('.nut-bo-loc');
-
-    danhSachNutBoLoc.forEach((nutBoLoc) => {
-        nutBoLoc.addEventListener(
-            'click',
-            xuLyChonDanhMuc
+        document.querySelectorAll(
+            '.nut-bo-loc'
         );
-    });
 
-    const oSapXep = document.querySelector('#sap-xep');
+    danhSachNutBoLoc.forEach(
+        (nutBoLoc) => {
+            nutBoLoc.addEventListener(
+                'click',
+                xuLyChonDanhMuc
+            );
+        }
+    );
 
-    if (oSapXep !== null) {
-        oSapXep.addEventListener('change', () => {
-            timKiemVaLocMonAn();
-            sapXepMonAn();
+    const oSapXep =
+        document.querySelector(
+            '#sap-xep'
+        );
 
-            trangHienTai = 1;
+    if (
+        oSapXep !== null
+    ) {
+        oSapXep.addEventListener(
+            'change',
+            () => {
+                timKiemVaLocMonAn();
+                sapXepMonAn();
 
-            hienThiDanhSachMonAn();
-        });
+                trangHienTai = 1;
+
+                hienThiDanhSachMonAn();
+            }
+        );
+    }
+
+    const khuVucDanhSach =
+        document.querySelector(
+            '#danh-sach-mon-an'
+        );
+
+    if (
+        khuVucDanhSach !== null
+    ) {
+        khuVucDanhSach.addEventListener(
+            'click',
+            xuLyYeuThich
+        );
     }
 
     taiDuLieuMonAn();
 };
 
-const khoiTaoTimKiemHeader = () => {
-    const formTimKiem =
-        document.querySelector('.o-tim-kiem');
-
-    if (formTimKiem === null) {
-        return;
-    }
-
-    formTimKiem.addEventListener(
-        'submit',
-        xuLyTimKiemHeader
-    );
-};
-
-khoiTaoTimKiemHeader();
 khoiTaoTrangDanhSach();

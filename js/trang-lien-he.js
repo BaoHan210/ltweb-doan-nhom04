@@ -511,6 +511,8 @@ const hienThiThongBao = (
     thongBao.className =
         'thong-bao-lien-he';
 
+    thongBao.setAttribute('aria-live', 'polite');
+
     if (laLoi === true) {
         thongBao.classList.add(
             'thong-bao-loi'
@@ -681,12 +683,46 @@ const khoiTaoKiemTra = () => {
 
     if (tenNguoiGui !== null) {
         tenNguoiGui.addEventListener(
+            'blur',
+            kiemTraHoTen
+        );
+
+        tenNguoiGui.addEventListener(
             'input',
             kiemTraHoTen
         );
     }
 
+    if (email !== null) {
+        email.addEventListener(
+            'blur',
+            kiemTraEmail
+        );
+
+        email.addEventListener(
+            'input',
+            kiemTraEmail
+        );
+    }
+
+    if (chuDe !== null) {
+        chuDe.addEventListener(
+            'blur',
+            kiemTraChuDe
+        );
+
+        chuDe.addEventListener(
+            'change',
+            kiemTraChuDe
+        );
+    }
+
     if (tenMon !== null) {
+        tenMon.addEventListener(
+            'blur',
+            kiemTraTenMon
+        );
+
         tenMon.addEventListener(
             'input',
             kiemTraTenMon
@@ -695,12 +731,34 @@ const khoiTaoKiemTra = () => {
 
     if (soNguoiAn !== null) {
         soNguoiAn.addEventListener(
+            'blur',
+            kiemTraSoNguoiAn
+        );
+
+        soNguoiAn.addEventListener(
             'input',
             kiemTraSoNguoiAn
         );
     }
 
+    if (thoiGianNau !== null) {
+        thoiGianNau.addEventListener(
+            'blur',
+            kiemTraThoiGianNau
+        );
+
+        thoiGianNau.addEventListener(
+            'input',
+            kiemTraThoiGianNau
+        );
+    }
+
     if (danhMuc !== null) {
+        danhMuc.addEventListener(
+            'blur',
+            kiemTraDanhMuc
+        );
+
         danhMuc.addEventListener(
             'change',
             kiemTraDanhMuc
@@ -709,32 +767,27 @@ const khoiTaoKiemTra = () => {
 
     if (noiDungCongThuc !== null) {
         noiDungCongThuc.addEventListener(
+            'blur',
+            kiemTraNoiDungCongThuc
+        );
+
+        noiDungCongThuc.addEventListener(
             'input',
             kiemTraNoiDungCongThuc
         );
     }
 
-    if (email !== null) {
-    email.addEventListener(
-        'input',
-        kiemTraEmail
-    );
-}
+    if (noiDung !== null) {
+        noiDung.addEventListener(
+            'blur',
+            kiemTraNoiDung
+        );
 
-if (chuDe !== null) {
-    chuDe.addEventListener(
-        'change',
-        kiemTraChuDe
-    );
-}
-
-if (noiDung !== null) {
-    noiDung.addEventListener(
-        'input',
-        kiemTraNoiDung
-    );
-}
-
+        noiDung.addEventListener(
+            'input',
+            kiemTraNoiDung
+        );
+    }
 };
 
 

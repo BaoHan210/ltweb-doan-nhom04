@@ -6,6 +6,9 @@
 
 const tenKhoaTaiKhoan = 'taiKhoanNguoiDung';
 
+const tenKhoaNguoiDungHienTai =
+    'nguoiDungHienTai';
+
 
 export const docDanhSachTaiKhoan = () => {
 
@@ -82,9 +85,6 @@ export const taoTaiKhoan = (
     return thongTinTaiKhoan;
 };
 
-const tenKhoaNguoiDungHienTai =
-    'nguoiDungHienTai';
-
 
 export const dangNhap = (
     email,
@@ -158,4 +158,97 @@ export const daDangNhap = () => {
     return (
         docNguoiDungHienTai() !== null
     );
+};
+
+
+/*
+ * Đổi mật khẩu tài khoản.
+ *
+ * Trả về:
+ * - true: đổi mật khẩu thành công.
+ * - false: không tìm thấy tài khoản hoặc mật khẩu cũ không đúng.
+ */
+export const doiMatKhau = (
+    idTaiKhoan,
+    matKhauCu,
+    matKhauMoi
+) => {
+
+    const danhSachTaiKhoan =
+        docDanhSachTaiKhoan();
+
+    const viTriTaiKhoan =
+        danhSachTaiKhoan.findIndex(
+            (taiKhoan) => {
+                return taiKhoan.id === idTaiKhoan;
+            }
+        );
+
+    if (viTriTaiKhoan === -1) {
+        return false;
+    }
+
+    const taiKhoan =
+        danhSachTaiKhoan[viTriTaiKhoan];
+
+    if (taiKhoan.matKhau !== matKhauCu) {
+        return false;
+    }
+
+    taiKhoan.matKhau = matKhauMoi;
+
+    danhSachTaiKhoan[viTriTaiKhoan] =
+        taiKhoan;
+
+    ghiDanhSachTaiKhoan(
+        danhSachTaiKhoan
+    );
+
+    return true;
+};
+
+
+/*
+ * Xóa tài khoản người dùng.
+ *
+ * Trả về:
+ * - true: xóa tài khoản thành công.
+ * - false: không tìm thấy tài khoản.
+ */
+export const xoaTaiKhoan = (
+    idTaiKhoan
+) => {
+
+    const danhSachTaiKhoan =
+        docDanhSachTaiKhoan();
+
+    const danhSachMoi =
+        danhSachTaiKhoan.filter(
+            (taiKhoan) => {
+                return taiKhoan.id !== idTaiKhoan;
+            }
+        );
+
+    if (
+        danhSachMoi.length ===
+        danhSachTaiKhoan.length
+    ) {
+        return false;
+    }
+
+    ghiDanhSachTaiKhoan(
+        danhSachMoi
+    );
+
+    const nguoiDungHienTai =
+        docNguoiDungHienTai();
+
+    if (
+        nguoiDungHienTai !== null
+        && nguoiDungHienTai.id === idTaiKhoan
+    ) {
+        dangXuat();
+    }
+
+    return true;
 };

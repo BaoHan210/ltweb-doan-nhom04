@@ -1,7 +1,9 @@
+document.documentElement.classList.add('js');
+
 /*
  * main.js
  * Xử lý các chức năng dùng chung trên toàn bộ website.
- * Cập nhật trạng thái tài khoản và số lượng món ăn yêu thích.
+ * Cập nhật trạng thái tài khoản, yêu thích và menu mobile.
  */
 
 import {
@@ -197,22 +199,91 @@ const khoiTaoTimKiemMonAn = () => {
     );
 };
 
+const dongMenuMobile = (menu, nutMenu) => {
+    menu.classList.remove('mo');
+    nutMenu.setAttribute('aria-expanded', 'false');
+    nutMenu.setAttribute(
+        'aria-label',
+        'Mở menu điều hướng'
+    );
+};
+
+const khoiTaoMenuMobile = () => {
+    const thanhDieuHuong = document.querySelector('.thanh-dieu-huong');
+
+    if (thanhDieuHuong === null) {
+        return;
+    }
+
+    const menu = thanhDieuHuong.querySelector(':scope > .menu');
+
+    if (menu === null) {
+        return;
+    }
+
+    let nutMenu = thanhDieuHuong.querySelector('.nut-menu');
+
+    if (nutMenu === null) {
+        nutMenu = document.createElement('button');
+        nutMenu.type = 'button';
+        nutMenu.className = 'nut-menu';
+        nutMenu.setAttribute('aria-expanded', 'false');
+        nutMenu.setAttribute('aria-label', 'Mở menu điều hướng');
+        nutMenu.textContent = '☰';
+
+        thanhDieuHuong.insertBefore(nutMenu, menu);
+    }
+
+    if (menu.id === '') {
+        menu.id = 'menu-dieu-huong-chinh';
+    }
+
+    nutMenu.setAttribute('aria-controls', menu.id);
+
+    nutMenu.addEventListener('click', () => {
+        const dangMo = menu.classList.toggle('mo');
+
+        nutMenu.setAttribute(
+            'aria-expanded',
+            dangMo ? 'true' : 'false'
+        );
+
+        nutMenu.setAttribute(
+            'aria-label',
+            dangMo ? 'Đóng menu điều hướng' : 'Mở menu điều hướng'
+        );
+    });
+
+    menu.addEventListener('click', (event) => {
+        const lienKet = event.target.closest('a');
+
+        if (lienKet === null) {
+            return;
+        }
+
+        dongMenuMobile(menu, nutMenu);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        dongMenuMobile(menu, nutMenu);
+    });
+};
+
 /* ================================
    KHỞI TẠO TRANG
    ================================ */
 
 const khoiTaoTrang = () => {
-
+    khoiTaoMenuMobile();
     capNhatSoLuongYeuThich();
-
     khoiTaoTimKiemMonAn();
 
-    const nguoiDung =
-        docNguoiDungHienTai();
-
-    taoKhuVucTaiKhoan(
-        nguoiDung
-    );
+    const nguoiDung = docNguoiDungHienTai();
+    taoKhuVucTaiKhoan(nguoiDung);
 
     window.addEventListener(
         'yeuThichThayDoi',

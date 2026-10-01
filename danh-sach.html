@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
+
 <body class="trang trang-kham-pha">
 
   <header class="dau-trang">
@@ -27,245 +28,395 @@
       Cook with me - Khơi nguồn cảm hứng vào bếp
     </p>
 
-    <form class="o-tim-kiem" action="#" method="get">
-      <label for="search">Tìm kiếm</label>
+
+    <form
+      class="o-tim-kiem"
+      action="danh-sach.html"
+      method="get"
+    >
+
+      <label for="search">
+        Tìm kiếm
+      </label>
 
       <input
         type="search"
         id="search"
         name="keyword"
         placeholder="Tìm kiếm món ăn, công thức..."
+        autocomplete="off"
       >
 
-      <button class="nut" type="submit">Tìm kiếm</button>
+      <button
+        class="nut"
+        type="submit"
+      >
+        Tìm kiếm
+      </button>
+
     </form>
+
 
     <div class="khu-vuc-tai-khoan">
 
-  <a
-    href="dang-ky.html"
-    class="nut nut-dang-ky"
-  >
-    Đăng ký
-  </a>
+      <a
+        href="dang-ky.html"
+        class="nut nut-dang-ky"
+      >
+        Đăng ký
+      </a>
 
-  <a
-    href="dang-nhap.html"
-    class="nut nut-dang-nhap"
-  >
-    Đăng nhập
-  </a>
+      <a
+        href="dang-nhap.html"
+        class="nut nut-dang-nhap"
+      >
+        Đăng nhập
+      </a>
 
-</div>
+    </div>
+
   </header>
 
-  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+
+  <nav
+    class="thanh-dieu-huong"
+    aria-label="Điều hướng chính"
+  >
+
     <ul class="menu">
 
       <li>
-        <a href="index.html">Trang chủ</a>
+        <a href="index.html">
+          Trang chủ
+        </a>
       </li>
 
       <li>
-        <a class="dang-chon" href="danh-sach.html">Khám phá</a>
+        <a
+          class="dang-chon"
+          href="danh-sach.html"
+        >
+          Khám phá
+        </a>
       </li>
 
       <li>
-        <a href="chi-tiet.html">Chi tiết công thức</a>
+        <a href="chi-tiet.html">
+          Chi tiết công thức
+        </a>
       </li>
 
       <li>
-        <a href="goi-y-mon-an.html">Gợi ý món ăn</a>
+        <a href="goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
       </li>
 
       <li>
-        <a href="cai-dat.html">Cài đặt</a>
+        <a href="cai-dat.html">
+          Cài đặt
+        </a>
       </li>
 
       <li>
-        <a href="gioi-thieu.html">Giới thiệu</a>
+        <a href="gioi-thieu.html">
+          Giới thiệu
+        </a>
       </li>
 
       <li>
-        <a href="lien-he.html">Liên hệ</a>
+        <a href="lien-he.html">
+          Liên hệ
+        </a>
       </li>
 
     </ul>
+
+    <div class="khu-vuc-yeu-thich" aria-label="Số món ăn yêu thích">
+
+  <span class="nhan-yeu-thich">
+    Yêu thích
+  </span>
+
+  <span
+    class="so-luong-yeu-thich"
+    aria-label="Số món ăn yêu thích"
+  >
+    0
+  </span>
+
+</div>
+
   </nav>
+
 
   <main class="kham-pha">
 
-    <section class="khu-vuc-danh-sach-mon-an" aria-labelledby="tieu-de-mon-an">
+    <section
+      class="khu-vuc-danh-sach-mon-an"
+      aria-labelledby="tieu-de-mon-an"
+    >
 
-        <div class="tieu-de-danh-sach">
-            <div>
-                <p class="nhan-danh-sach">Khám phá</p>
-                <h1 id="tieu-de-mon-an">Món ăn</h1>
-            </div>
+      <div class="tieu-de-danh-sach">
 
-            <form class="o-tim-mon-an" id="o-tim-mon-an" action="#" method="get">
-                <label for="tim-mon-an">Tìm món ăn</label>
+        <div>
 
-                <input
-                    type="search"
-                    id="tim-mon-an"
-                    name="keyword"
-                    placeholder="Tìm món ăn..."
-                    autocomplete="off"
-                >
-            </form>
-        </div>
+          <p class="nhan-danh-sach">
+            Khám phá
+          </p>
 
-        <div class="thanh-cong-cu-mon-an">
-
-            <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
-
-                <button
-                    class="nut-bo-loc dang-loc"
-                    type="button"
-                    data-danh-muc="tat-ca"
-                >
-                    Tất cả
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món chính"
-                >
-                    Món chính
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món canh"
-                >
-                    Món canh
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món xào"
-                >
-                    Món xào
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món ăn vặt"
-                >
-                    Món ăn vặt
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Đồ uống"
-                >
-                    Đồ uống
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món ăn nhanh"
-                >
-                    Món ăn nhanh
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món tráng miệng"
-                >
-                    Món tráng miệng
-                </button>
-
-                <button
-                    class="nut-bo-loc"
-                    type="button"
-                    data-danh-muc="Món chay"
-                >
-                    Món chay
-                </button>
-
-            </nav>
-
-            <div class="khu-vuc-sap-xep">
-                <label for="sap-xep">Sắp xếp</label>
-
-                <select id="sap-xep" name="sapXep">
-                    <option value="">Mặc định</option>
-                    <option value="danhGiaGiam">Đánh giá cao nhất</option>
-                    <option value="thoiGianTang">Thời gian ngắn nhất</option>
-                    <option value="nganSachTang">Ngân sách thấp nhất</option>
-                    <option value="tenTang">Tên A → Z</option>
-                </select>
-            </div>
+          <h1 id="tieu-de-mon-an">
+            Món ăn
+          </h1>
 
         </div>
 
-        <section class="khu-vuc-ket-qua" aria-labelledby="tieu-de-ket-qua">
 
-            <div class="tieu-de-ket-qua">
-                <h2 id="tieu-de-ket-qua">Các món ăn</h2>
+        <form
+          class="o-tim-mon-an"
+          id="o-tim-mon-an"
+          action="danh-sach.html"
+          method="get"
+        >
 
-                <p class="so-luong-mon-an" id="so-luong-mon-an">
-                    Đang tải món ăn...
-                </p>
-            </div>
+          <label for="tim-mon-an">
+            Tìm món ăn
+          </label>
 
-            <div
-                class="danh-sach-mon-an"
-                id="danh-sach-mon-an"
-            >
-                <p class="thong-bao-dang-tai">
-                    Đang tải món ăn...
-                </p>
-            </div>
+          <input
+            type="search"
+            id="tim-mon-an"
+            name="keyword"
+            placeholder="Tìm món ăn..."
+            autocomplete="off"
+          >
 
-        </section>
+        </form>
+
+      </div>
+
+
+      <div class="thanh-cong-cu-mon-an">
 
         <nav
-            class="phan-trang"
-            id="phan-trang"
-            aria-label="Phân trang danh sách món ăn"
+          class="bo-loc-mon-an"
+          aria-label="Lọc món ăn"
         >
-            <button
-                class="nut-phan-trang"
-                type="button"
-                data-trang="truoc"
-                aria-label="Trang trước"
-            >
-                ‹
-            </button>
+
+          <button
+            class="nut-bo-loc dang-loc"
+            type="button"
+            data-danh-muc="tat-ca"
+          >
+            Tất cả
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món chính"
+          >
+            Món chính
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món canh"
+          >
+            Món canh
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món khai vị"
+          >
+            Món khai vị
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món rau"
+          >
+            Món rau
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Đồ uống"
+          >
+            Đồ uống
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món tráng miệng"
+          >
+            Món tráng miệng
+          </button>
+
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món chay"
+          >
+            Món chay
+          </button>
+
         </nav>
+
+
+        <div class="khu-vuc-sap-xep">
+
+          <label for="sap-xep">
+            Sắp xếp
+          </label>
+
+          <select
+            id="sap-xep"
+            name="sapXep"
+          >
+
+            <option value="">
+              Mặc định
+            </option>
+
+            <option value="danhGiaGiam">
+              Đánh giá cao nhất
+            </option>
+
+            <option value="thoiGianTang">
+              Thời gian ngắn nhất
+            </option>
+
+            <option value="nganSachTang">
+              Ngân sách thấp nhất
+            </option>
+
+            <option value="tenTang">
+              Tên A → Z
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <section
+        class="khu-vuc-ket-qua"
+        aria-labelledby="tieu-de-ket-qua"
+      >
+
+        <div class="tieu-de-ket-qua">
+
+          <h2 id="tieu-de-ket-qua">
+            Các món ăn
+          </h2>
+
+          <p
+            class="so-luong-mon-an"
+            id="so-luong-mon-an"
+          >
+            Đang tải món ăn...
+          </p>
+
+        </div>
+
+
+        <div class="danh-sach-mon-an"
+            id="danh-sach-mon-an"
+            aria-live="polite"
+        >
+
+          <p class="thong-bao-dang-tai">
+            Đang tải món ăn...
+          </p>
+
+          <noscript>
+            <p>
+              Danh sách món ăn và chức năng tìm kiếm cần JavaScript để hoạt động.
+            </p>
+          </noscript>
+
+        </div>
+
+      </section>
+
+
+      <nav
+        class="phan-trang"
+        id="phan-trang"
+        aria-label="Phân trang danh sách món ăn"
+      >
+
+        <button
+          class="nut-phan-trang"
+          type="button"
+          data-trang="truoc"
+          aria-label="Trang trước"
+        >
+          ‹
+        </button>
+
+      </nav>
 
     </section>
 
-</main>
+  </main>
+
 
   <footer>
-    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
+
 
     <nav aria-label="Điều hướng phụ">
+
       <ul class="menu">
+
         <li>
-          <a href="gioi-thieu.html">Giới thiệu</a>
+          <a href="gioi-thieu.html">
+            Giới thiệu
+          </a>
         </li>
 
         <li>
-          <a href="lien-he.html">Liên hệ</a>
+          <a href="lien-he.html">
+            Liên hệ
+          </a>
         </li>
+
       </ul>
+
     </nav>
+
   </footer>
 
-  <script type="module" src="js/main.js"></script>
-  <script type="module" src="js/trang-danh-sach.js"></script>
+
+  <script
+    type="module"
+    src="js/main.js"
+  ></script>
+
+  <script
+    type="module"
+    src="js/trang-danh-sach.js"
+  ></script>
 
 </body>
 

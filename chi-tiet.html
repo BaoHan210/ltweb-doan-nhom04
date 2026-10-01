@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/05-tien-ich.css">
 </head>
 
+
 <body class="trang">
 
   <header class="dau-trang">
@@ -27,266 +28,377 @@
       Cook with me - Khơi nguồn cảm hứng vào bếp
     </p>
 
-    <form class="o-tim-kiem" action="#" method="get">
-      <label for="search">Tìm kiếm</label>
+
+    <form
+      class="o-tim-kiem"
+      action="danh-sach.html"
+      method="get"
+    >
+
+      <label for="search">
+        Tìm kiếm
+      </label>
 
       <input
         type="search"
         id="search"
         name="keyword"
         placeholder="Tìm kiếm món ăn, công thức..."
+        autocomplete="off"
       >
 
-      <button class="nut" type="submit">Tìm kiếm</button>
+      <button
+        class="nut"
+        type="submit"
+      >
+        Tìm kiếm
+      </button>
+
     </form>
+
 
     <div class="khu-vuc-tai-khoan">
 
-  <a
-    href="dang-ky.html"
-    class="nut nut-dang-ky"
-  >
-    Đăng ký
-  </a>
+      <a
+        href="dang-ky.html"
+        class="nut nut-dang-ky"
+      >
+        Đăng ký
+      </a>
 
-  <a
-    href="dang-nhap.html"
-    class="nut nut-dang-nhap"
-  >
-    Đăng nhập
-  </a>
+      <a
+        href="dang-nhap.html"
+        class="nut nut-dang-nhap"
+      >
+        Đăng nhập
+      </a>
 
-</div>
+    </div>
 
   </header>
 
 
-  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+  <nav
+    class="thanh-dieu-huong"
+    aria-label="Điều hướng chính"
+  >
 
     <ul class="menu">
 
       <li>
-        <a href="index.html">Trang chủ</a>
+        <a href="index.html">
+          Trang chủ
+        </a>
       </li>
 
       <li>
-        <a href="danh-sach.html">Khám phá</a>
+        <a href="danh-sach.html">
+          Khám phá
+        </a>
       </li>
 
       <li>
-        <a class="dang-chon" href="chi-tiet.html">
+        <a
+          class="dang-chon"
+          href="chi-tiet.html"
+        >
           Chi tiết công thức
         </a>
       </li>
 
       <li>
-        <a href="goi-y-mon-an.html">Gợi ý món ăn</a>
+        <a href="goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
       </li>
 
       <li>
-        <a href="cai-dat.html">Cài đặt</a>
+        <a href="cai-dat.html">
+          Cài đặt
+        </a>
       </li>
 
       <li>
-        <a href="gioi-thieu.html">Giới thiệu</a>
+        <a href="gioi-thieu.html">
+          Giới thiệu
+        </a>
       </li>
 
       <li>
-        <a href="lien-he.html">Liên hệ</a>
+        <a href="lien-he.html">
+          Liên hệ
+        </a>
       </li>
 
     </ul>
+    <div
+      class="khu-vuc-yeu-thich"
+      aria-label="Số món ăn yêu thích"
+    >
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
+
+      <span
+        class="so-luong-yeu-thich"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
+    </div>
 
   </nav>
 
 
   <main class="chi-tiet-trang">
 
-  <section class="khung-chi-tiet">
+    <section class="khung-chi-tiet">
 
-    <h1>Chi tiết món ăn</h1>
+      <h1>
+        Chi tiết món ăn
+      </h1>
 
-    <article class="chi-tiet-mon-an">
+      <div
+  class="trang-thai-chi-tiet"
+  aria-live="polite"
+></div>
 
-      <!-- Khu vực hình ảnh -->
-      <section class="khu-vuc-hinh-anh">
-        <figure class="hinh-anh-mon-an">
-          <img
-            src="images/cao-lau.jpg"
-            alt="Cao lầu Hội An"
-            width="550"
-            height="350"
-          >
-          <figcaption>
-            Hình ảnh món ăn
-          </figcaption>
-        </figure>
-      </section>
+      <article class="chi-tiet-mon-an">
 
+        <!-- Khu vực hình ảnh -->
+        <section class="khu-vuc-hinh-anh">
 
-      <!-- Khu vực thông tin món ăn -->
-      <section class="thong-tin-mon-an">
+          <figure class="hinh-anh-mon-an">
 
-        <h2 class="tieu-de-mon-an">
-          Cao lầu Hội An
-        </h2>
+            <img
+              src="images/cao-lau.jpg"
+              alt="Cao lầu Hội An"
+              width="550"
+              height="350"
+            >
 
-        <div class="thong-tin-danh-gia">
-          <span class="danh-gia">
-            ★★★★★
-          </span>
+            <figcaption>
+              Hình ảnh món ăn
+            </figcaption>
 
-          <span class="so-luot-danh-gia">
-            4.8 (206 đánh giá)
-          </span>
-        </div>
-
-
-        <div class="thong-tin-co-ban">
-
-          <div class="thong-tin-item">
-            <span>Thời gian</span>
-            <strong>60 phút</strong>
-          </div>
-
-          <div class="thong-tin-item">
-            <span>Khẩu phần</span>
-            <strong>3 người</strong>
-          </div>
-
-          <div class="thong-tin-item">
-            <span>Độ khó</span>
-            <strong>Trung bình</strong>
-          </div>
-
-          <div class="thong-tin-item">
-            <span>Ngân sách</span>
-            <strong>120.000 đồng</strong>
-          </div>
-
-        </div>
-
-
-        <section class="mo-ta-mon-an">
-
-          <h3>Mô tả</h3>
-
-          <p>
-            Cao lầu là món ăn đặc trưng của Hội An
-            với sợi mì đặc biệt, thịt xá xíu,
-            rau sống và các nguyên liệu ăn kèm.
-          </p>
+          </figure>
 
         </section>
 
 
-        <div class="khu-vuc-hanh-dong">
+        <!-- Khu vực thông tin món ăn -->
+        <section class="thong-tin-mon-an">
 
-          <button
-            type="button"
-            class="nut nut-yeu-thich"
-          >
-            ♡ Lưu công thức
-          </button>
-
-          <button
-            type="button"
-            class="nut nut-chia-se"
-          >
-            Chia sẻ
-          </button>
-
-        </div>
-
-      </section>
+          <h2 class="tieu-de-mon-an">
+            Cao lầu Hội An
+          </h2>
 
 
-      <!-- Khu vực nguyên liệu -->
-      <section class="khu-vuc-nguyen-lieu">
+          <div class="thong-tin-danh-gia">
 
-        <h2>Nguyên liệu</h2>
+            <span class="danh-gia">
+              ★★★★★
+            </span>
 
-        <ul class="danh-sach-nguyen-lieu"></ul>
+            <span class="so-luot-danh-gia">
+              4.8 (206 đánh giá)
+            </span>
 
-        <!-- Bình luận nằm trong khu vực Nguyên liệu -->
-        <section class="binh-luan">
+          </div>
 
-          <h3>Bình luận</h3>
 
-          <p class="so-luong-binh-luan">
-            24 bình luận
-          </p>
+          <div class="thong-tin-co-ban">
 
-          <div class="o-nhap-binh-luan">
+            <div class="thong-tin-item">
 
-            <label for="noi-dung-binh-luan">
-              Viết bình luận
-            </label>
+              <span>
+                Thời gian
+              </span>
 
-            <textarea
-              id="noi-dung-binh-luan"
-              name="noiDungBinhLuan"
-              rows="4"
-              placeholder="Chia sẻ cảm nhận của bạn..."
-            ></textarea>
+              <strong>
+                60 phút
+              </strong>
+
+            </div>
+
+
+            <div class="thong-tin-item">
+
+              <span>
+                Khẩu phần
+              </span>
+
+              <strong>
+                3 người
+              </strong>
+
+            </div>
+
+
+            <div class="thong-tin-item">
+
+              <span>
+                Độ khó
+              </span>
+
+              <strong>
+                Trung bình
+              </strong>
+
+            </div>
+
+
+            <div class="thong-tin-item">
+
+              <span>
+                Ngân sách
+              </span>
+
+              <strong>
+                120.000 đồng
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <section class="mo-ta-mon-an">
+
+            <h3>
+              Mô tả
+            </h3>
+
+            <p>
+              Cao lầu là món ăn đặc trưng của Hội An
+              với sợi mì đặc biệt, thịt xá xíu,
+              rau sống và các nguyên liệu ăn kèm.
+            </p>
+
+          </section>
+
+
+          <div class="khu-vuc-hanh-dong">
 
             <button
               type="button"
-              class="nut nut-binh-luan"
+              class="nut nut-yeu-thich"
             >
-              Gửi bình luận
+              ♡ Lưu công thức
+            </button>
+
+            <button
+              type="button"
+              class="nut nut-chia-se"
+            >
+              Chia sẻ
             </button>
 
           </div>
 
         </section>
 
-      </section>
+
+        <!-- Khu vực nguyên liệu -->
+        <section class="khu-vuc-nguyen-lieu">
+
+          <h2>
+            Nguyên liệu
+          </h2>
+
+          <ul class="danh-sach-nguyen-lieu"></ul>
 
 
-      <!-- Khu vực các bước chế biến -->
-      <section class="khu-vuc-cac-buoc">
+          <!-- Bình luận -->
+          <section class="binh-luan">
 
-        <h2>Các bước chế biến</h2>
+            <h3>
+              Bình luận
+            </h3>
 
-        <ol class="cac-buoc-che-bien">
-
-        </ol>
-
-      </section>
+            <p class="so-luong-binh-luan">
+              24 bình luận
+            </p>
 
 
-      <!-- Khu vực video -->
-      <section class="video-huong-dan">
+            <div class="o-nhap-binh-luan">
 
-        <h2>Video hướng dẫn</h2>
+              <label for="noi-dung-binh-luan">
+                Viết bình luận
+              </label>
 
-        <div class="khung-video">
+              <textarea
+                id="noi-dung-binh-luan"
+                name="noiDungBinhLuan"
+                rows="4"
+                placeholder="Chia sẻ cảm nhận của bạn..."
+              ></textarea>
 
-        </div>
+              <button
+                type="button"
+                class="nut nut-binh-luan"
+              >
+                Gửi bình luận
+              </button>
 
-      </section>
+            </div>
 
-    </article>
+          </section>
 
-  </section>
+        </section>
 
-</main>
+
+        <!-- Khu vực các bước chế biến -->
+        <section class="khu-vuc-cac-buoc">
+
+          <h2>
+            Các bước chế biến
+          </h2>
+
+          <ol class="cac-buoc-che-bien"></ol>
+
+        </section>
+
+
+        <!-- Khu vực video -->
+        <section class="video-huong-dan">
+
+          <h2>
+            Video hướng dẫn
+          </h2>
+
+          <div class="khung-video"></div>
+
+        </section>
+
+      </article>
+
+    </section>
+
+  </main>
+
 
   <footer>
 
-    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
+
 
     <nav aria-label="Điều hướng phụ">
 
       <ul class="menu">
 
         <li>
-          <a href="gioi-thieu.html">Giới thiệu</a>
+          <a href="gioi-thieu.html">
+            Giới thiệu
+          </a>
         </li>
 
         <li>
-          <a href="lien-he.html">Liên hệ</a>
+          <a href="lien-he.html">
+            Liên hệ
+          </a>
         </li>
 
       </ul>
@@ -295,8 +407,16 @@
 
   </footer>
 
-<script type="module" src="js/main.js"></script>
-<script type="module" src="js/trang-chi-tiet.js"></script>
+
+  <script
+    type="module"
+    src="js/main.js"
+  ></script>
+
+  <script
+    type="module"
+    src="js/trang-chi-tiet.js"
+  ></script>
 
 </body>
 

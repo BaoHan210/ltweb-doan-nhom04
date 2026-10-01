@@ -33,7 +33,7 @@
     </p>
 
 
-    <form class="o-tim-kiem" action="#" method="get">
+    <form class="o-tim-kiem" action="danh-sach.html" method="get">
 
       <label for="search">
         Tìm kiếm
@@ -55,21 +55,21 @@
 
     <div class="khu-vuc-tai-khoan">
 
-  <a
-    href="dang-ky.html"
-    class="nut nut-dang-ky"
-  >
-    Đăng ký
-  </a>
+      <a
+        href="dang-ky.html"
+        class="nut nut-dang-ky"
+      >
+        Đăng ký
+      </a>
 
-  <a
-    href="dang-nhap.html"
-    class="nut nut-dang-nhap"
-  >
-    Đăng nhập
-  </a>
+      <a
+        href="dang-nhap.html"
+        class="nut nut-dang-nhap"
+      >
+        Đăng nhập
+      </a>
 
-</div>
+    </div>
 
   </header>
 
@@ -126,6 +126,22 @@
 
     </ul>
 
+    <div
+      class="khu-vuc-yeu-thich"
+      aria-label="Số món ăn yêu thích"
+    >
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
+
+      <span
+        class="so-luong-yeu-thich"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
+    </div>
+
   </nav>
 
 
@@ -135,218 +151,106 @@
 
   <main class="lien-he-trang">
 
-  <section class="lien-he-banner">
+    <section class="lien-he-banner">
 
-    <div class="lien-he-banner-noi-dung">
-      <h1 class="tieu-de-lien-he">
-  Liên hệ với chúng tôi
-</h1>
+      <div class="lien-he-banner-noi-dung">
 
-      <p class="tieu-de-phu-lien-he">
-  Chúng tôi luôn sẵn sàng lắng nghe ý kiến của bạn!
-</p>
-    </div>
+        <h1 class="tieu-de-lien-he">
+          Liên hệ với chúng tôi
+        </h1>
 
-  </section>
+        <p class="tieu-de-phu-lien-he">
+          Chúng tôi luôn sẵn sàng lắng nghe ý kiến của bạn!
+        </p>
 
+      </div>
 
-  <section class="khu-vuc-lien-he">
-
-    <div class="khu-vuc-form-lien-he">
-
-      <h2>Gửi ý kiến cho Cook with me</h2>
-
-      <p class="mo-ta-lien-he">
-        Gửi đóng góp, phản hồi hoặc chia sẻ công thức với đội ngũ
-        Cook with me.
-      </p>
+    </section>
 
 
-      <form
-    class="form-lien-he"
-    action="#"
-    method="post"
-    novalidate
+    <section class="khu-vuc-lien-he">
+
+      <div class="khu-vuc-form-lien-he">
+
+        <h2>Gửi ý kiến cho Cook with me</h2>
+
+        <p class="mo-ta-lien-he">
+          Gửi đóng góp, phản hồi hoặc chia sẻ công thức với đội ngũ
+          Cook with me.
+        </p>
+
+
+        <form
+  class="form-lien-he"
+  action="#"
+  method="post"
+  novalidate
 >
 
-        <div class="truong-form">
-
-          <label for="full-name">
-            Họ và tên <span aria-hidden="true">*</span>
-          </label>
-
-          <input
-            type="text"
-            id="full-name"
-            name="full_name"
-            placeholder="Nhập họ và tên"
-            required
-          >
-
-        </div>
-
-
-        <div class="truong-form">
-
-          <label for="email">
-            Email <span aria-hidden="true">*</span>
-          </label>
-
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Nhập email"
-            required
-          >
-
-        </div>
-
-
-        <div class="truong-form">
-
-          <label for="subject">
-            Chủ đề <span aria-hidden="true">*</span>
-          </label>
-
-          <select
-            id="subject"
-            name="subject"
-            required
-          >
-
-            <option value="">
-              Chọn chủ đề
-            </option>
-
-            <option value="gop-y">
-              Góp ý
-            </option>
-
-            <option value="phan-hoi">
-              Phản hồi
-            </option>
-
-            <option value="bao-loi">
-              Báo lỗi website
-            </option>
-
-            <option value="gui-cong-thuc">
-              Gửi công thức
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <!-- THÔNG TIN CÔNG THỨC -->
-        <fieldset
-          class="khu-vuc-cong-thuc"
-          hidden
-        >
-
-        <div class="truong-form">
-
-  <label for="servings">
-    Khẩu phần
-  </label>
-
-  <input
-    type="number"
-    id="servings"
-    name="servings"
-    min="1"
-    max="20"
-    placeholder="Ví dụ: 4"
-  >
-
-</div>
-
-
-<div class="truong-form">
-
-  <label for="cooking-time">
-    Thời gian nấu (phút)
-  </label>
-
-  <input
-    type="number"
-    id="cooking-time"
-    name="cooking_time"
-    min="1"
-    max="300"
-    placeholder="Ví dụ: 45"
-  >
-
-</div>
-        <legend>
-    Thông tin công thức
-  </legend>
           <div class="truong-form">
-            
 
-    <label for="dish-name">
-        Tên món ăn
-    </label>
+            <label for="full-name">
+              Họ và tên <span aria-hidden="true">*</span>
+            </label>
 
-    <input
-        type="text"
-        id="dish-name"
-        name="dish_name"
-        pattern="[A-Za-zÀ-ỹĐđ\s]{2,50}"
-        required
-        placeholder="Nhập tên món ăn"
-    >
+            <input
+              type="text"
+              id="full-name"
+              name="full_name"
+              placeholder="Nhập họ và tên"
+              required
+            >
 
-</div>
+          </div>
 
 
           <div class="truong-form">
 
-            <label for="category">
-              Danh mục
+            <label for="email">
+              Email <span aria-hidden="true">*</span>
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Nhập email"
+              required
+            >
+
+          </div>
+
+
+          <div class="truong-form">
+
+            <label for="subject">
+              Chủ đề <span aria-hidden="true">*</span>
             </label>
 
             <select
-              id="category"
-              name="category"
+              id="subject"
+              name="subject"
+              required
             >
 
               <option value="">
-                Chọn danh mục
+                Chọn chủ đề
               </option>
 
-              <option value="mon-chinh">
-                Món chính
+              <option value="gop-y">
+                Góp ý
               </option>
 
-              <option value="mon-canh">
-                Món canh
+              <option value="phan-hoi">
+                Phản hồi
               </option>
 
-              <option value="mon-xao">
-                Món xào
+              <option value="bao-loi">
+                Báo lỗi website
               </option>
 
-              <option value="mon-an-vat">
-                Món ăn vặt
-              </option>
-
-              <option value="do-uong">
-                Đồ uống
-              </option>
-
-              <option value="mon-an-nhanh">
-                Món ăn nhanh
-              </option>
-
-              <option value="mon-trang-mieng">
-                Món tráng miệng
-              </option>
-
-              <option value="mon-chay">
-                Món chay
+              <option value="gui-cong-thuc">
+                Gửi công thức
               </option>
 
             </select>
@@ -354,153 +258,282 @@
           </div>
 
 
+          <!-- THÔNG TIN CÔNG THỨC -->
+
+          <fieldset
+            class="khu-vuc-cong-thuc"
+            hidden
+          >
+
+            <legend>
+              Thông tin công thức
+            </legend>
+
+
+            <div class="truong-form">
+
+              <label for="dish-name">
+                Tên món ăn
+              </label>
+
+              <input
+                type="text"
+                id="dish-name"
+                name="dish_name"
+                pattern="[A-Za-zÀ-ỹĐđ\s]{2,50}"
+                required
+                placeholder="Nhập tên món ăn"
+              >
+
+            </div>
+
+
+            <div class="truong-form">
+
+              <label for="category">
+                Danh mục
+              </label>
+
+              <select
+                id="category"
+                name="category"
+              >
+
+                <option value="">
+                  Chọn danh mục
+                </option>
+
+                <option value="mon-chinh">
+                  Món chính
+                </option>
+
+                <option value="mon-canh">
+                  Món canh
+                </option>
+
+                <option value="mon-xao">
+                  Món xào
+                </option>
+
+                <option value="mon-an-vat">
+                  Món ăn vặt
+                </option>
+
+                <option value="do-uong">
+                  Đồ uống
+                </option>
+
+                <option value="mon-an-nhanh">
+                  Món ăn nhanh
+                </option>
+
+                <option value="mon-trang-mieng">
+                  Món tráng miệng
+                </option>
+
+                <option value="mon-chay">
+                  Món chay
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="truong-form">
+
+              <label for="recipe-content">
+                Nội dung công thức
+              </label>
+
+              <textarea
+                id="recipe-content"
+                name="recipe_content"
+                rows="5"
+                placeholder="Nhập nguyên liệu và cách thực hiện món ăn..."
+              ></textarea>
+
+            </div>
+
+
+            <div class="truong-form">
+
+              <label for="servings">
+                Khẩu phần
+              </label>
+
+              <input
+                type="number"
+                id="servings"
+                name="servings"
+                min="1"
+                max="20"
+                placeholder="Ví dụ: 4"
+              >
+
+            </div>
+
+
+            <div class="truong-form">
+
+              <label for="cooking-time">
+                Thời gian nấu (phút)
+              </label>
+
+              <input
+                type="number"
+                id="cooking-time"
+                name="cooking_time"
+                min="1"
+                max="300"
+                placeholder="Ví dụ: 45"
+              >
+
+            </div>
+
+          </fieldset>
+
+
           <div class="truong-form">
 
-            <label for="recipe-content">
-              Nội dung công thức
+            <label for="message">
+              Nội dung <span aria-hidden="true">*</span>
             </label>
 
             <textarea
-              id="recipe-content"
-              name="recipe_content"
-              rows="5"
-              placeholder="Nhập nguyên liệu và cách thực hiện món ăn..."
+              id="message"
+              name="message"
+              rows="6"
+              maxlength="500"
+              placeholder="Nhập nội dung..."
+              required
             ></textarea>
 
+            <small>
+              Tối đa 500 ký tự
+            </small>
+
           </div>
 
-        </fieldset>
 
+          <div class="hanh-dong-lien-he">
 
-        <div class="truong-form">
+            <button
+              class="nut nut-chinh"
+              type="submit"
+            >
+              Gửi
+            </button>
 
-          <label for="message">
-            Nội dung <span aria-hidden="true">*</span>
-          </label>
-
-          <textarea
-            id="message"
-            name="message"
-            rows="6"
-            maxlength="500"
-            placeholder="Nhập nội dung..."
-            required
-          ></textarea>
-
-          <small>
-            Tối đa 500 ký tự
-          </small>
-
-        </div>
-
-
-        <div class="hanh-dong-lien-he">
-
-          <button
-            class="nut nut-chinh"
-            type="submit"
-          >
-            Gửi
-          </button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-
-    <aside class="thong-tin-lien-he">
-
-      <section class="the-thong-tin-lien-he">
-
-        <h2>Thông tin liên hệ</h2>
-
-        <div class="thong-tin-lien-he-item">
-          <span class="bieu-tuong-lien-he" aria-hidden="true">
-            ✉
-          </span>
-
-          <div>
-            <strong>Email</strong>
-            <p>cookwithme@gmail.com</p>
           </div>
-        </div>
+
+        </form>
+        <noscript>
+  <p class="thong-bao-noscript">
+    Biểu mẫu liên hệ cần JavaScript để kiểm tra dữ liệu và gửi thông tin.
+  </p>
+</noscript>
+      </div>
 
 
-        <div class="thong-tin-lien-he-item">
-          <span class="bieu-tuong-lien-he" aria-hidden="true">
-            ☎
-          </span>
+      <aside class="thong-tin-lien-he">
 
-          <div>
-            <strong>Điện thoại</strong>
-            <p>0123 456 789</p>
+        <section class="the-thong-tin-lien-he">
+
+          <h2>Thông tin liên hệ</h2>
+
+
+          <div class="thong-tin-lien-he-item">
+
+            <span class="bieu-tuong-lien-he" aria-hidden="true">
+              ✉
+            </span>
+
+            <div>
+              <strong>Email</strong>
+              <p>cookwithme@gmail.com</p>
+            </div>
+
           </div>
-        </div>
 
 
-        <div class="thong-tin-lien-he-item">
-          <span class="bieu-tuong-lien-he" aria-hidden="true">
-            📍
-          </span>
+          <div class="thong-tin-lien-he-item">
 
-          <div>
-            <strong>Địa chỉ</strong>
-            <p>Đà Nẵng, Việt Nam</p>
+            <span class="bieu-tuong-lien-he" aria-hidden="true">
+              ☎
+            </span>
+
+            <div>
+              <strong>Điện thoại</strong>
+              <p>0123 456 789</p>
+            </div>
+
           </div>
-        </div>
-
-      </section>
 
 
-      <section class="the-thong-tin-lien-he">
+          <div class="thong-tin-lien-he-item">
 
-        <h2>Kết nối với chúng tôi</h2>
+            <span class="bieu-tuong-lien-he" aria-hidden="true">
+              📍
+            </span>
 
-        <div class="mang-xa-hoi-lien-he">
+            <div>
+              <strong>Địa chỉ</strong>
+              <p>Đà Nẵng, Việt Nam</p>
+            </div>
 
-          <a href="#" aria-label="Facebook">
-            f
-          </a>
+          </div>
 
-          <a href="#" aria-label="Instagram">
-            ◎
-          </a>
-
-          <a href="#" aria-label="YouTube">
-            ▶
-          </a>
-
-          <a href="#" aria-label="TikTok">
-            ♪
-          </a>
-
-        </div>
-
-      </section>
+        </section>
 
 
-      <section class="loi-nhan-lien-he">
+        <section class="the-thong-tin-lien-he">
 
-        <p>
-          Cook with me luôn trân trọng mọi đóng góp,
-          phản hồi và công thức từ cộng đồng.
-        </p>
+          <h2>Kết nối với chúng tôi</h2>
 
-        <p>
-          Nếu bạn muốn tự quản lý bài viết của mình,
-          hãy sử dụng chức năng <strong>Đăng bài viết</strong>
-          tại trang Khám phá.
-        </p>
+          <div class="mang-xa-hoi-lien-he">
 
-      </section>
+            <a href="#" aria-label="Facebook">
+              f
+            </a>
 
-    </aside>
+            <a href="#" aria-label="Instagram">
+              ◎
+            </a>
 
-  </section>
+            <a href="#" aria-label="YouTube">
+              ▶
+            </a>
 
-</main>
+            <a href="#" aria-label="TikTok">
+              ♪
+            </a>
+
+          </div>
+
+        </section>
+
+
+        <section class="loi-nhan-lien-he">
+
+          <p>
+            Cook with me luôn trân trọng mọi đóng góp,
+            phản hồi và công thức từ cộng đồng.
+          </p>
+
+          <p>
+            Nếu bạn muốn tự quản lý bài viết của mình,
+            hãy sử dụng chức năng <strong>Đăng bài viết</strong>
+            tại trang Khám phá.
+          </p>
+
+        </section>
+
+      </aside>
+
+    </section>
+
+  </main>
 
 
   <!-- ==============================
@@ -535,6 +568,7 @@
     </nav>
 
   </footer>
+
 
   <script
     type="module"

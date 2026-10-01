@@ -249,12 +249,12 @@ nutXoa.addEventListener(
         }
 
         xoaBaiViet(
-            baiViet.id
-        );
+    baiViet.id
+);
 
-        hienThiBaiVietCuaToi(
-            nguoiDungHienTai
-        );
+hienThiBaiVietCuaToi(
+    nguoiDung
+);
     }
 );
 
@@ -455,6 +455,67 @@ const taoTheMonDaLuu = (
     return monAnItem;
 };
 
+const hienThiDangTaiMonDaLuu = () => {
+    if (khuVucMonDaLuu === null) {
+        return;
+    }
+
+    khuVucMonDaLuu.innerHTML = '';
+
+    const thongBao = document.createElement('p');
+
+    thongBao.className =
+        'thong-bao-mon-da-luu';
+
+    thongBao.textContent =
+        'Đang tải danh sách món đã lưu...';
+
+    khuVucMonDaLuu.appendChild(
+        thongBao
+    );
+};
+
+const hienThiLoiMonDaLuu = () => {
+    if (khuVucMonDaLuu === null) {
+        return;
+    }
+
+    khuVucMonDaLuu.innerHTML = '';
+
+    const thongBao = document.createElement('p');
+
+    thongBao.className =
+        'thong-bao-mon-da-luu';
+
+    thongBao.textContent =
+        'Không thể tải danh sách món đã lưu.';
+
+    const nutThuLai = document.createElement('button');
+
+    nutThuLai.type = 'button';
+
+    nutThuLai.className =
+        'nut nut-phu';
+
+    nutThuLai.textContent =
+        'Thử lại';
+
+    nutThuLai.addEventListener(
+        'click',
+        async () => {
+            await hienThiMonDaLuu();
+        }
+    );
+
+    khuVucMonDaLuu.appendChild(
+        thongBao
+    );
+
+    khuVucMonDaLuu.appendChild(
+        nutThuLai
+    );
+};
+
 
 /* ================================
    HIỂN THỊ MÓN ĐÃ LƯU
@@ -466,9 +527,7 @@ const hienThiMonDaLuu = async () => {
         return;
     }
 
-
-    khuVucMonDaLuu.innerHTML = '';
-
+    hienThiDangTaiMonDaLuu();
 
     const tieuDe =
         document.createElement('h2');
@@ -479,7 +538,6 @@ const hienThiMonDaLuu = async () => {
     khuVucMonDaLuu.appendChild(
         tieuDe
     );
-
 
     const danhSachYeuThich =
         docYeuThich();
@@ -513,13 +571,16 @@ const hienThiMonDaLuu = async () => {
 
 
         const monAnDaLuu =
-            danhSachMonAn.filter(
-                (monAn) => {
-                    return danhSachYeuThich.includes(
-                        monAn.id
-                    );
+    danhSachMonAn.filter(
+        (monAn) => {
+            return danhSachYeuThich.some(
+                (idMonAn) => {
+                    return String(idMonAn) ===
+                        String(monAn.id);
                 }
             );
+        }
+    );
 
 
         if (monAnDaLuu.length === 0) {
@@ -567,27 +628,16 @@ const hienThiMonDaLuu = async () => {
             danhSach
         );
 
-    } catch (error) {
+    }     catch (error) {
 
         console.error(
             'Lỗi tải món ăn đã lưu:',
             error
         );
 
-
-        const thongBao =
-            document.createElement('p');
-
-        thongBao.className =
-            'thong-bao-mon-da-luu';
-
-        thongBao.textContent =
-            'Không thể tải danh sách món đã lưu.';
-
-        khuVucMonDaLuu.appendChild(
-            thongBao
-        );
+        hienThiLoiMonDaLuu();
     }
+    
 };
 
 
