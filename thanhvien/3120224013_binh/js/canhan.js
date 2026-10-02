@@ -1,27 +1,20 @@
-/* ========================================
-   canhan.js
-   JavaScript riêng cho trang cá nhân
-   Nguyễn Thị Ngọc Bình - 3120224013
-   ======================================== */
-
+/*
+ * Tệp tạo tương tác cho trang cá nhân Ngọc Bình.
+ * Có chức năng tìm kiếm kỹ năng và thu gọn/mở rộng nội dung.
+ * Cách thử: nhập từ khóa vào ô tìm kiếm hoặc bấm nút Thu gọn.
+ */
 
 // ========================================
 // 1. TÌM KIẾM / LỌC DANH SÁCH KỸ NĂNG
 // ========================================
 
 const oTimKyNang = document.getElementById("tim-ky-nang");
-
 const danhSachKyNang = document.querySelectorAll(
   ".danh-sach-ky-nang li"
 );
+const khungKyNang = document.querySelector(".danh-sach-ky-nang");
 
-const thongBaoKhongCo = document.getElementById(
-  "khong-co-ky-nang"
-);
-
-
-// Khi người dùng nhập từ khóa
-if (oTimKyNang) {
+if (oTimKyNang && khungKyNang) {
 
   oTimKyNang.addEventListener("input", function () {
 
@@ -31,7 +24,6 @@ if (oTimKyNang) {
 
     let soKyNangHienThi = 0;
 
-
     danhSachKyNang.forEach(function (kyNang) {
 
       const noiDungKyNang = kyNang.textContent
@@ -39,42 +31,49 @@ if (oTimKyNang) {
 
       if (noiDungKyNang.includes(tuKhoa)) {
 
-        kyNang.style.display = "";
-
+        kyNang.classList.remove("an-ky-nang");
         soKyNangHienThi++;
 
       } else {
 
-        kyNang.style.display = "none";
+        kyNang.classList.add("an-ky-nang");
 
       }
-
     });
 
 
-    // Hiện thông báo nếu không có kết quả
-    if (thongBaoKhongCo) {
+    // Xóa thông báo cũ nếu có
+    const thongBaoCu = document.getElementById(
+      "khong-co-ky-nang"
+    );
 
-      if (soKyNangHienThi === 0) {
-
-        thongBaoKhongCo.hidden = false;
-
-      } else {
-
-        thongBaoKhongCo.hidden = true;
-
-      }
-
+    if (thongBaoCu) {
+      thongBaoCu.remove();
     }
 
-  });
 
+    // Tạo thông báo nếu không tìm thấy kỹ năng
+    if (soKyNangHienThi === 0) {
+
+      const thongBaoMoi = document.createElement("p");
+
+      thongBaoMoi.textContent =
+        "Không tìm thấy kỹ năng phù hợp.";
+
+      thongBaoMoi.id = "khong-co-ky-nang";
+
+      thongBaoMoi.classList.add("khong-co-ky-nang");
+
+      khungKyNang.parentElement.appendChild(
+        thongBaoMoi
+      );
+    }
+  });
 }
 
 
 // ========================================
 // 2. THU GỌN / MỞ RỘNG
-//    PHẦN DỰ ÁN VÀ SỞ THÍCH
 // ========================================
 
 const nutMoRong = document.getElementById(
@@ -85,31 +84,15 @@ const noiDungDuAn = document.getElementById(
   "noi-dung-du-an"
 );
 
-
 if (nutMoRong && noiDungDuAn) {
 
   nutMoRong.addEventListener("click", function () {
 
-    // Kiểm tra nội dung đang ẩn hay đang hiện
-    const dangAn = noiDungDuAn.hidden;
+    noiDungDuAn.classList.toggle("noi-dung-an");
 
-
-    if (dangAn) {
-
-      // MỞ NỘI DUNG
-      noiDungDuAn.hidden = false;
-
-      nutMoRong.textContent = "▲ Thu gọn";
-
-      nutMoRong.setAttribute(
-        "aria-expanded",
-        "true"
-      );
-
-    } else {
-
-      // THU GỌN NỘI DUNG
-      noiDungDuAn.hidden = true;
+    if (
+      noiDungDuAn.classList.contains("noi-dung-an")
+    ) {
 
       nutMoRong.textContent = "▼ Xem thêm";
 
@@ -118,8 +101,14 @@ if (nutMoRong && noiDungDuAn) {
         "false"
       );
 
+    } else {
+
+      nutMoRong.textContent = "▲ Thu gọn";
+
+      nutMoRong.setAttribute(
+        "aria-expanded",
+        "true"
+      );
     }
-
   });
-
 }
