@@ -32,23 +32,36 @@
       Cook with me - Khơi nguồn cảm hứng vào bếp
     </p>
 
-    <form class="o-tim-kiem" action="#" method="get">
+    <!-- KHU VỰC TÌM KIẾM CÓ GỢI Ý TỪ KHÓA (TƯƠNG TÁC 1) -->
+    <div>
+      <form class="o-tim-kiem" action="#" method="get">
 
-      <label for="search">Tìm kiếm</label>
+        <label for="search">Tìm kiếm</label>
 
-      <input
-        type="search"
-        id="search"
-        name="keyword"
-        placeholder="Tìm kiếm món ăn, công thức..."
-      >
+        <input
+          type="search"
+          id="search"
+          name="keyword"
+          placeholder="Tìm kiếm món ăn, công thức..."
+        >
 
-      <button class="nut" type="submit">
-        Tìm kiếm
-      </button>
+        <button class="nut" type="submit">
+          Tìm kiếm
+        </button>
 
-    </form>
+      </form>
 
+      <!-- Hàng gợi ý nhanh từ khóa nấu ăn -->
+      <div style="font-size: 13px; margin-top: 6px; color: #555;">
+        Gợi ý tìm nhanh: 
+        <span class="tag-mon-an" style="cursor: pointer; color: #d35400; text-decoration: underline; margin-right: 8px;">#Món chay</span>
+        <span class="tag-mon-an" style="cursor: pointer; color: #d35400; text-decoration: underline; margin-right: 8px;">#Eat clean</span>
+        <span class="tag-mon-an" style="cursor: pointer; color: #d35400; text-decoration: underline; margin-right: 8px;">#Bánh ngọt</span>
+        <span class="tag-mon-an" style="cursor: pointer; color: #d35400; text-decoration: underline;">#Canh chua</span>
+      </div>
+    </div>
+
+    <!-- KHU VỰC TÀI KHOẢN (GẮN ID KÍCH HOẠT MODAL - TƯƠNG TÁC 2) -->
     <p class="tai-khoan">
 
       <button class="nut" type="button">
@@ -57,7 +70,7 @@
 
       /
 
-      <button class="nut" type="button">
+      <button class="nut" id="btn-open-login" type="button">
         Đăng nhập
       </button>
 
@@ -140,8 +153,8 @@
           alt="Ảnh chân dung thành viên Nguyễn Thị Trinh"
           width="200"
           height="200"
->
-<figcaption>
+        >
+        <figcaption>
           Ảnh chân dung thành viên Nguyễn Thị Trinh - Nhóm 04.
         </figcaption>
 
@@ -287,8 +300,9 @@
               <td>
                 Tự học HTML5 ngữ nghĩa và Cơ sở dữ liệu
               </td>
-<td>
-Nghiên cứu tài liệu đồ án
+
+              <td>
+                Nghiên cứu tài liệu đồ án
               </td>
 
             </tr>
@@ -384,6 +398,22 @@ Nghiên cứu tài liệu đồ án
     </nav>
 
   </footer>
+
+  <!-- ================= POPUP MODAL ĐĂNG NHẬP (TƯƠNG TÁC 2) ================= -->
+  <div id="modal-auth" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 99999; justify-content: center; align-items: center;">
+    <div style="background: #ffffff; padding: 25px; border-radius: 8px; width: 320px; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+      <span id="btn-close-login" style="position: absolute; top: 8px; right: 12px; cursor: pointer; font-size: 24px; font-weight: bold; color: #666;">&times;</span>
+      <h3 style="margin-top: 0; color: #d35400; text-align: center;">Đăng nhập Cook with me</h3>
+      <form style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+        <input type="text" placeholder="Email hoặc tên đăng nhập" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
+        <input type="password" placeholder="Mật khẩu" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
+        <button class="nut" type="button" style="padding: 9px; background: #e67e22; color: #ffffff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Đăng nhập</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- NHÚNG TỆP JAVASCRIPT RIÊNG CHO TRANG CÁ NHÂN -->
+  <script src="js/canhan.js"></script>
 
 </body>
 
