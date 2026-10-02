@@ -1,83 +1,48 @@
 /*
- * Tệp canhan.js tạo các tương tác cho trang cá nhân của thành viên.
- * Chức năng 1: chuyển đổi giao diện sáng và tối, ghi nhớ bằng localStorage.
- * Chức năng 2: thu gọn và mở rộng nội dung của từng mục bằng accordion.
- * Cách thử: nhấn nút đổi giao diện hoặc nhấn vào tiêu đề các mục.
+ * Tệp canhan.js tạo chức năng đánh giá cho trang cá nhân.
+ * Người dùng có thể chọn mức đánh giá từ 1 đến 5 sao.
+ * JavaScript xử lý sự kiện và hiển thị kết quả đánh giá trực tiếp trên trang.
+ * Cách thử: nhấn một trong năm mức đánh giá và quan sát thông báo kết quả.
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-    // ==============================
-    // TƯƠNG TÁC 1: CHUYỂN SÁNG / TỐI
-    // ==============================
+    const ratingSection = document.createElement("section");
+    const ratingTitle = document.createElement("h2");
+    const ratingText = document.createElement("p");
+    const ratingList = document.createElement("div");
 
-    const themeButton = document.createElement("button");
+    ratingSection.classList.add("danh-gia-ca-nhan");
+    ratingTitle.textContent = "Đánh giá trang cá nhân";
+    ratingText.textContent = "Bạn đánh giá trang cá nhân này bao nhiêu sao?";
+    ratingList.classList.add("rating-list");
 
-    themeButton.type = "button";
-    themeButton.textContent = "🌙 Chế độ tối";
+    for (let i = 1; i <= 5; i++) {
+        const ratingButton = document.createElement("button");
 
-    document.body.prepend(themeButton);
+        ratingButton.type = "button";
+        ratingButton.textContent = "⭐ " + i;
+        ratingButton.setAttribute("aria-label", "Đánh giá " + i + " sao");
+        ratingButton.classList.add("rating-button");
 
-    const savedTheme = localStorage.getItem("theme");
+        ratingButton.addEventListener("click", function () {
+            ratingText.textContent =
+                "Bạn đã đánh giá " + i + " sao. Cảm ơn bạn đã đánh giá!";
 
-    if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        themeButton.textContent = "☀️ Chế độ sáng";
+            const buttons = ratingList.querySelectorAll(".rating-button");
+
+            buttons.forEach(function (button) {
+                button.classList.remove("rating-selected");
+            });
+
+            ratingButton.classList.add("rating-selected");
+        });
+
+        ratingList.appendChild(ratingButton);
     }
 
-    themeButton.addEventListener("click", function () {
-        document.body.classList.toggle("dark-mode");
+    ratingSection.appendChild(ratingTitle);
+    ratingSection.appendChild(ratingText);
+    ratingSection.appendChild(ratingList);
 
-        if (document.body.classList.contains("dark-mode")) {
-            themeButton.textContent = "☀️ Chế độ sáng";
-            localStorage.setItem("theme", "dark");
-        } else {
-            themeButton.textContent = "🌙 Chế độ tối";
-            localStorage.setItem("theme", "light");
-        }
-    });
-
-
-    // ==============================
-    // TƯƠNG TÁC 2: THU GỌN / MỞ RỘNG
-    // ==============================
-
-    const sections = document.querySelectorAll("main > section, main > article");
-
-    sections.forEach(function (section) {
-        const title = section.querySelector("h2");
-
-        if (!title) {
-            return;
-        }
-
-        title.setAttribute("tabindex", "0");
-        title.setAttribute("role", "button");
-        title.setAttribute("aria-expanded", "true");
-
-        const arrow = document.createElement("span");
-        arrow.textContent = " ▼";
-        arrow.setAttribute("aria-hidden", "true");
-        title.appendChild(arrow);
-
-        title.addEventListener("click", function () {
-            const isOpen = title.getAttribute("aria-expanded") === "true";
-
-            title.setAttribute("aria-expanded", String(!isOpen));
-
-            arrow.textContent = isOpen ? " ▶" : " ▼";
-
-            Array.from(section.children).forEach(function (element) {
-                if (element !== title) {
-                    element.hidden = isOpen;
-                }
-            });
-        });
-
-        title.addEventListener("keydown", function (event) {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                title.click();
-            }
-        });
-    });
+    document.querySelector(".ho-so-trang").appendChild(ratingSection);
 });
