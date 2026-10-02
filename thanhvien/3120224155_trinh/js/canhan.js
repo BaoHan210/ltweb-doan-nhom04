@@ -1,7 +1,13 @@
+/**
+ * Tệp kịch bản: canhan.js - Nguyễn Thị Trinh (Nhóm 04 - Cook with me)
+ * Chức năng: 
+ *   1. Gợi ý từ khóa: Nhấp tag gợi ý để tự động điền vào thanh tìm kiếm.
+ *   2. Modal đăng nhập: Bật / tắt cửa sổ đăng nhập thành viên cộng đồng bếp.
+ * Cách thử: Nhấp vào các thẻ #Món chay, #Eat clean... hoặc nhấp nút 'Đăng nhập'.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
-  /* ========================================================
-   * 1. GỢI Ý NHANH TỪ KHÓA NẤU ĂN VÀO Ô TÌM KIẾM
-   * ======================================================== */
+  // 1. Tương tác gợi ý nhanh từ khóa nấu ăn
   const searchInput = document.getElementById("search");
   const quickTags = document.querySelectorAll(".tag-mon-an");
 
@@ -14,9 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ========================================================
-   * 2. BẬT / TẮT POPUP ĐĂNG NHẬP CỘNG ĐỒNG BẾP
-   * ======================================================== */
+  // 2. Tương tác bật / tắt Modal đăng nhập
   const loginBtn = document.getElementById("btn-open-login");
   const loginModal = document.getElementById("modal-auth");
   const closeLoginBtn = document.getElementById("btn-close-login");
@@ -34,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (loginModal) {
-    loginModal.addEventListener("click", (e) => {
-      if (e.target === loginModal) {
+    loginModal.addEventListener("click", (event) => {
+      if (event.target === loginModal) {
         loginModal.style.display = "none";
       }
     });
