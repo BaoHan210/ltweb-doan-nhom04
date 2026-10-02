@@ -24,31 +24,25 @@
   <header class="dau-trang">
 
     <p class="thuong-hieu">
-      <span class="ten-website">Cook with me</span>
-      <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-    </p>
+  <!-- Icon mũ đầu bếp bên trái -->
+  <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
 
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+  <!-- Khối chữ bên phải -->
+  <span class="khoi-chu-logo">
+    <span class="ten-website">Cook with me</span>
+    <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+  </span>
+</p>
 
-      <label for="search">Tìm kiếm</label>
+  <form class="o-tim-kiem" action="danh-sach.html" method="get">
+    <label for="search">Tìm kiếm</label>
+    <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
+    <button class="nut" type="submit">Tìm kiếm</button>
+  </form>
 
-      <input
-        type="search"
-        id="search"
-        name="keyword"
-        placeholder="Tìm kiếm món ăn, công thức..."
-        autocomplete="off"
-      >
+  <div class="khu-vuc-tai-khoan"></div>
 
-      <button class="nut" type="submit">
-        Tìm kiếm
-      </button>
-
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-
-  </header>
+</header>
 
 
   <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
@@ -120,9 +114,6 @@
 
   </ul>
 
-
-  <!-- B6: chỉ hiển thị số lượng yêu thích.
-       Không tạo liên kết yeu-thich.html. -->
 
   <div class="khu-vuc-yeu-thich">
     <span class="nhan-yeu-thich">
@@ -238,197 +229,176 @@
     </section>
 
 
-    <!-- TỦ LẠNH CỦA TÔI -->
-<div class="khu-vuc-trang-chu">
+    <!-- KHU VỰC TRANG CHỦ -->
+    <div class="khu-vuc-trang-chu">
 
-    <section class="banner-tu-lanh" aria-labelledby="tieu-de-tu-lanh">
-        <div class="noi-dung-banner-tu-lanh">
-            <span class="bieu-tuong-tu-lanh" aria-hidden="true">
-                🧊
-            </span>
-
-            <div class="chu-banner-tu-lanh">
-                <p class="nhan-banner-tu-lanh">
-                    TỦ LẠNH CỦA TÔI
+        <!-- B5: KHỐI DỮ LIỆU API (CỘT TRÁI) -->
+        <section class="du-lieu-api" aria-labelledby="tieu-de-du-lieu-api">
+            <div class="tieu-de-khu-vuc">
+                <h2 id="tieu-de-du-lieu-api">
+                    Gợi ý món ăn hôm nay
+                </h2>
+            </div>
+            <div class="noi-dung-api">
+                <p class="api-trang-thai">
+                    Đang tải dữ liệu...
                 </p>
+            </div>
+        </section>
 
-                <h2 id="tieu-de-tu-lanh">
-                    Hôm nay ăn gì?
+        <noscript>
+    <p class="thong-bao-noscript">
+        JavaScript đang được tắt. Khối gợi ý món ăn từ API bên ngoài không thể tải dữ liệu động.
+    </p>
+</noscript>
+
+        <!-- MÓN ĂN NỔI BẬT (CỘT PHẢI - HÀNG 1) -->
+        <section class="mon-noi-bat">
+            <div class="tieu-de-khu-vuc">
+                <h2>
+                    Món ăn nổi bật
                 </h2>
 
-                <p>
-                    Có sẵn nguyên liệu trong tủ lạnh?
-                    Hãy để Cook with me gợi ý món ăn phù hợp
-                    với bạn.
-                </p>
+                <a href="danh-sach.html">
+                    Xem tất cả →
+                </a>
+            </div>
 
-                <a
-                    class="nut nut-goi-y-mon-an"
-                    href="goi-y-mon-an.html"
+            <article class="the-mon-an">
+                <img
+                    src="images/ca-kho-to.jpg"
+                    alt="Món cá kho tộ với thịt cá và nước kho màu nâu đậm"
+                    width="300"
+                    height="200"
+                    loading="lazy"
                 >
-                    🍳 Gợi ý món ăn
+
+                <div class="thong-tin-mon">
+                    <h3>
+                        Cá kho tộ
+                    </h3>
+
+                    <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
+                        ★★★★★
+                    </p>
+
+                    <a href="chi-tiet.html?id=ca-kho-to">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </article>
+
+            <article class="the-mon-an">
+                <img
+                    src="images/goi-ngo-sen.jpg"
+                    alt="Món gỏi ngó sen với rau củ và nguyên liệu trộn"
+                    width="300"
+                    height="200"
+                    loading="lazy"
+                >
+
+                <div class="thong-tin-mon">
+                    <h3>
+                        Gỏi ngó sen
+                    </h3>
+
+                    <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
+                        ★★★★★
+                    </p>
+
+                    <a href="chi-tiet.html?id=goi-ngo-sen">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </article>
+
+            <article class="the-mon-an">
+                <img
+                    src="images/banh-xeo.jpg"
+                    alt="Bánh xèo vàng giòn ăn kèm rau sống"
+                    width="300"
+                    height="200"
+                    loading="lazy"
+                >
+
+                <div class="thong-tin-mon">
+                    <h3>
+                        Bánh xèo
+                    </h3>
+
+                    <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
+                        ★★★★★
+                    </p>
+
+                    <a href="chi-tiet.html?id=banh-xeo">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </article>
+        </section>
+
+        <!-- GỢI Ý NGƯỜI THEO DÕI (CỘT PHẢI - HÀNG 2) -->
+        <section class="goi-y-theo-doi">
+            <div class="tieu-de-khu-vuc">
+                <h2>
+                    Gợi ý người theo dõi
+                </h2>
+
+                <a href="nguoi-dung.html">
+                    Xem tất cả →
                 </a>
             </div>
-        </div>
 
-        <div
-            class="trang-tri-banner-tu-lanh"
-            aria-hidden="true"
-        >
-            <span>🥕</span>
-            <span>🥚</span>
-            <span>🍅</span>
-            <span>🥬</span>
-        </div>
-    </section>
+            <article class="the-nguoi-dung nguoi-dung-gladly">
+                <div class="thong-tin-nguoi-dung">
+                    <h3>
+                        Gladly
+                    </h3>
 
-    <!-- MÓN ĂN NỔI BẬT -->
-    <section class="mon-noi-bat">
-        <div class="tieu-de-khu-vuc">
-            <h2>
-                Món ăn nổi bật
-            </h2>
+                    <p>
+                        Chia sẻ nhiều công thức món ăn gia đình.
+                    </p>
+                </div>
 
-            <a href="danh-sach.html">
-                Xem tất cả →
-            </a>
-        </div>
+                <button class="nut nut-phu" type="button">
+                    Theo dõi
+                </button>
+            </article>
 
-        <article class="the-mon-an">
-            <img
-                src="images/ca-kho-to.jpg"
-                alt="Món cá kho tộ với thịt cá và nước kho màu nâu đậm"
-                width="300"
-                height="200"
-                loading="lazy"
-            >
+            <article class="the-nguoi-dung nguoi-dung-serena">
+                <div class="thong-tin-nguoi-dung">
+                    <h3>
+                        Serena
+                    </h3>
 
-            <div class="thong-tin-mon">
-                <h3>
-                    Cá kho tộ
-                </h3>
+                    <p>
+                        Thường xuyên chia sẻ các món ăn nhanh.
+                    </p>
+                </div>
 
-                <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
-                    ★★★★★
-                </p>
+                <button class="nut nut-phu" type="button">
+                    Theo dõi
+                </button>
+            </article>
 
-                <a href="chi-tiet.html?id=ca-kho-to">
-                    Xem chi tiết
-                </a>
-            </div>
-        </article>
+            <article class="the-nguoi-dung nguoi-dung-jasmine">
+                <div class="thong-tin-nguoi-dung">
+                    <h3>
+                        Jasmine
+                    </h3>
 
-        <article class="the-mon-an">
-            <img
-                src="images/goi-ngo-sen.jpg"
-                alt="Món gỏi ngó sen với rau củ và nguyên liệu trộn"
-                width="300"
-                height="200"
-                loading="lazy"
-            >
+                    <p>
+                        Yêu thích các món tráng miệng và làm bánh.
+                    </p>
+                </div>
 
-            <div class="thong-tin-mon">
-                <h3>
-                    Gỏi ngó sen
-                </h3>
+                <button class="nut nut-phu" type="button">
+                    Theo dõi
+                </button>
+            </article>
+        </section>
 
-                <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
-                    ★★★★★
-                </p>
-
-                <a href="chi-tiet.html?id=goi-ngo-sen">
-                    Xem chi tiết
-                </a>
-            </div>
-        </article>
-
-        <article class="the-mon-an">
-            <img
-                src="images/banh-xeo.jpg"
-                alt="Bánh xèo vàng giòn ăn kèm rau sống"
-                width="300"
-                height="200"
-                loading="lazy"
-            >
-
-            <div class="thong-tin-mon">
-                <h3>
-                    Bánh xèo
-                </h3>
-
-                <p class="danh-gia-mon" role="img" aria-label="5 trên 5 sao">
-                    ★★★★★
-                </p>
-
-                <a href="chi-tiet.html?id=banh-xeo">
-                    Xem chi tiết
-                </a>
-            </div>
-        </article>
-    </section>
-
-    <!-- GỢI Ý NGƯỜI THEO DÕI -->
-    <section class="goi-y-theo-doi">
-        <div class="tieu-de-khu-vuc">
-            <h2>
-                Gợi ý người theo dõi
-            </h2>
-
-            <a href="nguoi-dung.html">
-                Xem tất cả →
-            </a>
-        </div>
-
-        <article class="the-nguoi-dung nguoi-dung-gladly">
-            <div class="thong-tin-nguoi-dung">
-                <h3>
-                    Gladly
-                </h3>
-
-                <p>
-                    Chia sẻ nhiều công thức món ăn gia đình.
-                </p>
-            </div>
-
-            <button class="nut nut-phu" type="button">
-                Theo dõi
-            </button>
-        </article>
-
-        <article class="the-nguoi-dung nguoi-dung-serena">
-            <div class="thong-tin-nguoi-dung">
-                <h3>
-                    Serena
-                </h3>
-
-                <p>
-                    Thường xuyên chia sẻ các món ăn nhanh.
-                </p>
-            </div>
-
-            <button class="nut nut-phu" type="button">
-                Theo dõi
-            </button>
-        </article>
-
-        <article class="the-nguoi-dung nguoi-dung-jasmine">
-            <div class="thong-tin-nguoi-dung">
-                <h3>
-                    Jasmine
-                </h3>
-
-                <p>
-                    Yêu thích các món tráng miệng và làm bánh.
-                </p>
-            </div>
-
-            <button class="nut nut-phu" type="button">
-                Theo dõi
-            </button>
-        </article>
-    </section>
-
-</div> <!-- THÊM THẺ ĐÓNG NÀY ĐỂ HOÀN TẤT KHU VỰC TRANG CHỦ -->
+    </div>
 
     <!-- BẢNG TIN -->
     <section class="bang-tin">
@@ -438,284 +408,248 @@
           Bảng tin
         </h2>
 
-        <a
-    href="dang-bai-viet.html"
->
+        <a href="dang-bai-viet.html">
           Đăng bài viết →
         </a>
       </div>
 
-      <article
-  class="the-bai-dang"
-  data-bai-viet-id="pho-bo-truyen-thong"
->
+      <article class="the-bai-dang" data-bai-viet-id="pho-bo-truyen-thong">
 
-  <div class="thong-tin-tac-gia">
-    <strong>Angel</strong>
-    <span>Chia sẻ một công thức mới</span>
-  </div>
+        <div class="thong-tin-tac-gia">
+          <strong>Angel</strong>
+          <span>Chia sẻ một công thức mới</span>
+        </div>
 
-  <h3>
-    Phở bò truyền thống
-  </h3>
+        <h3>
+          Phở bò truyền thống
+        </h3>
 
-  <p>
-    Công thức phở bò thơm ngon với nước dùng đậm đà
-    và các nguyên liệu quen thuộc.
-  </p>
+        <p>
+          Công thức phở bò thơm ngon với nước dùng đậm đà
+          và các nguyên liệu quen thuộc.
+        </p>
 
-  <img
-    src="images/pho-bo.jpg"
-    alt="Tô phở bò với bánh phở, thịt bò, rau thơm và chanh"
-    width="500"
-    height="320"
-    loading="lazy"
-  >
+        <img
+          src="images/pho-bo.jpg"
+          alt="Tô phở bò với bánh phở, thịt bò, rau thơm và chanh"
+          width="500"
+          height="320"
+          loading="lazy"
+        >
 
-  <div class="noi-dung-mo-rong" hidden>
+        <div class="noi-dung-mo-rong" hidden>
 
-    <p>
-      Phở bò là món ăn quen thuộc với nước dùng trong,
-      thơm và đậm vị.
-    </p>
+          <p>
+            Phở bò là món ăn quen thuộc với nước dùng trong,
+            thơm và đậm vị.
+          </p>
 
-  </div>
+        </div>
 
 
-  <div class="hanh-dong-bai-dang">
+        <div class="hanh-dong-bai-dang">
 
-    <button
-      class="nut-tuong-tac nut-thich"
-      type="button"
-      data-bai-viet-id="pho-bo-truyen-thong"
-      aria-label="Thích bài viết"
-      title="Thích"
-    >
-      ♡
-    </button>
+          <button
+            class="nut-tuong-tac nut-thich"
+            type="button"
+            data-bai-viet-id="pho-bo-truyen-thong"
+            aria-label="Thích bài viết"
+            title="Thích"
+          >
+            ♡
+          </button>
 
-    <button
-      class="nut-tuong-tac nut-binh-luan"
-      type="button"
-      aria-label="Bình luận"
-      title="Bình luận"
-    >
-      💬
-    </button>
+          <button
+            class="nut-tuong-tac nut-binh-luan"
+            type="button"
+            aria-label="Bình luận"
+            title="Bình luận"
+          >
+            💬
+          </button>
 
-    <button
-      class="nut-tuong-tac nut-chia-se"
-      type="button"
-      aria-label="Chia sẻ bài viết"
-      title="Chia sẻ"
-    >
-      ↗
-    </button>
+          <button
+            class="nut-tuong-tac nut-chia-se"
+            type="button"
+            aria-label="Chia sẻ bài viết"
+            title="Chia sẻ"
+          >
+            ↗
+          </button>
 
-    <button
-      class="nut-tuong-tac nut-luu"
-      type="button"
-      data-bai-viet-id="pho-bo-truyen-thong"
-      aria-label="Lưu bài viết"
-      title="Lưu"
-    >
-      🔖
-    </button>
+          <button
+            class="nut-tuong-tac nut-luu"
+            type="button"
+            data-bai-viet-id="pho-bo-truyen-thong"
+            aria-label="Lưu bài viết"
+            title="Lưu"
+          >
+            🔖
+          </button>
 
-    <button
-      class="nut-tuong-tac nut-xem"
-      type="button"
-      aria-label="Xem nội dung bài viết"
-      title="Xem"
-    >
-      ⋯
-    </button>
+          <button
+            class="nut-tuong-tac nut-xem"
+            type="button"
+            aria-label="Xem nội dung bài viết"
+            title="Xem"
+          >
+            ⋯
+          </button>
 
-  </div>
-
-
-  <div class="khu-vuc-binh-luan" hidden>
-
-    <form class="form-binh-luan">
-
-      <label for="binh-luan-pho-bo">
-        Bình luận
-      </label>
-
-      <input
-        type="text"
-        id="binh-luan-pho-bo"
-        name="comment"
-        maxlength="200"
-        placeholder="Viết bình luận..."
-        autocomplete="off"
-      >
-
-      <button
-        class="nut"
-        type="submit"
-      >
-        Gửi
-      </button>
-
-    </form>
-
-    <div class="danh-sach-binh-luan"></div>
-
-  </div>
-
-</article>
+        </div>
 
 
-      <article
-  class="the-bai-dang"
-  data-bai-viet-id="mi-quang-tom-thit"
->
+        <div class="khu-vuc-binh-luan" hidden>
 
-  <div class="thong-tin-tac-gia">
-    <strong>Helia</strong>
-    <span>Chia sẻ một công thức mới</span>
-  </div>
+          <form class="form-binh-luan">
 
-  <h3>
-    Mì Quảng tôm thịt
-  </h3>
+            <label for="binh-luan-pho-bo">
+              Bình luận
+            </label>
 
-  <p>
-    Công thức mì Quảng với tôm, thịt và rau sống ăn kèm.
-  </p>
+            <input
+              type="text"
+              id="binh-luan-pho-bo"
+              name="comment"
+              maxlength="200"
+              placeholder="Viết bình luận..."
+              autocomplete="off"
+            >
 
-  <img
-    src="images/mi-quang.jpg"
-    alt="Tô mì Quảng với sợi mì vàng, tôm, thịt và rau sống"
-    width="500"
-    height="320"
-    loading="lazy"
-  >
+            <button
+              class="nut"
+              type="submit"
+            >
+              Gửi
+            </button>
 
-  <div class="noi-dung-mo-rong" hidden>
+          </form>
 
-    <p>
-      Công thức phù hợp cho bữa ăn gia đình và có thể điều chỉnh
-      nguyên liệu theo khẩu phần.
-    </p>
+          <div class="danh-sach-binh-luan"></div>
 
-  </div>
+        </div>
+
+      </article>
 
 
-  <div class="hanh-dong-bai-dang">
+      <article class="the-bai-dang" data-bai-viet-id="mi-quang-tom-thit">
 
-    <button
-      class="nut-tuong-tac nut-thich"
-      type="button"
-      data-bai-viet-id="mi-quang-tom-thit"
-      aria-label="Thích bài viết"
-      title="Thích"
-    >
-      ♡
-    </button>
+        <div class="thong-tin-tac-gia">
+          <strong>Helia</strong>
+          <span>Chia sẻ một công thức mới</span>
+        </div>
 
-    <button
-      class="nut-tuong-tac nut-binh-luan"
-      type="button"
-      aria-label="Bình luận"
-      title="Bình luận"
-    >
-      💬
-    </button>
+        <h3>
+          Mì Quảng tôm thịt
+        </h3>
 
-    <button
-      class="nut-tuong-tac nut-chia-se"
-      type="button"
-      aria-label="Chia sẻ bài viết"
-      title="Chia sẻ"
-    >
-      ↗
-    </button>
+        <p>
+          Công thức mì Quảng với tôm, thịt và rau sống ăn kèm.
+        </p>
 
-    <button
-      class="nut-tuong-tac nut-luu"
-      type="button"
-      data-bai-viet-id="mi-quang-tom-thit"
-      aria-label="Lưu bài viết"
-      title="Lưu"
-    >
-      🔖
-    </button>
+        <img
+          src="images/mi-quang.jpg"
+          alt="Tô mì Quảng với sợi mì vàng, tôm, thịt và rau sống"
+          width="500"
+          height="320"
+          loading="lazy"
+        >
 
-    <button
-      class="nut-tuong-tac nut-xem"
-      type="button"
-      aria-label="Xem nội dung bài viết"
-      title="Xem"
-    >
-      ⋯
-    </button>
+        <div class="noi-dung-mo-rong" hidden>
 
-  </div>
+          <p>
+            Công thức phù hợp cho bữa ăn gia đình và có thể điều chỉnh
+            nguyên liệu theo khẩu phần.
+          </p>
+
+        </div>
 
 
-  <div class="khu-vuc-binh-luan" hidden>
+        <div class="hanh-dong-bai-dang">
 
-    <form class="form-binh-luan">
+          <button
+            class="nut-tuong-tac nut-thich"
+            type="button"
+            data-bai-viet-id="mi-quang-tom-thit"
+            aria-label="Thích bài viết"
+            title="Thích"
+          >
+            ♡
+          </button>
 
-      <label for="binh-luan-mi-quang">
-        Bình luận
-      </label>
+          <button
+            class="nut-tuong-tac nut-binh-luan"
+            type="button"
+            aria-label="Bình luận"
+            title="Bình luận"
+          >
+            💬
+          </button>
 
-      <input
-        type="text"
-        id="binh-luan-mi-quang"
-        name="comment"
-        maxlength="200"
-        placeholder="Viết bình luận..."
-        autocomplete="off"
-      >
+          <button
+            class="nut-tuong-tac nut-chia-se"
+            type="button"
+            aria-label="Chia sẻ bài viết"
+            title="Chia sẻ"
+          >
+            ↗
+          </button>
 
-      <button
-        class="nut"
-        type="submit"
-      >
-        Gửi
-      </button>
+          <button
+            class="nut-tuong-tac nut-luu"
+            type="button"
+            data-bai-viet-id="mi-quang-tom-thit"
+            aria-label="Lưu bài viết"
+            title="Lưu"
+          >
+            🔖
+          </button>
 
-    </form>
+          <button
+            class="nut-tuong-tac nut-xem"
+            type="button"
+            aria-label="Xem nội dung bài viết"
+            title="Xem"
+          >
+            ⋯
+          </button>
 
-    <div class="danh-sach-binh-luan"></div>
+        </div>
 
-  </div>
 
-</article>
+        <div class="khu-vuc-binh-luan" hidden>
+
+          <form class="form-binh-luan">
+
+            <label for="binh-luan-mi-quang">
+              Bình luận
+            </label>
+
+            <input
+              type="text"
+              id="binh-luan-mi-quang"
+              name="comment"
+              maxlength="200"
+              placeholder="Viết bình luận..."
+              autocomplete="off"
+            >
+
+            <button
+              class="nut"
+              type="submit"
+            >
+              Gửi
+            </button>
+
+          </form>
+
+          <div class="danh-sach-binh-luan"></div>
+
+        </div>
+
+      </article>
 
     </section>
-
-    <!-- =====================================================
-     B5 - DỮ LIỆU TỪ REST API CÔNG KHAI
-     Dữ liệu được tải bằng trang-chu.js.
-     ===================================================== -->
-
-<section
-  class="du-lieu-api"
-  aria-labelledby="tieu-de-du-lieu-api"
->
-
-  <div class="tieu-de-khu-vuc">
-
-    <h2 id="tieu-de-du-lieu-api">
-      Gợi ý món ăn hôm nay
-    </h2>
-
-  </div>
-
-  <div class="noi-dung-api">
-
-    <p class="api-trang-thai">
-      Đang tải dữ liệu...
-    </p>
-
-  </div>
-
-</section>
 
   </main>
 

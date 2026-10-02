@@ -11,20 +11,32 @@ import {
     doiTrangThaiYeuThich
 } from './yeu-thich.js';
 
+
+/* ================================
+   LẤY ID MÓN ĂN TRÊN URL
+   ================================ */
+
 const layIdMonAn = () => {
-    const thamSo = new URLSearchParams(
-        window.location.search
-    );
+    const thamSo =
+        new URLSearchParams(
+            window.location.search
+        );
 
     return thamSo.get('id');
 };
 
+
+/* ================================
+   HIỂN THỊ DANH SÁCH NGUYÊN LIỆU
+   ================================ */
+
 const taoDanhSachNguyenLieu = (
     danhSachNguyenLieu
 ) => {
-    const danhSach = document.querySelector(
-        '.danh-sach-nguyen-lieu'
-    );
+    const danhSach =
+        document.querySelector(
+            '.danh-sach-nguyen-lieu'
+        );
 
     if (danhSach === null) {
         return;
@@ -38,33 +50,59 @@ const taoDanhSachNguyenLieu = (
         return;
     }
 
-    danhSachNguyenLieu.forEach((nguyenLieu) => {
-        const item =
-            document.createElement('li');
+    danhSachNguyenLieu.forEach(
+        (nguyenLieu) => {
+            const item =
+                document.createElement('li');
 
-        item.className =
-            'nguyen-lieu-item';
+            if (
+                nguyenLieu.type
+            ) {
+                item.classList.add(
+                    `nguyen-lieu-${nguyenLieu.type}`
+                );
+            } else {
+                item.classList.add(
+                    'nguyen-lieu-gia-vi'
+                );
+            }
 
-        item.textContent =
-            nguyenLieu.ten;
+            const ten =
+                document.createElement('span');
 
-        if (nguyenLieu.icon !== '') {
-            item.style.setProperty(
-                '--icon-nguyen-lieu',
-                `url("images/icons/${nguyenLieu.icon}")`
+            ten.textContent =
+                nguyenLieu.ten || '';
+
+            const soLuong =
+                document.createElement('strong');
+
+            soLuong.textContent =
+                nguyenLieu.soLuong || '';
+
+            item.append(
+                ten,
+                soLuong
+            );
+
+            danhSach.appendChild(
+                item
             );
         }
-
-        danhSach.appendChild(item);
-    });
+    );
 };
+
+
+/* ================================
+   HIỂN THỊ CÁC BƯỚC CHẾ BIẾN
+   ================================ */
 
 const taoDanhSachCacBuoc = (
     danhSachCacBuoc
 ) => {
-    const danhSach = document.querySelector(
-        '.cac-buoc-che-bien'
-    );
+    const danhSach =
+        document.querySelector(
+            '.cac-buoc-che-bien'
+        );
 
     if (danhSach === null) {
         return;
@@ -78,21 +116,36 @@ const taoDanhSachCacBuoc = (
         return;
     }
 
-    danhSachCacBuoc.forEach((buoc) => {
-        const item =
-            document.createElement('li');
+    danhSachCacBuoc.forEach(
+        (buoc) => {
+            const item =
+                document.createElement('li');
 
-        const moTa =
-            document.createElement('p');
+            const moTa =
+                document.createElement('p');
 
-        moTa.textContent = buoc;
+            moTa.textContent =
+                buoc;
 
-        item.appendChild(moTa);
-        danhSach.appendChild(item);
-    });
+            item.appendChild(
+                moTa
+            );
+
+            danhSach.appendChild(
+                item
+            );
+        }
+    );
 };
 
-const taoVideoHuongDan = (maVideo) => {
+
+/* ================================
+   HIỂN THỊ VIDEO HƯỚNG DẪN
+   ================================ */
+
+const taoVideoHuongDan = (
+    maVideo
+) => {
     const khuVucVideo =
         document.querySelector(
             '.video-huong-dan'
@@ -110,11 +163,18 @@ const taoVideoHuongDan = (maVideo) => {
         return;
     }
 
-    if (maVideo === '') {
-        khuVucVideo.style.display = 'none';
+    khungVideo.replaceChildren();
+
+    if (
+        typeof maVideo !== 'string' ||
+        maVideo.trim() === ''
+    ) {
+        khuVucVideo.hidden = true;
 
         return;
     }
+
+    khuVucVideo.hidden = false;
 
     const iframe =
         document.createElement('iframe');
@@ -123,17 +183,83 @@ const taoVideoHuongDan = (maVideo) => {
     iframe.height = '315';
 
     iframe.src =
-        `https://www.youtube-nocookie.com/embed/${maVideo}`;
+        `https://www.youtube-nocookie.com/embed/${encodeURIComponent(maVideo)}`;
 
     iframe.title =
         'Video hướng dẫn món ăn';
 
+    iframe.loading = 'lazy';
+
+    iframe.setAttribute(
+        'allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+    );
+
     iframe.allowFullscreen = true;
 
-    khungVideo.replaceChildren();
-
-    khungVideo.appendChild(iframe);
+    khungVideo.appendChild(
+        iframe
+    );
 };
+
+
+/* ================================
+   CẬP NHẬT TRẠNG THÁI NÚT YÊU THÍCH
+   ================================ */
+
+const capNhatTrangThaiNutYeuThich = (
+    khuVucHanhDong,
+    idMonAn
+) => {
+    const nutYeuThich =
+        khuVucHanhDong.querySelector(
+            '.nut-yeu-thich'
+        );
+
+    if (
+        nutYeuThich === null
+    ) {
+        return;
+    }
+
+    const daYeuThich =
+        kiemTraYeuThich(
+            idMonAn
+        );
+
+    if (
+        daYeuThich === true
+    ) {
+        nutYeuThich.textContent =
+            '♥ Đã lưu';
+
+        nutYeuThich.classList.add(
+            'da-luu'
+        );
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            'Bỏ khỏi yêu thích'
+        );
+    } else {
+        nutYeuThich.textContent =
+            '♡ Lưu công thức';
+
+        nutYeuThich.classList.remove(
+            'da-luu'
+        );
+
+        nutYeuThich.setAttribute(
+            'aria-label',
+            'Thêm vào yêu thích'
+        );
+    }
+};
+
+
+/* ================================
+   XỬ LÝ YÊU THÍCH BẰNG EVENT DELEGATION
+   ================================ */
 
 const thietLapNutYeuThich = (
     idMonAn
@@ -149,47 +275,23 @@ const thietLapNutYeuThich = (
         return;
     }
 
-    const capNhatTrangThaiNut = () => {
-        const nutYeuThich =
-            khuVucHanhDong.querySelector(
-                '.nut-yeu-thich'
-            );
+    khuVucHanhDong.dataset.idMonAn =
+        idMonAn;
 
-        if (
-            nutYeuThich === null
-        ) {
-            return;
-        }
+    if (
+        khuVucHanhDong.dataset.daGanSuKien ===
+        'true'
+    ) {
+        capNhatTrangThaiNutYeuThich(
+            khuVucHanhDong,
+            idMonAn
+        );
 
-        const daYeuThich =
-            kiemTraYeuThich(idMonAn);
+        return;
+    }
 
-        if (daYeuThich === true) {
-            nutYeuThich.textContent =
-                '♥ Đã lưu';
-
-            nutYeuThich.classList.add(
-                'da-luu'
-            );
-
-            nutYeuThich.setAttribute(
-                'aria-label',
-                'Bỏ khỏi yêu thích'
-            );
-        } else {
-            nutYeuThich.textContent =
-                '♡ Lưu công thức';
-
-            nutYeuThich.classList.remove(
-                'da-luu'
-            );
-
-            nutYeuThich.setAttribute(
-                'aria-label',
-                'Thêm vào yêu thích'
-            );
-        }
-    };
+    khuVucHanhDong.dataset.daGanSuKien =
+        'true';
 
     khuVucHanhDong.addEventListener(
         'click',
@@ -200,67 +302,100 @@ const thietLapNutYeuThich = (
                 );
 
             if (
-                nutYeuThich === null
+                nutYeuThich === null ||
+                khuVucHanhDong.contains(
+                    nutYeuThich
+                ) === false
+            ) {
+                return;
+            }
+
+            const id =
+                khuVucHanhDong.dataset.idMonAn;
+
+            if (
+                id === undefined ||
+                id === ''
             ) {
                 return;
             }
 
             doiTrangThaiYeuThich(
-                idMonAn
+                id
             );
 
-            capNhatTrangThaiNut();
+            capNhatTrangThaiNutYeuThich(
+                khuVucHanhDong,
+                id
+            );
         }
     );
 
-    capNhatTrangThaiNut();
+    capNhatTrangThaiNutYeuThich(
+        khuVucHanhDong,
+        idMonAn
+    );
 };
+
+
+/* ================================
+   HIỂN THỊ THÔNG TIN MÓN ĂN
+   ================================ */
 
 const hienThiThongTinMonAn = (
     monAn
 ) => {
-    
     const khuVucTrangThai =
-    document.querySelector(
-        '.trang-thai-chi-tiet'
-    );
+        document.querySelector(
+            '.trang-thai-chi-tiet'
+        );
 
-const khuVucChiTiet =
-    document.querySelector(
-        '.chi-tiet-mon-an'
-    );
+    const khuVucChiTiet =
+        document.querySelector(
+            '.chi-tiet-mon-an'
+        );
 
-if (
-    khuVucTrangThai !== null
-) {
-    khuVucTrangThai.replaceChildren();
-}
+    if (
+        khuVucTrangThai !== null
+    ) {
+        khuVucTrangThai.replaceChildren();
+    }
 
-if (
-    khuVucChiTiet !== null
-) {
-    khuVucChiTiet.hidden = false;
-}
+    if (
+        khuVucChiTiet !== null
+    ) {
+        khuVucChiTiet.hidden = false;
+    }
 
-document.title =
+    document.title =
         `${monAn.ten} | Cook with me`;
+
+
+    /* ---------- Tên món ---------- */
 
     const tieuDe =
         document.querySelector(
             '.tieu-de-mon-an'
         );
 
-    if (tieuDe !== null) {
+    if (
+        tieuDe !== null
+    ) {
         tieuDe.textContent =
             monAn.ten;
     }
+
+
+    /* ---------- Hình ảnh ---------- */
 
     const hinhAnh =
         document.querySelector(
             '.hinh-anh-mon-an img'
         );
 
-    if (hinhAnh !== null) {
+    if (
+        hinhAnh !== null
+    ) {
         hinhAnh.src =
             monAn.hinhAnh;
 
@@ -268,15 +403,23 @@ document.title =
             monAn.ten;
     }
 
+
+    /* ---------- Đánh giá ---------- */
+
     const danhGia =
         document.querySelector(
             '.so-luot-danh-gia'
         );
 
-    if (danhGia !== null) {
+    if (
+        danhGia !== null
+    ) {
         danhGia.textContent =
             `${monAn.danhGia} (${monAn.soLuotDanhGia} đánh giá)`;
     }
+
+
+    /* ---------- Thông tin cơ bản ---------- */
 
     const thongTinCoBan =
         document.querySelectorAll(
@@ -296,35 +439,57 @@ document.title =
             monAn.doKho;
 
         thongTinCoBan[3].textContent =
-            `${monAn.nganSach.toLocaleString('vi-VN')} đồng`;
+            `${Number(monAn.nganSach).toLocaleString('vi-VN')} đồng`;
     }
+
+
+    /* ---------- Mô tả ---------- */
 
     const moTa =
         document.querySelector(
             '.mo-ta-mon-an p'
         );
 
-    if (moTa !== null) {
+    if (
+        moTa !== null
+    ) {
         moTa.textContent =
             monAn.moTa;
     }
+
+
+    /* ---------- Nguyên liệu ---------- */
 
     taoDanhSachNguyenLieu(
         monAn.nguyenLieu
     );
 
+
+    /* ---------- Các bước chế biến ---------- */
+
     taoDanhSachCacBuoc(
         monAn.cacBuoc
     );
+
+
+    /* ---------- Video ---------- */
 
     taoVideoHuongDan(
         monAn.video
     );
 
+
+    /* ---------- Yêu thích ---------- */
+
     thietLapNutYeuThich(
         monAn.id
     );
 };
+
+
+/* ================================
+   TRẠNG THÁI ĐANG TẢI
+   ================================ */
 
 const hienThiDangTai = () => {
     const khuVucTrangThai =
@@ -338,13 +503,14 @@ const hienThiDangTai = () => {
         );
 
     if (
-        khuVucTrangThai === null
-        || khuVucChiTiet === null
+        khuVucTrangThai === null ||
+        khuVucChiTiet === null
     ) {
         return;
     }
 
     khuVucChiTiet.hidden = true;
+
     khuVucTrangThai.replaceChildren();
 
     const thongBao =
@@ -361,6 +527,11 @@ const hienThiDangTai = () => {
     );
 };
 
+
+/* ================================
+   HIỂN THỊ LỖI
+   ================================ */
+
 const hienThiLoi = (
     noiDung,
     coThuLai = false
@@ -376,13 +547,14 @@ const hienThiLoi = (
         );
 
     if (
-        khuVucTrangThai === null
-        || khuVucChiTiet === null
+        khuVucTrangThai === null ||
+        khuVucChiTiet === null
     ) {
         return;
     }
 
     khuVucChiTiet.hidden = true;
+
     khuVucTrangThai.replaceChildren();
 
     const thongBao =
@@ -398,13 +570,21 @@ const hienThiLoi = (
         thongBao
     );
 
-    if (coThuLai === true) {
+
+    if (
+        coThuLai === true
+    ) {
         const nutThuLai =
             document.createElement('button');
 
-        nutThuLai.type = 'button';
-        nutThuLai.className = 'nut';
-        nutThuLai.textContent = 'Thử lại';
+        nutThuLai.type =
+            'button';
+
+        nutThuLai.className =
+            'nut';
+
+        nutThuLai.textContent =
+            'Thử lại';
 
         nutThuLai.addEventListener(
             'click',
@@ -417,13 +597,24 @@ const hienThiLoi = (
     }
 };
 
+
+/* ================================
+   TẢI VÀ HIỂN THỊ MÓN ĂN
+   ================================ */
+
 const taiVaHienThiMonAn = async () => {
     hienThiDangTai();
 
     const idMonAn =
         layIdMonAn();
 
-    if (idMonAn === null) {
+
+    /* ---------- Kiểm tra id ---------- */
+
+    if (
+        idMonAn === null ||
+        idMonAn.trim() === ''
+    ) {
         hienThiLoi(
             'Không tìm thấy mã món ăn.'
         );
@@ -431,11 +622,17 @@ const taiVaHienThiMonAn = async () => {
         return;
     }
 
+
     try {
+        /* ---------- Tải JSON ---------- */
+
         const danhSachMonAn =
             await taiJSON(
                 'data/mon-an.json'
             );
+
+
+        /* ---------- Kiểm tra dữ liệu ---------- */
 
         if (
             Array.isArray(danhSachMonAn) === false
@@ -445,10 +642,21 @@ const taiVaHienThiMonAn = async () => {
             );
         }
 
+
+        /* ---------- Tìm món theo id ---------- */
+
         const monAn =
-            danhSachMonAn.find((item) => {
-            return String(item.id) === idMonAn;
-        });
+            danhSachMonAn.find(
+                (item) => {
+                    return (
+                        String(item.id) ===
+                        idMonAn
+                    );
+                }
+            );
+
+
+        /* ---------- Không tìm thấy ---------- */
 
         if (
             monAn === undefined
@@ -460,9 +668,13 @@ const taiVaHienThiMonAn = async () => {
             return;
         }
 
+
+        /* ---------- Hiển thị ---------- */
+
         hienThiThongTinMonAn(
             monAn
         );
+
     } catch (error) {
         console.error(
             'Lỗi tải dữ liệu món ăn:',
@@ -475,5 +687,10 @@ const taiVaHienThiMonAn = async () => {
         );
     }
 };
+
+
+/* ================================
+   KHỞI CHẠY
+   ================================ */
 
 taiVaHienThiMonAn();

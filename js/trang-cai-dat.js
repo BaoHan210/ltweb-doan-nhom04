@@ -13,21 +13,36 @@ import {
     xoaTaiKhoan
 } from './tai-khoan.js';
 
-const tenKhoaCaiDat = 'caiDatNguoiDung';
+
+const tenKhoaCaiDat =
+    'caiDatNguoiDung';
 
 
+/*
+ * Lấy khóa cài đặt theo ID người dùng.
+ */
 const layKhoaNguoiDung = (
     nguoiDung
 ) => {
 
-    if (nguoiDung === null) {
+    if (
+        nguoiDung === null
+        || typeof nguoiDung !== 'object'
+        || nguoiDung.id === undefined
+        || nguoiDung.id === null
+    ) {
         return '';
     }
 
-    return String(nguoiDung.id);
+    return String(
+        nguoiDung.id
+    );
 };
 
 
+/*
+ * Đọc cài đặt của người dùng hiện tại.
+ */
 const docCaiDat = (
     nguoiDung
 ) => {
@@ -37,7 +52,9 @@ const docCaiDat = (
             nguoiDung
         );
 
-    if (khoaNguoiDung === '') {
+    if (
+        khoaNguoiDung === ''
+    ) {
         return {};
     }
 
@@ -46,7 +63,9 @@ const docCaiDat = (
             tenKhoaCaiDat
         );
 
-    if (duLieu === null) {
+    if (
+        duLieu === null
+    ) {
         return {};
     }
 
@@ -60,14 +79,26 @@ const docCaiDat = (
         if (
             typeof danhSachCaiDat !== 'object'
             || danhSachCaiDat === null
+            || Array.isArray(
+                danhSachCaiDat
+            )
         ) {
             return {};
         }
 
-        return (
-            danhSachCaiDat[khoaNguoiDung]
-            || {}
-        );
+        const caiDat =
+            danhSachCaiDat[
+                khoaNguoiDung
+            ];
+
+        if (
+            caiDat === null
+            || typeof caiDat !== 'object'
+        ) {
+            return {};
+        }
+
+        return caiDat;
 
     } catch (error) {
 
@@ -76,6 +107,9 @@ const docCaiDat = (
 };
 
 
+/*
+ * Ghi cài đặt của người dùng.
+ */
 const ghiCaiDat = (
     nguoiDung,
     caiDat
@@ -86,7 +120,9 @@ const ghiCaiDat = (
             nguoiDung
         );
 
-    if (khoaNguoiDung === '') {
+    if (
+        khoaNguoiDung === ''
+    ) {
         return;
     }
 
@@ -97,7 +133,9 @@ const ghiCaiDat = (
             tenKhoaCaiDat
         );
 
-    if (duLieu !== null) {
+    if (
+        duLieu !== null
+    ) {
 
         try {
 
@@ -109,6 +147,9 @@ const ghiCaiDat = (
             if (
                 typeof duLieuDaLuu === 'object'
                 && duLieuDaLuu !== null
+                && Array.isArray(
+                    duLieuDaLuu
+                ) === false
             ) {
                 danhSachCaiDat =
                     duLieuDaLuu;
@@ -120,7 +161,9 @@ const ghiCaiDat = (
         }
     }
 
-    danhSachCaiDat[khoaNguoiDung] =
+    danhSachCaiDat[
+        khoaNguoiDung
+    ] =
         caiDat;
 
     localStorage.setItem(
@@ -132,21 +175,42 @@ const ghiCaiDat = (
 };
 
 
+/*
+ * Tìm tài khoản hiện tại trong danh sách tài khoản.
+ */
 const timTaiKhoanHienTai = (
     nguoiDung
 ) => {
+
+    if (
+        nguoiDung === null
+    ) {
+        return undefined;
+    }
 
     const danhSachTaiKhoan =
         docDanhSachTaiKhoan();
 
     return danhSachTaiKhoan.find(
         (taiKhoan) => {
-            return taiKhoan.id === nguoiDung.id;
+
+            return (
+                String(
+                    taiKhoan.id
+                )
+                ===
+                String(
+                    nguoiDung.id
+                )
+            );
         }
     );
 };
 
 
+/*
+ * Hiển thị thông báo trên trang.
+ */
 const hienThiThongBao = (
     noiDung
 ) => {
@@ -156,18 +220,49 @@ const hienThiThongBao = (
             '#thong-bao-cai-dat'
         );
 
-    if (thongBao === null) {
-        window.alert(noiDung);
+    if (
+        thongBao === null
+    ) {
+        window.alert(
+            noiDung
+        );
+
         return;
     }
 
     thongBao.textContent =
         noiDung;
 
-    thongBao.hidden = false;
+    thongBao.hidden =
+        false;
 };
 
 
+/*
+ * Ẩn thông báo.
+ */
+const anThongBao = () => {
+
+    const thongBao =
+        document.querySelector(
+            '#thong-bao-cai-dat'
+        );
+
+    if (
+        thongBao !== null
+    ) {
+        thongBao.hidden =
+            true;
+
+        thongBao.textContent =
+            '';
+    }
+};
+
+
+/*
+ * Điền thông tin tài khoản vào form.
+ */
 const dienThongTinTaiKhoan = (
     taiKhoan
 ) => {
@@ -187,23 +282,32 @@ const dienThongTinTaiKhoan = (
             '#phone'
         );
 
-    if (oHoTen !== null) {
+    if (
+        oHoTen !== null
+    ) {
         oHoTen.value =
             taiKhoan.hoTen || '';
     }
 
-    if (oEmail !== null) {
+    if (
+        oEmail !== null
+    ) {
         oEmail.value =
             taiKhoan.email || '';
     }
 
-    if (oSoDienThoai !== null) {
+    if (
+        oSoDienThoai !== null
+    ) {
         oSoDienThoai.value =
             taiKhoan.soDienThoai || '';
     }
 };
 
 
+/*
+ * Điền cài đặt sở thích và thông báo.
+ */
 const dienCaiDat = (
     caiDat
 ) => {
@@ -248,48 +352,67 @@ const dienCaiDat = (
             '[name="recipe_notification"]'
         );
 
-    if (danhMuc !== null) {
+    if (
+        danhMuc !== null
+    ) {
         danhMuc.value =
             caiDat.danhMuc || '';
     }
 
-    if (nganSach !== null) {
+    if (
+        nganSach !== null
+    ) {
         nganSach.value =
             caiDat.nganSach || '';
     }
 
-    if (thoiGian !== null) {
+    if (
+        thoiGian !== null
+    ) {
         thoiGian.value =
             caiDat.thoiGian || '';
     }
 
-    if (khauPhan !== null) {
+    if (
+        khauPhan !== null
+    ) {
         khauPhan.value =
             caiDat.khauPhan || '';
     }
 
-    if (thongBaoBinhLuan !== null) {
+    if (
+        thongBaoBinhLuan !== null
+    ) {
         thongBaoBinhLuan.checked =
             caiDat.thongBaoBinhLuan !== false;
     }
 
-    if (thongBaoLuotThich !== null) {
+    if (
+        thongBaoLuotThich !== null
+    ) {
         thongBaoLuotThich.checked =
             caiDat.thongBaoLuotThich !== false;
     }
 
-    if (thongBaoTheoDoi !== null) {
+    if (
+        thongBaoTheoDoi !== null
+    ) {
         thongBaoTheoDoi.checked =
             caiDat.thongBaoTheoDoi === true;
     }
 
-    if (thongBaoCongThuc !== null) {
+    if (
+        thongBaoCongThuc !== null
+    ) {
         thongBaoCongThuc.checked =
             caiDat.thongBaoCongThuc === true;
     }
 };
 
 
+/*
+ * Cập nhật họ tên, email và số điện thoại.
+ */
 const capNhatThongTinTaiKhoan = (
     taiKhoan
 ) => {
@@ -311,12 +434,12 @@ const capNhatThongTinTaiKhoan = (
 
     const hoTenMoi =
         oHoTen === null
-            ? taiKhoan.hoTen
+            ? taiKhoan.hoTen || ''
             : oHoTen.value.trim();
 
     const emailMoi =
         oEmail === null
-            ? taiKhoan.email
+            ? taiKhoan.email || ''
             : oEmail.value.trim();
 
     const soDienThoaiMoi =
@@ -324,48 +447,106 @@ const capNhatThongTinTaiKhoan = (
             ? taiKhoan.soDienThoai || ''
             : oSoDienThoai.value.trim();
 
-    if (hoTenMoi === '') {
 
-    hienThiThongBao(
-        'Vui lòng nhập họ và tên.'
-    );
+    if (
+        hoTenMoi === ''
+    ) {
 
-    return false;
-}
+        hienThiThongBao(
+            'Vui lòng nhập họ và tên.'
+        );
 
-if (emailMoi === '') {
+        if (
+            oHoTen !== null
+        ) {
+            oHoTen.focus();
+        }
 
-    hienThiThongBao(
-        'Vui lòng nhập email.'
-    );
+        return false;
+    }
 
-    return false;
-}
 
-if (soDienThoaiMoi === '') {
+    if (
+        emailMoi === ''
+    ) {
 
-    hienThiThongBao(
-        'Vui lòng nhập số điện thoại.'
-    );
+        hienThiThongBao(
+            'Vui lòng nhập email.'
+        );
 
-    return false;
-}
+        if (
+            oEmail !== null
+        ) {
+            oEmail.focus();
+        }
 
-const mauSoDienThoai =
-    /^[0-9]{10}$/;
+        return false;
+    }
 
-if (
-    mauSoDienThoai.test(
-        soDienThoaiMoi
-    ) === false
-) {
 
-    hienThiThongBao(
-        'Số điện thoại phải gồm đúng 10 chữ số.'
-    );
+    const mauEmail =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    return false;
-}
+    if (
+        mauEmail.test(
+            emailMoi
+        ) === false
+    ) {
+
+        hienThiThongBao(
+            'Vui lòng nhập email đúng định dạng.'
+        );
+
+        if (
+            oEmail !== null
+        ) {
+            oEmail.focus();
+        }
+
+        return false;
+    }
+
+
+    if (
+        soDienThoaiMoi === ''
+    ) {
+
+        hienThiThongBao(
+            'Vui lòng nhập số điện thoại.'
+        );
+
+        if (
+            oSoDienThoai !== null
+        ) {
+            oSoDienThoai.focus();
+        }
+
+        return false;
+    }
+
+
+    const mauSoDienThoai =
+        /^[0-9]{10}$/;
+
+    if (
+        mauSoDienThoai.test(
+            soDienThoaiMoi
+        ) === false
+    ) {
+
+        hienThiThongBao(
+            'Số điện thoại phải gồm đúng 10 chữ số.'
+        );
+
+        if (
+            oSoDienThoai !== null
+        ) {
+            oSoDienThoai.focus();
+        }
+
+        return false;
+    }
+
 
     const danhSachTaiKhoan =
         docDanhSachTaiKhoan();
@@ -373,21 +554,43 @@ if (
     const emailDaTonTai =
         danhSachTaiKhoan.some(
             (item) => {
+
                 return (
-                    item.email === emailMoi
-                    && item.id !== taiKhoan.id
+                    String(
+                        item.email || ''
+                    ).trim().toLowerCase()
+                    ===
+                    emailMoi.toLowerCase()
+                    &&
+                    String(
+                        item.id
+                    )
+                    !==
+                    String(
+                        taiKhoan.id
+                    )
                 );
             }
         );
 
-    if (emailDaTonTai) {
+
+    if (
+        emailDaTonTai
+    ) {
 
         hienThiThongBao(
             'Email này đã được sử dụng bởi tài khoản khác.'
         );
 
+        if (
+            oEmail !== null
+        ) {
+            oEmail.focus();
+        }
+
         return false;
     }
+
 
     taiKhoan.hoTen =
         hoTenMoi;
@@ -398,11 +601,20 @@ if (
     taiKhoan.soDienThoai =
         soDienThoaiMoi;
 
+
     const danhSachMoi =
         danhSachTaiKhoan.map(
             (item) => {
 
-                if (item.id === taiKhoan.id) {
+                if (
+                    String(
+                        item.id
+                    )
+                    ===
+                    String(
+                        taiKhoan.id
+                    )
+                ) {
                     return taiKhoan;
                 }
 
@@ -410,10 +622,15 @@ if (
             }
         );
 
+
     ghiDanhSachTaiKhoan(
         danhSachMoi
     );
 
+
+    /*
+     * Cập nhật phiên đăng nhập hiện tại.
+     */
     localStorage.setItem(
         'nguoiDungHienTai',
         JSON.stringify({
@@ -427,16 +644,24 @@ if (
 };
 
 
+/*
+ * Lưu toàn bộ cài đặt.
+ */
 const luuCaiDat = (
     event
 ) => {
 
     event.preventDefault();
 
+    anThongBao();
+
     const nguoiDung =
         docNguoiDungHienTai();
 
-    if (nguoiDung === null) {
+
+    if (
+        nguoiDung === null
+    ) {
 
         hienThiThongBao(
             'Bạn cần đăng nhập để sử dụng trang cài đặt.'
@@ -445,12 +670,16 @@ const luuCaiDat = (
         return;
     }
 
+
     const taiKhoan =
         timTaiKhoanHienTai(
             nguoiDung
         );
 
-    if (taiKhoan === undefined) {
+
+    if (
+        taiKhoan === undefined
+    ) {
 
         hienThiThongBao(
             'Không tìm thấy thông tin tài khoản.'
@@ -459,14 +688,19 @@ const luuCaiDat = (
         return;
     }
 
+
     const capNhatThanhCong =
         capNhatThongTinTaiKhoan(
             taiKhoan
         );
 
-    if (capNhatThanhCong === false) {
+
+    if (
+        capNhatThanhCong === false
+    ) {
         return;
     }
+
 
     const danhMuc =
         document.querySelector(
@@ -508,7 +742,9 @@ const luuCaiDat = (
             '[name="recipe_notification"]'
         );
 
+
     const caiDat = {
+
         danhMuc:
             danhMuc === null
                 ? ''
@@ -546,10 +782,12 @@ const luuCaiDat = (
             && thongBaoCongThuc.checked
     };
 
+
     ghiCaiDat(
         nguoiDung,
         caiDat
     );
+
 
     hienThiThongBao(
         'Đã lưu cài đặt thành công.'
@@ -557,39 +795,58 @@ const luuCaiDat = (
 };
 
 
-const khoiPhucCaiDat = () => {
+/*
+ * Khôi phục dữ liệu đã lưu vào form.
+ */
+const khoiPhucCaiDat = (
+    hienThiThongBaoThanhCong = true
+) => {
 
     const nguoiDung =
         docNguoiDungHienTai();
 
-    if (nguoiDung === null) {
+    if (
+        nguoiDung === null
+    ) {
         return;
     }
+
 
     const taiKhoan =
         timTaiKhoanHienTai(
             nguoiDung
         );
 
-    if (taiKhoan !== undefined) {
+
+    if (
+        taiKhoan !== undefined
+    ) {
 
         dienThongTinTaiKhoan(
             taiKhoan
         );
     }
 
+
     const caiDat =
         docCaiDat(
             nguoiDung
         );
 
+
     dienCaiDat(
         caiDat
     );
 
-    hienThiThongBao(
-        'Đã khôi phục cài đặt đã lưu.'
-    );
+
+    if (
+        hienThiThongBaoThanhCong
+    ) {
+
+        hienThiThongBao(
+            'Đã khôi phục cài đặt đã lưu.'
+        );
+    }
 };
 
 
@@ -603,18 +860,46 @@ const taoFormDoiMatKhau = () => {
             '#form-doi-mat-khau'
         );
 
-    if (formCu !== null) {
+
+    if (
+        formCu !== null
+    ) {
+        formCu.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+        const oMatKhauCu =
+            document.querySelector(
+                '#mat-khau-cu'
+            );
+
+        if (
+            oMatKhauCu !== null
+        ) {
+            oMatKhauCu.focus();
+        }
+
         return formCu;
     }
+
 
     const khuVucBaoMat =
         document.querySelector(
             '.khung-tai-khoan'
         );
 
-    if (khuVucBaoMat === null) {
+
+    if (
+        khuVucBaoMat === null
+    ) {
+        hienThiThongBao(
+            'Không tìm thấy khu vực đổi mật khẩu.'
+        );
+
         return null;
     }
+
 
     const form =
         document.createElement(
@@ -625,10 +910,16 @@ const taoFormDoiMatKhau = () => {
         'form-doi-mat-khau';
 
     form.className =
-    'form-doi-mat-khau';
+        'form-doi-mat-khau';
 
-form.noValidate = true;
+    form.noValidate =
+        true;
 
+
+    /*
+     * Form này chỉ chứa HTML tĩnh.
+     * Không nối dữ liệu người dùng/API vào innerHTML.
+     */
     form.innerHTML = `
         <h3>Đổi mật khẩu</h3>
 
@@ -691,36 +982,61 @@ form.noValidate = true;
         </p>
     `;
 
+
     khuVucBaoMat.appendChild(
         form
     );
+
 
     form.addEventListener(
         'submit',
         xuLyDoiMatKhau
     );
 
+
     const nutHuy =
-        document.querySelector(
+        form.querySelector(
             '#nut-huy-doi-mat-khau'
         );
 
-    if (nutHuy !== null) {
+
+    if (
+        nutHuy !== null
+    ) {
 
         nutHuy.addEventListener(
             'click',
             () => {
+
                 form.remove();
+
+                hienThiThongBao(
+                    'Đã hủy thao tác đổi mật khẩu.'
+                );
             }
         );
     }
+
+
+    const oMatKhauCu =
+        form.querySelector(
+            '#mat-khau-cu'
+        );
+
+
+    if (
+        oMatKhauCu !== null
+    ) {
+        oMatKhauCu.focus();
+    }
+
 
     return form;
 };
 
 
 /*
- * Xử lý khi người dùng xác nhận đổi mật khẩu.
+ * Xử lý đổi mật khẩu.
  */
 const xuLyDoiMatKhau = (
     event
@@ -728,10 +1044,16 @@ const xuLyDoiMatKhau = (
 
     event.preventDefault();
 
+    anThongBao();
+
+
     const nguoiDung =
         docNguoiDungHienTai();
 
-    if (nguoiDung === null) {
+
+    if (
+        nguoiDung === null
+    ) {
 
         hienThiThongBao(
             'Bạn cần đăng nhập để đổi mật khẩu.'
@@ -739,6 +1061,7 @@ const xuLyDoiMatKhau = (
 
         return;
     }
+
 
     const oMatKhauCu =
         document.querySelector(
@@ -755,6 +1078,7 @@ const xuLyDoiMatKhau = (
             '#xac-nhan-mat-khau'
         );
 
+
     if (
         oMatKhauCu === null
         || oMatKhauMoi === null
@@ -768,16 +1092,20 @@ const xuLyDoiMatKhau = (
         return;
     }
 
+
     const matKhauCu =
-        oMatKhauCu.value.trim();
+        oMatKhauCu.value;
 
     const matKhauMoi =
-        oMatKhauMoi.value.trim();
+        oMatKhauMoi.value;
 
     const xacNhanMatKhau =
-        oXacNhanMatKhau.value.trim();
+        oXacNhanMatKhau.value;
 
-    if (matKhauCu === '') {
+
+    if (
+        matKhauCu.trim() === ''
+    ) {
 
         hienThiThongBao(
             'Vui lòng nhập mật khẩu hiện tại.'
@@ -788,7 +1116,10 @@ const xuLyDoiMatKhau = (
         return;
     }
 
-    if (matKhauMoi === '') {
+
+    if (
+        matKhauMoi.trim() === ''
+    ) {
 
         hienThiThongBao(
             'Vui lòng nhập mật khẩu mới.'
@@ -799,7 +1130,10 @@ const xuLyDoiMatKhau = (
         return;
     }
 
-    if (xacNhanMatKhau === '') {
+
+    if (
+        xacNhanMatKhau.trim() === ''
+    ) {
 
         hienThiThongBao(
             'Vui lòng nhập lại mật khẩu mới.'
@@ -810,7 +1144,10 @@ const xuLyDoiMatKhau = (
         return;
     }
 
-    if (matKhauMoi.length < 6) {
+
+    if (
+        matKhauMoi.length < 6
+    ) {
 
         hienThiThongBao(
             'Mật khẩu mới phải có ít nhất 6 ký tự.'
@@ -821,8 +1158,11 @@ const xuLyDoiMatKhau = (
         return;
     }
 
+
     if (
-        matKhauMoi !== xacNhanMatKhau
+        matKhauMoi
+        !==
+        xacNhanMatKhau
     ) {
 
         hienThiThongBao(
@@ -834,7 +1174,12 @@ const xuLyDoiMatKhau = (
         return;
     }
 
-    if (matKhauCu === matKhauMoi) {
+
+    if (
+        matKhauCu
+        ===
+        matKhauMoi
+    ) {
 
         hienThiThongBao(
             'Mật khẩu mới phải khác mật khẩu hiện tại.'
@@ -845,6 +1190,7 @@ const xuLyDoiMatKhau = (
         return;
     }
 
+
     const doiMatKhauThanhCong =
         doiMatKhau(
             nguoiDung.id,
@@ -852,8 +1198,11 @@ const xuLyDoiMatKhau = (
             matKhauMoi
         );
 
+
     if (
-        doiMatKhauThanhCong === false
+        doiMatKhauThanhCong
+        ===
+        false
     ) {
 
         hienThiThongBao(
@@ -865,16 +1214,22 @@ const xuLyDoiMatKhau = (
         return;
     }
 
+
     hienThiThongBao(
         'Đổi mật khẩu thành công.'
     );
+
 
     const form =
         document.querySelector(
             '#form-doi-mat-khau'
         );
 
-    if (form !== null) {
+
+    if (
+        form !== null
+    ) {
+
         form.reset();
         form.remove();
     }
@@ -891,9 +1246,13 @@ const xuLyDangXuat = () => {
             'Bạn có chắc muốn đăng xuất không?'
         );
 
-    if (dongY === false) {
+
+    if (
+        dongY === false
+    ) {
         return;
     }
+
 
     dangXuat();
 
@@ -910,7 +1269,10 @@ const xuLyXoaTaiKhoan = () => {
     const nguoiDung =
         docNguoiDungHienTai();
 
-    if (nguoiDung === null) {
+
+    if (
+        nguoiDung === null
+    ) {
 
         hienThiThongBao(
             'Bạn cần đăng nhập để xóa tài khoản.'
@@ -919,21 +1281,29 @@ const xuLyXoaTaiKhoan = () => {
         return;
     }
 
+
     const dongY =
         window.confirm(
-            'Bạn có chắc muốn xóa tài khoản? Dữ liệu tài khoản sẽ bị xóa và không thể khôi phục.'
+            'Bạn có chắc muốn xóa tài khoản? Dữ liệu tài khoản và cài đặt liên quan sẽ bị xóa và không thể khôi phục.'
         );
 
-    if (dongY === false) {
+
+    if (
+        dongY === false
+    ) {
         return;
     }
+
 
     const xoaThanhCong =
         xoaTaiKhoan(
             nguoiDung.id
         );
 
-    if (xoaThanhCong === false) {
+
+    if (
+        xoaThanhCong === false
+    ) {
 
         hienThiThongBao(
             'Không thể xóa tài khoản.'
@@ -942,21 +1312,29 @@ const xuLyXoaTaiKhoan = () => {
         return;
     }
 
+
     window.alert(
         'Tài khoản đã được xóa.'
     );
+
 
     window.location.href =
         'index.html';
 };
 
 
+/*
+ * Khởi tạo trang cài đặt.
+ */
 const khoiTaoTrangCaiDat = () => {
 
     const nguoiDung =
         docNguoiDungHienTai();
 
-    if (nguoiDung === null) {
+
+    if (
+        nguoiDung === null
+    ) {
 
         hienThiThongBao(
             'Bạn chưa đăng nhập. Vui lòng đăng nhập để sử dụng cài đặt.'
@@ -965,12 +1343,16 @@ const khoiTaoTrangCaiDat = () => {
         return;
     }
 
+
     const taiKhoan =
         timTaiKhoanHienTai(
             nguoiDung
         );
 
-    if (taiKhoan === undefined) {
+
+    if (
+        taiKhoan === undefined
+    ) {
 
         hienThiThongBao(
             'Không tìm thấy thông tin tài khoản.'
@@ -979,49 +1361,74 @@ const khoiTaoTrangCaiDat = () => {
         return;
     }
 
+
+    /*
+     * Điền dữ liệu hiện tại.
+     */
     dienThongTinTaiKhoan(
         taiKhoan
     );
+
 
     const caiDat =
         docCaiDat(
             nguoiDung
         );
 
+
     dienCaiDat(
         caiDat
     );
 
+
+    /*
+     * Form cài đặt.
+     */
     const formCaiDat =
         document.querySelector(
             '#form-cai-dat'
         );
 
-    if (formCaiDat !== null) {
+
+    if (
+        formCaiDat !== null
+    ) {
 
         formCaiDat.addEventListener(
             'submit',
             luuCaiDat
         );
 
+
         formCaiDat.addEventListener(
             'reset',
             () => {
 
                 window.setTimeout(
-                    khoiPhucCaiDat,
+                    () => {
+                        khoiPhucCaiDat(
+                            false
+                        );
+                    },
                     0
                 );
             }
         );
     }
 
+
+    /*
+     * Nút đăng xuất.
+     */
     const nutDangXuat =
         document.querySelector(
             '#nut-dang-xuat'
         );
 
-    if (nutDangXuat !== null) {
+
+    if (
+        nutDangXuat !== null
+    ) {
 
         nutDangXuat.addEventListener(
             'click',
@@ -1029,27 +1436,42 @@ const khoiTaoTrangCaiDat = () => {
         );
     }
 
+
+    /*
+     * Nút đổi mật khẩu.
+     */
     const nutDoiMatKhau =
         document.querySelector(
             '#nut-doi-mat-khau'
         );
 
-    if (nutDoiMatKhau !== null) {
+
+    if (
+        nutDoiMatKhau !== null
+    ) {
 
         nutDoiMatKhau.addEventListener(
             'click',
             () => {
+
                 taoFormDoiMatKhau();
             }
         );
     }
 
+
+    /*
+     * Nút xóa tài khoản.
+     */
     const nutXoaTaiKhoan =
         document.querySelector(
             '#nut-xoa-tai-khoan'
         );
 
-    if (nutXoaTaiKhoan !== null) {
+
+    if (
+        nutXoaTaiKhoan !== null
+    ) {
 
         nutXoaTaiKhoan.addEventListener(
             'click',

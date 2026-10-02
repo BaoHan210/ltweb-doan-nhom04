@@ -5,16 +5,29 @@
 
 
 /* ==============================
-   1. KHUNG NỘI DUNG
+   1. KHUNG NỘI DUNG & CHỐNG TRÀN TOÀN CỤC
    ============================== */
 
-/*
-   Giới hạn chiều rộng nội dung và
-   căn giữa trong khu vực hiển thị.
-*/
+/* Tính lề vào trong cho toàn bộ phần tử */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
 .bao {
-    width: min(100% - 32px, var(--do-rong-toi-da));
+    width: 100%;
+    max-width: var(--do-rong-toi-da, 1200px);
     margin: 0 auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
 }
 
 
@@ -122,4 +135,156 @@
 
 .khong-padding {
     padding: 0;
+}
+
+/* =====================================================================
+   05-TIEN-ICH.CSS - RESPONSIVE TỔNG THỂ CÁC TRANG PHỤ & UTILITIES
+   ===================================================================== */
+
+/* RESPONSIVE TABLET (>= 768px) */
+@media (min-width: 768px) {
+    .hero {
+        padding: 28px 24px;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    .the-gioi-thieu {
+        gap: 16px;
+    }
+
+    .the-gioi-thieu-item {
+        flex: 1 1 0;
+        padding: 18px;
+    }
+
+    .chia-se-cong-thuc,
+    .the-bai-dang {
+        padding: 16px;
+    }
+
+    /* Trang Khám phá */
+    .tieu-de-kham-pha {
+        font-size: 28px;
+    }
+
+    .the-danh-muc > summary {
+        min-height: 90px;
+    }
+
+    .the-danh-muc > summary img {
+        flex-basis: 90px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .the-danh-muc > summary span {
+        padding: 12px 16px;
+    }
+
+    /* Trang Chi tiết công thức */
+    .tieu-de-mon-an {
+        font-size: 26px;
+    }
+
+    .thong-tin-bai-chia-se,
+    .hinh-anh-mon-an,
+    .thong-tin-cong-thuc,
+    .nguyen-lieu,
+    .cach-thuc-hien,
+    .video-huong-dan,
+    .binh-luan {
+        padding: 14px;
+    }
+
+    /* Trang Cài đặt */
+    .tieu-de-cai-dat {
+        font-size: 26px;
+    }
+
+    .tieu-de-cai-dat::before {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+
+    .khu-vuc-cai-dat {
+        padding: 16px;
+    }
+
+    .khung-cai-dat {
+        padding: 14px;
+    }
+
+    /* Trang Giới thiệu */
+    .tieu-de-gioi-thieu {
+        padding: 14px 18px;
+        font-size: 26px;
+    }
+
+    .gioi-thieu-website,
+    .muc-tieu-do-an,
+    .khu-vuc-thanh-vien {
+        padding: 18px;
+    }
+
+    .gioi-thieu-website > h2,
+    .muc-tieu-do-an > h2,
+    .khu-vuc-thanh-vien > h2 {
+        font-size: 20px;
+    }
+
+    /* Trang Hồ sơ */
+    .tieu-de-ho-so {
+        padding: 14px 18px;
+        font-size: 26px;
+    }
+
+    .thong-tin-chung,
+    .du-an-so-thich,
+    .ky-nang,
+    .thoi-khoa-bieu {
+        padding: 18px;
+    }
+
+    .thong-tin-chung > h2,
+    .du-an-so-thich > h2,
+    .ky-nang > h2,
+    .thoi-khoa-bieu > h2 {
+        font-size: 20px;
+    }
+
+    .anh-dai-dien img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .quay-lai {
+        text-align: right;
+    }
+}
+
+/* RESPONSIVE DESKTOP (>= 992px) */
+@media (min-width: 992px) {
+    .hero {
+        padding: 34px 28px;
+    }
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        max-width: 70ch;
+    }
+
+    .the-gioi-thieu {
+        gap: 16px;
+    }
+
+    .the-gioi-thieu-item {
+        padding: 20px;
+    }
 }

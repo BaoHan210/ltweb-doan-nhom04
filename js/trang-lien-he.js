@@ -5,6 +5,10 @@
  */
 
 
+/* =========================================================
+ * 1. LẤY CÁC PHẦN TỬ HTML
+ * ========================================================= */
+
 const formLienHe = document.querySelector(
     '.form-lien-he'
 );
@@ -32,6 +36,7 @@ const danhMuc = document.querySelector(
 const noiDungCongThuc = document.querySelector(
     '#recipe-content'
 );
+
 const chuDe = document.querySelector(
     '#subject'
 );
@@ -48,6 +53,11 @@ const thoiGianNau = document.querySelector(
     '#cooking-time'
 );
 
+
+/* =========================================================
+ * 2. XÁC ĐỊNH CHẾ ĐỘ TRANG
+ * ========================================================= */
+
 const layCheDoTrang = () => {
     const thamSo = new URLSearchParams(
         window.location.search
@@ -55,6 +65,11 @@ const layCheDoTrang = () => {
 
     return thamSo.get('loai');
 };
+
+
+/* =========================================================
+ * 3. HIỂN THỊ CHẾ ĐỘ ĐĂNG CÔNG THỨC
+ * ========================================================= */
 
 const thietLapCheDoDangCongThuc = () => {
     const cheDoTrang = layCheDoTrang();
@@ -75,16 +90,9 @@ const thietLapCheDoDangCongThuc = () => {
         '.mo-ta-lien-he'
     );
 
-    const chuDe = document.querySelector(
-        '#subject'
-    );
-
-    const khuVucCongThuc = document.querySelector(
-    '.khu-vuc-cong-thuc'
-);
-
     if (tieuDe !== null) {
-        tieuDe.textContent = 'Đăng công thức';
+        tieuDe.textContent =
+            'Đăng công thức';
     }
 
     if (tieuDePhu !== null) {
@@ -106,16 +114,84 @@ const thietLapCheDoDangCongThuc = () => {
     }
 };
 
-/*
- * Kiểm tra họ và tên.
- */
+
+/* =========================================================
+ * 4. HIỂN THỊ / XÓA LỖI CỦA TỪNG TRƯỜNG
+ * ========================================================= */
+
+const hienThiLoiTruong = (
+    truong,
+    noiDungLoi
+) => {
+    if (truong === null) {
+        return;
+    }
+
+    truong.setCustomValidity(
+        noiDungLoi
+    );
+
+    truong.classList.add(
+        'co-loi'
+    );
+
+    let thongBao =
+        truong.parentElement.querySelector(
+            '.thong-bao-loi-truong'
+        );
+
+    if (thongBao === null) {
+        thongBao =
+            document.createElement('p');
+
+        thongBao.className =
+            'thong-bao-loi-truong';
+
+        truong.parentElement.appendChild(
+            thongBao
+        );
+    }
+
+    thongBao.textContent =
+        noiDungLoi;
+};
+
+
+const xoaLoiTruong = (
+    truong
+) => {
+    if (truong === null) {
+        return;
+    }
+
+    truong.setCustomValidity('');
+
+    truong.classList.remove(
+        'co-loi'
+    );
+
+    const thongBao =
+        truong.parentElement.querySelector(
+            '.thong-bao-loi-truong'
+        );
+
+    if (thongBao !== null) {
+        thongBao.remove();
+    }
+};
+
+
+/* =========================================================
+ * 5. KIỂM TRA HỌ VÀ TÊN
+ * ========================================================= */
 
 const kiemTraHoTen = () => {
     if (tenNguoiGui === null) {
         return true;
     }
 
-    const giaTri = tenNguoiGui.value.trim();
+    const giaTri =
+        tenNguoiGui.value.trim();
 
     if (giaTri === '') {
         hienThiLoiTruong(
@@ -126,7 +202,11 @@ const kiemTraHoTen = () => {
         return false;
     }
 
-    if (/^[A-Za-zÀ-ỹĐđ\s]{2,50}$/.test(giaTri) === false) {
+    if (
+        /^[A-Za-zÀ-ỹĐđ\s]{2,50}$/.test(
+            giaTri
+        ) === false
+    ) {
         hienThiLoiTruong(
             tenNguoiGui,
             'Họ tên chỉ được chứa chữ cái và khoảng trắng.'
@@ -135,21 +215,25 @@ const kiemTraHoTen = () => {
         return false;
     }
 
-    xoaLoiTruong(tenNguoiGui);
+    xoaLoiTruong(
+        tenNguoiGui
+    );
 
     return true;
 };
 
-/*
- * Kiểm tra email.
- */
+
+/* =========================================================
+ * 6. KIỂM TRA EMAIL
+ * ========================================================= */
 
 const kiemTraEmail = () => {
     if (email === null) {
         return true;
     }
 
-    const giaTri = email.value.trim();
+    const giaTri =
+        email.value.trim();
 
     if (giaTri === '') {
         hienThiLoiTruong(
@@ -160,7 +244,9 @@ const kiemTraEmail = () => {
         return false;
     }
 
-    if (email.validity.typeMismatch === true) {
+    if (
+        email.validity.typeMismatch === true
+    ) {
         hienThiLoiTruong(
             email,
             'Email không đúng định dạng.'
@@ -169,14 +255,17 @@ const kiemTraEmail = () => {
         return false;
     }
 
-    xoaLoiTruong(email);
+    xoaLoiTruong(
+        email
+    );
 
     return true;
 };
 
-/*
- * Kiểm tra chủ đề.
- */
+
+/* =========================================================
+ * 7. KIỂM TRA CHỦ ĐỀ
+ * ========================================================= */
 
 const kiemTraChuDe = () => {
     if (chuDe === null) {
@@ -192,21 +281,67 @@ const kiemTraChuDe = () => {
         return false;
     }
 
-    xoaLoiTruong(chuDe);
+    xoaLoiTruong(
+        chuDe
+    );
 
     return true;
 };
 
-/*
- * Kiểm tra số người ăn.
- */
+
+/* =========================================================
+ * 8. KIỂM TRA TÊN MÓN
+ * ========================================================= */
+
+const kiemTraTenMon = () => {
+    if (tenMon === null) {
+        return true;
+    }
+
+    const giaTri =
+        tenMon.value.trim();
+
+    if (giaTri === '') {
+        hienThiLoiTruong(
+            tenMon,
+            'Vui lòng nhập tên món ăn.'
+        );
+
+        return false;
+    }
+
+    if (
+        /^[A-Za-zÀ-ỹĐđ\s]{2,50}$/.test(
+            giaTri
+        ) === false
+    ) {
+        hienThiLoiTruong(
+            tenMon,
+            'Tên món ăn chỉ được chứa chữ cái và có từ 2 đến 50 ký tự.'
+        );
+
+        return false;
+    }
+
+    xoaLoiTruong(
+        tenMon
+    );
+
+    return true;
+};
+
+
+/* =========================================================
+ * 9. KIỂM TRA SỐ NGƯỜI ĂN
+ * ========================================================= */
 
 const kiemTraSoNguoiAn = () => {
     if (soNguoiAn === null) {
         return true;
     }
 
-    const giaTri = Number(soNguoiAn.value);
+    const giaTri =
+        Number(soNguoiAn.value);
 
     if (
         soNguoiAn.value === ''
@@ -221,45 +356,17 @@ const kiemTraSoNguoiAn = () => {
         return false;
     }
 
-    xoaLoiTruong(soNguoiAn);
-
-    return true;
-};
-
-/*
- * Kiểm tra thời gian nấu.
- */
-
-const kiemTraThoiGianNau = () => {
-    if (thoiGianNau === null) {
-        return true;
-    }
-
-    const giaTri = Number(
-        thoiGianNau.value
+    xoaLoiTruong(
+        soNguoiAn
     );
 
-    if (
-        thoiGianNau.value === ''
-        || giaTri < 1
-        || giaTri > 300
-    ) {
-        hienThiLoiTruong(
-            thoiGianNau,
-            'Thời gian nấu phải từ 1 đến 300 phút.'
-        );
-
-        return false;
-    }
-
-    xoaLoiTruong(thoiGianNau);
-
     return true;
 };
 
-/*
- * Kiểm tra danh mục.
- */
+
+/* =========================================================
+ * 10. KIỂM TRA DANH MỤC
+ * ========================================================= */
 
 const kiemTraDanhMuc = () => {
     if (danhMuc === null) {
@@ -275,21 +382,26 @@ const kiemTraDanhMuc = () => {
         return false;
     }
 
-    xoaLoiTruong(danhMuc);
+    xoaLoiTruong(
+        danhMuc
+    );
 
     return true;
 };
 
-/*
- * Kiểm tra nội dung công thức.
- */
+
+/* =========================================================
+ * 11. KIỂM TRA NỘI DUNG CÔNG THỨC
+ * ========================================================= */
 
 const kiemTraNoiDungCongThuc = () => {
     if (noiDungCongThuc === null) {
         return true;
     }
 
-    if (noiDungCongThuc.value.trim() === '') {
+    if (
+        noiDungCongThuc.value.trim() === ''
+    ) {
         hienThiLoiTruong(
             noiDungCongThuc,
             'Vui lòng nhập nội dung công thức.'
@@ -298,20 +410,91 @@ const kiemTraNoiDungCongThuc = () => {
         return false;
     }
 
-    xoaLoiTruong(noiDungCongThuc);
+    xoaLoiTruong(
+        noiDungCongThuc
+    );
 
     return true;
 };
 
-/*
- * Kiểm tra toàn bộ biểu mẫu.
- */
+
+/* =========================================================
+ * 12. KIỂM TRA THỜI GIAN NẤU
+ * ========================================================= */
+
+const kiemTraThoiGianNau = () => {
+    if (thoiGianNau === null) {
+        return true;
+    }
+
+    const giaTri =
+        Number(thoiGianNau.value);
+
+    if (
+        thoiGianNau.value === ''
+        || giaTri < 1
+        || giaTri > 300
+    ) {
+        hienThiLoiTruong(
+            thoiGianNau,
+            'Thời gian nấu phải từ 1 đến 300 phút.'
+        );
+
+        return false;
+    }
+
+    xoaLoiTruong(
+        thoiGianNau
+    );
+
+    return true;
+};
+
+
+/* =========================================================
+ * 13. KIỂM TRA NỘI DUNG LIÊN HỆ
+ * ========================================================= */
+
+const kiemTraNoiDung = () => {
+    if (noiDung === null) {
+        return true;
+    }
+
+    if (
+        noiDung.value.trim() === ''
+    ) {
+        hienThiLoiTruong(
+            noiDung,
+            'Vui lòng nhập nội dung.'
+        );
+
+        return false;
+    }
+
+    xoaLoiTruong(
+        noiDung
+    );
+
+    return true;
+};
+
+
+/* =========================================================
+ * 14. KIỂM TRA TOÀN BỘ BIỂU MẪU
+ * ========================================================= */
 
 const kiemTraBieuMau = () => {
-    const ketQuaHoTen = kiemTraHoTen();
-    const ketQuaEmail = kiemTraEmail();
-    const ketQuaChuDe = kiemTraChuDe();
-    const ketQuaNoiDung = kiemTraNoiDung();
+    const ketQuaHoTen =
+        kiemTraHoTen();
+
+    const ketQuaEmail =
+        kiemTraEmail();
+
+    const ketQuaChuDe =
+        kiemTraChuDe();
+
+    const ketQuaNoiDung =
+        kiemTraNoiDung();
 
     if (
         ketQuaHoTen === false
@@ -326,11 +509,18 @@ const kiemTraBieuMau = () => {
         chuDe !== null
         && chuDe.value === 'gui-cong-thuc'
     ) {
-        const ketQuaTenMon = kiemTraTenMon();
-        const ketQuaSoNguoiAn = kiemTraSoNguoiAn();
-        const ketQuaDanhMuc = kiemTraDanhMuc();
+        const ketQuaTenMon =
+            kiemTraTenMon();
+
+        const ketQuaSoNguoiAn =
+            kiemTraSoNguoiAn();
+
+        const ketQuaDanhMuc =
+            kiemTraDanhMuc();
+
         const ketQuaNoiDungCongThuc =
             kiemTraNoiDungCongThuc();
+
         const ketQuaThoiGianNau =
             kiemTraThoiGianNau();
 
@@ -346,118 +536,20 @@ const kiemTraBieuMau = () => {
     return true;
 };
 
-/*
- * Kiểm tra tên món ăn.
- */
 
-const kiemTraTenMon = () => {
-    if (tenMon === null) {
-        return true;
-    }
-
-    const giaTri = tenMon.value.trim();
-
-    if (giaTri === '') {
-        hienThiLoiTruong(
-            tenMon,
-            'Vui lòng nhập tên món ăn.'
-        );
-
-        return false;
-    }
-
-    if (
-        /^[A-Za-zÀ-ỹĐđ\s]{2,50}$/.test(giaTri) === false
-    ) {
-        hienThiLoiTruong(
-            tenMon,
-            'Tên món ăn chỉ được chứa chữ cái và có từ 2 đến 50 ký tự.'
-        );
-
-        return false;
-    }
-
-    xoaLoiTruong(tenMon);
-
-    return true;
-};
-
-/*
- * Hiển thị lỗi cho từng trường.
- */
-
-const hienThiLoiTruong = (truong, noiDung) => {
-    if (truong === null) {
-        return;
-    }
-
-    truong.setCustomValidity(noiDung);
-
-    truong.classList.add('co-loi');
-
-    let thongBao = truong.parentElement.querySelector(
-        '.thong-bao-loi-truong'
-    );
-
-    if (thongBao === null) {
-        thongBao = document.createElement('p');
-        thongBao.className = 'thong-bao-loi-truong';
-
-        truong.parentElement.appendChild(thongBao);
-    }
-
-    thongBao.textContent = noiDung;
-};
-
-const xoaLoiTruong = (truong) => {
-    if (truong === null) {
-        return;
-    }
-
-    truong.setCustomValidity('');
-
-    truong.classList.remove('co-loi');
-
-    const thongBao = truong.parentElement.querySelector(
-        '.thong-bao-loi-truong'
-    );
-
-    if (thongBao !== null) {
-        thongBao.remove();
-    }
-};
-
-/*
- * Kiểm tra nội dung liên hệ.
- */
-
-const kiemTraNoiDung = () => {
-    if (noiDung === null) {
-        return true;
-    }
-
-    if (noiDung.value.trim() === '') {
-        hienThiLoiTruong(
-            noiDung,
-            'Vui lòng nhập nội dung.'
-        );
-
-        return false;
-    }
-
-    xoaLoiTruong(noiDung);
-
-    return true;
-};
-
-/*
- * Tạo dữ liệu gửi đi.
- */
+/* =========================================================
+ * 15. TẠO DỮ LIỆU GỬI ĐI
+ * ========================================================= */
 
 const taoDuLieuGuiDi = () => {
-    const duLieuForm = new FormData(
-        formLienHe
-    );
+    if (formLienHe === null) {
+        return {};
+    }
+
+    const duLieuForm =
+        new FormData(
+            formLienHe
+        );
 
     const dangCongThuc =
         layCheDoTrang() === 'cong-thuc';
@@ -465,36 +557,61 @@ const taoDuLieuGuiDi = () => {
     if (dangCongThuc === true) {
         return {
             loai: 'cong-thuc',
-            hoTen: duLieuForm.get('full_name'),
-            email: duLieuForm.get('email'),
-            tenMon: duLieuForm.get('dish_name'),
-            soNguoiAn: duLieuForm.get('servings'),
-            danhMuc: duLieuForm.get('category'),
+            hoTen: duLieuForm.get(
+                'full_name'
+            ),
+            email: duLieuForm.get(
+                'email'
+            ),
+            tenMon: duLieuForm.get(
+                'dish_name'
+            ),
+            soNguoiAn: duLieuForm.get(
+                'servings'
+            ),
+            danhMuc: duLieuForm.get(
+                'category'
+            ),
             noiDungCongThuc:
-                duLieuForm.get('recipe_content'),
+                duLieuForm.get(
+                    'recipe_content'
+                ),
             thoiGianNau:
-                duLieuForm.get('cooking_time')
+                duLieuForm.get(
+                    'cooking_time'
+                )
         };
     }
 
     return {
         loai: 'lien-he',
-        hoTen: duLieuForm.get('full_name'),
-        email: duLieuForm.get('email'),
-        chuDe: duLieuForm.get('subject'),
-        noiDung: duLieuForm.get('message')
+        hoTen: duLieuForm.get(
+            'full_name'
+        ),
+        email: duLieuForm.get(
+            'email'
+        ),
+        chuDe: duLieuForm.get(
+            'subject'
+        ),
+        noiDung: duLieuForm.get(
+            'message'
+        )
     };
 };
 
 
-/*
- * Hiển thị thông báo.
- */
+/* =========================================================
+ * 16. HIỂN THỊ THÔNG BÁO KẾT QUẢ
+ * ========================================================= */
 
 const hienThiThongBao = (
     noiDungThongBao,
     laLoi = false
 ) => {
+    if (formLienHe === null) {
+        return;
+    }
 
     const thongBaoCu =
         document.querySelector(
@@ -511,7 +628,13 @@ const hienThiThongBao = (
     thongBao.className =
         'thong-bao-lien-he';
 
-    thongBao.setAttribute('aria-live', 'polite');
+    thongBao.setAttribute(
+        'aria-live',
+        'polite'
+    );
+
+    thongBao.textContent =
+        noiDungThongBao;
 
     if (laLoi === true) {
         thongBao.classList.add(
@@ -519,35 +642,38 @@ const hienThiThongBao = (
         );
     }
 
-    thongBao.textContent =
-        noiDungThongBao;
-
-    formLienHe.prepend(thongBao);
+    formLienHe.prepend(
+        thongBao
+    );
 };
 
 
-/*
- * Gửi dữ liệu bằng fetch.
- */
+/* =========================================================
+ * 17. GỬI FORM BẰNG POST
+ * ========================================================= */
 
-const guiBieuMau = async (duLieu) => {
+const guiBieuMau = async (
+    duLieu
+) => {
+    const res =
+        await fetch(
+            'https://jsonplaceholder.typicode.com/posts',
+            {
+                method: 'POST',
 
-    const res = await fetch(
-        'https://jsonplaceholder.typicode.com/posts',
-        {
-            method: 'POST',
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
 
-            headers: {
-                'Content-Type':
-                    'application/json'
-            },
-
-            body: JSON.stringify(duLieu)
-        }
-    );
+                body:
+                    JSON.stringify(
+                        duLieu
+                    )
+            }
+        );
 
     if (res.ok === false) {
-
         throw new Error(
             `Gửi biểu mẫu thất bại: ${res.status}`
         );
@@ -557,71 +683,70 @@ const guiBieuMau = async (duLieu) => {
 };
 
 
-/*
- * Xử lý gửi biểu mẫu.
- */
+/* =========================================================
+ * 18. XỬ LÝ SUBMIT
+ * ========================================================= */
 
-const xuLyGuiBieuMau = async (event) => {
-
+const xuLyGuiBieuMau = async (
+    event
+) => {
     event.preventDefault();
 
     if (formLienHe === null) {
         return;
     }
 
-
     const hopLe =
         kiemTraBieuMau();
 
-
     if (hopLe === false) {
-    return;
+        return;
     }
-
 
     const nutGui =
         formLienHe.querySelector(
             'button[type="submit"]'
         );
 
-
     if (nutGui !== null) {
-
         nutGui.disabled = true;
-        nutGui.textContent = 'Đang gửi...';
+        nutGui.textContent =
+            'Đang gửi...';
     }
-
 
     try {
-    const duLieu = taoDuLieuGuiDi();
+        const duLieu =
+            taoDuLieuGuiDi();
 
-    await guiBieuMau(
-        duLieu
-    );
-
-    const dangCongThuc =
-        layCheDoTrang() === 'cong-thuc';
-
-    if (dangCongThuc === true) {
-        hienThiThongBao(
-            'Đăng công thức thành công. Cảm ơn bạn đã chia sẻ với Cook with me.'
+        await guiBieuMau(
+            duLieu
         );
-    } else {
-        hienThiThongBao(
-            'Gửi thông tin thành công. Cảm ơn bạn đã liên hệ với Cook with me.'
-        );
-    }
 
-    formLienHe.reset();
+        const dangCongThuc =
+            layCheDoTrang() === 'cong-thuc';
 
-    if (dangCongThuc === true) {
-        chuDe.value = 'gui-cong-thuc';
-        capNhatKhuVucCongThuc();
-    }
+        if (dangCongThuc === true) {
+            hienThiThongBao(
+                'Đăng công thức thành công. Cảm ơn bạn đã chia sẻ với Cook with me.'
+            );
+        } else {
+            hienThiThongBao(
+                'Gửi thông tin thành công. Cảm ơn bạn đã liên hệ với Cook with me.'
+            );
+        }
 
+        formLienHe.reset();
+
+        if (dangCongThuc === true) {
+            if (chuDe !== null) {
+                chuDe.value =
+                    'gui-cong-thuc';
+            }
+
+            capNhatKhuVucCongThuc();
+        }
 
     } catch (error) {
-
         console.error(
             'Lỗi gửi biểu mẫu:',
             error
@@ -632,52 +757,53 @@ const xuLyGuiBieuMau = async (event) => {
             true
         );
 
-
     } finally {
-
         if (nutGui !== null) {
-    nutGui.disabled = false;
+            nutGui.disabled = false;
 
-    if (
-        layCheDoTrang() === 'cong-thuc'
-    ) {
-        nutGui.textContent =
-            'Đăng công thức';
-    } else {
-        nutGui.textContent =
-            'Gửi liên hệ';
-    }
-}
+            if (
+                layCheDoTrang() ===
+                'cong-thuc'
+            ) {
+                nutGui.textContent =
+                    'Đăng công thức';
+            } else {
+                nutGui.textContent =
+                    'Gửi liên hệ';
+            }
+        }
     }
 };
 
-/*
- * Hiển thị hoặc ẩn khu vực thông tin công thức.
- */
+
+/* =========================================================
+ * 19. HIỂN THỊ / ẨN KHU VỰC CÔNG THỨC
+ * ========================================================= */
 
 const capNhatKhuVucCongThuc = () => {
-
     if (
-        chuDe === null ||
-        khuVucCongThuc === null
+        chuDe === null
+        || khuVucCongThuc === null
     ) {
         return;
     }
 
-
-    if (chuDe.value === 'gui-cong-thuc') {
-
-        khuVucCongThuc.hidden = false;
-
+    if (
+        chuDe.value ===
+        'gui-cong-thuc'
+    ) {
+        khuVucCongThuc.hidden =
+            false;
     } else {
-
-        khuVucCongThuc.hidden = true;
+        khuVucCongThuc.hidden =
+            true;
     }
 };
 
-/*
- * Kiểm tra ngay khi người dùng nhập.
- */
+
+/* =========================================================
+ * 20. GẮN VALIDATION CHO CÁC TRƯỜNG
+ * ========================================================= */
 
 const khoiTaoKiemTra = () => {
 
@@ -741,18 +867,6 @@ const khoiTaoKiemTra = () => {
         );
     }
 
-    if (thoiGianNau !== null) {
-        thoiGianNau.addEventListener(
-            'blur',
-            kiemTraThoiGianNau
-        );
-
-        thoiGianNau.addEventListener(
-            'input',
-            kiemTraThoiGianNau
-        );
-    }
-
     if (danhMuc !== null) {
         danhMuc.addEventListener(
             'blur',
@@ -777,6 +891,18 @@ const khoiTaoKiemTra = () => {
         );
     }
 
+    if (thoiGianNau !== null) {
+        thoiGianNau.addEventListener(
+            'blur',
+            kiemTraThoiGianNau
+        );
+
+        thoiGianNau.addEventListener(
+            'input',
+            kiemTraThoiGianNau
+        );
+    }
+
     if (noiDung !== null) {
         noiDung.addEventListener(
             'blur',
@@ -791,37 +917,37 @@ const khoiTaoKiemTra = () => {
 };
 
 
-/*
- * Khởi tạo trang.
- */
+/* =========================================================
+ * 21. KHỞI TẠO TRANG
+ * ========================================================= */
 
 const khoiTaoTrang = () => {
-
     if (formLienHe === null) {
         return;
     }
 
-
     if (chuDe !== null) {
-
         chuDe.addEventListener(
             'change',
             capNhatKhuVucCongThuc
         );
     }
 
-
     khoiTaoKiemTra();
-
 
     formLienHe.addEventListener(
         'submit',
         xuLyGuiBieuMau
     );
 
-
     capNhatKhuVucCongThuc();
 };
 
+
+/* =========================================================
+ * 22. CHẠY KHỞI TẠO
+ * ========================================================= */
+
 thietLapCheDoDangCongThuc();
+
 khoiTaoTrang();

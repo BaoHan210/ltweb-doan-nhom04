@@ -13,7 +13,7 @@ const nutSaoChepEmail =
 const thongBaoSaoChep =
     document.querySelector('.thong-bao-sao-chep');
 
-const TEN_KHOA_GIAO_DIEN = 'giaoDienCaNhan';
+const tenKhoaGiaoDien = 'giaoDienCaNhan';
 
 const capNhatNutGiaoDien = (laGiaoDienToi) => {
     if (nutChuyenGiaoDien === null) return;
@@ -40,7 +40,7 @@ const apDungGiaoDien = (laGiaoDienToi) => {
 
 const khoiTaoGiaoDien = () => {
     const giaoDienDaLuu =
-        localStorage.getItem(TEN_KHOA_GIAO_DIEN);
+        localStorage.getItem(tenKhoaGiaoDien);
 
     const laGiaoDienToi =
         giaoDienDaLuu === 'toi';
@@ -58,7 +58,7 @@ const khoiTaoNutGiaoDien = () => {
         apDungGiaoDien(laGiaoDienToi);
 
         localStorage.setItem(
-            TEN_KHOA_GIAO_DIEN,
+            tenKhoaGiaoDien,
             laGiaoDienToi ? 'toi' : 'sang'
         );
     });

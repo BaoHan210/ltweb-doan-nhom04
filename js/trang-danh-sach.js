@@ -11,7 +11,7 @@ import {
     doiTrangThaiYeuThich
 } from './yeu-thich.js';
 
-const SO_MON_MOI_TRANG = 8;
+const soMonMoiTrang = 9;
 
 let trangHienTai = 1;
 let danhSachMonAn = [];
@@ -141,11 +141,11 @@ const sapXepMonAn = () => {
 const layMonAnTheoTrang = () => {
     const viTriBatDau =
         (trangHienTai - 1) *
-        SO_MON_MOI_TRANG;
+        soMonMoiTrang;
 
     const viTriKetThuc =
         viTriBatDau +
-        SO_MON_MOI_TRANG;
+        soMonMoiTrang;
 
     return danhSachMonAnHienThi.slice(
         viTriBatDau,
@@ -358,7 +358,7 @@ const capNhatPhanTrang = () => {
     const tongSoTrang =
         Math.ceil(
             danhSachMonAnHienThi.length /
-            SO_MON_MOI_TRANG
+            soMonMoiTrang
         );
 
     if (tongSoTrang <= 1) {
@@ -468,7 +468,7 @@ const xuLyChuyenTrang = (
     const tongSoTrang =
         Math.ceil(
             danhSachMonAnHienThi.length /
-            SO_MON_MOI_TRANG
+            soMonMoiTrang
         );
 
     if (giaTri === 'truoc') {

@@ -1,7 +1,16 @@
 /*
  * trang-dang-bai-viet.js
  * Xử lý trang đăng bài viết trực tiếp của người dùng.
- * Cho phép chọn hình ảnh, xem trước hình ảnh và kiểm tra dữ liệu bài viết.
+ *
+ * Chức năng:
+ * - Kiểm tra người dùng đã đăng nhập.
+ * - Đăng bài viết mới.
+ * - Chỉnh sửa bài viết của chính người dùng.
+ * - Chọn nhiều hình ảnh.
+ * - Xem trước hình ảnh.
+ * - Hiển thị ảnh cũ khi chỉnh sửa.
+ * - Kiểm tra dữ liệu trước khi lưu.
+ * - Lưu dữ liệu thông qua bai-viet.js.
  */
 
 import {
@@ -16,87 +25,149 @@ import {
 } from './tai-khoan.js';
 
 
-/* ================================
-   LẤY CÁC PHẦN TỬ HTML
-   ================================ */
+/* =========================================================
+   1. LẤY CÁC PHẦN TỬ HTML
+   ========================================================= */
 
-const formDangBai = document.querySelector(
-    '.form-dang-bai-viet'
-);
+const formDangBai =
+    document.querySelector(
+        '.form-dang-bai-viet'
+    );
 
-const oChonHinhAnh = document.querySelector(
-    '#hinh-anh'
-);
+const oChonHinhAnh =
+    document.querySelector(
+        '#hinh-anh'
+    );
 
-const khuVucXemTruoc = document.querySelector(
-    '.xem-truoc-hinh-anh'
-);
+const khuVucXemTruoc =
+    document.querySelector(
+        '.xem-truoc-hinh-anh'
+    );
 
-const moTaBaiViet = document.querySelector(
-    '#mo-ta-bai-viet'
-);
+const moTaBaiViet =
+    document.querySelector(
+        '#mo-ta-bai-viet'
+    );
 
-const tenMon = document.querySelector(
-    '#ten-mon'
-);
+const tenMon =
+    document.querySelector(
+        '#ten-mon'
+    );
 
-const danhMuc = document.querySelector(
-    '#danh-muc'
-);
+const danhMuc =
+    document.querySelector(
+        '#danh-muc'
+    );
 
-const thoiGianNau = document.querySelector(
-    '#thoi-gian-nau'
-);
+const thoiGianNau =
+    document.querySelector(
+        '#thoi-gian-nau'
+    );
 
-const soNguoiAn = document.querySelector(
-    '#so-nguoi-an'
-);
+const soNguoiAn =
+    document.querySelector(
+        '#so-nguoi-an'
+    );
 
-const nganSach = document.querySelector(
-    '#ngan-sach'
-);
+const nganSach =
+    document.querySelector(
+        '#ngan-sach'
+    );
 
-const nguyenLieu = document.querySelector(
-    '#nguyen-lieu'
-);
+const nguyenLieu =
+    document.querySelector(
+        '#nguyen-lieu'
+    );
 
-const cachLam = document.querySelector(
-    '#cach-lam'
-);
+const cachLam =
+    document.querySelector(
+        '#cach-lam'
+    );
 
-
-/* ================================
-   XÁC ĐỊNH CHẾ ĐỘ THÊM / SỬA
-   ================================ */
-
-const thamSo = new URLSearchParams(
-    window.location.search
-);
-
-const idBaiViet = thamSo.get('id');
-
-const cheDo = thamSo.get('cheDo');
-
-const dangSua = cheDo === 'sua';
+const nutDangBai =
+    document.querySelector(
+        '.nut-dang-bai'
+    );
 
 
-/* ================================
-   DANH SÁCH HÌNH ẢNH
-   ================================ */
+/* =========================================================
+   2. XÁC ĐỊNH CHẾ ĐỘ THÊM / SỬA
+   ========================================================= */
 
+const thamSo =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const idBaiViet =
+    thamSo.get(
+        'id'
+    );
+
+const cheDo =
+    thamSo.get(
+        'cheDo'
+    );
+
+const dangSua =
+    cheDo === 'sua';
+
+
+/* =========================================================
+   3. NGƯỜI DÙNG HIỆN TẠI
+   ========================================================= */
+
+const nguoiDungHienTai =
+    docNguoiDungHienTai();
+
+
+/* =========================================================
+   4. CHUYỂN VỀ TRANG ĐĂNG NHẬP NẾU CHƯA ĐĂNG NHẬP
+   ========================================================= */
+
+if (
+    nguoiDungHienTai === null
+) {
+
+    window.alert(
+        'Vui lòng đăng nhập để sử dụng chức năng này.'
+    );
+
+    window.location.href =
+        'dang-nhap.html';
+}
+
+
+/* =========================================================
+   5. DANH SÁCH HÌNH ẢNH
+   ========================================================= */
+
+/*
+ * Ảnh người dùng vừa chọn từ thiết bị.
+ */
 let danhSachHinhAnh = [];
 
 
-/* ================================
-   HIỂN THỊ LỖI
-   ================================ */
+/*
+ * Ảnh đã lưu trước đó trong bài viết.
+ *
+ * Có thể là Data URL hoặc chuỗi đường dẫn ảnh.
+ */
+let danhSachHinhAnhCu = [];
+
+
+/* =========================================================
+   6. HÀM HIỂN THỊ LỖI
+   ========================================================= */
 
 const hienThiLoi = (
     phanTu,
     noiDung
 ) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
 
@@ -105,35 +176,58 @@ const hienThiLoi = (
     );
 
     let thongBaoLoi =
-        phanTu.parentElement.querySelector(
-            '.thong-bao-loi-truong'
-        );
+        phanTu.parentElement
+            ?.querySelector(
+                '.thong-bao-loi-truong'
+            );
 
-    if (thongBaoLoi === null) {
+    if (
+        thongBaoLoi === null
+        ||
+        thongBaoLoi === undefined
+    ) {
 
         thongBaoLoi =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBaoLoi.className =
             'thong-bao-loi-truong';
 
-        phanTu.parentElement.appendChild(
+        thongBaoLoi.setAttribute(
+            'role',
+            'alert'
+        );
+
+        phanTu.parentElement?.appendChild(
             thongBaoLoi
         );
     }
 
-    thongBaoLoi.textContent =
-        noiDung;
+    if (
+        thongBaoLoi !== null
+        &&
+        thongBaoLoi !== undefined
+    ) {
+
+        thongBaoLoi.textContent =
+            noiDung;
+    }
 };
 
 
-/* ================================
-   XÓA LỖI
-   ================================ */
+/* =========================================================
+   7. XÓA LỖI
+   ========================================================= */
 
-const xoaLoi = (phanTu) => {
+const xoaLoi = (
+    phanTu
+) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
 
@@ -142,69 +236,164 @@ const xoaLoi = (phanTu) => {
     );
 
     const thongBaoLoi =
-        phanTu.parentElement.querySelector(
-            '.thong-bao-loi-truong'
-        );
+        phanTu.parentElement
+            ?.querySelector(
+                '.thong-bao-loi-truong'
+            );
 
-    if (thongBaoLoi !== null) {
+    if (
+        thongBaoLoi !== null
+        &&
+        thongBaoLoi !== undefined
+    ) {
+
         thongBaoLoi.remove();
     }
 };
 
 
-/* ================================
-   KIỂM TRA NGƯỜI DÙNG HIỆN TẠI
-   ================================ */
-
-const nguoiDungHienTai =
-    docNguoiDungHienTai();
-
-if (nguoiDungHienTai === null) {
-
-    window.location.href =
-        'dang-nhap.html';
-}
-
-
-/* ================================
-   LẤY BÀI VIẾT CẦN SỬA
-   ================================ */
+/* =========================================================
+   8. LẤY BÀI VIẾT CẦN SỬA
+   ========================================================= */
 
 const layBaiVietCanSua = () => {
 
-    if (dangSua === false) {
-        return null;
-    }
-
-    if (idBaiViet === null) {
+    if (
+        dangSua === false
+        ||
+        idBaiViet === null
+    ) {
         return null;
     }
 
     const danhSachBaiViet =
         docBaiViet();
 
-    const baiViet =
+    return (
         danhSachBaiViet.find(
-            (item) => {
-                return item.id === idBaiViet;
-            }
-        );
+            (baiViet) => {
 
-    if (baiViet === undefined) {
-        return null;
+                if (
+                    baiViet === null
+                    ||
+                    typeof baiViet !== 'object'
+                ) {
+                    return false;
+                }
+
+                return (
+                    String(
+                        baiViet.id
+                    )
+                    ===
+                    String(
+                        idBaiViet
+                    )
+                );
+            }
+        )
+        ||
+        null
+    );
+};
+
+const baiVietCanSua =
+    layBaiVietCanSua();
+
+
+/* =========================================================
+   9. KIỂM TRA QUYỀN SỬA
+   ========================================================= */
+
+if (
+    nguoiDungHienTai !== null
+    &&
+    dangSua
+    &&
+    (
+        baiVietCanSua === null
+        ||
+        String(
+            baiVietCanSua.userId
+        )
+        !==
+        String(
+            nguoiDungHienTai.id
+        )
+    )
+) {
+
+    window.alert(
+        'Bạn không có quyền sửa bài viết này.'
+    );
+
+    window.location.href =
+        'ca-nhan.html';
+}
+
+
+/* =========================================================
+   10. CẬP NHẬT THÔNG TIN NGƯỜI ĐĂNG
+   ========================================================= */
+
+const capNhatThongTinNguoiDang = () => {
+
+    if (
+        nguoiDungHienTai === null
+    ) {
+        return;
     }
 
-    return baiViet;
+    const phanTuTen =
+        document.querySelector(
+            '.nguoi-dang-bai strong'
+        );
+
+    const phanTuAvatar =
+        document.querySelector(
+            '.anh-dai-dien span'
+        );
+
+    const tenNguoiDung =
+        String(
+            nguoiDungHienTai.hoTen
+            ||
+            nguoiDungHienTai.ten
+            ||
+            nguoiDungHienTai.email
+            ||
+            'Người dùng'
+        ).trim();
+
+    if (
+        phanTuTen !== null
+    ) {
+
+        phanTuTen.textContent =
+            tenNguoiDung;
+    }
+
+    if (
+        phanTuAvatar !== null
+    ) {
+
+        phanTuAvatar.textContent =
+            tenNguoiDung
+                .charAt(0)
+                .toUpperCase();
+    }
 };
 
 
-/* ================================
-   THIẾT LẬP CHẾ ĐỘ SỬA
-   ================================ */
+/* =========================================================
+   11. THIẾT LẬP CHẾ ĐỘ SỬA
+   ========================================================= */
 
 const thietLapCheDoSua = () => {
 
-    if (dangSua === false) {
+    if (
+        dangSua === false
+    ) {
         return;
     }
 
@@ -213,39 +402,71 @@ const thietLapCheDoSua = () => {
             '.nguoi-dang-bai strong'
         );
 
-    if (tieuDe !== null) {
+    /*
+     * Không thay tên người dùng.
+     * Tên người dùng vẫn được hiển thị ở phần thông tin.
+     */
 
-        tieuDe.textContent =
+    const tieuDeTrang =
+        document.querySelector(
+            'main h1'
+        );
+
+    if (
+        tieuDeTrang !== null
+    ) {
+
+        tieuDeTrang.textContent =
             'Chỉnh sửa bài viết';
     }
 
-    const nutDangBai =
-        document.querySelector(
-            '.nut-dang-bai'
-        );
+    document.title =
+        'Chỉnh sửa bài viết | Cook with me';
 
-    if (nutDangBai !== null) {
+    if (
+        nutDangBai !== null
+    ) {
 
         nutDangBai.textContent =
             'Lưu thay đổi';
     }
+
+    /*
+     * Dòng phụ bên dưới tên người dùng.
+     */
+    const moTaNguoiDang =
+        document.querySelector(
+            '.thong-tin-nguoi-dang span'
+        );
+
+    if (
+        moTaNguoiDang !== null
+    ) {
+
+        moTaNguoiDang.textContent =
+            'Đang chỉnh sửa công thức';
+    }
 };
 
 
-/* ================================
-   KIỂM TRA MÔ TẢ
-   ================================ */
+/* =========================================================
+   12. KIỂM TRA MÔ TẢ
+   ========================================================= */
 
 const kiemTraMoTa = () => {
 
-    if (moTaBaiViet === null) {
+    if (
+        moTaBaiViet === null
+    ) {
         return false;
     }
 
     const noiDung =
         moTaBaiViet.value.trim();
 
-    if (noiDung === '') {
+    if (
+        noiDung === ''
+    ) {
 
         hienThiLoi(
             moTaBaiViet,
@@ -255,7 +476,9 @@ const kiemTraMoTa = () => {
         return false;
     }
 
-    if (noiDung.length < 10) {
+    if (
+        noiDung.length < 10
+    ) {
 
         hienThiLoi(
             moTaBaiViet,
@@ -265,26 +488,32 @@ const kiemTraMoTa = () => {
         return false;
     }
 
-    xoaLoi(moTaBaiViet);
+    xoaLoi(
+        moTaBaiViet
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA TÊN MÓN
-   ================================ */
+/* =========================================================
+   13. KIỂM TRA TÊN MÓN
+   ========================================================= */
 
 const kiemTraTenMon = () => {
 
-    if (tenMon === null) {
+    if (
+        tenMon === null
+    ) {
         return false;
     }
 
     const giaTri =
         tenMon.value.trim();
 
-    if (giaTri === '') {
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             tenMon,
@@ -294,7 +523,9 @@ const kiemTraTenMon = () => {
         return false;
     }
 
-    if (giaTri.length < 2) {
+    if (
+        giaTri.length < 2
+    ) {
 
         hienThiLoi(
             tenMon,
@@ -304,23 +535,29 @@ const kiemTraTenMon = () => {
         return false;
     }
 
-    xoaLoi(tenMon);
+    xoaLoi(
+        tenMon
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA DANH MỤC
-   ================================ */
+/* =========================================================
+   14. KIỂM TRA DANH MỤC
+   ========================================================= */
 
 const kiemTraDanhMuc = () => {
 
-    if (danhMuc === null) {
+    if (
+        danhMuc === null
+    ) {
         return false;
     }
 
-    if (danhMuc.value === '') {
+    if (
+        danhMuc.value === ''
+    ) {
 
         hienThiLoi(
             danhMuc,
@@ -330,30 +567,39 @@ const kiemTraDanhMuc = () => {
         return false;
     }
 
-    xoaLoi(danhMuc);
+    xoaLoi(
+        danhMuc
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA THỜI GIAN NẤU
-   ================================ */
+/* =========================================================
+   15. KIỂM TRA THỜI GIAN NẤU
+   ========================================================= */
 
 const kiemTraThoiGianNau = () => {
 
-    if (thoiGianNau === null) {
+    if (
+        thoiGianNau === null
+    ) {
         return false;
     }
 
     const giaTri =
-        Number(thoiGianNau.value);
+        Number(
+            thoiGianNau.value
+        );
 
     if (
         thoiGianNau.value === ''
-        || Number.isNaN(giaTri)
-        || giaTri < 1
-        || giaTri > 300
+        ||
+        Number.isNaN(giaTri)
+        ||
+        giaTri < 1
+        ||
+        giaTri > 300
     ) {
 
         hienThiLoi(
@@ -364,30 +610,39 @@ const kiemTraThoiGianNau = () => {
         return false;
     }
 
-    xoaLoi(thoiGianNau);
+    xoaLoi(
+        thoiGianNau
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA KHẨU PHẦN
-   ================================ */
+/* =========================================================
+   16. KIỂM TRA KHẨU PHẦN
+   ========================================================= */
 
 const kiemTraSoNguoiAn = () => {
 
-    if (soNguoiAn === null) {
+    if (
+        soNguoiAn === null
+    ) {
         return false;
     }
 
     const giaTri =
-        Number(soNguoiAn.value);
+        Number(
+            soNguoiAn.value
+        );
 
     if (
         soNguoiAn.value === ''
-        || Number.isNaN(giaTri)
-        || giaTri < 1
-        || giaTri > 20
+        ||
+        Number.isNaN(giaTri)
+        ||
+        giaTri < 1
+        ||
+        giaTri > 20
     ) {
 
         hienThiLoi(
@@ -398,29 +653,37 @@ const kiemTraSoNguoiAn = () => {
         return false;
     }
 
-    xoaLoi(soNguoiAn);
+    xoaLoi(
+        soNguoiAn
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA NGÂN SÁCH
-   ================================ */
+/* =========================================================
+   17. KIỂM TRA NGÂN SÁCH
+   ========================================================= */
 
 const kiemTraNganSach = () => {
 
-    if (nganSach === null) {
+    if (
+        nganSach === null
+    ) {
         return false;
     }
 
     const giaTri =
-        Number(nganSach.value);
+        Number(
+            nganSach.value
+        );
 
     if (
         nganSach.value === ''
-        || Number.isNaN(giaTri)
-        || giaTri < 0
+        ||
+        Number.isNaN(giaTri)
+        ||
+        giaTri < 0
     ) {
 
         hienThiLoi(
@@ -431,26 +694,32 @@ const kiemTraNganSach = () => {
         return false;
     }
 
-    xoaLoi(nganSach);
+    xoaLoi(
+        nganSach
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA NGUYÊN LIỆU
-   ================================ */
+/* =========================================================
+   18. KIỂM TRA NGUYÊN LIỆU
+   ========================================================= */
 
 const kiemTraNguyenLieu = () => {
 
-    if (nguyenLieu === null) {
+    if (
+        nguyenLieu === null
+    ) {
         return false;
     }
 
     const noiDung =
         nguyenLieu.value.trim();
 
-    if (noiDung === '') {
+    if (
+        noiDung === ''
+    ) {
 
         hienThiLoi(
             nguyenLieu,
@@ -460,7 +729,9 @@ const kiemTraNguyenLieu = () => {
         return false;
     }
 
-    if (noiDung.length < 10) {
+    if (
+        noiDung.length < 10
+    ) {
 
         hienThiLoi(
             nguyenLieu,
@@ -470,26 +741,32 @@ const kiemTraNguyenLieu = () => {
         return false;
     }
 
-    xoaLoi(nguyenLieu);
+    xoaLoi(
+        nguyenLieu
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA CÁCH LÀM
-   ================================ */
+/* =========================================================
+   19. KIỂM TRA CÁCH LÀM
+   ========================================================= */
 
 const kiemTraCachLam = () => {
 
-    if (cachLam === null) {
+    if (
+        cachLam === null
+    ) {
         return false;
     }
 
     const noiDung =
         cachLam.value.trim();
 
-    if (noiDung === '') {
+    if (
+        noiDung === ''
+    ) {
 
         hienThiLoi(
             cachLam,
@@ -499,7 +776,9 @@ const kiemTraCachLam = () => {
         return false;
     }
 
-    if (noiDung.length < 10) {
+    if (
+        noiDung.length < 10
+    ) {
 
         hienThiLoi(
             cachLam,
@@ -509,46 +788,70 @@ const kiemTraCachLam = () => {
         return false;
     }
 
-    xoaLoi(cachLam);
+    xoaLoi(
+        cachLam
+    );
 
     return true;
 };
 
 
-/* ================================
-   KIỂM TRA HÌNH ẢNH
-   ================================ */
+/* =========================================================
+   20. KIỂM TRA HÌNH ẢNH
+   ========================================================= */
 
 const kiemTraHinhAnh = () => {
 
     /*
-     * Khi sửa bài viết, bài cũ có thể đã có hình ảnh.
-     * Không bắt buộc người dùng phải chọn lại hình ảnh.
+     * Khi đăng bài mới:
+     * phải có ít nhất một ảnh.
+     *
+     * Khi sửa:
+     * - không chọn ảnh mới -> giữ ảnh cũ;
+     * - chọn ảnh mới -> dùng ảnh mới.
      */
 
-    if (dangSua === true) {
+    if (
+        dangSua
+        &&
+        danhSachHinhAnh.length === 0
+        &&
+        danhSachHinhAnhCu.length > 0
+    ) {
 
-        if (danhSachHinhAnh.length === 0) {
-            return true;
+        if (
+            khuVucXemTruoc !== null
+        ) {
+
+            khuVucXemTruoc.classList.remove(
+                'khu-vuc-co-loi'
+            );
         }
+
+        return true;
     }
 
-    if (danhSachHinhAnh.length === 0) {
+    if (
+        danhSachHinhAnh.length === 0
+    ) {
 
-        if (khuVucXemTruoc !== null) {
+        if (
+            khuVucXemTruoc !== null
+        ) {
 
             khuVucXemTruoc.classList.add(
                 'khu-vuc-co-loi'
             );
 
-            khuVucXemTruoc.textContent =
-                'Vui lòng thêm ít nhất một hình ảnh món ăn.';
+            hienThiLoiHinhAnh();
         }
 
         return false;
     }
 
-    if (khuVucXemTruoc !== null) {
+    if (
+        khuVucXemTruoc !== null
+    ) {
 
         khuVucXemTruoc.classList.remove(
             'khu-vuc-co-loi'
@@ -559,92 +862,243 @@ const kiemTraHinhAnh = () => {
 };
 
 
-/* ================================
-   HIỂN THỊ HÌNH ẢNH
-   ================================ */
+/* =========================================================
+   21. HIỂN THỊ LỖI HÌNH ẢNH
+   ========================================================= */
 
-const hienThiHinhAnh = () => {
+const hienThiLoiHinhAnh = () => {
 
-    if (khuVucXemTruoc === null) {
+    if (
+        khuVucXemTruoc === null
+    ) {
         return;
     }
 
-    khuVucXemTruoc.innerHTML = '';
+    khuVucXemTruoc.replaceChildren();
+
+    const thongBao =
+        document.createElement(
+            'p'
+        );
+
+    thongBao.className =
+        'thong-bao-loi-truong';
+
+    thongBao.setAttribute(
+        'role',
+        'alert'
+    );
+
+    thongBao.textContent =
+        'Vui lòng thêm ít nhất một hình ảnh món ăn.';
+
+    khuVucXemTruoc.appendChild(
+        thongBao
+    );
+};
+
+
+/* =========================================================
+   22. TẠO KHUNG XEM TRƯỚC ẢNH
+   ========================================================= */
+
+const taoKhungHinhAnh = (
+    src,
+    chiSo,
+    laAnhCu = false
+) => {
+
+    if (
+        khuVucXemTruoc === null
+    ) {
+        return;
+    }
+
+    const khungHinhAnh =
+        document.createElement(
+            'div'
+        );
+
+    khungHinhAnh.className =
+        'khung-hinh-anh-xem-truoc';
+
+
+    const hinhAnh =
+        document.createElement(
+            'img'
+        );
+
+    hinhAnh.src =
+        String(
+            src
+        );
+
+    hinhAnh.alt =
+        laAnhCu
+            ? `Hình ảnh món ăn hiện tại ${chiSo + 1}`
+            : `Hình ảnh món ăn mới ${chiSo + 1}`;
+
+
+    khungHinhAnh.appendChild(
+        hinhAnh
+    );
+
+
+    if (
+        laAnhCu === false
+    ) {
+
+        const nutXoa =
+            document.createElement(
+                'button'
+            );
+
+        nutXoa.type =
+            'button';
+
+        nutXoa.className =
+            'nut-xoa-hinh-anh';
+
+        nutXoa.textContent =
+            '×';
+
+        nutXoa.setAttribute(
+            'aria-label',
+            `Xóa hình ảnh ${chiSo + 1}`
+        );
+
+        nutXoa.addEventListener(
+            'click',
+            () => {
+
+                danhSachHinhAnh =
+                    danhSachHinhAnh.filter(
+                        (
+                            tepHinhAnh,
+                            viTri
+                        ) => {
+
+                            return (
+                                viTri !==
+                                chiSo
+                            );
+                        }
+                    );
+
+                hienThiHinhAnhMoi();
+            }
+        );
+
+        khungHinhAnh.appendChild(
+            nutXoa
+        );
+    }
+
+    khuVucXemTruoc.appendChild(
+        khungHinhAnh
+    );
+};
+
+
+/* =========================================================
+   23. HIỂN THỊ ẢNH CŨ
+   ========================================================= */
+
+const hienThiHinhAnhCu = () => {
+
+    if (
+        khuVucXemTruoc === null
+    ) {
+        return;
+    }
+
+    danhSachHinhAnhCu.forEach(
+        (
+            src,
+            chiSo
+        ) => {
+
+            if (
+                typeof src !== 'string'
+                ||
+                src.trim() === ''
+            ) {
+                return;
+            }
+
+            taoKhungHinhAnh(
+                src,
+                chiSo,
+                true
+            );
+        }
+    );
+};
+
+
+/* =========================================================
+   24. HIỂN THỊ ẢNH MỚI
+   ========================================================= */
+
+const hienThiHinhAnhMoi = () => {
+
+    if (
+        khuVucXemTruoc === null
+    ) {
+        return;
+    }
+
+    /*
+     * Khi đang sửa và có ảnh mới,
+     * ảnh cũ không được hiển thị nữa
+     * vì ảnh mới sẽ thay thế ảnh cũ.
+     */
+    khuVucXemTruoc.replaceChildren();
+
+    if (
+        danhSachHinhAnh.length === 0
+    ) {
+
+        if (
+            dangSua
+            &&
+            danhSachHinhAnhCu.length > 0
+        ) {
+
+            hienThiHinhAnhCu();
+        }
+
+        return;
+    }
 
     danhSachHinhAnh.forEach(
-        (tepHinhAnh, chiSo) => {
-
-            const khungHinhAnh =
-                document.createElement('div');
-
-            khungHinhAnh.className =
-                'khung-hinh-anh-xem-truoc';
-
-
-            const hinhAnh =
-                document.createElement('img');
-
-            hinhAnh.alt =
-                `Hình ảnh món ăn ${chiSo + 1}`;
-
-
-            const nutXoa =
-                document.createElement('button');
-
-            nutXoa.type = 'button';
-
-            nutXoa.className =
-                'nut-xoa-hinh-anh';
-
-            nutXoa.textContent = '×';
-
-            nutXoa.setAttribute(
-                'aria-label',
-                `Xóa hình ảnh ${chiSo + 1}`
-            );
-
-
-            nutXoa.addEventListener(
-                'click',
-                () => {
-
-                    danhSachHinhAnh =
-                        danhSachHinhAnh.filter(
-                            (tep, viTri) => {
-                                return viTri !== chiSo;
-                            }
-                        );
-
-                    hienThiHinhAnh();
-                }
-            );
-
+        (
+            tepHinhAnh,
+            chiSo
+        ) => {
 
             const boDocFile =
                 new FileReader();
-
 
             boDocFile.addEventListener(
                 'load',
                 () => {
 
-                    hinhAnh.src =
-                        boDocFile.result;
+                    if (
+                        typeof boDocFile.result
+                        !==
+                        'string'
+                    ) {
+                        return;
+                    }
 
-                    khungHinhAnh.appendChild(
-                        hinhAnh
-                    );
-
-                    khungHinhAnh.appendChild(
-                        nutXoa
-                    );
-
-                    khuVucXemTruoc.appendChild(
-                        khungHinhAnh
+                    taoKhungHinhAnh(
+                        boDocFile.result,
+                        chiSo,
+                        false
                     );
                 }
             );
-
 
             boDocFile.readAsDataURL(
                 tepHinhAnh
@@ -654,220 +1108,333 @@ const hienThiHinhAnh = () => {
 };
 
 
-/* ================================
-   XỬ LÝ CHỌN HÌNH ẢNH
-   ================================ */
+/* =========================================================
+   25. XỬ LÝ CHỌN HÌNH ẢNH
+   ========================================================= */
 
 const xuLyChonHinhAnh = () => {
 
-    if (oChonHinhAnh === null) {
+    if (
+        oChonHinhAnh === null
+    ) {
         return;
     }
 
     const danhSachTepMoi =
-        Array.from(oChonHinhAnh.files);
+        Array.from(
+            oChonHinhAnh.files
+        );
 
+    let soTepBiTuChoi = 0;
 
     danhSachTepMoi.forEach(
-        (tepHinhAnh) => {
+        (
+            tepHinhAnh
+        ) => {
 
             if (
                 tepHinhAnh.type.startsWith(
                     'image/'
                 ) === false
             ) {
+
+                soTepBiTuChoi += 1;
+
+                return;
+            }
+
+            /*
+             * Giới hạn kích thước mỗi ảnh 5 MB.
+             */
+            if (
+                tepHinhAnh.size
+                >
+                5 * 1024 * 1024
+            ) {
+
+                soTepBiTuChoi += 1;
+
                 return;
             }
 
             const daTonTai =
                 danhSachHinhAnh.some(
-                    (tepDaChon) => {
+                    (
+                        tepDaChon
+                    ) => {
+
                         return (
-                            tepDaChon.name ===
+                            tepDaChon.name
+                            ===
                             tepHinhAnh.name
                             &&
-                            tepDaChon.size ===
+                            tepDaChon.size
+                            ===
                             tepHinhAnh.size
                         );
                     }
                 );
 
+            if (
+                daTonTai
+            ) {
+
+                soTepBiTuChoi += 1;
+
+                return;
+            }
 
             if (
-                daTonTai === false
-                &&
-                danhSachHinhAnh.length < 10
+                danhSachHinhAnh.length
+                >=
+                10
             ) {
-                danhSachHinhAnh.push(
-                    tepHinhAnh
-                );
+
+                soTepBiTuChoi += 1;
+
+                return;
             }
+
+            danhSachHinhAnh.push(
+                tepHinhAnh
+            );
         }
     );
 
-
-    hienThiHinhAnh();
+    hienThiHinhAnhMoi();
 
     oChonHinhAnh.value = '';
+
+    if (
+        soTepBiTuChoi > 0
+    ) {
+
+        hienThiThongBao(
+            `Có ${soTepBiTuChoi} hình ảnh không được thêm. ` +
+            'Chỉ chấp nhận ảnh hợp lệ, tối đa 10 ảnh và 5 MB mỗi ảnh.',
+            true
+        );
+    }
 };
 
 
-/* ================================
-   KIỂM TRA TOÀN BỘ FORM
-   ================================ */
+/* =========================================================
+   26. KIỂM TRA TOÀN BỘ FORM
+   ========================================================= */
 
 const kiemTraBieuMau = () => {
 
-    const ketQuaMoTa =
-        kiemTraMoTa();
+    const ketQua = [
+        kiemTraMoTa(),
+        kiemTraHinhAnh(),
+        kiemTraTenMon(),
+        kiemTraDanhMuc(),
+        kiemTraThoiGianNau(),
+        kiemTraSoNguoiAn(),
+        kiemTraNganSach(),
+        kiemTraNguyenLieu(),
+        kiemTraCachLam()
+    ];
 
-    const ketQuaHinhAnh =
-        kiemTraHinhAnh();
-
-    const ketQuaTenMon =
-        kiemTraTenMon();
-
-    const ketQuaDanhMuc =
-        kiemTraDanhMuc();
-
-    const ketQuaThoiGian =
-        kiemTraThoiGianNau();
-
-    const ketQuaSoNguoi =
-        kiemTraSoNguoiAn();
-
-    const ketQuaNganSach =
-        kiemTraNganSach();
-
-    const ketQuaNguyenLieu =
-        kiemTraNguyenLieu();
-
-    const ketQuaCachLam =
-        kiemTraCachLam();
-
-
-    return (
-        ketQuaMoTa === true
-        && ketQuaHinhAnh === true
-        && ketQuaTenMon === true
-        && ketQuaDanhMuc === true
-        && ketQuaThoiGian === true
-        && ketQuaSoNguoi === true
-        && ketQuaNganSach === true
-        && ketQuaNguyenLieu === true
-        && ketQuaCachLam === true
+    return ketQua.every(
+        (hopLe) => hopLe
     );
 };
 
 
-/* ================================
-   ĐIỀN DỮ LIỆU KHI SỬA
-   ================================ */
+/* =========================================================
+   27. ĐIỀN DỮ LIỆU KHI SỬA
+   ========================================================= */
 
 const dienDuLieuBaiViet = (
     baiViet
 ) => {
 
-    if (baiViet === null) {
+    if (
+        baiViet === null
+    ) {
         return;
     }
 
-    moTaBaiViet.value =
-        baiViet.moTa;
+    if (
+        moTaBaiViet !== null
+    ) {
 
-    tenMon.value =
-        baiViet.tenMon;
+        moTaBaiViet.value =
+            baiViet.moTa || '';
+    }
 
-    danhMuc.value =
-        baiViet.danhMuc;
+    if (
+        tenMon !== null
+    ) {
 
-    thoiGianNau.value =
-        baiViet.thoiGianNau;
+        tenMon.value =
+            baiViet.tenMon || '';
+    }
 
-    soNguoiAn.value =
-        baiViet.soNguoiAn;
+    if (
+        danhMuc !== null
+    ) {
 
-    nganSach.value =
-        baiViet.nganSach;
+        danhMuc.value =
+            baiViet.danhMuc || '';
+    }
 
-    nguyenLieu.value =
-        baiViet.nguyenLieu;
+    if (
+        thoiGianNau !== null
+    ) {
 
-    cachLam.value =
-        baiViet.cachLam;
+        thoiGianNau.value =
+            baiViet.thoiGianNau ?? '';
+    }
+
+    if (
+        soNguoiAn !== null
+    ) {
+
+        soNguoiAn.value =
+            baiViet.soNguoiAn ?? '';
+    }
+
+    if (
+        nganSach !== null
+    ) {
+
+        nganSach.value =
+            baiViet.nganSach ?? '';
+    }
+
+    if (
+        nguyenLieu !== null
+    ) {
+
+        nguyenLieu.value =
+            baiViet.nguyenLieu || '';
+    }
+
+    if (
+        cachLam !== null
+    ) {
+
+        cachLam.value =
+            baiViet.cachLam || '';
+    }
+
+    /*
+     * Lưu ảnh cũ.
+     */
+    if (
+        Array.isArray(
+            baiViet.hinhAnh
+        )
+    ) {
+
+        danhSachHinhAnhCu =
+            baiViet.hinhAnh.filter(
+                (src) => {
+
+                    return (
+                        typeof src === 'string'
+                        &&
+                        src.trim() !== ''
+                    );
+                }
+            );
+    }
+
+    /*
+     * Hiển thị ảnh cũ ngay khi mở trang sửa.
+     */
+    if (
+        dangSua
+        &&
+        danhSachHinhAnhCu.length > 0
+    ) {
+
+        hienThiHinhAnhCu();
+    }
 };
 
 
-/* ================================
-   SỰ KIỆN CHỌN HÌNH ẢNH
-   ================================ */
-
-if (oChonHinhAnh !== null) {
-
-    oChonHinhAnh.addEventListener(
-        'change',
-        xuLyChonHinhAnh
-    );
-}
-
-
-/* ================================
-   TẠO DỮ LIỆU BÀI VIẾT
-   ================================ */
+/* =========================================================
+   28. TẠO DỮ LIỆU BÀI VIẾT
+   ========================================================= */
 
 const taoDuLieuBaiViet = () => {
 
     return {
+
         moTa:
-            moTaBaiViet.value.trim(),
+            moTaBaiViet?.value.trim() || '',
 
         tenMon:
-            tenMon.value.trim(),
+            tenMon?.value.trim() || '',
 
         danhMuc:
-            danhMuc.value,
+            danhMuc?.value || '',
 
         thoiGianNau:
-            Number(thoiGianNau.value),
+            Number(
+                thoiGianNau?.value
+            ),
 
         soNguoiAn:
-            Number(soNguoiAn.value),
+            Number(
+                soNguoiAn?.value
+            ),
 
         nganSach:
-            Number(nganSach.value),
+            Number(
+                nganSach?.value
+            ),
 
         nguyenLieu:
-            nguyenLieu.value.trim(),
+            nguyenLieu?.value.trim() || '',
 
         cachLam:
-            cachLam.value.trim()
+            cachLam?.value.trim() || ''
     };
 };
 
 
-/* ================================
-   HIỂN THỊ THÔNG BÁO
-   ================================ */
+/* =========================================================
+   29. HIỂN THỊ THÔNG BÁO
+   ========================================================= */
 
 const hienThiThongBao = (
     noiDung,
     laLoi = false
 ) => {
 
+    if (
+        formDangBai === null
+    ) {
+        return;
+    }
+
     let thongBao =
-        document.querySelector(
+        formDangBai.querySelector(
             '.thong-bao-dang-bai'
         );
 
-    if (thongBao === null) {
+    if (
+        thongBao === null
+    ) {
 
         thongBao =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBao.className =
             'thong-bao-dang-bai';
 
-        formDangBai.appendChild(
+        thongBao.setAttribute(
+            'aria-live',
+            'polite'
+        );
+
+        formDangBai.prepend(
             thongBao
         );
     }
@@ -882,11 +1449,15 @@ const hienThiThongBao = (
 };
 
 
-/* ================================
-   SỰ KIỆN GỬI FORM
-   ================================ */
+/* =========================================================
+   30. XỬ LÝ GỬI FORM
+   ========================================================= */
 
-if (formDangBai !== null) {
+if (
+    formDangBai !== null
+    &&
+    nguoiDungHienTai !== null
+) {
 
     formDangBai.addEventListener(
         'submit',
@@ -897,31 +1468,30 @@ if (formDangBai !== null) {
             const hopLe =
                 kiemTraBieuMau();
 
-            if (hopLe === false) {
+            if (
+                hopLe === false
+            ) {
+
+                hienThiThongBao(
+                    'Vui lòng kiểm tra lại các trường thông tin.',
+                    true
+                );
+
                 return;
             }
 
-            const nutDangBai =
-                formDangBai.querySelector(
-                    '.nut-dang-bai'
-                );
+            if (
+                nutDangBai !== null
+            ) {
 
-            if (nutDangBai !== null) {
+                nutDangBai.disabled =
+                    true;
 
-                nutDangBai.disabled = true;
-
-                if (dangSua === true) {
-
-                    nutDangBai.textContent =
-                        'Đang lưu...';
-
-                } else {
-
-                    nutDangBai.textContent =
-                        'Đang đăng...';
-                }
+                nutDangBai.textContent =
+                    dangSua
+                        ? 'Đang lưu...'
+                        : 'Đang đăng...';
             }
-
 
             try {
 
@@ -929,27 +1499,59 @@ if (formDangBai !== null) {
                     taoDuLieuBaiViet();
 
 
-                /* ================================
+                /* =========================================
                    CHẾ ĐỘ SỬA
-                   ================================ */
+                   ========================================= */
 
-                if (dangSua === true) {
+                if (
+                    dangSua
+                ) {
+
+                    let hinhAnhCapNhat =
+                        danhSachHinhAnhCu;
+
+                    /*
+                     * Nếu người dùng chọn ảnh mới,
+                     * ảnh mới thay thế ảnh cũ.
+                     */
+                    if (
+                        danhSachHinhAnh.length > 0
+                    ) {
+
+                        hinhAnhCapNhat =
+                            await chuyenHinhAnhThanhDataUrl(
+                                danhSachHinhAnh
+                            );
+                    }
+
+                    const duLieuCapNhat = {
+
+                        ...duLieuBaiViet,
+
+                        hinhAnh:
+                            hinhAnhCapNhat,
+
+                        soLuongHinhAnh:
+                            hinhAnhCapNhat.length,
+
+                        ngayCapNhat:
+                            new Date().toISOString()
+                    };
 
                     const thanhCong =
                         capNhatBaiViet(
                             idBaiViet,
                             nguoiDungHienTai.id,
-                            duLieuBaiViet
+                            duLieuCapNhat
                         );
 
-                    if (thanhCong === false) {
+                    if (
+                        thanhCong === false
+                    ) {
 
-                        hienThiThongBao(
-                            'Không thể cập nhật bài viết.',
-                            true
+                        throw new Error(
+                            'Không thể cập nhật bài viết.'
                         );
-
-                        return;
                     }
 
                     window.alert(
@@ -963,40 +1565,48 @@ if (formDangBai !== null) {
                 }
 
 
-                /* ================================
+                /* =========================================
                    CHẾ ĐỘ ĐĂNG BÀI MỚI
-                   ================================ */
+                   ========================================= */
 
                 const danhSachDataUrl =
-    await chuyenHinhAnhThanhDataUrl(
-        danhSachHinhAnh
-    );
+                    await chuyenHinhAnhThanhDataUrl(
+                        danhSachHinhAnh
+                    );
 
-const baiVietMoi = {
+                const baiVietMoi = {
 
-    id:
-        `bai-viet-${Date.now()}`,
+                    id:
+                        `bai-viet-${Date.now()}`,
 
-    userId:
-        nguoiDungHienTai.id,
+                    userId:
+                        nguoiDungHienTai.id,
 
-    ...duLieuBaiViet,
+                    ...duLieuBaiViet,
 
-    hinhAnh:
-        danhSachDataUrl,
+                    hinhAnh:
+                        danhSachDataUrl,
 
-    soLuongHinhAnh:
-        danhSachDataUrl.length,
+                    soLuongHinhAnh:
+                        danhSachDataUrl.length,
 
-    ngayDang:
-        new Date().toISOString()
-};
+                    ngayDang:
+                        new Date().toISOString()
+                };
 
+                const baiVietDaThem =
+                    themBaiViet(
+                        baiVietMoi
+                    );
 
-                themBaiViet(
-                    baiVietMoi
-                );
+                if (
+                    baiVietDaThem === null
+                ) {
 
+                    throw new Error(
+                        'Không thể lưu bài viết.'
+                    );
+                }
 
                 window.alert(
                     'Đăng bài viết thành công.'
@@ -1008,32 +1618,30 @@ const baiVietMoi = {
             } catch (error) {
 
                 console.error(
-                    'Lỗi đăng bài:',
+                    'Lỗi xử lý bài viết:',
                     error
                 );
 
                 hienThiThongBao(
-                    'Không thể đăng bài viết. Vui lòng thử lại.',
+                    dangSua
+                        ? 'Không thể cập nhật bài viết. Vui lòng thử lại.'
+                        : 'Không thể đăng bài viết. Vui lòng thử lại.',
                     true
                 );
 
             } finally {
 
-                if (nutDangBai !== null) {
+                if (
+                    nutDangBai !== null
+                ) {
 
                     nutDangBai.disabled =
                         false;
 
-                    if (dangSua === true) {
-
-                        nutDangBai.textContent =
-                            'Lưu thay đổi';
-
-                    } else {
-
-                        nutDangBai.textContent =
-                            'Đăng bài viết';
-                    }
+                    nutDangBai.textContent =
+                        dangSua
+                            ? 'Lưu thay đổi'
+                            : 'Đăng bài viết';
                 }
             }
         }
@@ -1041,41 +1649,31 @@ const baiVietMoi = {
 }
 
 
-/* ================================
-   KHỞI TẠO CHẾ ĐỘ TRANG
-   ================================ */
-
-const baiVietCanSua =
-    layBaiVietCanSua();
-
-
-/* ================================
-   KIỂM TRA QUYỀN SỬA
-   ================================ */
+/* =========================================================
+   31. KHỞI TẠO TRANG
+   ========================================================= */
 
 if (
-    dangSua === true
-    && (
-        baiVietCanSua === null
-        || baiVietCanSua.userId !== nguoiDungHienTai.id
-    )
+    nguoiDungHienTai !== null
 ) {
 
-    window.alert(
-        'Bạn không có quyền sửa bài viết này.'
-    );
+    capNhatThongTinNguoiDang();
 
-    window.location.href =
-        'ca-nhan.html';
+    if (
+        dangSua
+        &&
+        baiVietCanSua !== null
+    ) {
+
+        thietLapCheDoSua();
+
+        dienDuLieuBaiViet(
+            baiVietCanSua
+        );
+
+    } else {
+
+        document.title =
+            'Đăng bài viết | Cook with me';
+    }
 }
-
-
-/* ================================
-   HIỂN THỊ CHẾ ĐỘ SỬA
-   ================================ */
-
-thietLapCheDoSua();
-
-dienDuLieuBaiViet(
-    baiVietCanSua
-);

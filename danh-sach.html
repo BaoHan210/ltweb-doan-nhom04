@@ -134,71 +134,130 @@
 
     <div class="khu-vuc-yeu-thich">
 
-  <span class="nhan-yeu-thich">
-    Yêu thích
-  </span>
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
 
-  <span
-  class="so-luong-yeu-thich"
-  role="status"
-  aria-label="Số món ăn yêu thích"
->
-  0
-</span>
+      <span
+        class="so-luong-yeu-thich"
+        role="status"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
 
-</div>
+    </div>
 
   </nav>
 
 
   <main class="kham-pha">
 
+    <!-- 1. TIÊU ĐỀ TRANG KHÁM PHÁ NẰM TRÊN CÙNG -->
+    <div class="tieu-de-danh-sach">
+      <div>
+        <p class="nhan-danh-sach">Khám phá</p>
+        <h1 id="tieu-de-mon-an">Món ăn</h1>
+      </div>
+    </div>
+
+
+    <!-- 2. HERO BANNER "TỦ LẠNH CỦA TÔI" -->
+    <section class="hero-kham-pha">
+
+      <div class="hero-kham-pha-icon-trai">
+        <img
+          src="images/icons/fridge.svg"
+          alt="Tủ lạnh"
+          width="60"
+          height="60"
+        >
+      </div>
+
+      <div class="hero-kham-pha-noi-dung">
+        <p class="hero-kham-pha-nhan">
+          Tủ lạnh của tôi
+        </p>
+
+        <h2>
+          Hôm nay ăn gì?
+        </h2>
+
+        <p>
+          Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!
+        </p>
+      </div>
+
+      <div class="hero-kham-pha-icon-phai">
+        <img
+          src="images/basket-vegetables.svg"
+          alt="Rau củ tươi"
+          width="160"
+          height="120"
+        >
+      </div>
+
+    </section>
+
+
+    <!-- KHU VỰC BỘ LỌC VÀ TÌM KIẾM MÓN ĂN -->
     <section
       class="khu-vuc-danh-sach-mon-an"
       aria-labelledby="tieu-de-mon-an"
     >
 
-      <div class="tieu-de-danh-sach">
+      <!-- THANH CÔNG CỤ BAO GỒM TÌM KIẾM, LỌC VÀ SẮP XẾP DUY NHẤT -->
+      <div class="thanh-cong-cu-mon-an">
 
-        <div>
+        <!-- Hàng trên: Ô Tìm kiếm bên trái + Ô Sắp xếp bên phải -->
+        <div class="hang-tim-kiem-bo-loc">
 
-          <p class="nhan-danh-sach">
-            Khám phá
-          </p>
+          <form
+            class="o-tim-mon-an"
+            id="o-tim-mon-an"
+            action="danh-sach.html"
+            method="get"
+            onsubmit="event.preventDefault();"
+          >
 
-          <h1 id="tieu-de-mon-an">
-            Món ăn
-          </h1>
+            <label for="tim-mon-an">
+              Tìm món ăn
+            </label>
+
+            <input
+              type="search"
+              id="tim-mon-an"
+              name="keyword"
+              placeholder="Tìm món ăn..."
+              autocomplete="off"
+            >
+
+          </form>
+
+
+          <div class="khu-vuc-sap-xep">
+
+            <label for="sap-xep">
+              Sắp xếp
+            </label>
+
+            <select
+              id="sap-xep"
+              name="sapXep"
+            >
+              <option value="">Mặc định</option>
+              <option value="danhGiaGiam">Đánh giá cao nhất</option>
+              <option value="thoiGianTang">Thời gian ngắn nhất</option>
+              <option value="nganSachTang">Ngân sách thấp nhất</option>
+              <option value="tenTang">Tên A → Z</option>
+            </select>
+
+          </div>
 
         </div>
 
 
-        <form
-          class="o-tim-mon-an"
-          id="o-tim-mon-an"
-          action="danh-sach.html"
-          method="get"
-        >
-
-          <label for="tim-mon-an">
-            Tìm món ăn
-          </label>
-
-          <input
-            type="search"
-            id="tim-mon-an"
-            name="keyword"
-            placeholder="Tìm món ăn..."
-            autocomplete="off"
-          >
-
-        </form>
-
-      </div>
-
-
-      <div class="thanh-cong-cu-mon-an">
-
+        <!-- Hàng dưới: Thanh các nút bấm lọc theo Danh mục -->
         <nav
           class="bo-loc-mon-an"
           aria-label="Lọc món ăn"
@@ -212,7 +271,6 @@
             Tất cả
           </button>
 
-
           <button
             class="nut-bo-loc"
             type="button"
@@ -220,7 +278,6 @@
           >
             Món chính
           </button>
-
 
           <button
             class="nut-bo-loc"
@@ -230,24 +287,21 @@
             Món canh
           </button>
 
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món xào"
+          >
+            Món xào
+          </button>
 
           <button
             class="nut-bo-loc"
             type="button"
-            data-danh-muc="Món khai vị"
+            data-danh-muc="Món ăn vặt"
           >
-            Món khai vị
+            Món ăn vặt
           </button>
-
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món rau"
-          >
-            Món rau
-          </button>
-
 
           <button
             class="nut-bo-loc"
@@ -257,6 +311,13 @@
             Đồ uống
           </button>
 
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món nhanh"
+          >
+            Món nhanh
+          </button>
 
           <button
             class="nut-bo-loc"
@@ -265,7 +326,6 @@
           >
             Món tráng miệng
           </button>
-
 
           <button
             class="nut-bo-loc"
@@ -277,45 +337,10 @@
 
         </nav>
 
-
-        <div class="khu-vuc-sap-xep">
-
-          <label for="sap-xep">
-            Sắp xếp
-          </label>
-
-          <select
-            id="sap-xep"
-            name="sapXep"
-          >
-
-            <option value="">
-              Mặc định
-            </option>
-
-            <option value="danhGiaGiam">
-              Đánh giá cao nhất
-            </option>
-
-            <option value="thoiGianTang">
-              Thời gian ngắn nhất
-            </option>
-
-            <option value="nganSachTang">
-              Ngân sách thấp nhất
-            </option>
-
-            <option value="tenTang">
-              Tên A → Z
-            </option>
-
-          </select>
-
-        </div>
-
       </div>
 
 
+      <!-- Kết quả danh sách món ăn -->
       <section
         class="khu-vuc-ket-qua"
         aria-labelledby="tieu-de-ket-qua"
@@ -337,26 +362,30 @@
         </div>
 
 
-        <div class="danh-sach-mon-an"
-            id="danh-sach-mon-an"
-            aria-live="polite"
+        <div
+          class="danh-sach-mon-an"
+          id="danh-sach-mon-an"
+          aria-live="polite"
         >
-
           <p class="thong-bao-dang-tai">
             Đang tải món ăn...
           </p>
-
-          <noscript>
-            <p>
-              Danh sách món ăn và chức năng tìm kiếm cần JavaScript để hoạt động.
-            </p>
-          </noscript>
-
         </div>
 
       </section>
 
 
+      <!-- Thông báo khi JavaScript bị tắt -->
+      <noscript>
+
+        <p class="thong-bao-noscript">
+          JavaScript đang được tắt. Danh sách món ăn, tìm kiếm, lọc và sắp xếp động không thể được tải đầy đủ.
+        </p>
+
+      </noscript>
+
+
+      <!-- Phân trang -->
       <nav
         class="phan-trang"
         id="phan-trang"

@@ -147,19 +147,16 @@
 
 
 /* =========================================================
-   BANNER TỦ LẠNH
+   KHỐI GỢI Ý MÓN ĂN API (THAY CHO BANNER TỦ LẠNH)
    ========================================================= */
 
-.trang-trang-chu .khu-vuc-trang-chu .banner-tu-lanh {
+.trang-trang-chu .khu-vuc-trang-chu .du-lieu-api {
     grid-column: 1;
     grid-row: auto;
-
     width: 100%;
     min-width: 0;
-
     margin: 0;
 }
-
 
 /* =========================================================
    MÓN ĂN NỔI BẬT
@@ -227,154 +224,6 @@
     border: 0;
 }
 
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 992px) {
-
-    .trang-trang-chu > .noi-dung-trang {
-
-        grid-template-columns: minmax(0, 1fr);
-
-        grid-template-areas:
-            "tieude"
-            "hero"
-            "gioi-thieu"
-            "khu-vuc"
-            "bang-tin";
-
-        gap: 20px;
-
-        padding: 18px 24px 24px;
-    }
-
-
-    /* -----------------------------------------
-       Khu vực 3 khối chính
-       ----------------------------------------- */
-
-    .trang-trang-chu .khu-vuc-trang-chu {
-
-        grid-template-columns:
-            minmax(0, 1fr)
-            minmax(0, 360px);
-
-        grid-template-rows:
-            auto
-            auto;
-
-        column-gap: 20px;
-        row-gap: 20px;
-
-        align-items: stretch;
-    }
-
-
-    /* -----------------------------------------
-       Banner Tủ lạnh
-       Cột trái + trải dài 2 hàng
-       ----------------------------------------- */
-
-    .trang-trang-chu .khu-vuc-trang-chu .banner-tu-lanh {
-
-        grid-column: 1;
-        grid-row: 1 / span 2;
-
-        height: 100%;
-        min-height: 0;
-
-        box-sizing: border-box;
-    }
-
-
-    /* -----------------------------------------
-       Món ăn nổi bật
-       Cột phải - hàng 1
-       ----------------------------------------- */
-
-    .trang-trang-chu .khu-vuc-trang-chu .mon-noi-bat {
-
-        grid-column: 2;
-        grid-row: 1;
-
-        width: 100%;
-        min-width: 0;
-    }
-
-
-    /* -----------------------------------------
-       Gợi ý người theo dõi
-       Cột phải - hàng 2
-       ----------------------------------------- */
-
-    .trang-trang-chu .khu-vuc-trang-chu .goi-y-theo-doi {
-
-        grid-column: 2;
-        grid-row: 2;
-
-        width: 100%;
-        min-width: 0;
-    }
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (min-width: 768px) and (max-width: 991px) {
-
-    .trang-trang-chu > .noi-dung-trang {
-        padding: 16px;
-    }
-
-
-    .trang-trang-chu .khu-vuc-trang-chu {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-
-    .trang-trang-chu .the-gioi-thieu-item {
-        flex: 1 1 calc(33.333% - 16px);
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 767px) {
-
-    .trang-trang-chu > .noi-dung-trang {
-        padding: 10px;
-    }
-
-
-    .trang-trang-chu .khu-vuc-trang-chu {
-        grid-template-columns: 1fr;
-
-        gap: 16px;
-    }
-
-
-    .trang-trang-chu .khu-vuc-trang-chu .banner-tu-lanh,
-    .trang-trang-chu .khu-vuc-trang-chu .mon-noi-bat,
-    .trang-trang-chu .khu-vuc-trang-chu .goi-y-theo-doi {
-        grid-column: 1;
-        grid-row: auto;
-
-        width: 100%;
-    }
-
-
-    .trang-trang-chu .bang-tin {
-        width: 100%;
-    }
-}
-
 /* =========================================================
    TRANG KHÁM PHÁ - GIAO DIỆN MỚI
    Bố cục giữ nguyên cấu trúc semantic hiện có.
@@ -419,11 +268,6 @@
     }
 }
 
-
-/* =========================================================
-   3. TRANG CHI TIẾT MÓN ĂN
-   ========================================================= */
-
 /* ==============================
    4. TRANG CHI TIẾT CÔNG THỨC
    ============================== */
@@ -446,11 +290,14 @@
 
 
 /* Một công thức */
+/* =========================================================
+   BỐ CỤC CHUẨN DÙNG CHUNG CHO TRANG CHI TIẾT MÓN ĂN
+   ========================================================= */
+
+/* Bố cục Mobile (< 768px) */
 .chi-tiet-mon-an {
     display: grid;
-
     grid-template-columns: 1fr;
-
     grid-template-areas:
         "tieude"
         "anh"
@@ -459,171 +306,37 @@
         "nguyen"
         "cach"
         "video";
-
-    align-items: start;
-
-    gap: 12px;
-
+    gap: 16px;
     padding: 12px;
-
-    min-width: 0;
-
-    scroll-margin-top: 20px;
+    align-items: start;
 }
 
+/* Định danh các khu vực theo grid-area */
+.chi-tiet-mon-an > .tieu-de-mon-an     { grid-area: tieude; }
+.chi-tiet-mon-an > .hinh-anh-mon-an    { grid-area: anh; }
+.chi-tiet-mon-an > .thong-tin-bai-chia-se { grid-area: chia; }
+.chi-tiet-mon-an > .thong-tin-cong-thuc { grid-area: congthuc; }
+.chi-tiet-mon-an > .nguyen-lieu        { grid-area: nguyen; }
+.chi-tiet-mon-an > .cach-thuc-hien     { grid-area: cach; }
+.chi-tiet-mon-an > .video-huong-dan    { grid-area: video; }
 
-/* Các khu vực */
-.chi-tiet-mon-an > .tieu-de-mon-an {
-    grid-area: tieude;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .thong-tin-bai-chia-se {
-    grid-area: chia;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .hinh-anh-mon-an {
-    grid-area: anh;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .thong-tin-cong-thuc {
-    grid-area: congthuc;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .nguyen-lieu {
-    grid-area: nguyen;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .cach-thuc-hien {
-    grid-area: cach;
-
-    min-width: 0;
-}
-
-
-.chi-tiet-mon-an > .video-huong-dan {
-    grid-area: video;
-
-    min-width: 0;
-}
-
-
-/* Các món tiếp theo */
-.chi-tiet-mon-an + .chi-tiet-mon-an {
-    margin-top: 20px;
-}
-
-    /* ==========================
-       Chi tiết
-       ========================== */
-
-    .chi-tiet-trang {
-        padding: 20px;
-    }
-
-
-    .chi-tiet-mon-an {
-        grid-template-columns:
-            minmax(0, 1fr)
-            minmax(0, 1fr);
-
-        grid-template-areas:
-            "anh tieude"
-            "anh chia"
-            "nguyen congthuc"
-            "nguyen cach"
-            "nguyen video";
-
-        gap: 16px;
-
-        padding: 16px;
-    }
-
-/* =========================================================
-   CHI TIẾT MÓN ĂN - V2
-   - Đưa metadata Cao lầu xuống ngay dưới Người chia sẻ.
-   - Giữ nguyên cấu trúc HTML, chỉ thay đổi bố cục bằng CSS.
-   - Ảnh 4 món dùng cùng khung 550 x 350 như ảnh Cao lầu.
-   ========================================================= */
+/* Bố cục Màn hình lớn (Desktop >= 768px) */
 @media (min-width: 768px) {
-    .chi-tiet-mon-an.mon-cao-lau {
-        grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    .chi-tiet-mon-an {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         grid-template-areas:
             "tieude tieude"
             "anh chia"
             "anh congthuc"
             "nguyen cach"
             "video video";
-        align-items: start;
+        gap: 20px;
+        padding: 20px;
     }
 
-    .chi-tiet-mon-an.mon-cao-lau > .hinh-anh-mon-an {
-        grid-column: 1;
-        grid-row: 2 / 4;
-    }
-
-    .chi-tiet-mon-an.mon-cao-lau > .thong-tin-bai-chia-se {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .chi-tiet-mon-an.mon-cao-lau > .thong-tin-cong-thuc {
-        grid-column: 2;
-        grid-row: 3;
-    }
-
-    .chi-tiet-mon-an.mon-cao-lau > .nguyen-lieu {
-        grid-column: 1;
-        grid-row: 4;
-    }
-
-    .chi-tiet-mon-an.mon-cao-lau > .cach-thuc-hien {
-        grid-column: 2;
-        grid-row: 4;
-    }
-
-    .chi-tiet-mon-an.mon-cao-lau > .video-huong-dan {
-        grid-column: 1 / -1;
-        grid-row: 5;
-    }
-}
-
-@media (min-width: 768px) {
-    .chi-tiet-mon-an .hinh-anh-mon-an img,
-    .chi-tiet-mon-an .thong-tin-cong-thuc figure img {
+    .chi-tiet-mon-an .hinh-anh-mon-an img {
         width: 100%;
         height: 350px;
-        aspect-ratio: 550 / 350;
-        object-fit: cover;
-    }
-
-    .chi-tiet-mon-an .thong-tin-cong-thuc figure {
-        width: 100%;
-        max-width: 550px;
-        margin-inline: auto;
-    }
-}
-
-@media (max-width: 767px) {
-    .chi-tiet-mon-an .hinh-anh-mon-an img,
-    .chi-tiet-mon-an .thong-tin-cong-thuc figure img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 550 / 350;
         object-fit: cover;
     }
 }
@@ -940,212 +653,74 @@
     }
 }
 
-
 /* =========================================================
-   6. TRANG LIÊN HỆ
+   BỐ CỤC CHUẨN TRANG LIÊN HỆ (THEO MẪU PHOTO)
    ========================================================= */
-
-/* ==============================
-   7. TRANG LIÊN HỆ
-   ============================== */
 
 .lien-he-trang {
-    min-width: 0;
-
-    padding: 12px 0;
+    padding: 20px 24px 40px;
+    color: var(--mau-chu);
 }
 
+/* Banner xanh lá nhạt đầu trang */
+.lien-he-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 100px;
+    padding: 20px 28px;
+    margin-bottom: 24px;
+    border: 1px solid #DDE8D8;
+    border-radius: 16px;
+    background-color: #F3F8F0;
+}
+
+.lien-he-banner-icon {
+    width: 52px;
+    height: 52px;
+    border: 2px solid var(--mau-chinh);
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-svg-banner {
+    width: 30px;
+    height: 30px;
+}
 
 .tieu-de-lien-he {
-    margin: 0 0 16px;
+    margin: 0 0 4px 0;
+    color: var(--mau-chu);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: 700;
 }
 
-
-.khu-vuc-lien-he {
-    min-width: 0;
-}
-
-
-.khu-vuc-lien-he > h2 {
-    margin: 0 0 6px;
-}
-
-
-.mo-ta-lien-he {
-    margin: 0 0 16px;
-}
-
-
-/* Form */
-.form-lien-he {
-    display: grid;
-
-    grid-template-columns: 1fr;
-
-    gap: 14px;
-
-    min-width: 0;
-}
-
-
-.thong-tin-nguoi-gui,
-.thong-tin-cong-thuc {
-    grid-column: 1;
-
-    grid-row: auto;
-
-    min-width: 0;
-}
-
-
-/* Nút */
-.hanh-dong-lien-he {
-    grid-column: 1;
-
-    display: flex;
-
-    justify-content: stretch;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
+.tieu-de-phu-lien-he {
     margin: 0;
+    color: var(--mau-chu-phu);
+    font-size: 14px;
 }
 
-
-.hanh-dong-lien-he .nut {
-    flex: 1 1 140px;
+/* Lưới 2 Cột: Form bên trái & Thông tin bên phải */
+.khu-vuc-lien-he {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
 }
 
-    /* ==========================
-       Liên hệ
-       ========================== */
-
-    .lien-he-trang {
-        padding: 16px;
-    }
-
-
-    .form-lien-he {
-        grid-template-columns:
-            minmax(0, 1fr)
-            minmax(0, 1fr);
-
-        gap: 16px;
-    }
-
-
-    .thong-tin-nguoi-gui {
-        grid-column: 1;
-
-        grid-row: 1;
-    }
-
-
-    .thong-tin-cong-thuc {
-        grid-column: 2;
-
-        grid-row: 1;
-    }
-
-
-    .hanh-dong-lien-he {
-        grid-column: 1 / -1;
-    }
-
-    /* ==========================
-       Liên hệ
-       ========================== */
-
-    .lien-he-trang {
-        padding: 20px;
-    }
-
-/* ==========================================================
-   LIÊN HỆ - BỐ CỤC THEO ẢNH MẪU
-   Chỉ dùng các phần tử semantic đã có trong HTML.
-   ========================================================== */
-
-@media (min-width: 992px) {
-    .trang-lien-he {
-        width: 100%;
-        max-width: none;
-        grid-template-areas:
-            "dau dau"
-            "menu chinh"
-            "chan chan";
-    }
-
-    .trang-lien-he > .lien-he-trang {
-        grid-area: chinh;
-        min-width: 0;
-        padding: 18px 24px 28px;
-    }
-
-    .trang-lien-he > footer {
-        grid-area: chan;
-    }
-
-    .trang-lien-he .khu-vuc-lien-he {
-        display: block;
-        max-width: 1080px;
-        margin: 0 auto;
-    }
-
-    .trang-lien-he .form-lien-he-giao-dien {
+@media (min-width: 850px) {
+    .khu-vuc-lien-he {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(270px, .78fr);
-        grid-template-rows: auto auto auto;
-        column-gap: 18px;
-        row-gap: 12px;
-        align-items: start;
-    }
-
-    .trang-lien-he .khung-nguoi-gui {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .trang-lien-he .khung-cong-thuc {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .trang-lien-he .nut-lien-he-giao-dien {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .trang-lien-he .form-lien-he-giao-dien::before {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-    }
-
-    .trang-lien-he .form-lien-he-giao-dien::after {
-        grid-column: 2;
-        grid-row: 3;
+        grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+        align-items: start; /* Giúp các card bên phải không bị kéo dài xuống dưới */
+        gap: 28px;
     }
 }
-
-@media (min-width: 1200px) {
-
-    .trang-lien-he > .lien-he-trang {
-        padding-left: 28px;
-        padding-right: 28px;
-    }
-}
-
-@media (max-width: 991px) {
-    .trang-lien-he > .lien-he-trang {
-        padding: 14px 16px 24px;
-    }
-}
-
-
-/* =========================================================
-   7. TRANG GIỚI THIỆU
-   ========================================================= */
 
 /* ==============================
    8. TRANG GIỚI THIỆU
@@ -1330,13 +905,6 @@
 }
 
 /* =========================================================
-   CHI TIẾT MÓN ĂN - V2
-   - Đưa metadata Cao lầu xuống ngay dưới Người chia sẻ.
-   - Giữ nguyên cấu trúc HTML, chỉ thay đổi bố cục bằng CSS.
-   - Ảnh 4 món dùng cùng khung 550 x 350 như ảnh Cao lầu.
-   ========================================================= */
-
-/* =========================================================
    8. HỒ SƠ THÀNH VIÊN
    ========================================================= */
 
@@ -1489,556 +1057,67 @@
         padding: 20px;
     }
 }
-/* ============================================================
-   BÀI 3 - TRANG CHI TIẾT MÓN ĂN
-   Bố cục theo mẫu giao diện Cook with me.
-   Header, menu và footer dùng chung nên không thay đổi.
-   ============================================================ */
-
-
-/* ==============================
-   Khung trang chi tiết
-   ============================== */
+/* =========================================================
+   CHI TIẾT MÓN ĂN - BỐ CỤC CHUẨN THEO ẢNH MẪU
+   ========================================================= */
 
 .chi-tiet-trang {
-    width: 100%;
-    min-width: 0;
-
-    padding: 18px 16px 32px;
-
-    overflow-x: clip;
+    padding: 20px 24px 40px;
 }
 
-
-/* Tiêu đề trang */
-
-.chi-tiet-trang > h1 {
-    margin: 0 0 20px;
-
-    text-align: left;
-
-    font-size: var(--co-chu-tieu-de);
-}
-
-
-/* ==============================
-   Khung nội dung món ăn
-   ============================== */
-
-.khung-chi-tiet {
-    width: 100%;
-    min-width: 0;
-}
-
-
-/* ==============================
-   Bố cục chính
-   ============================== */
-
-.khung-chi-tiet .chi-tiet-mon-an {
+.chi-tiet-mon-an {
     display: grid;
-
     grid-template-columns: 1fr;
-
-    grid-template-areas:
-        "anh"
-        "thongtin"
-        "nguyenlieu"
-        "cacbuoc"
-        "video";
-
-    gap: 18px;
-
-    min-width: 0;
+    gap: 20px;
 }
 
-
-/* ==============================
-   Khu vực hình ảnh
-   ============================== */
-
-.khu-vuc-hinh-anh {
-    grid-area: anh;
-
-    min-width: 0;
-}
-
-
-.hinh-anh-mon-an {
-    width: 100%;
-
-    margin: 0;
-
-    padding: 10px;
-
-    border: 1px solid var(--mau-vien);
-    border-radius: var(--bo-goc);
-
-    background-color: var(--mau-nen);
-}
-
-
-.hinh-anh-mon-an img {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    max-height: 350px;
-
-    object-fit: cover;
-
-    border-radius: var(--bo-goc);
-}
-
-
-.hinh-anh-mon-an figcaption {
-    margin-top: 6px;
-
-    text-align: center;
-
-    font-size: 11px;
-}
-
-
-/* ==============================
-   Thông tin món ăn
-   ============================== */
-
-.thong-tin-mon-an {
-    grid-area: thongtin;
-
-    min-width: 0;
-}
-
-
-.tieu-de-mon-an {
-    margin: 0 0 8px;
-
-    font-size: 18px;
-}
-
-
-.thong-tin-danh-gia {
-    display: flex;
-
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    gap: 6px;
-
-    margin-bottom: 8px;
-}
-
-
-.danh-gia {
-    letter-spacing: 1px;
-
-    font-size: 13px;
-}
-
-
-.so-luot-danh-gia {
-    font-size: 12px;
-}
-
-
-.thong-tin-co-ban {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 4px 14px;
-
-    margin-bottom: 10px;
-}
-
-
-.thong-tin-item {
-    display: flex;
-
-    gap: 4px;
-
-    font-size: 12px;
-}
-
-
-.thong-tin-item span::after {
-    content: ":";
-}
-
-
-.thong-tin-item strong {
-    font-weight: 600;
-}
-
-
-.mo-ta-mon-an {
-    margin-top: 8px;
-}
-
-
-.mo-ta-mon-an h3 {
-    margin: 0 0 5px;
-
-    font-size: 13px;
-}
-
-
-.mo-ta-mon-an p {
-    margin: 0;
-
-    line-height: 1.5;
-
-    font-size: 12px;
-}
-
-
-/* ==============================
-   Khu vực nút
-   ============================== */
-
-.khu-vuc-hanh-dong {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-top: 12px;
-}
-
-
-.khu-vuc-hanh-dong .nut {
-    padding: 6px 10px;
-
-    font-size: 11px;
-
-    cursor: pointer;
-}
-
-
-/* ==============================
-   Nguyên liệu + bình luận
-   ============================== */
-
-.khu-vuc-nguyen-lieu {
-    grid-area: nguyenlieu;
-
-    min-width: 0;
-}
-
-
-.khu-vuc-nguyen-lieu > h2,
-.khu-vuc-cac-buoc > h2,
-.video-huong-dan > h2 {
-    margin: 0 0 10px;
-
-    font-size: 14px;
-}
-
-
-.danh-sach-nguyen-lieu {
-    margin: 0;
-
-    padding-left: 20px;
-
-    font-size: 12px;
-}
-
-
-.danh-sach-nguyen-lieu li {
-    margin-bottom: 4px;
-}
-
-
-/* ==============================
-   Bình luận
-   Bình luận nằm bên trong Nguyên liệu
-   ============================== */
-
-.khu-vuc-nguyen-lieu .binh-luan {
-    margin-top: 18px;
-
-    padding-left: 0;
-}
-
-
-.khu-vuc-nguyen-lieu .binh-luan h3 {
-    margin: 0 0 6px;
-
-    text-align: center;
-
-    font-size: 14px;
-}
-
-
-.so-luong-binh-luan {
-    margin: 0 0 8px;
-
-    font-size: 11px;
-}
-
-
-.o-nhap-binh-luan {
-    display: grid;
-
-    grid-template-columns: auto 1fr auto;
-
-    align-items: end;
-
-    gap: 6px;
-
-    min-width: 0;
-}
-
-
-.o-nhap-binh-luan label {
-    font-size: 11px;
-}
-
-
-.o-nhap-binh-luan textarea {
-    width: 100%;
-    min-width: 0;
-
-    min-height: 55px;
-
-    padding: 6px;
-
-    resize: vertical;
-
-    font-family: inherit;
-
-    font-size: 11px;
-}
-
-
-.o-nhap-binh-luan .nut {
-    padding: 6px 9px;
-
-    font-size: 10px;
-
-    cursor: pointer;
-}
-
-
-/* ==============================
-   Các bước chế biến
-   ============================== */
-
-.khu-vuc-cac-buoc {
-    grid-area: cacbuoc;
-
-    min-width: 0;
-}
-
-
-.cac-buoc-che-bien {
-    margin: 0;
-
-    padding-left: 22px;
-
-    font-size: 12px;
-}
-
-
-.cac-buoc-che-bien li {
-    margin-bottom: 10px;
-
-    padding-left: 2px;
-}
-
-
-.cac-buoc-che-bien strong {
-    display: block;
-
-    margin-bottom: 4px;
-}
-
-
-.cac-buoc-che-bien p {
-    margin: 0;
-
-    line-height: 1.5;
-}
-
-
-/* ==============================
-   Video hướng dẫn
-   ============================== */
-
-.video-huong-dan {
-    grid-area: video;
-
-    min-width: 0;
-
-    padding: 12px;
-
-    border: 1px solid var(--mau-vien);
-
-    border-radius: var(--bo-goc);
-
-    background-color: var(--mau-nen);
-}
-
-
-.khung-video {
-    width: 100%;
-}
-
-
-.khung-video iframe {
-    display: block;
-
-    width: 100%;
-
-    max-width: 100%;
-
-    aspect-ratio: 16 / 9;
-
-    height: auto;
-
-    border: 0;
-
-    border-radius: var(--bo-goc);
-}
-
-
-/* ============================================================
-   TABLET + DESKTOP
-   ============================================================ */
-
-@media (min-width: 768px) {
-
-    .chi-tiet-trang {
-        padding: 20px 18px 36px;
-    }
-
-
-    .chi-tiet-trang > h1 {
-        margin-bottom: 22px;
-    }
-
-
-    .khung-chi-tiet .chi-tiet-mon-an {
-        grid-template-columns:
-            minmax(0, 1.05fr)
-            minmax(0, 1fr);
-
+@media (min-width: 850px) {
+    .chi-tiet-mon-an {
+        /* Chia 2 cột tỷ lệ 1:1 bằng nhau tuyệt đối */
+        grid-template-columns: repeat(2, minmax(0, 1fr)); 
         grid-template-areas:
             "anh thongtin"
-            "nguyenlieu cacbuoc"
-            "nguyenlieu video";
-
-        column-gap: 24px;
-
-        row-gap: 22px;
-
+            "cottrai cotphai";
+        gap: 24px;
         align-items: start;
     }
 
-
     .khu-vuc-hinh-anh {
-        align-self: start;
+        grid-area: anh;
+        width: 100%;
     }
-
-
-    .hinh-anh-mon-an {
-        padding: 10px;
-    }
-
-
-    .hinh-anh-mon-an img {
-        height: 175px;
-
-        max-height: none;
-    }
-
 
     .thong-tin-mon-an {
-        padding-top: 2px;
+        grid-area: thongtin;
+        width: 100%;
     }
 
-
-    .tieu-de-mon-an {
-        font-size: 16px;
+    .cot-trai-chi-tiet {
+        grid-area: cottrai;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
-
-    .khu-vuc-nguyen-lieu {
-        align-self: start;
-    }
-
-
-    .khu-vuc-cac-buoc {
-        align-self: start;
-    }
-
-
-    .video-huong-dan {
-        align-self: start;
+    .cot-phai-chi-tiet {
+        grid-area: cotphai;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 }
 
-
-/* ============================================================
-   DESKTOP LỚN
-   ============================================================ */
-
-@media (min-width: 992px) {
-
-    .chi-tiet-trang {
-        padding: 22px 22px 40px;
+/* Bố cục Grid cho trang Chi tiết món ăn */
+@media (min-width: 850px) {
+    .chi-tiet-mon-an {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
     }
 
-
-    .khung-chi-tiet .chi-tiet-mon-an {
-        grid-template-columns:
-            minmax(0, 1.05fr)
-            minmax(0, 1fr);
-
-        column-gap: 28px;
-
-        row-gap: 24px;
-    }
-
-
-    .hinh-anh-mon-an {
-        padding: 10px;
-    }
-
-
-    .hinh-anh-mon-an img {
-        height: 185px;
-    }
-}
-
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 767px) {
-
-    .thong-tin-co-ban {
-        grid-template-columns: 1fr;
-    }
-
-
-    .o-nhap-binh-luan {
-        grid-template-columns: 1fr;
-    }
-
-
-    .o-nhap-binh-luan label {
-        margin-bottom: -2px;
-    }
-
-
-    .o-nhap-binh-luan .nut {
-        justify-self: start;
+    .chi-tiet-mon-an > .tieu-de-mon-an,
+    .chi-tiet-mon-an > .thong-tin-cong-thuc {
+        grid-column: 1 / -1; /* Trải dài toàn bộ chiều rộng */
     }
 }
 
@@ -2239,5 +1318,234 @@
 
     .form-doi-mat-khau {
         padding: 16px;
+    }
+}
+
+/* =====================================================================
+   03-BO-CUC.CSS - BỐ CỤC KHUNG CHÍNH VÀ RESPONSIVE TOÀN TRANG
+   ===================================================================== */
+
+/* 1. KHÓA TRÀN NGANG TOÀN BỘ WEBSITE */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. CẤU TRÚC LƯỚI TRANG CHỦ */
+.trang-trang-chu > .noi-dung-trang {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "tieude"
+        "hero"
+        "gioi-thieu"
+        "khu-vuc"
+        "bang-tin";
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+}
+
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang { grid-area: tieude; }
+.trang-trang-chu > .noi-dung-trang > .hero { grid-area: hero; min-width: 0; }
+.trang-trang-chu > .noi-dung-trang > .the-gioi-thieu { grid-area: gioi-thieu; min-width: 0; }
+.trang-trang-chu > .noi-dung-trang > .bang-tin { grid-area: bang-tin; width: 100%; min-width: 0; }
+
+.trang-trang-chu .khu-vuc-trang-chu {
+    grid-area: khu-vuc;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* Tiêu đề H1 ẩn kỹ thuật */
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 3. DESKTOP (Màn hình lớn >= 992px) */
+@media (min-width: 992px) {
+    .trang-trang-chu > .noi-dung-trang {
+        gap: 20px;
+        padding: 18px 24px 24px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+        grid-template-rows: auto auto;
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .du-lieu-api {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .mon-noi-bat {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .goi-y-theo-doi {
+        grid-column: 2;
+        grid-row: 2;
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* 4. TABLET (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .trang-trang-chu > .noi-dung-trang {
+        padding: 16px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .trang-trang-chu .the-gioi-thieu-item {
+        flex: 1 1 calc(33.333% - 16px);
+    }
+}
+
+/* 5. MOBILE (< 767px) - KHÔNG TRÀN NGANG, BỐ CỤC ÔM KHÍT */
+/* =========================================================
+   FIX TRÀN 360PX BẰNG SELECTOR CHUẨN (SẠCH CODE, KHÔNG !IMPORTANT)
+   ========================================================= */
+@media (max-width: 767px) {
+
+    /* 1. Đảm bảo container chính thu khít 100% */
+    .trang-trang-chu > .noi-dung-trang {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 8px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* 2. Dùng selector cụ thể ép Header xếp thành hàng dọc */
+    .trang-trang-chu .dau-trang,
+    .dau-trang {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 8px;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    /* 3. Logo thương hiệu căn giữa xếp dọc */
+    .trang-trang-chu .thuong-hieu,
+    .thuong-hieu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .thuong-hieu .logo-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 2px;
+    }
+
+    .thuong-hieu .ten-website {
+        font-size: 22px;
+        line-height: 1.1;
+    }
+
+    .thuong-hieu .slogan {
+        font-size: 11px;
+    }
+
+    /* 4. Ô tìm kiếm phủ rộng 100% ở tầng dưới */
+    .trang-trang-chu .o-tim-kiem,
+    .o-tim-kiem {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        gap: 6px;
+        box-sizing: border-box;
+    }
+
+    /* Bắt buộc min-width: 0 để flexbox không đẩy phình ô input vượt quá 360px */
+    .trang-trang-chu .o-tim-kiem input[type="search"],
+    .o-tim-kiem input[type="search"] {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 12px;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+
+    .trang-trang-chu .o-tim-kiem .nut,
+    .o-tim-kiem .nut {
+        flex-shrink: 0;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* 5. Khóa phình lề cho Banner Hero */
+    .trang-trang-chu .hero {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px;
+        box-sizing: border-box;
+    }
+
+    .trang-trang-chu .hero h2 {
+        font-size: 22px;
+        word-break: break-word;
+    }
+}
+
+@media (max-width: 480px) {
+    .trang-trang-chu .mon-noi-bat {
+        grid-template-columns: 1fr;
+    }
+
+    .trang-trang-chu .mon-noi-bat .tieu-de-khu-vuc {
+        grid-column: auto;
+    }
+
+    .trang-trang-chu .goi-y-theo-doi .the-nguoi-dung {
+        grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    .trang-trang-chu .goi-y-theo-doi .the-nguoi-dung .nut {
+        grid-column: 2;
+        justify-self: start;
     }
 }

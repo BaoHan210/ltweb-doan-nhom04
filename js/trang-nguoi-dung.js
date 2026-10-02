@@ -4,10 +4,10 @@
  * Khám phá người dùng.
  */
 
-const KHOA_THEO_DOI = 'nguoiDungDangTheoDoi';
+const khoaTheoDoi = 'nguoiDungDangTheoDoi';
 
 const docDanhSachTheoDoi = () => {
-    const duLieu = localStorage.getItem(KHOA_THEO_DOI);
+    const duLieu = localStorage.getItem(khoaTheoDoi);
 
     if (duLieu === null) {
         return [];
@@ -28,7 +28,7 @@ const docDanhSachTheoDoi = () => {
 
 const luuDanhSachTheoDoi = (danhSach) => {
     localStorage.setItem(
-        KHOA_THEO_DOI,
+        khoaTheoDoi,
         JSON.stringify(danhSach)
     );
 };

@@ -10,6 +10,10 @@ import {
 } from './tai-khoan.js';
 
 
+/* =========================================================
+   1. LẤY CÁC PHẦN TỬ FORM
+   ========================================================= */
+
 const formDangKy =
     document.querySelector(
         '.form-dang-ky'
@@ -36,71 +40,115 @@ const xacNhanMatKhau =
     );
 
 
+/* =========================================================
+   2. HIỂN THỊ LỖI
+   ========================================================= */
+
 const hienThiLoi = (
     phanTu,
     noiDung
 ) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
+
 
     phanTu.classList.add(
         'truong-co-loi'
     );
 
+
     let thongBao =
-        phanTu.parentElement.querySelector(
+        phanTu.parentElement?.querySelector(
             '.thong-bao-loi-truong'
         );
 
-    if (thongBao === null) {
+
+    if (
+        thongBao === null
+    ) {
 
         thongBao =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBao.className =
             'thong-bao-loi-truong';
 
-        phanTu.parentElement.appendChild(
+        thongBao.setAttribute(
+            'role',
+            'alert'
+        );
+
+        phanTu.parentElement?.appendChild(
             thongBao
         );
     }
+
 
     thongBao.textContent =
         noiDung;
 };
 
 
+/* =========================================================
+   3. XÓA LỖI
+   ========================================================= */
+
 const xoaLoi = (
     phanTu
 ) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
+
 
     phanTu.classList.remove(
         'truong-co-loi'
     );
 
+
     const thongBao =
-        phanTu.parentElement.querySelector(
+        phanTu.parentElement?.querySelector(
             '.thong-bao-loi-truong'
         );
 
-    if (thongBao !== null) {
+
+    if (
+        thongBao !== null
+    ) {
         thongBao.remove();
     }
 };
 
 
+/* =========================================================
+   4. KIỂM TRA HỌ TÊN
+   ========================================================= */
+
 const kiemTraHoTen = () => {
+
+    if (
+        hoTen === null
+    ) {
+        return false;
+    }
+
 
     const giaTri =
         hoTen.value.trim();
 
-    if (giaTri === '') {
+
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             hoTen,
@@ -110,7 +158,10 @@ const kiemTraHoTen = () => {
         return false;
     }
 
-    if (giaTri.length < 2) {
+
+    if (
+        giaTri.length < 2
+    ) {
 
         hienThiLoi(
             hoTen,
@@ -120,21 +171,41 @@ const kiemTraHoTen = () => {
         return false;
     }
 
-    xoaLoi(hoTen);
+
+    xoaLoi(
+        hoTen
+    );
 
     return true;
 };
 
 
+/* =========================================================
+   5. KIỂM TRA EMAIL
+   ========================================================= */
+
 const kiemTraEmail = () => {
 
+    if (
+        email === null
+    ) {
+        return false;
+    }
+
+
     const giaTri =
-        email.value.trim();
+        email.value
+            .trim()
+            .toLowerCase();
+
 
     const mauEmail =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (giaTri === '') {
+
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             email,
@@ -144,8 +215,11 @@ const kiemTraEmail = () => {
         return false;
     }
 
+
     if (
-        mauEmail.test(giaTri) === false
+        mauEmail.test(
+            giaTri
+        ) === false
     ) {
 
         hienThiLoi(
@@ -156,18 +230,35 @@ const kiemTraEmail = () => {
         return false;
     }
 
-    xoaLoi(email);
+
+    xoaLoi(
+        email
+    );
 
     return true;
 };
 
 
+/* =========================================================
+   6. KIỂM TRA MẬT KHẨU
+   ========================================================= */
+
 const kiemTraMatKhau = () => {
+
+    if (
+        matKhau === null
+    ) {
+        return false;
+    }
+
 
     const giaTri =
         matKhau.value;
 
-    if (giaTri === '') {
+
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             matKhau,
@@ -177,7 +268,10 @@ const kiemTraMatKhau = () => {
         return false;
     }
 
-    if (giaTri.length < 6) {
+
+    if (
+        giaTri.length < 6
+    ) {
 
         hienThiLoi(
             matKhau,
@@ -187,13 +281,29 @@ const kiemTraMatKhau = () => {
         return false;
     }
 
-    xoaLoi(matKhau);
+
+    xoaLoi(
+        matKhau
+    );
 
     return true;
 };
 
 
+/* =========================================================
+   7. KIỂM TRA XÁC NHẬN MẬT KHẨU
+   ========================================================= */
+
 const kiemTraXacNhanMatKhau = () => {
+
+    if (
+        xacNhanMatKhau === null
+        ||
+        matKhau === null
+    ) {
+        return false;
+    }
+
 
     if (
         xacNhanMatKhau.value === ''
@@ -207,8 +317,10 @@ const kiemTraXacNhanMatKhau = () => {
         return false;
     }
 
+
     if (
-        xacNhanMatKhau.value !==
+        xacNhanMatKhau.value
+        !==
         matKhau.value
     ) {
 
@@ -220,37 +332,63 @@ const kiemTraXacNhanMatKhau = () => {
         return false;
     }
 
-    xoaLoi(xacNhanMatKhau);
+
+    xoaLoi(
+        xacNhanMatKhau
+    );
 
     return true;
 };
 
+
+/* =========================================================
+   8. HIỂN THỊ THÔNG BÁO CHUNG
+   ========================================================= */
 
 const hienThiThongBao = (
     noiDung,
     laLoi = false
 ) => {
 
+    if (
+        formDangKy === null
+    ) {
+        return;
+    }
+
+
     let thongBao =
-        document.querySelector(
+        formDangKy.querySelector(
             '.thong-bao-dang-ky'
         );
 
-    if (thongBao === null) {
+
+    if (
+        thongBao === null
+    ) {
 
         thongBao =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBao.className =
             'thong-bao-dang-ky';
+
+        thongBao.setAttribute(
+            'aria-live',
+            'polite'
+        );
 
         formDangKy.appendChild(
             thongBao
         );
     }
 
+
     thongBao.textContent =
         noiDung;
+
 
     thongBao.classList.toggle(
         'thong-bao-dang-ky-loi',
@@ -259,37 +397,79 @@ const hienThiThongBao = (
 };
 
 
+/* =========================================================
+   9. TẠO ID NGƯỜI DÙNG
+   ========================================================= */
+
 const taoIdNguoiDung = () => {
 
-    return `user-${Date.now()}`;
+    return (
+        `user-${Date.now()}`
+    );
 };
 
 
+/* =========================================================
+   10. ĐĂNG KÝ TÀI KHOẢN
+   ========================================================= */
+
 const dangKyTaiKhoan = () => {
 
+    if (
+        hoTen === null
+        ||
+        email === null
+        ||
+        matKhau === null
+    ) {
+        return false;
+    }
+
+
     const emailNguoiDung =
-        email.value.trim()
+        email.value
+            .trim()
             .toLowerCase();
 
+
+    /*
+     * Kiểm tra email đã tồn tại.
+     */
     const taiKhoanTonTai =
         timTaiKhoanTheoEmail(
             emailNguoiDung
         );
 
-    if (taiKhoanTonTai !== undefined) {
+
+    if (
+        taiKhoanTonTai !== undefined
+    ) {
+
+        hienThiLoi(
+            email,
+            'Email này đã được đăng ký.'
+        );
+
 
         hienThiThongBao(
-            'Email này đã được đăng ký.',
+            'Email này đã được đăng ký. Vui lòng sử dụng email khác.',
             true
         );
+
+
+        email.focus();
 
         return false;
     }
 
 
+    /*
+     * Tạo thông tin tài khoản.
+     */
     const taiKhoanMoi = {
 
-        id: taoIdNguoiDung(),
+        id:
+            taoIdNguoiDung(),
 
         hoTen:
             hoTen.value.trim(),
@@ -305,16 +485,115 @@ const dangKyTaiKhoan = () => {
     };
 
 
-    taoTaiKhoan(
-        taiKhoanMoi
-    );
+    /*
+     * Lưu tài khoản.
+     */
+    const taiKhoanDaTao =
+        taoTaiKhoan(
+            taiKhoanMoi
+        );
+
+
+    /*
+     * Không lưu được tài khoản.
+     */
+    if (
+        taiKhoanDaTao === null
+    ) {
+
+        hienThiThongBao(
+            'Không thể lưu tài khoản. Vui lòng thử lại.',
+            true
+        );
+
+        return false;
+    }
 
 
     return true;
 };
 
 
-if (formDangKy !== null) {
+/* =========================================================
+   11. GẮN KIỂM TRA KHI RỜI KHỎI TRƯỜNG
+   ========================================================= */
+
+if (
+    hoTen !== null
+) {
+
+    hoTen.addEventListener(
+        'blur',
+        kiemTraHoTen
+    );
+}
+
+
+if (
+    email !== null
+) {
+
+    email.addEventListener(
+        'blur',
+        kiemTraEmail
+    );
+}
+
+
+if (
+    matKhau !== null
+) {
+
+    matKhau.addEventListener(
+        'blur',
+        kiemTraMatKhau
+    );
+}
+
+
+if (
+    xacNhanMatKhau !== null
+) {
+
+    xacNhanMatKhau.addEventListener(
+        'blur',
+        kiemTraXacNhanMatKhau
+    );
+}
+
+
+/*
+ * Khi mật khẩu thay đổi,
+ * kiểm tra lại phần xác nhận nếu người dùng
+ * đã nhập trước đó.
+ */
+if (
+    matKhau !== null
+    &&
+    xacNhanMatKhau !== null
+) {
+
+    matKhau.addEventListener(
+        'input',
+        () => {
+
+            if (
+                xacNhanMatKhau.value !== ''
+            ) {
+                kiemTraXacNhanMatKhau();
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   12. XỬ LÝ SUBMIT
+   ========================================================= */
+
+if (
+    formDangKy !== null
+) {
 
     formDangKy.addEventListener(
         'submit',
@@ -323,6 +602,9 @@ if (formDangKy !== null) {
             event.preventDefault();
 
 
+            /*
+             * Kiểm tra toàn bộ trường.
+             */
             const hopLeHoTen =
                 kiemTraHoTen();
 
@@ -338,14 +620,26 @@ if (formDangKy !== null) {
 
             if (
                 hopLeHoTen === false
-                || hopLeEmail === false
-                || hopLeMatKhau === false
-                || hopLeXacNhan === false
+                ||
+                hopLeEmail === false
+                ||
+                hopLeMatKhau === false
+                ||
+                hopLeXacNhan === false
             ) {
+
+                hienThiThongBao(
+                    'Vui lòng kiểm tra lại thông tin đăng ký.',
+                    true
+                );
+
                 return;
             }
 
 
+            /*
+             * Tạo tài khoản.
+             */
             const dangKyThanhCong =
                 dangKyTaiKhoan();
 
@@ -357,12 +651,49 @@ if (formDangKy !== null) {
             }
 
 
+            /*
+             * Thông báo thành công.
+             */
             hienThiThongBao(
                 'Đăng ký tài khoản thành công.'
             );
 
 
+            /*
+             * Xóa dữ liệu form.
+             */
             formDangKy.reset();
+
+
+            /*
+             * Xóa trạng thái lỗi còn sót lại.
+             */
+            xoaLoi(
+                hoTen
+            );
+
+            xoaLoi(
+                email
+            );
+
+            xoaLoi(
+                matKhau
+            );
+
+            xoaLoi(
+                xacNhanMatKhau
+            );
+
+
+            /*
+             * Đưa con trỏ về ô họ tên
+             * để người dùng có thể tiếp tục thao tác.
+             */
+            if (
+                hoTen !== null
+            ) {
+                hoTen.focus();
+            }
         }
     );
 }

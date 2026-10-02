@@ -9,6 +9,10 @@ import {
 } from './tai-khoan.js';
 
 
+/* =========================================================
+   1. LẤY CÁC PHẦN TỬ TRONG FORM
+   ========================================================= */
+
 const formDangNhap =
     document.querySelector(
         '.form-dang-nhap'
@@ -25,74 +29,122 @@ const matKhau =
     );
 
 
+/* =========================================================
+   2. HIỂN THỊ LỖI CHO TỪNG TRƯỜNG
+   ========================================================= */
+
 const hienThiLoi = (
     phanTu,
     noiDung
 ) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
+
 
     phanTu.classList.add(
         'truong-co-loi'
     );
 
+
     let thongBao =
-        phanTu.parentElement.querySelector(
+        phanTu.parentElement?.querySelector(
             '.thong-bao-loi-truong'
         );
 
-    if (thongBao === null) {
+
+    if (
+        thongBao === null
+    ) {
 
         thongBao =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBao.className =
             'thong-bao-loi-truong';
 
-        phanTu.parentElement.appendChild(
+        thongBao.setAttribute(
+            'role',
+            'alert'
+        );
+
+
+        phanTu.parentElement?.appendChild(
             thongBao
         );
     }
+
 
     thongBao.textContent =
         noiDung;
 };
 
 
+/* =========================================================
+   3. XÓA LỖI
+   ========================================================= */
+
 const xoaLoi = (
     phanTu
 ) => {
 
-    if (phanTu === null) {
+    if (
+        phanTu === null
+    ) {
         return;
     }
+
 
     phanTu.classList.remove(
         'truong-co-loi'
     );
 
+
     const thongBao =
-        phanTu.parentElement.querySelector(
+        phanTu.parentElement?.querySelector(
             '.thong-bao-loi-truong'
         );
 
-    if (thongBao !== null) {
+
+    if (
+        thongBao !== null
+    ) {
         thongBao.remove();
     }
 };
 
 
+/* =========================================================
+   4. KIỂM TRA EMAIL
+   ========================================================= */
+
 const kiemTraEmail = () => {
 
+    if (
+        email === null
+    ) {
+        return false;
+    }
+
+
     const giaTri =
-        email.value.trim();
+        email.value
+            .trim()
+            .toLowerCase();
+
 
     const mauEmail =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (giaTri === '') {
+
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             email,
@@ -102,8 +154,11 @@ const kiemTraEmail = () => {
         return false;
     }
 
+
     if (
-        mauEmail.test(giaTri) === false
+        mauEmail.test(
+            giaTri
+        ) === false
     ) {
 
         hienThiLoi(
@@ -114,15 +169,35 @@ const kiemTraEmail = () => {
         return false;
     }
 
-    xoaLoi(email);
+
+    xoaLoi(
+        email
+    );
 
     return true;
 };
 
 
+/* =========================================================
+   5. KIỂM TRA MẬT KHẨU
+   ========================================================= */
+
 const kiemTraMatKhau = () => {
 
-    if (matKhau.value === '') {
+    if (
+        matKhau === null
+    ) {
+        return false;
+    }
+
+
+    const giaTri =
+        matKhau.value;
+
+
+    if (
+        giaTri === ''
+    ) {
 
         hienThiLoi(
             matKhau,
@@ -132,37 +207,64 @@ const kiemTraMatKhau = () => {
         return false;
     }
 
-    xoaLoi(matKhau);
+
+    xoaLoi(
+        matKhau
+    );
 
     return true;
 };
 
+
+/* =========================================================
+   6. HIỂN THỊ THÔNG BÁO CHUNG
+   ========================================================= */
 
 const hienThiThongBao = (
     noiDung,
     laLoi = false
 ) => {
 
+    if (
+        formDangNhap === null
+    ) {
+        return;
+    }
+
+
     let thongBao =
-        document.querySelector(
+        formDangNhap.querySelector(
             '.thong-bao-dang-nhap'
         );
 
-    if (thongBao === null) {
+
+    if (
+        thongBao === null
+    ) {
 
         thongBao =
-            document.createElement('p');
+            document.createElement(
+                'p'
+            );
 
         thongBao.className =
             'thong-bao-dang-nhap';
+
+        thongBao.setAttribute(
+            'aria-live',
+            'polite'
+        );
+
 
         formDangNhap.appendChild(
             thongBao
         );
     }
 
+
     thongBao.textContent =
         noiDung;
+
 
     thongBao.classList.toggle(
         'thong-bao-dang-nhap-loi',
@@ -171,7 +273,39 @@ const hienThiThongBao = (
 };
 
 
-if (formDangNhap !== null) {
+/* =========================================================
+   7. KIỂM TRA KHI NGƯỜI DÙNG RỜI KHỎI TRƯỜNG
+   ========================================================= */
+
+if (
+    email !== null
+) {
+
+    email.addEventListener(
+        'blur',
+        kiemTraEmail
+    );
+}
+
+
+if (
+    matKhau !== null
+) {
+
+    matKhau.addEventListener(
+        'blur',
+        kiemTraMatKhau
+    );
+}
+
+
+/* =========================================================
+   8. XỬ LÝ FORM ĐĂNG NHẬP
+   ========================================================= */
+
+if (
+    formDangNhap !== null
+) {
 
     formDangNhap.addEventListener(
         'submit',
@@ -180,6 +314,9 @@ if (formDangNhap !== null) {
             event.preventDefault();
 
 
+            /*
+             * Kiểm tra dữ liệu nhập.
+             */
             const emailHopLe =
                 kiemTraEmail();
 
@@ -189,19 +326,46 @@ if (formDangNhap !== null) {
 
             if (
                 emailHopLe === false
-                || matKhauHopLe === false
+                ||
+                matKhauHopLe === false
             ) {
+
+                hienThiThongBao(
+                    'Vui lòng kiểm tra lại thông tin đăng nhập.',
+                    true
+                );
+
                 return;
             }
 
 
+            /*
+             * Chuẩn hóa email trước khi đăng nhập.
+             */
+            const emailNguoiDung =
+                email.value
+                    .trim()
+                    .toLowerCase();
+
+
+            /*
+             * Gọi hàm đăng nhập từ tai-khoan.js.
+             *
+             * Hàm này:
+             * - tìm tài khoản theo email;
+             * - kiểm tra mật khẩu;
+             * - tạo localStorage "nguoiDungHienTai".
+             */
             const dangNhapThanhCong =
                 dangNhap(
-                    email.value.trim().toLowerCase(),
+                    emailNguoiDung,
                     matKhau.value
                 );
 
 
+            /*
+             * Đăng nhập thất bại.
+             */
             if (
                 dangNhapThanhCong === false
             ) {
@@ -215,15 +379,42 @@ if (formDangNhap !== null) {
             }
 
 
+            /*
+             * Đăng nhập thành công.
+             */
             hienThiThongBao(
                 'Đăng nhập thành công.'
             );
 
 
+            /*
+             * Khóa nút submit trong thời gian
+             * chuyển trang để tránh thao tác nhiều lần.
+             */
+            const nutSubmit =
+                formDangNhap.querySelector(
+                    'button[type="submit"], input[type="submit"]'
+                );
+
+
+            if (
+                nutSubmit !== null
+            ) {
+
+                nutSubmit.disabled =
+                    true;
+            }
+
+
+            /*
+             * Chuyển về trang chủ.
+             */
             window.setTimeout(
                 () => {
+
                     window.location.href =
                         'index.html';
+
                 },
                 500
             );
