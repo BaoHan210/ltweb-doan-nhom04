@@ -5,11 +5,13 @@
  */
 
 export const taiJSON = async (url) => {
-  const res = await fetch(url);
+    const res = await fetch(url);
 
-  if (!res.ok) {
-    throw new Error(`Không thể tải dữ liệu: ${res.status}`);
-  }
+    if (!res.ok) {
+        throw new Error(
+            `Không thể tải dữ liệu: ${res.status}`
+        );
+    }
 
-  return res.json();
+    return res.json();
 };
