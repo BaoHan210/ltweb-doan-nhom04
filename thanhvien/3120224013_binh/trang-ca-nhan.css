@@ -3,6 +3,7 @@
    CSS riêng cho trang cá nhân Ngọc Bình
    ======================================== */
 
+
 /* ==============================
    1. TIÊU ĐỀ HỒ SƠ
    ============================== */
@@ -13,6 +14,7 @@
   font-size: var(--co-chu-tieu-de);
   line-height: 1.3;
 }
+
 
 /* ==============================
    2. CÁC KHỐI NỘI DUNG
@@ -38,6 +40,7 @@
   font-size: 20px;
   line-height: 1.4;
 }
+
 
 /* ==============================
    3. THÔNG TIN CÁ NHÂN
@@ -84,6 +87,7 @@
   color: var(--mau-chinh);
 }
 
+
 /* ==============================
    4. DỰ ÁN VÀ SỞ THÍCH
    ============================== */
@@ -98,9 +102,76 @@
   margin-top: 10px;
 }
 
+
 /* ==============================
-   5. DANH SÁCH KỸ NĂNG
+   5. NÚT THU GỌN / MỞ RỘNG
    ============================== */
+
+.nut-mo-rong {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--mau-chinh);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-chinh);
+  color: var(--mau-nen);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nut-mo-rong:hover {
+  background-color: var(--mau-nhan);
+  border-color: var(--mau-nhan);
+}
+
+.nut-mo-rong:focus-visible {
+  outline: 2px solid var(--mau-chinh);
+  outline-offset: 2px;
+}
+
+.nut-mo-rong:active {
+  transform: translateY(1px);
+}
+
+
+/* ==============================
+   6. DANH SÁCH KỸ NĂNG
+   ============================== */
+
+.ky-nang > label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--mau-chu);
+}
+
+#tim-ky-nang {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen);
+  color: var(--mau-chu);
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#tim-ky-nang::placeholder {
+  color: var(--mau-chu-phu);
+}
+
+#tim-ky-nang:focus {
+  outline: 2px solid var(--mau-chinh);
+  outline-offset: 2px;
+}
 
 .danh-sach-ky-nang {
   display: grid;
@@ -128,8 +199,20 @@
   font-weight: 700;
 }
 
+
 /* ==============================
-   6. THỜI KHÓA BIỂU
+   7. THÔNG BÁO KHÔNG TÌM THẤY
+   ============================== */
+
+.khong-co-ky-nang {
+  margin: 12px 0 0;
+  color: var(--mau-chu-phu);
+  font-size: var(--co-chu-nho);
+}
+
+
+/* ==============================
+   8. THỜI KHÓA BIỂU
    ============================== */
 
 .thoi-khoa-bieu {
@@ -155,6 +238,8 @@
   line-height: 1.5;
   text-align: left;
 }
+
+
 /* Khung cuộn ngang riêng cho bảng */
 
 .khung-bang {
@@ -194,8 +279,9 @@
   background-color: var(--mau-nen-phu);
 }
 
+
 /* ==============================
-   7. LIÊN KẾT QUAY LẠI
+   9. LIÊN KẾT QUAY LẠI
    ============================== */
 
 .quay-lai {
@@ -232,13 +318,15 @@
   transform: translateY(1px);
 }
 
+
 /* ==============================
-   8. RESPONSIVE - TABLET
+   10. RESPONSIVE - TABLET
    ============================== */
 
 @media (min-width: 768px) {
 
   /* Thông tin chung */
+
   .ho-so-trang > .thong-tin-chung {
     grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
     column-gap: 24px;
@@ -249,19 +337,25 @@
     grid-column: 1 / -1;
   }
 
+
   /* Kỹ năng */
+
   .danh-sach-ky-nang {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+
   /* Bảng */
+
   .khung-bang table {
     min-width: 0;
   }
+
 }
 
+
 /* ==============================
-   TÙY CHỈNH RIÊNG - NGỌC BÌNH
+   11. TÙY CHỈNH RIÊNG - NGỌC BÌNH
    ============================== */
 
 .tieu-de-ho-so {
