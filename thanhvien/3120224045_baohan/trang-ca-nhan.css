@@ -269,3 +269,128 @@
   border-left: 4px solid var(--mau-chinh);
   padding-left: 12px;
 }
+
+/* ==============================
+   GIAO DIỆN TỐI
+   ============================== */
+
+body.giao-dien-toi {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .dau-trang,
+body.giao-dien-toi .thanh-dieu-huong,
+body.giao-dien-toi footer {
+  background-color: #242424;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .ho-so-trang > .thong-tin-chung,
+body.giao-dien-toi .ho-so-trang > .du-an-so-thich,
+body.giao-dien-toi .ho-so-trang > .ky-nang,
+body.giao-dien-toi .ho-so-trang > .thoi-khoa-bieu {
+  background-color: #2b2b2b;
+  border-color: #444;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .ho-so-trang h1,
+body.giao-dien-toi .ho-so-trang h2,
+body.giao-dien-toi .thong-tin-ca-nhan strong {
+  color: #9bd36a;
+}
+
+body.giao-dien-toi .anh-dai-dien figcaption,
+body.giao-dien-toi .thoi-khoa-bieu > p,
+body.giao-dien-toi .thoi-khoa-bieu caption {
+  color: #d0d0d0;
+}
+
+body.giao-dien-toi .danh-sach-ky-nang li,
+body.giao-dien-toi .khung-bang tbody th,
+body.giao-dien-toi .khung-bang tbody tr:nth-child(even) td {
+  background-color: #333;
+  border-color: #4a4a4a;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .khung-bang th,
+body.giao-dien-toi .khung-bang td {
+  border-color: #4a4a4a;
+}
+
+body.giao-dien-toi .email-ca-nhan,
+body.giao-dien-toi .thong-bao-sao-chep {
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .nut-chuyen-giao-dien,
+body.giao-dien-toi .nut-sao-chep-email,
+body.giao-dien-toi .nut-chinh-sua {
+  border-color: #9bd36a;
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .nut-chuyen-giao-dien:hover,
+body.giao-dien-toi .nut-sao-chep-email:hover,
+body.giao-dien-toi .nut-chinh-sua:hover {
+  background-color: #3a3a3a;
+}
+
+body.giao-dien-toi a {
+  color: #b7e986;
+}
+
+body.giao-dien-toi .khung-bang thead th {
+  background-color: #355d1f;
+  color: #ffffff;
+}
+
+/* Hiển thị rõ phần tử đang được chọn bằng bàn phím */
+.nut-chinh-sua:focus-visible,
+.nut-chuyen-giao-dien:focus-visible,
+.nut-sao-chep-email:focus-visible {
+  outline: 2px solid var(--mau-chinh);
+  outline-offset: 2px;
+}
+
+/* Điều chỉnh bố cục để không tràn ngang trên màn hình nhỏ */
+.trang,
+.dau-trang,
+.thanh-dieu-huong,
+.ho-so-trang {
+  min-width: 0;
+}
+
+.o-tim-kiem {
+  min-width: 0;
+}
+
+.o-tim-kiem input {
+  min-width: 0;
+}
+
+.thuong-hieu,
+.du-an-so-thich,
+.thong-tin-ca-nhan {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tai-khoan {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+.ho-so-trang > .thoi-khoa-bieu {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.khung-bang {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}

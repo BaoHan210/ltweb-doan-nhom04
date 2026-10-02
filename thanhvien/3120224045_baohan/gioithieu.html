@@ -21,6 +21,10 @@
 
   <!-- CSS riêng cho trang cá nhân -->
   <link rel="stylesheet" href="trang-ca-nhan.css">
+
+  <!-- JavaScript riêng cho trang cá nhân -->
+  <script type="module" src="canhan.js"></script>
+
 </head>
 
 <body class="trang">
@@ -124,6 +128,50 @@
     <h1 class="tieu-de-ho-so">
       Hồ sơ thành viên: Bảo Hân
     </h1>
+
+
+    <!-- KHU VỰC TƯƠNG TÁC TRANG CÁ NHÂN -->
+    <div class="khu-vuc-thao-tac-ca-nhan">
+
+      <button
+        type="button"
+        class="nut-chinh-sua"
+      >
+        Chỉnh sửa
+      </button>
+
+      <button
+        type="button"
+        class="nut-chuyen-giao-dien"
+        aria-pressed="false"
+      >
+        Chế độ tối
+      </button>
+
+    </div>
+
+
+    <!-- KHU VỰC EMAIL -->
+    <div class="khu-vuc-email-ca-nhan">
+
+      <p class="email-ca-nhan">
+        Email:
+        <span class="dia-chi-email">baohanphan205@gmail.com</span>
+      </p>
+
+      <button
+        type="button"
+        class="nut-sao-chep-email"
+      >
+        Sao chép email
+      </button>
+
+      <p
+        class="thong-bao-sao-chep"
+        aria-live="polite"
+      ></p>
+
+    </div>
 
 
     <!-- THÔNG TIN CHUNG -->
