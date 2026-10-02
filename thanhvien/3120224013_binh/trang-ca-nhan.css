@@ -363,3 +363,14 @@
   padding-bottom: 10px;
   border-bottom: 2px solid var(--mau-vien);
 }
+/* ==============================
+   12. CLASS ĐƯỢC JAVASCRIPT SỬ DỤNG
+   ============================== */
+
+.an-ky-nang {
+  display: none !important;
+}
+
+.noi-dung-an {
+  display: none;
+}
