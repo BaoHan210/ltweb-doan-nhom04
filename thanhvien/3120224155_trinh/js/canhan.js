@@ -2,8 +2,8 @@
  * Tệp kịch bản: canhan.js - Nguyễn Thị Trinh (Nhóm 04 - Cook with me)
  * Chức năng: 
  *   1. Gợi ý từ khóa: Nhấp tag gợi ý để tự động điền vào thanh tìm kiếm.
- *   2. Modal đăng nhập: Bật / tắt cửa sổ đăng nhập thành viên cộng đồng bếp.
- * Cách thử: Nhấp vào các thẻ #Món chay, #Eat clean... hoặc nhấp nút 'Đăng nhập'.
+ *   2. Modal đăng nhập: Bật / tắt cửa sổ đăng nhập thành viên cộng đồng bếp (hỗ trợ phím Escape).
+ * Cách thử: Nhấp/Tab chọn các thẻ #Món chay, #Eat clean... hoặc mở Modal và nhấn phím Escape để đóng.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,23 +25,48 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginModal = document.getElementById("modal-auth");
   const closeLoginBtn = document.getElementById("btn-close-login");
 
-  if (loginBtn && loginModal) {
-    loginBtn.addEventListener("click", () => {
-      loginModal.style.display = "flex";
-    });
+  // Hàm mở modal
+  const moModal = () => {
+    if (!loginModal) return;
+    loginModal.style.display = "flex";
+    // Tự động focus vào ô nhập liệu đầu tiên để người dùng gõ ngay
+    const firstInput = loginModal.querySelector("input");
+    if (firstInput) {
+      firstInput.focus();
+    }
+  };
+
+  // Hàm đóng modal
+  const dongModal = () => {
+    if (!loginModal) return;
+    loginModal.style.display = "none";
+    // Trả lại tiêu điểm cho nút mở modal để tiếp tục duyệt phím
+    if (loginBtn) {
+      loginBtn.focus();
+    }
+  };
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", moModal);
   }
 
-  if (closeLoginBtn && loginModal) {
-    closeLoginBtn.addEventListener("click", () => {
-      loginModal.style.display = "none";
-    });
+  if (closeLoginBtn) {
+    closeLoginBtn.addEventListener("click", dongModal);
   }
 
+  // Đóng modal khi nhấp chuột ra ngoài vùng nền mờ
   if (loginModal) {
     loginModal.addEventListener("click", (event) => {
       if (event.target === loginModal) {
-        loginModal.style.display = "none";
+        dongModal();
       }
     });
   }
+
+  // Bổ sung xử lý bàn phím: Nhấn phím Escape để đóng Modal ngay lập tức
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && loginModal && loginModal.style.display === "flex") {
+      dongModal();
+    }
+  });
 });
