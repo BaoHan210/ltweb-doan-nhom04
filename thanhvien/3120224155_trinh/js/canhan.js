@@ -3,7 +3,7 @@
  * Chức năng: 
  *   1. Gợi ý từ khóa: Nhấp tag gợi ý để tự động điền vào thanh tìm kiếm.
  *   2. Modal đăng nhập: Bật / tắt cửa sổ đăng nhập thành viên cộng đồng bếp (hỗ trợ phím Escape).
- * Cách thử: Nhấp/Tab chọn các thẻ #Món chay, #Eat clean... hoặc mở Modal và nhấn phím Escape để đóng.
+ * Cách thử: Dùng phím Tab duyệt qua các thẻ gợi ý/nút Đăng nhập rồi nhấn Enter; nhấn Escape để đóng Modal.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (searchInput) {
         searchInput.value = tag.textContent.replace("#", "").trim();
         searchInput.focus();
+        const len = searchInput.value.length;
+        searchInput.setSelectionRange(len, len);
       }
     });
   });
@@ -25,26 +27,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginModal = document.getElementById("modal-auth");
   const closeLoginBtn = document.getElementById("btn-close-login");
 
-  // Hàm mở modal
+  // Hàm mở modal: tự động kích hoạt vạch con trỏ nhấp nháy ngay lập tức bằng phím
   const moModal = () => {
     if (!loginModal) return;
     loginModal.style.display = "flex";
     
-    // Đặt khoảng trễ ngắn để DOM kịp hiển thị xong rồi mới kích hoạt tiêu điểm
-    setTimeout(() => {
-      const firstInput = loginModal.querySelector("input");
-      if (firstInput) {
-        firstInput.focus();
-        firstInput.select(); // Hỗ trợ nhấp nháy con trỏ rõ ràng trên mọi trình duyệt
-      }
-    }, 50);
+    // Sử dụng requestAnimationFrame kết hợp setTimeout để đảm bảo modal đã render xong trên màn hình
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const firstInput = loginModal.querySelector("input");
+        if (firstInput) {
+          firstInput.focus();
+          // Đặt con trỏ vào vị trí 0 để ép trình duyệt bật ngay vạch nhấp nháy (|) mà không cần chuột
+          try {
+            firstInput.setSelectionRange(0, 0);
+          } catch (e) {
+            // Phòng ngừa đối với các type input không hỗ trợ setSelectionRange
+          }
+        }
+      }, 50);
+    });
   };
 
   // Hàm đóng modal
   const dongModal = () => {
     if (!loginModal) return;
     loginModal.style.display = "none";
-    // Trả lại tiêu điểm cho nút mở modal để tiếp tục duyệt phím
+    // Trả lại tiêu điểm cho nút mở modal để tiếp tục duyệt phím Tab
     if (loginBtn) {
       loginBtn.focus();
     }
