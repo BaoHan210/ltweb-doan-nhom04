@@ -1,11 +1,15 @@
 /*
- * Tệp canhan.js tạo chức năng đánh giá cho trang cá nhân.
- * Người dùng có thể chọn mức đánh giá từ 1 đến 5 sao.
- * JavaScript xử lý sự kiện và hiển thị kết quả đánh giá trực tiếp trên trang.
- * Cách thử: nhấn một trong năm mức đánh giá và quan sát thông báo kết quả.
+ * Tệp canhan.js tạo hai tương tác cho trang cá nhân của thành viên.
+ * Chức năng 1: đánh giá trang cá nhân từ 1 đến 5 sao.
+ * Chức năng 2: sao chép liên kết trang cá nhân và hiển thị thông báo.
+ * Cách thử: chọn mức đánh giá hoặc nhấn nút sao chép liên kết.
  */
 
 document.addEventListener("DOMContentLoaded", function () {
+    // ==============================
+    // TƯƠNG TÁC 1: ĐÁNH GIÁ 1–5 SAO
+    // ==============================
+
     const ratingSection = document.createElement("section");
     const ratingTitle = document.createElement("h2");
     const ratingText = document.createElement("p");
@@ -25,9 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ratingButton.classList.add("rating-button");
 
         ratingButton.addEventListener("click", function () {
-            ratingText.textContent =
-                "Bạn đã đánh giá " + i + " sao. Cảm ơn bạn đã đánh giá!";
-
             const buttons = ratingList.querySelectorAll(".rating-button");
 
             buttons.forEach(function (button) {
@@ -35,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             ratingButton.classList.add("rating-selected");
+            ratingText.textContent =
+                "Bạn đã đánh giá " + i + " sao. Cảm ơn bạn đã đánh giá!";
         });
 
         ratingList.appendChild(ratingButton);
@@ -44,5 +47,41 @@ document.addEventListener("DOMContentLoaded", function () {
     ratingSection.appendChild(ratingText);
     ratingSection.appendChild(ratingList);
 
+    // ==============================
+    // TƯƠNG TÁC 2: SAO CHÉP LIÊN KẾT
+    // ==============================
+
+    const linkSection = document.createElement("section");
+    const linkTitle = document.createElement("h2");
+    const copyButton = document.createElement("button");
+    const copyMessage = document.createElement("p");
+
+    linkSection.classList.add("sao-chep-lien-ket");
+    linkTitle.textContent = "Chia sẻ trang cá nhân";
+
+    copyButton.type = "button";
+    copyButton.textContent = "🔗 Sao chép liên kết";
+
+    copyMessage.textContent = "";
+
+    copyButton.addEventListener("click", function () {
+        const pageUrl = window.location.href;
+
+        navigator.clipboard.writeText(pageUrl)
+            .then(function () {
+                copyMessage.textContent =
+                    "Đã sao chép liên kết trang cá nhân.";
+            })
+            .catch(function () {
+                copyMessage.textContent =
+                    "Không thể sao chép liên kết. Vui lòng thử lại.";
+            });
+    });
+
+    linkSection.appendChild(linkTitle);
+    linkSection.appendChild(copyButton);
+    linkSection.appendChild(copyMessage);
+
     document.querySelector(".ho-so-trang").appendChild(ratingSection);
+    document.querySelector(".ho-so-trang").appendChild(linkSection);
 });
