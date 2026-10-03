@@ -29,11 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const moModal = () => {
     if (!loginModal) return;
     loginModal.style.display = "flex";
-    // Tự động focus vào ô nhập liệu đầu tiên để người dùng gõ ngay
-    const firstInput = loginModal.querySelector("input");
-    if (firstInput) {
-      firstInput.focus();
-    }
+    
+    // Đặt khoảng trễ ngắn để DOM kịp hiển thị xong rồi mới kích hoạt tiêu điểm
+    setTimeout(() => {
+      const firstInput = loginModal.querySelector("input");
+      if (firstInput) {
+        firstInput.focus();
+        firstInput.select(); // Hỗ trợ nhấp nháy con trỏ rõ ràng trên mọi trình duyệt
+      }
+    }, 50);
   };
 
   // Hàm đóng modal
