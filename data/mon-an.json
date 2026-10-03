@@ -502,5 +502,253 @@
             "Nêm nước tương và hoàn thiện món ăn."
         ],
         "video": ""
-    }
+    },
+    {
+    "id": "banh-xeo-mien-tay",
+    "ten": "Bánh xèo miền Tây",
+    "danhMuc": "Món chính",
+    "thoiGian": 40,
+    "khauPhan": 4,
+    "doKho": "Trung bình",
+    "nganSach": 70000,
+    "hinhAnh": "images/Banh-Xeo-Mien-Tay.jpg",
+    "danhGia": 4.9,
+    "soLuotDanhGia": 85,
+    "moTa": "Bánh xèo vàng giòn rụm cuốn kèm rau sống và nước mắm chua ngọt.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Pha bột bánh xèo với nước cốt dừa và bột nghệ.",
+      "Xào thịt và tôm làm nhân.",
+      "Đổ bánh mỏng vào chảo nóng cho giòn vàng.",
+      "Cuốn bánh với rau sống và thưởng thức."
+    ],
+    "video": ""
+  },
+  {
+    "id": "com-hen",
+    "ten": "Cơm hến",
+    "danhMuc": "Món chính",
+    "thoiGian": 30,
+    "khauPhan": 2,
+    "doKho": "Dễ",
+    "nganSach": 35000,
+    "hinhAnh": "images/com-hen.jpg",
+    "danhGia": 4.8,
+    "soLuotDanhGia": 60,
+    "moTa": "Cơm hến đậm đà hương vị miền Trung cay nồng hấp dẫn.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Luộc hến lấy nước dùng và đãi lấy thịt hến.",
+      "Xào thịt hến với gia vị và hành tỏi.",
+      "Trộn cơm nguội với hến, rau sống, bắp chuối thái nhỏ.",
+      "Chan nước hến luộc và thêm mắm ruốc khi ăn."
+    ],
+    "video": ""
+  },
+  {
+    "id": "hu-tieu-nam-vang",
+    "ten": "Hủ tiếu Nam Vang",
+    "danhMuc": "Món chính",
+    "thoiGian": 45,
+    "khauPhan": 4,
+    "doKho": "Trung bình",
+    "nganSach": 80000,
+    "hinhAnh": "images/Hu-tieu-nam-vang.jpg",
+    "danhGia": 4.9,
+    "soLuotDanhGia": 110,
+    "moTa": "Hủ tiếu Nam Vang nước dùng thanh ngọt, topping phong phú.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Hầm xương heo lấy nước dùng ngọt thanh.",
+      "Luộc sợi hủ tiếu và chuẩn bị thịt heo, tôm, trứng cút.",
+      "Xếp topping lên tô và chan nước dùng nóng hổi."
+    ],
+    "video": ""
+  },
+  {
+    "id": "banh-canh-cha-ca",
+    "ten": "Bánh canh chả cá",
+    "danhMuc": "Món chính",
+    "thoiGian": 35,
+    "khauPhan": 4,
+    "doKho": "Dễ",
+    "nganSach": 50000,
+    "hinhAnh": "images/Banh-canh-cha-ca.jpg",
+    "danhGia": 4.7,
+    "soLuotDanhGia": 75,
+    "moTa": "Bánh canh chả cá dai ngọt đậm đà hương vị biển.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Nấu nước dùng từ xương cá hoặc thịt.",
+      "Chiên hoặc hấp chả cá rồi cắt lát vừa ăn.",
+      "Trần bánh canh qua nước sôi rồi cho vào tô.",
+      "Chan nước dùng và đặt chả cá lên trên."
+    ],
+    "video": ""
+  },
+  {
+    "id": "bun-dau-mam-tom",
+    "ten": "Bún đậu mắm tôm",
+    "danhMuc": "Món chính",
+    "thoiGian": 25,
+    "khauPhan": 3,
+    "doKho": "Dễ",
+    "nganSach": 60000,
+    "hinhAnh": "images/Bun-dau-mam-tom.jpg",
+    "danhGia": 5.0,
+    "soLuotDanhGia": 150,
+    "moTa": "Đậu hũ giòn rụm ăn kèm bún, chả cốm, thịt luộc chấm mắm tôm.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Cắt đậu hũ thành từng miếng nhỏ rồi rán vàng giòn.",
+      "Luộc thịt ba chỉ thái mỏng.",
+      "Pha mắm tôm với đường, quất, ớt và dầu nóng.",
+      "Bày bún, đậu, thịt, chả cốm và rau sống ra mẹt."
+    ],
+    "video": ""
+  },
+  {
+    "id": "goi-ca-trich-phu-quoc",
+    "ten": "Gỏi cá trích Phú Quốc",
+    "danhMuc": "Món khai vị",
+    "thoiGian": 30,
+    "khauPhan": 4,
+    "doKho": "Trung bình",
+    "nganSach": 100000,
+    "hinhAnh": "images/Goi-ca-trich-phu-quoc.jpg",
+    "danhGia": 4.9,
+    "soLuotDanhGia": 90,
+    "moTa": "Gỏi cá trích tươi ngon trộn hành tây, dừa nạo và nước sốt đặc biệt.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Sơ chế cá trích lấy phần phi lê thịt tươi.",
+      "Trộn cá với nước cốt chanh, hành tây và dừa nạo.",
+      "Pha nước chấm chua ngọt cay đặc trưng."
+    ],
+    "video": ""
+  },
+  {
+    "id": "banh-khot-vung-tau",
+    "ten": "Bánh khọt Vũng Tàu",
+    "danhMuc": "Món chính",
+    "thoiGian": 35,
+    "khauPhan": 4,
+    "doKho": "Trung bình",
+    "nganSach": 65000,
+    "hinhAnh": "images/Banh-khot-vung-tau.jpg",
+    "danhGia": 4.8,
+    "soLuotDanhGia": 80,
+    "moTa": "Bánh khọt nhỏ tròn giòn rụm bên trên có tôm tươi và mỡ hành.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Pha bột bánh khọt đổ vào khuôn nhỏ.",
+      "Đặt tôm tươi lên giữa bánh khi đổ.",
+      "Đậy nắp đến khi bánh chín giòn cạnh thì lấy ra.",
+      "Ăn kèm rau sống và nước mắm chua ngọt."
+    ],
+    "video": ""
+  },
+  {
+    "id": "lau-mam-mien-tay",
+    "ten": "Lẩu mắm miền Tây",
+    "danhMuc": "Món canh",
+    "thoiGian": 50,
+    "khauPhan": 6,
+    "doKho": "Khó",
+    "nganSach": 150000,
+    "hinhAnh": "images/Lau-mam-mien-tay.jpg",
+    "danhGia": 4.9,
+    "soLuotDanhGia": 130,
+    "moTa": "Lẩu mắm đậm đà hương vị miền tây ăn kèm các loại rau đồng quê.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Nấu mắm cá linh hoặc mắm cá sặc rồi lọc bỏ xương.",
+      "Phi sả ớt thơm rồi cho nước mắm vào nấu thành nước lẩu.",
+      "Chuẩn bị các loại hải sản, thịt ba chỉ và rổ rau đồng phong phú."
+    ],
+    "video": ""
+  },
+  {
+    "id": "com-tam-sai-gon",
+    "ten": "Cơm tấm Sài Gòn",
+    "danhMuc": "Món chính",
+    "thoiGian": 35,
+    "khauPhan": 2,
+    "doKho": "Dễ",
+    "nganSach": 45000,
+    "hinhAnh": "images/Com-tam-sai-gon.jpg",
+    "danhGia": 5.0,
+    "soLuotDanhGia": 200,
+    "moTa": "Cơm tấm hạt nhuyễn ăn kèm sườn nướng mỡ hành và bì chả.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Nấu chín cơm tấm.",
+      "Ướp sườn với nước mắm, mật ong, hành tỏi rồi nướng chín thơm.",
+      "Làm mỡ hành và pha nước mắm chua ngọt.",
+      "Bày cơm, sườn, chả, mỡ hành ra đĩa."
+    ],
+    "video": ""
+  },
+  {
+    "id": "banh-trang-cuon-thit-heo",
+    "ten": "Bánh tráng cuốn thịt heo",
+    "danhMuc": "Món chính",
+    "thoiGian": 25,
+    "khauPhan": 4,
+    "doKho": "Dễ",
+    "nganSach": 75000,
+    "hinhAnh": "images/Banh-trang-cuon-thit-heo.jpg",
+    "danhGia": 4.9,
+    "soLuotDanhGia": 140,
+    "moTa": "Thịt heo luộc hai đầu da cuốn bánh tráng kèm rau sống chấm mắm nêm.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Luộc thịt heo chín tới để giữ độ giòn của da.",
+      "Thái thịt thành các lát mỏng dài.",
+      "Pha mắm nêm đậm đà với tỏi ớt băm.",
+      "Cuốn thịt cùng bánh tráng, rau sống và dưa leo."
+    ],
+    "video": ""
+  },
+  {
+    "id": "banh-da-cua-hai-phong",
+    "ten": "Bánh đa cua Hải Phòng",
+    "danhMuc": "Món chính",
+    "thoiGian": 40,
+    "khauPhan": 3,
+    "doKho": "Trung bình",
+    "nganSach": 60000,
+    "hinhAnh": "images/Banh-da-cua-hai-phong.jpg",
+    "danhGia": 4.8,
+    "soLuotDanhGia": 95,
+    "moTa": "Bánh đa đỏ dai thơm hòa quyện với gạch cua và chả lá lốt.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Lọc thịt cua đồng nấu lấy gạch và nước dùng đậm đà.",
+      "Trần bánh đa đỏ qua nước sôi.",
+      "Làm chả lá lốt và chuẩn bị các loại topping.",
+      "Chan nước dùng cua nóng vào tô bánh đa."
+    ],
+    "video": ""
+  },
+  {
+    "id": "cha-muc-ha-long",
+    "ten": "Chả mực Hạ Long",
+    "danhMuc": "Món chính",
+    "thoiGian": 30,
+    "khauPhan": 4,
+    "doKho": "Trung bình",
+    "nganSach": 120000,
+    "hinhAnh": "images/Cha-muc-ha-long.jpg",
+    "danhGia": 5.0,
+    "soLuotDanhGia": 110,
+    "moTa": "Chả mực giã tay dai giòn sần sật thơm lừng đặc sản Hạ Long.",
+    "nguyenLieu": [],
+    "cacBuoc": [
+      "Làm sạch mực tươi, giã nhuyễn thủ công để tạo độ dai.",
+      "Trộn mực với thì là, tiêu và gia vị vừa ăn.",
+      "Nặn thành từng miếng tròn rồi chiên vàng ngập dầu."
+    ],
+    "video": ""
+  }
 ]
