@@ -4,13 +4,12 @@
  * Chức năng:
  * 1. Tải món ăn từ Public REST API TheMealDB.
  * 2. Hiển thị trạng thái loading, error và empty.
- * 3. Hiển thị URL API và JSON rút gọn.
- * 4. Thích bài viết.
- * 5. Lưu bài viết.
- * 6. Xem / thu gọn nội dung bài viết.
- * 7. Bình luận bài viết.
- * 8. Chia sẻ bài viết.
- * 9. Theo dõi người dùng.
+ * 3. Thích bài viết.
+ * 4. Lưu bài viết.
+ * 5. Xem / thu gọn nội dung bài viết.
+ * 6. Bình luận bài viết.
+ * 7. Chia sẻ bài viết.
+ * 8. Theo dõi người dùng.
  */
 
 import { taiJSON } from './api.js';
@@ -190,7 +189,7 @@ const hienThiLoiApi = () => {
 
 
 /*
- * Hiển thị món ăn, URL API và JSON rút gọn.
+ * Hiển thị món ăn từ Public REST API.
  */
 const hienThiDuLieuApi = (
     danhSachMonAn
@@ -219,7 +218,7 @@ const hienThiDuLieuApi = (
 
 
     /*
-     * Hiển thị các món ăn.
+     * Chỉ hiển thị các thẻ món ăn.
      */
     danhSachMonAn.forEach(
         (monAn) => {
@@ -230,82 +229,6 @@ const hienThiDuLieuApi = (
                 theMonAn
             );
         }
-    );
-
-
-    /*
-     * Hiển thị thông tin API.
-     */
-    const tieuDeApi =
-        document.createElement('h3');
-
-    tieuDeApi.textContent =
-        'Public REST API';
-
-
-    const urlApi =
-        document.createElement('p');
-
-    urlApi.textContent =
-        `URL: ${URL_API_MON_AN}`;
-
-
-    khuVucDuLieuApi.appendChild(
-        tieuDeApi
-    );
-
-    khuVucDuLieuApi.appendChild(
-        urlApi
-    );
-
-
-    /*
-     * Lấy món ăn đầu tiên để tạo
-     * JSON rút gọn phục vụ báo cáo.
-     */
-    const monAn =
-        danhSachMonAn[0];
-
-
-    const duLieuRutGon = {
-        strMeal:
-            monAn.strMeal,
-
-        strCategory:
-            monAn.strCategory,
-
-        strArea:
-            monAn.strArea,
-
-        strMealThumb:
-            monAn.strMealThumb
-    };
-
-
-    const tieuDeJson =
-        document.createElement('h3');
-
-    tieuDeJson.textContent =
-        'JSON rút gọn';
-
-
-    const duLieuJson =
-        document.createElement('pre');
-
-    duLieuJson.textContent =
-        JSON.stringify(
-            duLieuRutGon,
-            null,
-            2
-        );
-
-
-    khuVucDuLieuApi.appendChild(
-        tieuDeJson
-    );
-
-    khuVucDuLieuApi.appendChild(
-        duLieuJson
     );
 };
 

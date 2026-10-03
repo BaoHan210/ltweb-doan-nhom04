@@ -12,6 +12,94 @@ import {
 } from './yeu-thich.js';
 
 
+/* =========================================================
+   HÀM NHẬN DIỆN CLASS ICON NGUYÊN LIỆU THEO TÊN
+   ========================================================= */
+const layClassNguyenLieu = (tenNguyenLieu) => {
+    if (!tenNguyenLieu) return 'nguyen-lieu-gia-vi';
+    
+    const ten = String(tenNguyenLieu).toLowerCase();
+
+    // 1. Nhóm Cá & Hải sản
+    if (ten.includes('cá') || ten.includes('lươn') || ten.includes('ếch')) {
+        return 'nguyen-lieu-ca';
+    }
+    if (ten.includes('tôm') || ten.includes('mực') || ten.includes('cua') || ten.includes('ghẹ')) {
+        return 'nguyen-lieu-tom';
+    }
+
+    // 2. Nhóm Thịt
+    if (ten.includes('thịt') || ten.includes('heo') || ten.includes('bò') || ten.includes('gà') || ten.includes('vịt') || ten.includes('xá xíu')) {
+        return 'nguyen-lieu-thit';
+    }
+
+    // 3. Nhóm Sợi & Bột
+    if (ten.includes('sợi') || ten.includes('mì') || ten.includes('phở') || ten.includes('bún') || ten.includes('cao lầu') || ten.includes('hủ tiếu')) {
+        return 'nguyen-lieu-soi';
+    }
+    if (ten.includes('bột') || ten.includes('bánh')) {
+        return 'nguyen-lieu-bot';
+    }
+
+    // 4. Nhóm Rau, Củ, Giá
+    if (ten.includes('giá') || ten.includes('giá đỗ')) {
+        return 'nguyen-lieu-gia';
+    }
+    if (ten.includes('rau thơm') || ten.includes('ngò') || ten.includes('húng') || ten.includes('thì là') || ten.includes('quế')) {
+        return 'nguyen-lieu-rau-thom';
+    }
+    if (ten.includes('rau') || ten.includes('xà lách') || ten.includes('cải') || ten.includes('củ') || ten.includes('cà rốt') || ten.includes('ngó sen')) {
+        return 'nguyen-lieu-rau';
+    }
+
+    // 5. Nhóm Hành & Tỏi & Ớt & Chanh
+    if (ten.includes('hành') || ten.includes('hành tím') || ten.includes('hành lá') || ten.includes('hành tây')) {
+        return 'nguyen-lieu-hanh';
+    }
+    if (ten.includes('tỏi')) {
+        return 'nguyen-lieu-toi';
+    }
+    if (ten.includes('ớt') || ten.includes('sa tế')) {
+        return 'nguyen-lieu-ot';
+    }
+    if (ten.includes('chanh') || ten.includes('tắc') || ten.includes('quất')) {
+        return 'nguyen-lieu-chanh';
+    }
+
+    // 6. Nhóm Hạt & Đậu / Dầu ăn
+    if (ten.includes('đậu lạc') || ten.includes('đậu phụng') || ten.includes('lạc') || ten.includes('vừng') || ten.includes('mè')) {
+        return 'nguyen-lieu-dau-phong';
+    }
+    if (ten.includes('dầu') || ten.includes('mỡ') || ten.includes('dầu ăn') || ten.includes('dầu hào') || ten.includes('dầu mè')) {
+        return 'nguyen-lieu-dau';
+    }
+
+    // 7. Nhóm Gia vị lỏng (Nước mắm, Nước tương, Mật ong)
+    if (ten.includes('nước mắm') || ten.includes('mắm')) {
+        return 'nguyen-lieu-nuoc-mam';
+    }
+    if (ten.includes('nước tương') || ten.includes('xì dầu') || ten.includes('sì dầu')) {
+        return 'nguyen-lieu-nuoc-tuong';
+    }
+    if (ten.includes('mật ong') || ten.includes('siro')) {
+        return 'nguyen-lieu-mat-ong';
+    }
+
+    // 8. Nhóm Gia vị khô (Tiêu, Đường, Ngũ vị hương, Gia vị chung)
+    if (ten.includes('tiêu')) {
+        return 'nguyen-lieu-tieu';
+    }
+    if (ten.includes('đường') || ten.includes('phèn')) {
+        return 'nguyen-lieu-duong';
+    }
+    if (ten.includes('ngũ vị') || ten.includes('ngũ vị hương') || ten.includes('cà ri')) {
+        return 'nguyen-lieu-ngu-vi';
+    }
+
+    return 'nguyen-lieu-gia-vi';
+};
+
+
 /* ================================
    LẤY ID MÓN ĂN TRÊN URL
    ================================ */
@@ -55,29 +143,29 @@ const taoDanhSachNguyenLieu = (
             const item =
                 document.createElement('li');
 
-            if (
-                nguyenLieu.type
-            ) {
-                item.classList.add(
-                    `nguyen-lieu-${nguyenLieu.type}`
-                );
-            } else {
-                item.classList.add(
-                    'nguyen-lieu-gia-vi'
-                );
-            }
+            // Lấy tên nguyên liệu (dạng đối tượng hoặc chuỗi)
+            const tenNguyenLieu =
+                typeof nguyenLieu === 'string'
+                    ? nguyenLieu
+                    : (nguyenLieu.ten || '');
+
+            // GÁN CLASS ICON TỰ ĐỘNG THEO TÊN NGUYÊN LIỆU
+            item.className =
+                layClassNguyenLieu(tenNguyenLieu);
 
             const ten =
                 document.createElement('span');
 
             ten.textContent =
-                nguyenLieu.ten || '';
+                tenNguyenLieu;
 
             const soLuong =
                 document.createElement('strong');
 
             soLuong.textContent =
-                nguyenLieu.soLuong || '';
+                typeof nguyenLieu === 'object'
+                    ? (nguyenLieu.soLuong || '')
+                    : '';
 
             item.append(
                 ten,
@@ -421,27 +509,37 @@ const hienThiThongTinMonAn = (
 
     /* ---------- Thông tin cơ bản ---------- */
 
-    const thongTinCoBan =
-        document.querySelectorAll(
-            '.thong-tin-item strong'
-        );
+    /* ---------- Thông tin cơ bản (Cập nhật động theo HTML mới) ---------- */
 
-    if (
-        thongTinCoBan.length >= 4
-    ) {
-        thongTinCoBan[0].textContent =
-            `${monAn.thoiGian} phút`;
+const khauPhanSpan =
+    document.querySelector(
+        '.meta-khau-phan span'
+    );
 
-        thongTinCoBan[1].textContent =
-            `${monAn.khauPhan} người`;
+if (khauPhanSpan !== null) {
+    khauPhanSpan.textContent =
+        `${monAn.khauPhan || 2} người`;
+}
 
-        thongTinCoBan[2].textContent =
-            monAn.doKho;
+const thoiGianSpan =
+    document.querySelector(
+        '.meta-thoi-gian span'
+    );
 
-        thongTinCoBan[3].textContent =
-            `${Number(monAn.nganSach).toLocaleString('vi-VN')} đồng`;
-    }
+if (thoiGianSpan !== null) {
+    thoiGianSpan.textContent =
+        `${monAn.thoiGian || 30} phút`;
+}
 
+const doKhoSpan =
+    document.querySelector(
+        '.meta-do-kho span'
+    );
+
+if (doKhoSpan !== null) {
+    doKhoSpan.textContent =
+        monAn.doKho || 'Dễ';
+}
 
     /* ---------- Mô tả ---------- */
 

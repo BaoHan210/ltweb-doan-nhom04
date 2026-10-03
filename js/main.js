@@ -116,15 +116,23 @@ const taoKhuVucTaiKhoan = (
        ĐÃ ĐĂNG NHẬP
        ===================================================== */
 
+    // Tự động kiểm tra vị trí file để trỏ đường dẫn trang cá nhân đúng 100%
+    const đangỞThưMụcThànhViên = window.location.pathname.includes('/thanhvien/');
+    
+    // Nếu ở trong thư mục thành viên thì trỏ thẳng 'gioithieu.html', nếu ở ngoài thì trỏ vào thư mục
+    const duongDanTrangCaNhan = đangỞThưMụcThànhViên
+        ? 'gioithieu.html'
+        : 'thanhvien/3120224045_baohan/gioithieu.html';
+
+    // Avatar mặc định nếu người dùng chưa đặt hoặc không có ảnh
     const duongDanAvatar =
         nguoiDung.avatar ||
-        'images/avatar-binh.jpg';
+        (đangỞThưMụcThànhViên ? '../../images/icons/avt-default.svg' : 'images/icons/avt-default.svg');
 
     const hoTen =
         String(
             nguoiDung.hoTen || 'Người dùng'
         );
-
 
     /*
      * Khối người dùng.
@@ -395,8 +403,8 @@ const taoKhuVucTaiKhoan = (
     const lienKetAvatar =
         document.createElement('a');
 
-    lienKetAvatar.href =
-        'ca-nhan.html';
+    
+    lienKetAvatar.href = duongDanTrangCaNhan;
 
     lienKetAvatar.title =
         `Trang cá nhân của ${hoTen}`;
@@ -413,6 +421,13 @@ const taoKhuVucTaiKhoan = (
 
     avatar.className =
         'avatar-header';
+
+    // Tự động quay về avatar mặc định nếu ảnh bị hỏng
+    avatar.onerror = () => {
+        avatar.src = đangỞThưMụcThànhViên
+            ? '../../images/icons/avt-default.svg'
+            : 'images/icons/avt-default.svg';
+    };
 
 
     lienKetAvatar.append(
@@ -447,8 +462,7 @@ const taoKhuVucTaiKhoan = (
     const lienKetCaNhan =
         document.createElement('a');
 
-    lienKetCaNhan.href =
-        'ca-nhan.html';
+    lienKetCaNhan.href = duongDanTrangCaNhan;
 
     lienKetCaNhan.className =
         'item-menu-drop';
@@ -506,8 +520,19 @@ const taoKhuVucTaiKhoan = (
 
             dangXuat();
 
-            window.location.href =
-                'index.html';
+            const duongDanHienTai =
+                window.location.pathname;
+
+            if (
+                duongDanHienTai.endsWith('index.html')
+                ||
+                duongDanHienTai === '/'
+            ) {
+                window.location.reload();
+            } else {
+                window.location.href =
+                    'index.html';
+            }
         }
     );
 

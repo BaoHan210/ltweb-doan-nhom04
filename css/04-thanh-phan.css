@@ -331,33 +331,6 @@
     white-space: nowrap;
 }
 
-/* =========================================================
-   B1 - TRẠNG THÁI MOBILE
-   ========================================================= */
-
-@media (max-width: 767px) {
-
-    .js .thanh-dieu-huong {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-
-    .js .thanh-dieu-huong > .nut-menu {
-        display: inline-flex;
-        align-self: flex-start;
-    }
-
-    .js .thanh-dieu-huong > .menu {
-        display: none;
-    }
-
-    .js .thanh-dieu-huong > .menu.mo {
-        display: flex;
-    }
-}
-
 /* ==============================
    4. FOOTER DÙNG CHUNG
    ============================== */
@@ -1809,240 +1782,6 @@
     color: #FFFFFF;
 }
 
-
-/* ==============================
-   22. RESPONSIVE - TABLET
-   ============================== */
-
-@media (min-width: 768px) {
-    /* ==========================
-       Hero
-       ========================== */
-
-    .hero {
-        padding: 28px 24px;
-    }
-
-
-    .hero h2 {
-        font-size: 28px;
-    }
-
-
-    /* ==========================
-       Ba thẻ giới thiệu
-       ========================== */
-
-    .the-gioi-thieu {
-        gap: 16px;
-    }
-
-
-    .the-gioi-thieu-item {
-        flex: 1 1 0;
-
-        padding: 18px;
-    }
-
-
-    /* ==========================
-       Chia sẻ
-       ========================== */
-
-    .chia-se-cong-thuc {
-        padding: 16px;
-    }
-
-
-    /* ==========================
-       Bài đăng
-       ========================== */
-
-    .the-bai-dang {
-        padding: 16px;
-    }
-
-
-    /* ==========================
-       Khám phá
-       ========================== */
-
-    .tieu-de-kham-pha {
-        font-size: 28px;
-    }
-
-
-    .the-danh-muc > summary {
-        min-height: 90px;
-    }
-
-
-    .the-danh-muc > summary img {
-        flex-basis: 90px;
-
-        width: 90px;
-        height: 90px;
-    }
-
-
-    .the-danh-muc > summary span {
-        padding: 12px 16px;
-    }
-
-
-    /* ==========================
-       Chi tiết
-       ========================== */
-
-    .tieu-de-mon-an {
-        font-size: 26px;
-    }
-
-
-    .thong-tin-bai-chia-se,
-    .hinh-anh-mon-an,
-    .thong-tin-cong-thuc,
-    .nguyen-lieu,
-    .cach-thuc-hien,
-    .video-huong-dan,
-    .binh-luan {
-        padding: 14px;
-    }
-
-
-    
-
-    /* ==========================
-       Cài đặt
-       ========================== */
-
-    .tieu-de-cai-dat {
-        font-size: 26px;
-    }
-
-
-    .tieu-de-cai-dat::before {
-        width: 36px;
-        height: 36px;
-
-        font-size: 20px;
-    }
-
-
-    .khu-vuc-cai-dat {
-        padding: 16px;
-    }
-
-
-    .khung-cai-dat {
-        padding: 14px;
-    }
-
-
-    /* ==========================
-       Giới thiệu
-       ========================== */
-
-    .tieu-de-gioi-thieu {
-        padding: 14px 18px;
-
-        font-size: 26px;
-    }
-
-
-    .gioi-thieu-website,
-    .muc-tieu-do-an,
-    .khu-vuc-thanh-vien {
-        padding: 18px;
-    }
-
-
-    .gioi-thieu-website > h2,
-    .muc-tieu-do-an > h2,
-    .khu-vuc-thanh-vien > h2 {
-        font-size: 20px;
-    }
-
-
-    /* ==========================
-       Hồ sơ
-       ========================== */
-
-    .tieu-de-ho-so {
-        padding: 14px 18px;
-
-        font-size: 26px;
-    }
-
-
-    .thong-tin-chung,
-    .du-an-so-thich,
-    .ky-nang,
-    .thoi-khoa-bieu {
-        padding: 18px;
-    }
-
-
-    .thong-tin-chung > h2,
-    .du-an-so-thich > h2,
-    .ky-nang > h2,
-    .thoi-khoa-bieu > h2 {
-        font-size: 20px;
-    }
-
-
-    .anh-dai-dien img {
-        width: 180px;
-        height: 180px;
-    }
-
-
-    .quay-lai {
-        text-align: right;
-    }
-
-}
-
-
-/* ==============================
-   23. RESPONSIVE - DESKTOP
-   ============================== */
-
-@media (min-width: 992px) {
-
-    /* ==========================
-       Hero
-       ========================== */
-
-    .hero {
-        padding: 34px 28px;
-    }
-
-
-    .hero h2 {
-        font-size: 30px;
-    }
-
-
-    .hero p {
-        max-width: 70ch;
-    }
-
-
-    /* ==========================
-       Ba thẻ giới thiệu
-       ========================== */
-
-    .the-gioi-thieu {
-        gap: 16px;
-    }
-
-
-    .the-gioi-thieu-item {
-        padding: 20px;
-    }
-}
-
 /* =====================================================================
    24. TRANG CHỦ - GIAO DIỆN COOK WITH ME
    Phần bổ sung chỉ áp dụng cho index.html thông qua .trang-trang-chu.
@@ -2296,7 +2035,7 @@
 }
 
 /* =========================================================
-   KHỐI GỢI Ý MÓN ĂN API (KÉO DÃN BẰNG NHAU HOÀN HẢO)
+   KHỐI GỢI Ý MÓN ĂN API (CỘT TRÁI - CHIẾM TỔNG CHIỀU CAO)
    ========================================================= */
 .trang-trang-chu .du-lieu-api {
     display: flex;
@@ -2306,7 +2045,7 @@
     border-radius: 16px;
     background-color: #FFFFFF;
     box-sizing: border-box;
-    height: 100%; /* Giúp khung khớp toàn bộ chiều cao của cột Grid */
+    height: 100%;
 }
 
 .trang-trang-chu .du-lieu-api .tieu-de-khu-vuc {
@@ -2317,32 +2056,30 @@
 .trang-trang-chu .du-lieu-api .noi-dung-api {
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Phủ hết chiều cao còn lại của card */
+    flex-grow: 1;
 }
 
-/* Thẻ món ăn chứa ảnh và chữ */
 .trang-trang-chu .bai-viet-api {
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Tự dãn để phủ hết chiều cao */
+    flex-grow: 1;
     height: 100%;
 }
 
-/* Ép ảnh tự động co dãn vừa khít khoảng trống trắng */
 .trang-trang-chu .bai-viet-api img {
     display: block;
     width: 100%;
-    height: 0; /* Đặt chiều cao gốc là 0 để flex-grow tính toán chính xác */
-    flex-grow: 1; /* Tự kéo dãn ảnh xuống lấp đầy khoảng trắng */
-    min-height: 200px; /* Chiều cao tối thiểu */
+    height: 0;
+    flex-grow: 1;
+    min-height: 220px;
     border-radius: 12px;
-    object-fit: cover; /* Giữ nguyên tỉ lệ hình ảnh không bị méo */
+    object-fit: cover;
     margin-bottom: 12px;
 }
 
 .trang-trang-chu .bai-viet-api h3 {
     margin: 0 0 4px 0;
-    color: var(--mau-chinh);
+    color: var(--mau-chinh, #2e6230);
     font-family: Georgia, "Times New Roman", serif;
     font-size: 20px;
     font-weight: 700;
@@ -2351,183 +2088,50 @@
 
 .trang-trang-chu .bai-viet-api .thong-tin-mon-api {
     margin: 0;
-    color: var(--mau-chu-phu);
+    color: var(--mau-chu-phu, #666);
     font-size: 13px;
     flex-shrink: 0;
 }
 
-.trang-trang-chu .api-trang-thai {
-    padding: 12px 0;
-    color: var(--mau-chu-phu);
-}
 
-.trang-trang-chu .api-loi {
-    color: var(--mau-nhan);
-}
-
-/* ==============================
-   MÓN ĂN NỔI BẬT
-   ============================== */
-
+/* =========================================================
+   CỘT PHẢI - DÒNG 1: MÓN ĂN NỔI BẬT (HÌNH VUÔNG 1:1, Ô ĐỀU NHAU)
+   ========================================================= */
 .trang-trang-chu .mon-noi-bat {
     display: grid;
-
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    align-content: start;
-
-    gap: 10px;
-
-    min-width: 0;
-
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     padding: 16px;
-
-    border: 1px solid var(--trang-chu-vien);
+    border: 1px solid var(--trang-chu-vien, #DDE8D8);
     border-radius: 16px;
-
     background-color: #FFFFFF;
 }
-
 
 .trang-trang-chu .mon-noi-bat .tieu-de-khu-vuc {
     grid-column: 1 / -1;
+    margin-bottom: 4px;
 }
 
-.trang-trang-chu .mon-noi-bat .danh-gia-mon {
-    margin: 0;
-
-    color: #B28A1E;
-
-    font-size: 11px;
-    letter-spacing: 0.04em;
-}
-
-
-.trang-trang-chu .mon-noi-bat .thong-tin-mon a {
-    color: var(--mau-chinh);
-
-    font-size: 11px;
-    font-weight: 600;
-}
-
-
-/* ==============================
-   GỢI Ý NGƯỜI THEO DÕI
-   ============================== */
-
-.trang-trang-chu .goi-y-theo-doi {
-    display: grid;
-
-    grid-template-columns: minmax(0, 1fr);
-
-    gap: 8px;
-
-    align-content: start;
-
-    min-width: 0;
-
-    padding: 16px;
-
-    border: 1px solid var(--trang-chu-vien);
-    border-radius: 16px;
-
-    background-color: #FFFFFF;
-}
-
-.trang-trang-chu .goi-y-theo-doi .tieu-de-khu-vuc {
-    margin-bottom: 3px;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung {
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) auto;
-    align-items: center;
-
-    gap: 9px;
-
-    min-width: 0;
-
-    padding: 7px 0;
-
-    border-bottom: 1px solid #E8EEE5;
-
-    background-color: transparent;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung:last-child {
-    border-bottom: none;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung > img {
-    width: 44px;
-    height: 44px;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .thong-tin-nguoi-dung {
-    min-width: 0;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung h3 {
-    margin: 0;
-
-    color: var(--mau-chu);
-
-    font-size: 13px;
-    font-weight: 700;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung p {
-    margin: 2px 0 0;
-
-    color: var(--mau-chu-phu);
-
-    font-size: 10px;
-    line-height: 1.35;
-}
-
-
-.trang-trang-chu .goi-y-theo-doi .nut,
-.trang-trang-chu .goi-y-theo-doi .nut {
-    min-height: 30px;
-
-    padding: 5px 10px;
-
-    border-radius: 8px;
-
-    font-size: 11px;
-}
-
-/* =========================================================
-   FIX KÍCH THƯỚC HÌNH BẰNG NHAU TRONG MÓN ĂN NỔI BẬT
-   ========================================================= */
-
-/* 1. Ép thẻ card món ăn hiển thị theo dạng cột đồng đều */
 .trang-trang-chu .mon-noi-bat .the-mon-an {
     display: flex;
     flex-direction: column;
     height: 100%;
+    padding: 10px;
+    border: 1px solid #E8EEE5;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
 }
 
-/* 2. Cố định chiều cao ảnh và giữ đúng tỉ lệ không bị méo */
+/* Ép ảnh món ăn thành hình vuông hoàn hảo (Tỉ lệ 1:1) */
 .trang-trang-chu .mon-noi-bat .the-mon-an img {
     width: 100%;
-    height: 140px; /* Cố định chiều cao bằng nhau cho cả 3 hình */
-    object-fit: cover; /* Cắt xúp ảnh vừa vặn khung, không bị méo hình */
-    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
     display: block;
 }
 
-/* 3. Căn chỉnh phần thông tin bên dưới cho đều hàng */
 .trang-trang-chu .mon-noi-bat .thong-tin-mon {
     display: flex;
     flex-direction: column;
@@ -2538,15 +2142,113 @@
 
 .trang-trang-chu .mon-noi-bat .thong-tin-mon h3 {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
-    color: var(--mau-chu);
+    color: var(--mau-chu, #333);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trang-trang-chu .mon-noi-bat .danh-gia-mon {
+    margin: 0;
+    color: #B28A1E;
+    font-size: 11px;
 }
 
 .trang-trang-chu .mon-noi-bat .thong-tin-mon a {
-    margin-top: auto; /* Đẩy chữ 'Xem chi tiết' xuống đáy đều nhau */
+    margin-top: auto;
+    color: var(--mau-chinh, #2e6230);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
 }
 
+
+/* =========================================================
+   CỘT PHẢI - DÒNG 2: GỢI Ý NGƯỜI THEO DÕI (ĐỀU Ô, AVATAR CHUẨN)
+   ========================================================= */
+.trang-trang-chu .goi-y-theo-doi {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--trang-chu-vien, #DDE8D8);
+    border-radius: 16px;
+    background-color: #FFFFFF;
+}
+
+.trang-trang-chu .goi-y-theo-doi .tieu-de-khu-vuc {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+}
+
+.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 12px 10px;
+    border: 1px solid #E8EEE5;
+    border-radius: 12px;
+    background-color: #FBFDFB;
+    box-sizing: border-box;
+}
+
+.trang-trang-chu .goi-y-theo-doi .thong-tin-hang-tren {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+/* Avatar hình tròn chuẩn */
+.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: #E8EEE5;
+}
+
+.trang-trang-chu .goi-y-theo-doi .thong-tin-nguoi-dung {
+    flex: 1;
+    min-width: 0;
+}
+
+.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung h3 {
+    margin: 0;
+    color: var(--mau-chu, #333);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trang-trang-chu .goi-y-theo-doi .the-nguoi-dung p {
+    margin: 2px 0 0;
+    color: var(--mau-chu-phu, #666);
+    font-size: 10px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Nút theo dõi nằm gọn dưới đáy ô */
+.trang-trang-chu .goi-y-theo-doi .nut-phu,
+.trang-trang-chu .goi-y-theo-doi .nut {
+    width: 100%;
+    margin-top: auto;
+    min-height: 28px;
+    padding: 4px 0;
+    border-radius: 16px;
+    font-size: 11px;
+    text-align: center;
+    box-sizing: border-box;
+}
 
 /* ==============================
    BẢNG TIN
@@ -3100,19 +2802,6 @@
   color: #d93838;
 }
 
-/* Responsive màn hình nhỏ hơn */
-@media (max-width: 991px) {
-  .trang-kham-pha .danh-sach-mon-an {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 767px) {
-  .trang-kham-pha .danh-sach-mon-an {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* =========================================================
    STYLE BỘ LỌC & TIÊU ĐỀ CHO TRANG KHÁM PHÁ
    ========================================================= */
@@ -3256,68 +2945,6 @@
   background-color: #2e6230;
   color: #ffffff;
   border-color: #2e6230;
-}
-
-@media (max-width: 767px) {
-    .trang-kham-pha .dau-trang {
-        padding: 14px 16px;
-    }
-
-    .trang-kham-pha .thuong-hieu {
-        font-size: 0;
-        padding-left: 58px;
-        background-size: 44px 44px;
-    }
-
-    .trang-kham-pha .o-tim-kiem .nut {
-        display: none;
-    }
-
-    .trang-kham-pha .tai-khoan::before {
-        display: none;
-    }
-
-    .trang-kham-pha .kham-pha {
-        padding: 16px;
-    }
-
-    .trang-kham-pha .hero-kham-pha {
-        min-height: 155px;
-        padding: 24px 22px;
-    }
-
-    .trang-kham-pha .hero-kham-pha h1 {
-        font-size: 36px;
-    }
-
-    .trang-kham-pha .bo-loc-mon-an {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 6px;
-    }
-
-    .trang-kham-pha .nut-bo-loc {
-        flex: 0 0 auto;
-    }
-
-    .trang-kham-pha .danh-muc {
-        grid-template-columns: repeat(1, 1fr); /* Đổi thành 1 cột trên Mobile để thẻ card hiển thị đẹp mắt */
-        gap: 12px;
-    }
-
-    .trang-kham-pha .the-danh-muc > summary img {
-        width: 70px;
-        height: 70px;
-        flex-basis: 70px;
-    }
-
-    .trang-kham-pha .the-danh-muc > summary span {
-        font-size: 14px;
-    }
-
-    .danh-sach-mon-an {
-    grid-template-columns: 1fr !important;
-  }
 }
 
 /* =========================================================
@@ -3740,75 +3367,6 @@
     font-size: 12px;
 }
 
-/* =========================
-   TABLET
-   ========================= */
-@media (max-width: 991px) and (min-width: 768px) {
-    .trang-cai-dat .card-thong-tin .khung-cai-dat {
-        grid-template-columns: 105px minmax(0, 1fr);
-        column-gap: 14px;
-    }
-
-    .trang-cai-dat .dong-cai-dat.anh-dai-dien::before {
-        width: 70px;
-        height: 70px;
-        flex-basis: 70px;
-    }
-}
-
-/* =========================
-   MOBILE
-   ========================= */
-@media (max-width: 767px) {
-    .trang-cai-dat .dau-trang {
-        padding: 12px 16px;
-    }
-
-    .trang-cai-dat .thuong-hieu {
-        font-size: 0;
-        padding-left: 58px;
-        background-size: 44px 44px;
-    }
-
-    .trang-cai-dat .khu-vuc-cai-dat {
-        padding: 15px;
-    }
-
-    .trang-cai-dat .card-thong-tin .khung-cai-dat {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        gap: 11px;
-    }
-
-    .trang-cai-dat .card-thong-tin .khung-cai-dat > .dong-cai-dat:not(.anh-dai-dien),
-    .trang-cai-dat .card-thong-tin .dong-cai-dat.anh-dai-dien {
-        grid-column: 1;
-        grid-row: auto;
-    }
-
-    .trang-cai-dat .card-thong-tin .dong-cai-dat.anh-dai-dien {
-        flex-direction: column;
-        padding-bottom: 5px;
-    }
-
-    .trang-cai-dat .dong-cai-dat.anh-dai-dien::before {
-        width: 78px;
-        height: 78px;
-        flex-basis: 78px;
-    }
-
-    .trang-cai-dat .dong-cai-dat.anh-dai-dien > .o-anh-dai-dien {
-        max-width: 230px;
-    }
-
-    .trang-cai-dat .card-so-thich .khung-cai-dat {
-        grid-template-columns: 1fr;
-    }
-
-    .trang-cai-dat .hanh-dong-cai-dat .nut {
-        flex: 1 1 100%;
-    }
-}
 /* =========================================================
    TRANG GIỚI THIỆU - THÀNH PHẦN V4
    Hero dùng toàn bộ ảnh món ăn làm nền, giống ngôn ngữ
@@ -4085,66 +3643,6 @@
 .trang-gioi-thieu .card-doi-ngu .the-thanh-vien p:last-child a:focus-visible {
     outline: 2px solid var(--mau-chinh);
     outline-offset: 2px;
-}
-
-@media (max-width: 991px) {
-    .trang-gioi-thieu .hero-gioi-thieu {
-        min-height: 300px;
-        padding: 34px 30px;
-    }
-
-    .trang-gioi-thieu .hero-gioi-thieu > .thong-diep-hero {
-        right: 4%;
-        width: min(42%, 330px);
-    }
-
-    .trang-gioi-thieu .card-muc-dich > ul {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .trang-gioi-thieu .card-doi-ngu > .danh-sach-thanh-vien {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 767px) {
-    .trang-gioi-thieu .hero-gioi-thieu {
-        min-height: 430px;
-        padding: 28px 22px 190px;
-        background-position: center, 62% center;
-    }
-
-    .trang-gioi-thieu .hero-gioi-thieu > .tieu-de-hero {
-        font-size: 30px;
-    }
-
-    .trang-gioi-thieu .hero-gioi-thieu > .mo-ta-hero {
-        max-width: none;
-        font-size: 14px;
-    }
-
-    .trang-gioi-thieu .hero-gioi-thieu > .thong-diep-hero {
-        right: 20px;
-        bottom: 24px;
-        width: calc(100% - 40px);
-        max-width: none;
-        font-size: 12px;
-    }
-
-    .trang-gioi-thieu .card-muc-dich,
-    .trang-gioi-thieu .card-doi-ngu {
-        padding: 17px;
-    }
-
-    .trang-gioi-thieu .card-muc-dich > ul {
-        grid-template-columns: 1fr;
-        gap: 7px;
-    }
-
-    .trang-gioi-thieu .card-doi-ngu > .danh-sach-thanh-vien {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
 }
 
 /* =========================================================
@@ -4490,21 +3988,6 @@
     font-size: 11px;
 }
 
-@media (max-width: 767px) {
-    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan {
-        display: block;
-    }
-
-    .trang-cai-dat .khung-thong-tin-ca-nhan .dong-avatar {
-        margin-bottom: 14px;
-    }
-
-    .trang-cai-dat .khung-thong-tin-ca-nhan .dong-avatar::before {
-        width: 92px;
-        height: 92px;
-    }
-}
-
 /* =========================================================
    B6 - SỐ LƯỢNG MÓN ĂN YÊU THÍCH
    Không liên kết tới trang riêng.
@@ -4780,17 +4263,23 @@
    ========================================================= */
 
 /* 1. Khu vực Ảnh & Thumbnail */
-/* Kiểu dáng cho 1 ảnh duy nhất */
-.hinh-anh-mon-an {
-    margin: 0;
+.khu-vuc-hinh-anh {
     width: 100%;
 }
 
-.hinh-anh-mon-an img {
+.khu-vuc-hinh-anh .hinh-anh-mon-an {
+    margin: 0;
     width: 100%;
-    height: 320px; /* Tăng từ 280px lên 320px để bố cục đầy đặn */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.khu-vuc-hinh-anh .hinh-anh-mon-an img {
+    width: 100%;
+    height: 320px;
     object-fit: cover;
     border-radius: 12px;
+    display: block;
 }
 
 /* 2. Tiêu đề & Metadata */
@@ -4822,7 +4311,7 @@
 .thong-tin-co-ban-ngang {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     margin-bottom: 16px;
 }
 
@@ -4832,11 +4321,6 @@
     gap: 6px;
     font-size: 14px;
     color: var(--mau-chu);
-}
-
-.icon-meta {
-    font-size: 16px;
-    color: var(--mau-chu-phu);
 }
 
 .mo-ta-mon-an p {
@@ -4894,10 +4378,11 @@
 }
 
 .danh-sach-nguyen-lieu li {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 0;
+    padding: 8px 0 8px 32px;
     border-bottom: 1px dashed #e2eadf;
     font-size: 14px;
 }
@@ -4905,6 +4390,27 @@
 .danh-sach-nguyen-lieu li:last-child {
     border-bottom: none;
 }
+
+/* Icon nguyên liệu bên trái */
+.danh-sach-nguyen-lieu li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.danh-sach-nguyen-lieu li.nguyen-lieu-soi::before     { background-image: url("../images/icons/nguyen-lieu-soi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-thit::before    { background-image: url("../images/icons/nguyen-lieu-thit.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-rau::before     { background-image: url("../images/icons/nguyen-lieu-rau.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-hanh::before    { background-image: url("../images/icons/nguyen-lieu-hanh.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-toi::before     { background-image: url("../images/icons/nguyen-lieu-toi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-gia-vi::before  { background-image: url("../images/icons/nguyen-lieu-gia-vi.svg"); }
 
 /* Nút Bình luận dạng thanh xanh dài */
 .nut-binh-luan-full {
@@ -4917,9 +4423,10 @@
     font-weight: 600;
     border: none;
     cursor: pointer;
+    margin-top: 12px;
 }
 
-/* 4. Đánh số màu xanh lá cho Các bước chế biến */
+/* 4. Đánh số bước chế biến màu xanh */
 .cac-buoc-che-bien {
     padding-left: 0;
     list-style: none;
@@ -5004,263 +4511,24 @@
     border-radius: 4px;
 }
 
-/* =========================================================
-   STYLE THÀNH PHẦN CHI TIẾT MÓN ĂN
-   ========================================================= */
-
-/* 1. Ảnh lớn đơn lẻ */
-.hinh-anh-mon-an {
-    margin: 0;
-    width: 100%;
-}
-
-.hinh-anh-mon-an img {
-    width: 100%;
-    height: 310px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-/* 2. Tiêu đề & Đánh giá & Metadata Ngang bên phải */
-.tieu-de-mon-an {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--mau-chu);
-    margin: 0 0 6px 0;
-}
-
-.thong-tin-danh-gia {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.danh-gia {
-    color: #f59e0b;
-    font-size: 15px;
-}
-
-.so-luot-danh-gia {
-    font-size: 13px;
-    color: var(--mau-chu-phu);
-}
-
-.thong-tin-co-ban-ngang {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 14px;
-}
-
-.item-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--mau-chu);
-}
-
-.mo-ta-mon-an p {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--mau-chu-phu);
-    margin: 0 0 16px 0;
-}
-
-.khu-vuc-hanh-dong {
-    display: flex;
-    gap: 10px;
-}
-
-/* 3. Card Nguyên liệu & Bình luận */
-.khu-vuc-nguyen-lieu,
-.khu-vuc-cac-buoc {
-    background-color: #f8fbf6;
-    border: 1px solid #e2eadf;
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.khu-vuc-nguyen-lieu h2,
-.khu-vuc-cac-buoc h2,
-.video-huong-dan h2 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--mau-chinh);
-    margin: 0 0 12px 0;
-}
-
-.danh-sach-nguyen-lieu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.danh-sach-nguyen-lieu li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 7px 0;
-    border-bottom: 1px dashed #e2eadf;
-    font-size: 13px;
-}
-
-.danh-sach-nguyen-lieu li:last-child {
-    border-bottom: none;
-}
-
-.nut-binh-luan-full {
-    width: 100%;
-    background-color: var(--mau-chinh);
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-}
-
-/* 4. Đánh số bước chế biến màu xanh */
-.cac-buoc-che-bien {
-    padding-left: 0;
-    list-style: none;
-    counter-reset: buoc-count;
-    margin: 0;
-}
-
-.cac-buoc-che-bien li {
-    position: relative;
-    padding-left: 32px;
-    margin-bottom: 12px;
-    font-size: 13px;
-    line-height: 1.45;
-    color: var(--mau-chu);
-}
-
-.cac-buoc-che-bien li::before {
-    counter-increment: buoc-count;
-    content: counter(buoc-count);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 22px;
-    height: 22px;
-    background-color: var(--mau-chinh);
-    color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-/* 5. Video xem trước */
-.video-huong-dan {
-    background-color: #f8fbf6;
-    border: 1px solid #e2eadf;
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.video-preview-card {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.video-preview-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-}
-
-.nut-play-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: var(--mau-chinh);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    padding-left: 2px;
-}
-
-.thoi-luong-video {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: #ffffff;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* =========================================================
-   1. FIX KHUNG ẢNH VỪA VẶN MÀN HÌNH LAPTOP (KHÔNG BỊ DÀI VỜN)
-   ========================================================= */
-.khu-vuc-hinh-anh {
-    width: 100%;
-}
-
-.khu-vuc-hinh-anh .hinh-anh-mon-an {
-    margin: 0;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.khu-vuc-hinh-anh .hinh-anh-mon-an img {
-    width: 100%;
-    height: 260px !important;    /* Khống chế chiều cao chuẩn card */
-    max-height: 260px !important;
-    object-fit: cover;          /* Cắt ảnh vừa khung, không móp hình */
-    border-radius: 12px;
-    display: block;
-}
-
-/* =========================================================
-   2. HIỂN THỊ ICON TỪNG DÒNG NGUYÊN LIỆU (SVG IN IMAGES/ICONS)
-   ========================================================= */
-.danh-sach-nguyen-lieu li {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0 8px 32px !important; /* Dành khoảng trống 32px bên trái chứa Icon */
-    border-bottom: 1px dashed #e2eadf;
-    font-size: 13px;
-}
-
-/* Icon chung hiển thị bên trái */
-.danh-sach-nguyen-lieu li::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-}
-
-/* Load từng Icon SVG từ thư mục images/icons/ */
-.danh-sach-nguyen-lieu li.nguyen-lieu-soi::before     { background-image: url("../images/icons/nguyen-lieu-soi.svg"); }
-.danh-sach-nguyen-lieu li.nguyen-lieu-thit::before    { background-image: url("../images/icons/nguyen-lieu-thit.svg"); }
-.danh-sach-nguyen-lieu li.nguyen-lieu-rau::before     { background-image: url("../images/icons/nguyen-lieu-rau.svg"); }
-.danh-sach-nguyen-lieu li.nguyen-lieu-hanh::before    { background-image: url("../images/icons/nguyen-lieu-hanh.svg"); }
-.danh-sach-nguyen-lieu li.nguyen-lieu-toi::before     { background-image: url("../images/icons/nguyen-lieu-toi.svg"); }
-.danh-sach-nguyen-lieu li.nguyen-lieu-gia-vi::before  { background-image: url("../images/icons/nguyen-lieu-gia-vi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-bot::before        { background-image: url("../images/icons/nguyen-lieu-bot.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-ca::before         { background-image: url("../images/icons/nguyen-lieu-ca.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-chanh::before      { background-image: url("../images/icons/nguyen-lieu-chanh.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-dau::before        { background-image: url("../images/icons/nguyen-lieu-dau.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-dau-phong::before  { background-image: url("../images/icons/nguyen-lieu-dau-phong.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-duong::before      { background-image: url("../images/icons/nguyen-lieu-duong.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-gia::before        { background-image: url("../images/icons/nguyen-lieu-gia.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-gia-vi::before     { background-image: url("../images/icons/nguyen-lieu-gia-vi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-hanh::before       { background-image: url("../images/icons/nguyen-lieu-hanh.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-mat-ong::before    { background-image: url("../images/icons/nguyen-lieu-mat-ong.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-ngu-vi::before     { background-image: url("../images/icons/nguyen-lieu-ngu-vi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-nuoc-mam::before   { background-image: url("../images/icons/nguyen-lieu-nuoc-mam.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-nuoc-tuong::before { background-image: url("../images/icons/nguyen-lieu-nuoc-tuong.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-ot::before         { background-image: url("../images/icons/nguyen-lieu-ot.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-rau::before        { background-image: url("../images/icons/nguyen-lieu-rau.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-rau-thom::before   { background-image: url("../images/icons/nguyen-lieu-rau-thom.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-soi::before        { background-image: url("../images/icons/nguyen-lieu-soi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-thit::before       { background-image: url("../images/icons/nguyen-lieu-thit.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-tieu::before       { background-image: url("../images/icons/nguyen-lieu-tieu.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-toi::before        { background-image: url("../images/icons/nguyen-lieu-toi.svg"); }
+.danh-sach-nguyen-lieu li.nguyen-lieu-tom::before        { background-image: url("../images/icons/nguyen-lieu-tom.svg"); }

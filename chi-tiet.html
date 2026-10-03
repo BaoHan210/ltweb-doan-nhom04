@@ -24,60 +24,24 @@
   <header class="dau-trang">
 
     <p class="thuong-hieu">
-      Cook with me - Khơi nguồn cảm hứng vào bếp
+      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
+      <span class="khoi-chu-logo">
+        <span class="ten-website">Cook with me</span>
+        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+      </span>
     </p>
 
-    <form
-      class="o-tim-kiem"
-      action="danh-sach.html"
-      method="get"
-    >
-
-      <label for="search">
-        Tìm kiếm
-      </label>
-
-      <input
-        type="search"
-        id="search"
-        name="keyword"
-        placeholder="Tìm kiếm món ăn, công thức..."
-        autocomplete="off"
-      >
-
-      <button
-        class="nut"
-        type="submit"
-      >
-        Tìm kiếm
-      </button>
-
+    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+      <label for="search">Tìm kiếm</label>
+      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
+      <button class="nut" type="submit">Tìm kiếm</button>
     </form>
 
-    <div class="khu-vuc-tai-khoan">
-
-      <a
-        href="dang-ky.html"
-        class="nut nut-dang-ky"
-      >
-        Đăng ký
-      </a>
-
-      <a
-        href="dang-nhap.html"
-        class="nut nut-dang-nhap"
-      >
-        Đăng nhập
-      </a>
-
-    </div>
+    <div class="khu-vuc-tai-khoan"></div>
 
   </header>
 
-  <nav
-    class="thanh-dieu-huong"
-    aria-label="Điều hướng chính"
-  >
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
 
     <ul class="menu">
 
@@ -94,10 +58,7 @@
       </li>
 
       <li>
-        <a
-          class="dang-chon"
-          href="chi-tiet.html"
-        >
+        <a class="dang-chon" href="chi-tiet.html">
           Chi tiết công thức
         </a>
       </li>
@@ -134,11 +95,7 @@
         Yêu thích
       </span>
 
-      <span
-        class="so-luong-yeu-thich"
-        role="status"
-        aria-label="Số món ăn yêu thích"
-      >
+      <span class="so-luong-yeu-thich" role="status" aria-label="Số món ăn yêu thích">
         0
       </span>
 
@@ -151,10 +108,7 @@
     <!-- Container bố cục, không cần dùng section -->
     <div class="khung-chi-tiet">
 
-      <div
-        class="trang-thai-chi-tiet"
-        aria-live="polite"
-      ></div>
+      <div class="trang-thai-chi-tiet" aria-live="polite"></div>
 
       <article class="chi-tiet-mon-an">
 
@@ -163,10 +117,7 @@
 
           <figure class="hinh-anh-mon-an">
 
-            <img
-              src="images/cao-lau.jpg"
-              alt="Cao lầu Hội An"
-            >
+            <img src="images/cao-lau.jpg" alt="Cao lầu Hội An">
 
           </figure>
 
@@ -194,21 +145,18 @@
           <div class="thong-tin-co-ban-ngang">
 
             <div class="item-meta meta-khau-phan">
-              <span>
-                2 người
-              </span>
+              <img src="images/icons/khau-phan.svg" alt="Khẩu phần" class="icon-meta">
+              <span>2 người</span>
             </div>
 
             <div class="item-meta meta-thoi-gian">
-              <span>
-                60 phút
-              </span>
+              <img src="images/icons/thoi-gian.svg" alt="Thời gian" class="icon-meta">
+              <span>60 phút</span>
             </div>
 
             <div class="item-meta meta-do-kho">
-              <span>
-                Trung bình
-              </span>
+              <img src="images/icons/do-kho.svg" alt="Độ khó" class="icon-meta">
+              <span>Trung bình</span>
             </div>
 
           </div>
@@ -225,17 +173,11 @@
 
           <div class="khu-vuc-hanh-dong">
 
-            <button
-              type="button"
-              class="nut nut-yeu-thich nut-chinh"
-            >
+            <button type="button" class="nut nut-yeu-thich nut-chinh">
               ♡ Đã lưu
             </button>
 
-            <button
-              type="button"
-              class="nut nut-chia-se nut-phu"
-            >
+            <button type="button" class="nut nut-chia-se nut-phu">
               ➦ Chia sẻ
             </button>
 
@@ -312,10 +254,7 @@
 
           </section>
 
-          <button
-            type="button"
-            class="nut-binh-luan-full"
-          >
+          <button type="button" class="nut-binh-luan-full">
             Bình luận (24)
           </button>
 
@@ -366,10 +305,7 @@
 
               <div class="video-preview-card">
 
-                <img
-                  src="images/cao-lau.jpg"
-                  alt="Xem video hướng dẫn"
-                >
+                <img src="images/cao-lau.jpg" alt="Xem video hướng dẫn">
 
                 <div class="nut-play-video">
                   ▶
@@ -421,15 +357,9 @@
 
   </footer>
 
-  <script
-    type="module"
-    src="js/main.js"
-  ></script>
+  <script type="module" src="js/main.js"></script>
 
-  <script
-    type="module"
-    src="js/trang-chi-tiet.js"
-  ></script>
+  <script type="module" src="js/trang-chi-tiet.js"></script>
 
 </body>
 

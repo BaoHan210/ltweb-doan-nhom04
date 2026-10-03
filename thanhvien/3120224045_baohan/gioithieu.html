@@ -29,46 +29,26 @@
 
 <body class="trang">
 
-  <!-- HEADER -->
+  <!-- HEADER ĐỒNG BỘ CHUẨN ĐƯỜNG DẪN -->
   <header class="dau-trang">
 
     <p class="thuong-hieu">
-      Cook with me - Khơi nguồn cảm hứng vào bếp
+      <img src="../../images/icons/chef.svg" alt="Cook with me" class="logo-icon">
+      <span class="khoi-chu-logo">
+        <span class="ten-website">Cook with me</span>
+        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+      </span>
     </p>
 
-    <form class="o-tim-kiem" action="#" method="get">
-
+    <form class="o-tim-kiem" action="../../danh-sach.html" method="get">
       <label for="search">Tìm kiếm</label>
-
-      <input
-        type="search"
-        id="search"
-        name="keyword"
-        placeholder="Tìm kiếm món ăn, công thức..."
-      >
-
-      <button class="nut" type="submit">
-        Tìm kiếm
-      </button>
-
+      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
+      <button class="nut" type="submit">Tìm kiếm</button>
     </form>
 
-    <p class="tai-khoan">
-
-      <button class="nut" type="button">
-        Đăng ký
-      </button>
-
-      /
-
-      <button class="nut" type="button">
-        Đăng nhập
-      </button>
-
-    </p>
+    <div class="khu-vuc-tai-khoan"></div>
 
   </header>
-
 
   <!-- ĐIỀU HƯỚNG CHÍNH -->
   <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
@@ -118,6 +98,23 @@
       </li>
 
     </ul>
+
+    <!-- BỔ SUNG KHỐI YÊU THÍCH -->
+    <div class="khu-vuc-yeu-thich">
+
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
+
+      <span
+        class="so-luong-yeu-thich"
+        role="status"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
+
+    </div>
 
   </nav>
 
@@ -520,6 +517,12 @@
     </nav>
 
   </footer>
+
+    <!-- JavaScript chung của nhóm -->
+  <script type="module" src="../../js/main.js"></script>
+
+  <!-- JavaScript riêng cho trang cá nhân -->
+  <script type="module" src="js/canhan.js"></script>
 
 </body>
 

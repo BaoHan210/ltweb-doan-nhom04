@@ -26,36 +26,6 @@
 .trang > main { grid-area: chinh; min-width: 0; }
 .trang > footer { grid-area: chan; }
 
-/* Bố cục Desktop: Cột Sidebar chuẩn 248px của Trang Khám phá */
-@media (min-width: 992px) {
-    .trang {
-        max-width: 1440px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 248px minmax(0, 1fr);
-        grid-template-areas:
-            "dau dau"
-            "menu chinh"
-            "menu chan";
-    }
-
-    .trang > main {
-        grid-area: chinh;
-        min-width: 0;
-    }
-
-    .trang > footer {
-        grid-area: chan;
-    }
-}
-
-@media (min-width: 1200px) {
-    .trang > .dau-trang {
-        grid-template-columns: 300px minmax(420px, 1fr) auto;
-        gap: 34px;
-    }
-}
-
 /* =====================================================================
    01. TRANG CHỦ - BỐ CỤC COOK WITH ME
    Cấu trúc:
@@ -234,40 +204,6 @@
     max-width: 1440px;
 }
 
-@media (min-width: 992px) {
-    .trang-kham-pha {
-        max-width: 1440px;
-        margin: 0 auto;
-
-        grid-template-areas:
-            "dau dau"
-            "menu chinh"
-            "menu chan";
-    }
-
-
-    .trang-kham-pha > .kham-pha {
-        grid-area: chinh;
-        min-width: 0;
-    }
-
-    .trang-kham-pha > footer {
-        grid-area: chan;
-    }
-}
-
-/* Tablet/mobile */
-@media (max-width: 991px) {
-    .trang-kham-pha {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "dau"
-            "menu"
-            "chinh"
-            "chan";
-    }
-}
-
 /* ==============================
    4. TRANG CHI TIẾT CÔNG THỨC
    ============================== */
@@ -287,7 +223,6 @@
 
     font-size: var(--co-chu-tieu-de);
 }
-
 
 /* Một công thức */
 /* =========================================================
@@ -309,36 +244,6 @@
     gap: 16px;
     padding: 12px;
     align-items: start;
-}
-
-/* Định danh các khu vực theo grid-area */
-.chi-tiet-mon-an > .tieu-de-mon-an     { grid-area: tieude; }
-.chi-tiet-mon-an > .hinh-anh-mon-an    { grid-area: anh; }
-.chi-tiet-mon-an > .thong-tin-bai-chia-se { grid-area: chia; }
-.chi-tiet-mon-an > .thong-tin-cong-thuc { grid-area: congthuc; }
-.chi-tiet-mon-an > .nguyen-lieu        { grid-area: nguyen; }
-.chi-tiet-mon-an > .cach-thuc-hien     { grid-area: cach; }
-.chi-tiet-mon-an > .video-huong-dan    { grid-area: video; }
-
-/* Bố cục Màn hình lớn (Desktop >= 768px) */
-@media (min-width: 768px) {
-    .chi-tiet-mon-an {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-areas:
-            "tieude tieude"
-            "anh chia"
-            "anh congthuc"
-            "nguyen cach"
-            "video video";
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .chi-tiet-mon-an .hinh-anh-mon-an img {
-        width: 100%;
-        height: 350px;
-        object-fit: cover;
-    }
 }
 
 /* =========================================================
@@ -409,51 +314,6 @@
 .danh-sach-di-cho[hidden] {
     display: none;
 }
-
-
-/* =========================================================
-   DESKTOP (Màn hình lớn >= 992px): Khớp 100% Bố cục Hình 1
-   ========================================================= */
-@media (min-width: 992px) {
-    .goi-y-trang {
-        padding: 18px 24px;
-    }
-
-    /* Form lọc dàn 2 phần: Nguyên liệu bên trái (1.2fr) - 3 ô Thông tin bên phải (3fr) */
-    .form-goi-y {
-        grid-template-columns: 1.2fr 3fr;
-        column-gap: 20px;
-        row-gap: 16px;
-        align-items: start;
-    }
-
-    .form-goi-y .nhom-nguyen-lieu {
-        grid-column: 1;
-    }
-
-    /* 3 ô: Ngân sách, Thời gian, Số người ăn dàn đều 3 cột ngang */
-    .form-goi-y .nhom-thong-tin {
-        grid-column: 2;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        column-gap: 12px;
-    }
-
-    /* Nút "Tìm món phù hợp" căn giữa rộng hết hàng bên dưới */
-    .form-goi-y .hanh-dong-goi-y {
-        grid-column: 1 / -1;
-        margin-top: 8px;
-    }
-
-    /* Danh sách món ăn phù hợp chia chuẩn 3 - 4 cột nằm ngang */
-    .mon-duoc-goi-y {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 16px;
-    }
-}
-
-/* =========================================================
-   5. TRANG CÀI ĐẶT
-   ========================================================= */
 
 /* ==============================
    6. TRANG CÀI ĐẶT
@@ -1003,122 +863,6 @@
     margin: 0;
 
     padding-left: 20px;
-}
-
-@media (min-width: 768px) {
-    /* ==========================
-       Hồ sơ thành viên
-       ========================== */
-
-    .ho-so-trang {
-        padding: 16px;
-
-        grid-template-columns:
-            minmax(0, 1fr)
-            minmax(0, 1fr);
-
-        grid-template-areas:
-            "tieu-de tieu-de"
-            "thong-tin thong-tin"
-            "du-an ky-nang"
-            "thoi-khoa-bieu thoi-khoa-bieu"
-            "quay-lai quay-lai";
-
-        gap: 16px;
-    }
-
-
-    .thong-tin-chung {
-
-        grid-template-rows:
-            auto
-            1fr;
-
-        gap: 10px 20px;
-    }
-
-
-    .thong-tin-chung > h2 {
-        grid-column: 1 / -1;
-    }
-
-
-    .anh-dai-dien {
-        text-align: center;
-    }
-}
-
-@media (min-width: 992px) {
-    /* ==========================
-       Hồ sơ thành viên
-       ========================== */
-
-    .ho-so-trang {
-        padding: 20px;
-    }
-}
-/* =========================================================
-   CHI TIẾT MÓN ĂN - BỐ CỤC CHUẨN THEO ẢNH MẪU
-   ========================================================= */
-
-.chi-tiet-trang {
-    padding: 20px 24px 40px;
-}
-
-.chi-tiet-mon-an {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-@media (min-width: 850px) {
-    .chi-tiet-mon-an {
-        /* Chia 2 cột tỷ lệ 1:1 bằng nhau tuyệt đối */
-        grid-template-columns: repeat(2, minmax(0, 1fr)); 
-        grid-template-areas:
-            "anh thongtin"
-            "cottrai cotphai";
-        gap: 24px;
-        align-items: start;
-    }
-
-    .khu-vuc-hinh-anh {
-        grid-area: anh;
-        width: 100%;
-    }
-
-    .thong-tin-mon-an {
-        grid-area: thongtin;
-        width: 100%;
-    }
-
-    .cot-trai-chi-tiet {
-        grid-area: cottrai;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .cot-phai-chi-tiet {
-        grid-area: cotphai;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-}
-
-/* Bố cục Grid cho trang Chi tiết món ăn */
-@media (min-width: 850px) {
-    .chi-tiet-mon-an {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .chi-tiet-mon-an > .tieu-de-mon-an,
-    .chi-tiet-mon-an > .thong-tin-cong-thuc {
-        grid-column: 1 / -1; /* Trải dài toàn bộ chiều rộng */
-    }
 }
 
 /* =========================================================
