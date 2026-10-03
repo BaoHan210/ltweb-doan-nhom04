@@ -113,16 +113,15 @@ const taoKhuVucTaiKhoan = (
 
 
     /* =====================================================
-       ĐÃ ĐĂNG NHẬP
-       ===================================================== */
+   ĐÃ ĐĂNG NHẬP (TRANG CÁ NHÂN NGƯỜI DÙNG / KHÁCH HÀNG)
+   ===================================================== */
 
-    // Tự động kiểm tra vị trí file để trỏ đường dẫn trang cá nhân đúng 100%
-    const đangỞThưMụcThànhViên = window.location.pathname.includes('/thanhvien/');
-    
-    // Nếu ở trong thư mục thành viên thì trỏ thẳng 'gioithieu.html', nếu ở ngoài thì trỏ vào thư mục
-    const duongDanTrangCaNhan = đangỞThưMụcThànhViên
-        ? 'gioithieu.html'
-        : 'thanhvien/3120224045_baohan/gioithieu.html';
+// Nếu người dùng đang duyệt ở thư mục con (thanhvien/...) thì lùi ra gốc, ngược lại gọi ca-nhan.html
+const đangỞThưMụcThànhViên = window.location.pathname.includes('/thanhvien/');
+
+const duongDanTrangCaNhan = đangỞThưMụcThànhViên
+    ? '../../ca-nhan.html'
+    : 'ca-nhan.html';
 
     // Avatar mặc định nếu người dùng chưa đặt hoặc không có ảnh
     const duongDanAvatar =
