@@ -26,20 +26,6 @@
 .trang > main { grid-area: chinh; min-width: 0; }
 .trang > footer { grid-area: chan; }
 
-/* =====================================================================
-   01. TRANG CHỦ - BỐ CỤC COOK WITH ME
-   Cấu trúc:
-   - Tiêu đề trang
-   - Hero
-   - Ba thẻ giới thiệu
-   - Khu vực nội dung chính:
-       + Banner Tủ lạnh bên trái
-       + Món ăn nổi bật bên phải
-       + Gợi ý người theo dõi bên phải
-   - Bảng tin
-   ===================================================================== */
-
-
 /* =========================================================
    KHUNG NỘI DUNG TRANG CHỦ
    ========================================================= */
@@ -246,75 +232,6 @@
     align-items: start;
 }
 
-/* =========================================================
-   4. TRANG GỢI Ý MÓN ĂN - BỐ CỤC CHUẨN (03-bo-cuc.css)
-   ========================================================= */
-
-/* Mặc định trên Điện thoại (1 cột) */
-.goi-y-trang {
-    min-width: 0;
-    padding: 12px 0;
-}
-
-/* Tiêu đề ẩn/hiện kỹ thuật */
-.goi-y-trang > .tieu-de-goi-y {
-    margin: 0 0 16px;
-}
-
-.tu-lanh-cua-toi {
-    min-width: 0;
-}
-
-/* Form lọc trên mobile */
-.form-goi-y {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    min-width: 0;
-}
-
-.form-goi-y .nhom-nguyen-lieu {
-    grid-column: 1;
-}
-
-.form-goi-y .nhom-thong-tin {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    min-width: 0;
-}
-
-.nhom-thong-tin legend {
-    grid-column: 1 / -1;
-}
-
-.form-goi-y .hanh-dong-goi-y {
-    grid-column: 1;
-    text-align: center;
-}
-
-/* Món ăn gợi ý trên mobile (1 cột) */
-.mon-duoc-goi-y {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 20px;
-    min-width: 0;
-}
-
-.mon-duoc-goi-y > h2 {
-    grid-column: 1 / -1;
-}
-
-.danh-sach-di-cho {
-    min-width: 0;
-    margin-top: 20px;
-}
-
-.danh-sach-di-cho[hidden] {
-    display: none;
-}
-
 /* ==============================
    6. TRANG CÀI ĐẶT
    ============================== */
@@ -463,57 +380,6 @@
     }
 
 /* =========================================================
-   CAI DAT - THONG TIN TAI KHOAN + AVATAR
-   Chi chinh sua khu vuc Thong tin tai khoan.
-   Khong thay doi bo cuc cua cac khu vuc con lai.
-   ========================================================= */
-
-@media (min-width: 768px) {
-    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan {
-        display: grid;
-        grid-template-columns: 126px minmax(0, 1fr);
-        grid-template-rows: repeat(3, auto);
-        column-gap: 22px;
-        row-gap: 8px;
-        align-items: center;
-    }
-
-    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan > legend {
-        grid-column: 1 / -1;
-    }
-
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-avatar {
-        grid-column: 1;
-        grid-row: 1 / span 3;
-        align-self: center;
-        margin: 0;
-    }
-
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-ho-ten,
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-email,
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-so-dien-thoai {
-        grid-column: 2;
-        margin: 0;
-    }
-}
-
-@media (max-width: 767px) {
-    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-avatar,
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-ho-ten,
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-email,
-    .trang-cai-dat .card-thong-tin-ca-nhan .dong-so-dien-thoai {
-        grid-column: 1;
-        grid-row: auto;
-    }
-}
-
-/* =========================================================
    BỐ CỤC CHUẨN TRANG LIÊN HỆ (THEO MẪU PHOTO)
    ========================================================= */
 
@@ -571,15 +437,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
-}
-
-@media (min-width: 850px) {
-    .khu-vuc-lien-he {
-        display: grid;
-        grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
-        align-items: start; /* Giúp các card bên phải không bị kéo dài xuống dưới */
-        gap: 28px;
-    }
 }
 
 /* ==============================
@@ -670,11 +527,6 @@
     padding: 18px 20px 28px;
 }
 
-@media (min-width: 768px) {
-    .trang-kham-pha .kham-pha {
-        padding: 22px 28px 34px;
-    }
-}
 
 /* Hero */
 .trang-kham-pha .hero-kham-pha {
@@ -750,23 +602,6 @@
     max-width: none;
     min-width: 0;
 }
-
-@media (min-width: 992px) {
-    .trang-gioi-thieu > .gioi-thieu-trang {
-        padding: 20px 30px 34px;
-    }
-}
-
-@media (max-width: 767px) {
-    .trang-gioi-thieu > .gioi-thieu-trang {
-        padding: 14px 12px 24px;
-        gap: 12px;
-    }
-}
-
-/* =========================================================
-   8. HỒ SƠ THÀNH VIÊN
-   ========================================================= */
 
 /* ==============================
    9. HỒ SƠ THÀNH VIÊN
@@ -971,98 +806,21 @@
     display: none;
 }
 
-
 /* =========================================================
-   TABLET
+   TRANG GỢI Ý MÓN ĂN - BỐ CỤC MỚI (03-bo-cuc.css)
    ========================================================= */
-
-@media (min-width: 768px) and (max-width: 991px) {
-
-    .trang-goi-y .goi-y-trang {
-        padding: 16px 20px 22px;
-    }
-
-    .trang-goi-y .form-goi-y {
-        grid-template-columns: 1fr;
-    }
-
-    .trang-goi-y .form-goi-y .nhom-nguyen-lieu,
-    .trang-goi-y .form-goi-y .nhom-thong-tin {
-        grid-column: 1;
-    }
-
-    .trang-goi-y .mon-duoc-goi-y {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+.goi-y-trang {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px;
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 767px) {
-
-    .trang-goi-y .goi-y-trang {
-        padding: 12px 14px 20px;
-    }
-
-    .trang-goi-y .form-goi-y {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .trang-goi-y .form-goi-y .nhom-nguyen-lieu,
-    .trang-goi-y .form-goi-y .nhom-thong-tin {
-        grid-column: 1;
-    }
-
-    .trang-goi-y .form-goi-y .nhom-thong-tin {
-        grid-template-columns: 1fr;
-    }
-
-    .trang-goi-y .form-goi-y .nhom-thong-tin legend {
-        grid-column: 1;
-    }
-
-    .trang-goi-y .form-goi-y .hanh-dong-goi-y {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .trang-goi-y .form-goi-y .hanh-dong-goi-y .nut {
-        width: 100%;
-    }
-
-    .trang-goi-y .mon-duoc-goi-y {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ================================
-   Responsive trang cài đặt
-   ================================ */
-
-@media (max-width: 767px) {
-
-    .khu-vuc-cai-dat {
-        padding: 16px;
-    }
-
-    .hanh-dong-cai-dat,
-    .hanh-dong-bao-mat {
-        flex-direction: column;
-    }
-
-    .hanh-dong-cai-dat .nut,
-    .hanh-dong-bao-mat .nut {
-        width: 100%;
-    }
-
-    .form-doi-mat-khau {
-        padding: 16px;
-    }
+/* Lưới món ăn 4 cột trên Desktop */
+.danh-sach-mon-goi-y {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 14px;
 }
 
 /* =====================================================================

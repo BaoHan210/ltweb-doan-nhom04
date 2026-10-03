@@ -3,21 +3,25 @@
  * Chức năng: 
  *   1. Gợi ý từ khóa: Nhấp tag gợi ý để tự động điền vào thanh tìm kiếm.
  *   2. Modal đăng nhập: Bật / tắt cửa sổ đăng nhập thành viên cộng đồng bếp (hỗ trợ phím Escape).
- * Cách thử: Dùng phím Tab duyệt qua các thẻ gợi ý/nút Đăng nhập rồi nhấn Enter; nhấn Escape để đóng Modal.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Tương tác gợi ý nhanh từ khóa nấu ăn
   const searchInput = document.getElementById("search");
+  const searchForm = searchInput ? searchInput.closest("form") : null;
   const quickTags = document.querySelectorAll(".tag-mon-an");
 
   quickTags.forEach((tag) => {
     tag.addEventListener("click", () => {
       if (searchInput) {
-        searchInput.value = tag.textContent.replace("#", "").trim();
+        const tuKhoa = tag.textContent.replace("#", "").trim();
+        searchInput.value = tuKhoa;
         searchInput.focus();
-        const len = searchInput.value.length;
-        searchInput.setSelectionRange(len, len);
+
+        // Nếu có form tìm kiếm thì gửi form để chuyển trang sang danh-sach.html
+        if (searchForm) {
+          searchForm.submit();
+        }
       }
     });
   });
@@ -27,18 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginModal = document.getElementById("modal-auth");
   const closeLoginBtn = document.getElementById("btn-close-login");
 
-  // Hàm mở modal: tự động kích hoạt vạch con trỏ nhấp nháy ngay lập tức bằng phím
   const moModal = () => {
     if (!loginModal) return;
     loginModal.style.display = "flex";
     
-    // Sử dụng requestAnimationFrame kết hợp setTimeout để đảm bảo modal đã render xong trên màn hình
     requestAnimationFrame(() => {
       setTimeout(() => {
         const firstInput = loginModal.querySelector("input");
         if (firstInput) {
           firstInput.focus();
-          // Đặt con trỏ vào vị trí 0 để ép trình duyệt bật ngay vạch nhấp nháy (|) mà không cần chuột
           try {
             firstInput.setSelectionRange(0, 0);
           } catch (e) {
@@ -49,11 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Hàm đóng modal
   const dongModal = () => {
     if (!loginModal) return;
     loginModal.style.display = "none";
-    // Trả lại tiêu điểm cho nút mở modal để tiếp tục duyệt phím Tab
     if (loginBtn) {
       loginBtn.focus();
     }
@@ -67,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     closeLoginBtn.addEventListener("click", dongModal);
   }
 
-  // Đóng modal khi nhấp chuột ra ngoài vùng nền mờ
   if (loginModal) {
     loginModal.addEventListener("click", (event) => {
       if (event.target === loginModal) {
@@ -76,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Bổ sung xử lý bàn phím: Nhấn phím Escape để đóng Modal ngay lập tức
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && loginModal && loginModal.style.display === "flex") {
       dongModal();

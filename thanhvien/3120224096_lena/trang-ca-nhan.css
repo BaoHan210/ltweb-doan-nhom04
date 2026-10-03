@@ -268,3 +268,61 @@
   border-left: 4px solid var(--mau-chinh);
   padding-left: 12px;
 }
+
+/* ==============================
+   9. TƯƠNG TÁC ĐÁNH GIÁ & CHIA SẺ
+   ============================== */
+
+.ho-so-trang > .danh-gia-ca-nhan,
+.ho-so-trang > .sao-chep-lien-ket {
+  min-width: 0;
+  padding: var(--khoang-cach);
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen);
+}
+
+.danh-gia-ca-nhan h2,
+.sao-chep-lien-ket h2 {
+  margin: 0 0 12px;
+  color: var(--mau-chinh);
+  font-size: 20px;
+}
+
+.rating-list {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rating-button {
+  padding: 8px 16px;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen-phu);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.rating-button:hover,
+.rating-button.rating-selected {
+  background-color: var(--mau-chinh);
+  color: var(--mau-nen);
+  border-color: var(--mau-chinh);
+}
+
+.sao-chep-lien-ket button {
+  padding: 8px 16px;
+  border: 1px solid var(--mau-chinh);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-chinh);
+  color: var(--mau-nen);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sao-chep-lien-ket button:hover {
+  background-color: var(--mau-nhan);
+  border-color: var(--mau-nhan);
+}

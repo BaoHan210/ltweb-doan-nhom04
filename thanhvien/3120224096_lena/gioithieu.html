@@ -25,18 +25,18 @@
 
 <body class="trang">
 
-  <!-- HEADER -->
+  <!-- HEADER ĐỒNG BỘ CHUẨN ĐƯỜNG DẪN -->
   <header class="dau-trang">
 
     <p class="thuong-hieu">
-      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
+      <img src="../../images/icons/chef.svg" alt="Cook with me" class="logo-icon">
       <span class="khoi-chu-logo">
         <span class="ten-website">Cook with me</span>
         <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
       </span>
     </p>
 
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+    <form class="o-tim-kiem" action="../../danh-sach.html" method="get">
       <label for="search">Tìm kiếm</label>
       <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
       <button class="nut" type="submit">Tìm kiếm</button>
@@ -45,7 +45,6 @@
     <div class="khu-vuc-tai-khoan"></div>
 
   </header>
-
 
   <!-- ĐIỀU HƯỚNG CHÍNH -->
   <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
@@ -96,6 +95,23 @@
 
     </ul>
 
+    <!-- BỔ SUNG KHỐI YÊU THÍCH -->
+    <div class="khu-vuc-yeu-thich">
+
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
+
+      <span
+        class="so-luong-yeu-thich"
+        role="status"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
+
+    </div>
+
   </nav>
 
 
@@ -107,7 +123,7 @@
     </h1>
 
 
-    <!-- THÔNG TIN CHUNG -->
+    <!-- THÔNG TIN CHUNG (ĐÃ BỎ THẺ SECTION ĐÓNG THỪA BÊN TRONG) -->
     <section class="thong-tin-chung">
 
       <h2>
@@ -124,11 +140,10 @@
         >
 
         <figcaption>
-Ảnh chân dung thành viên Lê Thị A Na - Nhóm 04.
+          Ảnh chân dung thành viên Lê Thị A Na - Nhóm 04.
         </figcaption>
 
       </figure>
-
 
       <p>
         Xin chào! Tôi là Lê Thị A Na, thành viên của Nhóm 04.
@@ -136,7 +151,6 @@
         Cook with me - mạng xã hội chia sẻ công thức, hình ảnh
         và trải nghiệm nấu ăn dành cho người đam mê ẩm thực.
       </p>
-    </section>
 
       <ul class="thong-tin-ca-nhan">
 
@@ -157,6 +171,8 @@
         </li>
 
       </ul>
+
+    </section>
 
 
     <!-- DỰ ÁN VÀ SỞ THÍCH -->
@@ -280,7 +296,7 @@
               </td>
 
               <td>
-Nghiên cứu cơ sở dữ liệu
+                Nghiên cứu cơ sở dữ liệu
               </td>
 
             </tr>
@@ -377,7 +393,12 @@ Nghiên cứu cơ sở dữ liệu
 
   </footer>
 
-<script src="js/canhan.js"></script>
+  <!-- JavaScript chung của nhóm -->
+  <script type="module" src="../../js/main.js"></script>
+
+  <!-- JavaScript riêng cho trang cá nhân -->
+  <script type="module" src="js/canhan.js"></script>
+
 </body>
 
 </html>

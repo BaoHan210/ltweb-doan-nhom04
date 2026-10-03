@@ -82,6 +82,15 @@ document.addEventListener("DOMContentLoaded", function () {
     linkSection.appendChild(copyButton);
     linkSection.appendChild(copyMessage);
 
-    document.querySelector(".ho-so-trang").appendChild(ratingSection);
-    document.querySelector(".ho-so-trang").appendChild(linkSection);
+    // Chèn 2 khối tương tác vào trước nút Quay lại trang chủ
+    const mainContainer = document.querySelector(".ho-so-trang");
+    const quayLaiElement = document.querySelector(".quay-lai");
+
+    if (mainContainer !== null && quayLaiElement !== null) {
+        mainContainer.insertBefore(ratingSection, quayLaiElement);
+        mainContainer.insertBefore(linkSection, quayLaiElement);
+    } else if (mainContainer !== null) {
+        mainContainer.appendChild(ratingSection);
+        mainContainer.appendChild(linkSection);
+    }
 });

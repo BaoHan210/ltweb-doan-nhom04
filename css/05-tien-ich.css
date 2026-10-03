@@ -441,6 +441,27 @@ html, body {
     }
 }
 
+/* Responsive Tablet & Mobile */
+@media (max-width: 900px) {
+  .hero-gioi-thieu-mau {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .hero-image-wrapper {
+    height: 200px;
+  }
+}
+
+/* Responsive di động */
+@media (max-width: 900px) {
+  .gioi-thieu-grid-2col,
+  .gioi-thieu-grid-doi-ngu,
+  .hero-gioi-thieu-mau {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 991px) {
     .trang-gioi-thieu .hero-gioi-thieu {
         min-height: 300px;
@@ -770,4 +791,239 @@ html, body {
         flex-direction: column;
         gap: 20px;
     }
+}
+
+/* =========================================================
+   CAI DAT - THONG TIN TAI KHOAN + AVATAR
+   Chi chinh sua khu vuc Thong tin tai khoan.
+   Khong thay doi bo cuc cua cac khu vuc con lai.
+   ========================================================= */
+
+@media (min-width: 768px) {
+    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan {
+        display: grid;
+        grid-template-columns: 126px minmax(0, 1fr);
+        grid-template-rows: repeat(3, auto);
+        column-gap: 22px;
+        row-gap: 8px;
+        align-items: center;
+    }
+
+    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan > legend {
+        grid-column: 1 / -1;
+    }
+
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-avatar {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        align-self: center;
+        margin: 0;
+    }
+
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-ho-ten,
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-email,
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-so-dien-thoai {
+        grid-column: 2;
+        margin: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .trang-cai-dat .card-thong-tin-ca-nhan .khung-thong-tin-ca-nhan {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-avatar,
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-ho-ten,
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-email,
+    .trang-cai-dat .card-thong-tin-ca-nhan .dong-so-dien-thoai {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+/* Responsive Mobile */
+@media (max-width: 640px) {
+  .noi-dung-thong-tin-ca-nhan {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .dong-form-ngang {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .dong-form-ngang label {
+    width: 100%;
+  }
+  
+  .dong-form-ngang input,
+  .dong-form-ngang select {
+    width: 100%;
+  }
+}
+
+/* Áp dụng CSS Grid 2 cột cho Form Cài đặt trên Desktop */
+@media (min-width: 768px) {
+  .form-cai-dat {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Chia 2 cột bằng nhau */
+    gap: 20px; /* Khoảng cách giữa các card */
+    align-items: start;
+  }
+
+  /* Khối 1: Thông tin cá nhân chiếm toàn bộ 2 cột dòng 1 */
+  .card-thong-tin-ca-nhan {
+    grid-column: 1 / -1;
+  }
+
+  /* Nút hành động Lưu/Khôi phục nằm ở dưới cùng chiếm full width */
+  .hanh-dong-cai-dat {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Bố cục 2 cột cho trang Cài đặt trên Desktop/Tablet */
+@media (min-width: 768px) {
+  #form-cai-dat,
+  .form-cai-dat-mau {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* Khối 1 & Nút lưu dưới cùng chiếm trọn 2 cột */
+  .card-thong-tin-ca-nhan,
+  .hanh-dong-cai-dat {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .trang-goi-y .goi-y-trang {
+        padding: 16px 20px 22px;
+    }
+
+    .trang-goi-y .form-goi-y {
+        grid-template-columns: 1fr;
+    }
+
+    .trang-goi-y .form-goi-y .nhom-nguyen-lieu,
+    .trang-goi-y .form-goi-y .nhom-thong-tin {
+        grid-column: 1;
+    }
+
+    .trang-goi-y .mon-duoc-goi-y {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .trang-goi-y .goi-y-trang {
+        padding: 12px 14px 20px;
+    }
+
+    .trang-goi-y .form-goi-y {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .trang-goi-y .form-goi-y .nhom-nguyen-lieu,
+    .trang-goi-y .form-goi-y .nhom-thong-tin {
+        grid-column: 1;
+    }
+
+    .trang-goi-y .form-goi-y .nhom-thong-tin {
+        grid-template-columns: 1fr;
+    }
+
+    .trang-goi-y .form-goi-y .nhom-thong-tin legend {
+        grid-column: 1;
+    }
+
+    .trang-goi-y .form-goi-y .hanh-dong-goi-y {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .trang-goi-y .form-goi-y .hanh-dong-goi-y .nut {
+        width: 100%;
+    }
+
+    .trang-goi-y .mon-duoc-goi-y {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsive Tablet */
+@media (max-width: 991px) {
+  .danh-sach-mon-goi-y {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Responsive Mobile */
+@media (max-width: 600px) {
+  .danh-sach-mon-goi-y {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 640px) {
+  .banner-tu-lanh {
+    padding: 16px;
+    flex-direction: column;
+    text-align: center;
+  }
+  .noi-dung-banner {
+    padding-left: 0;
+    text-align: center;
+  }
+  .tieu-de-banner {
+    font-size: 26px;
+  }
+}
+
+/* Responsive cho Tablet và Mobile */
+@media (max-width: 868px) {
+  .khong-gian-loc {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .khong-gian-loc {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .mon-duoc-goi-y-moi .danh-sach-mon-goi-y {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .mon-duoc-goi-y-moi .danh-sach-mon-goi-y {
+    grid-template-columns: 1fr;
+  }
 }

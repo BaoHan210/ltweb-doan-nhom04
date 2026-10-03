@@ -22,7 +22,7 @@
 
 <body class="trang trang-kham-pha">
 
-<header class="dau-trang">
+  <header class="dau-trang">
 
     <p class="thuong-hieu">
       <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
@@ -177,12 +177,12 @@
         <!-- Hàng trên: Ô Tìm kiếm bên trái + Ô Sắp xếp bên phải -->
         <div class="hang-tim-kiem-bo-loc">
 
+          <!-- ĐÃ BỎ onsubmit NỘI TUYẾN TẠI ĐÂY -->
           <form
             class="o-tim-mon-an"
             id="o-tim-mon-an"
             action="danh-sach.html"
             method="get"
-            onsubmit="event.preventDefault();"
           >
 
             <label for="tim-mon-an">
@@ -222,7 +222,7 @@
         </div>
 
 
-        <!-- Hàng dưới: Thanh các nút bấm lọc theo Danh mục -->
+        <!-- Hàng dưới: Thanh các nút bấm lọc theo Danh mục đã được chuẩn hóa theo mon-an.json -->
         <nav
           class="bo-loc-mon-an"
           aria-label="Lọc món ăn"
@@ -263,9 +263,17 @@
           <button
             class="nut-bo-loc"
             type="button"
-            data-danh-muc="Món ăn vặt"
+            data-danh-muc="Món rau"
           >
-            Món ăn vặt
+            Món rau
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món khai vị"
+          >
+            Món khai vị
           </button>
 
           <button
@@ -274,14 +282,6 @@
             data-danh-muc="Đồ uống"
           >
             Đồ uống
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món nhanh"
-          >
-            Món nhanh
           </button>
 
           <button

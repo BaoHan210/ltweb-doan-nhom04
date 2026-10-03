@@ -611,42 +611,6 @@ const taiDuLieuMonAn = async () => {
     }
 };
 
-const xuLyTimKiemHeader = (
-    event
-) => {
-    event.preventDefault();
-
-    const oTimKiemHeader =
-        document.querySelector(
-            '#search'
-        );
-
-    if (
-        oTimKiemHeader === null
-    ) {
-        return;
-    }
-
-    const tuKhoa =
-        oTimKiemHeader.value.trim();
-
-    const url =
-        new URL(
-            'danh-sach.html',
-            window.location.href
-        );
-
-    if (tuKhoa !== '') {
-        url.searchParams.set(
-            'keyword',
-            tuKhoa
-        );
-    }
-
-    window.location.href =
-        url.toString();
-};
-
 const xuLyChonDanhMuc = (
     event
 ) => {
@@ -736,6 +700,16 @@ const xuLyYeuThich = (
 };
 
 const khoiTaoTrangDanhSach = () => {
+    // LẮNG NGHE SỰ KIỆN SUBMIT FORM TÌM KIẾM TẠI ĐÂY
+    const formTimMonAn =
+        document.querySelector('#o-tim-mon-an');
+
+    if (formTimMonAn !== null) {
+        formTimMonAn.addEventListener('submit', (event) => {
+            event.preventDefault();
+        });
+    }
+
     const oTimKiem =
         document.querySelector(
             '#tim-mon-an'
