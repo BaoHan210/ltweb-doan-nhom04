@@ -155,8 +155,8 @@
   line-height: 1.5;
   text-align: left;
 }
-/* Khung cuộn ngang riêng cho bảng */
 
+/* Khung cuộn ngang riêng cho bảng */
 .khung-bang {
   width: 100%;
   min-width: 0;
@@ -233,11 +233,114 @@
 }
 
 /* ==============================
-   8. RESPONSIVE - TABLET
+   8. SỬA LỖI HEADER BỊ CẮT VÀ TRÀN NGANG MÀN HÌNH 360PX
+   Ghi đè .dau-trang của 04-thanh-phan.css nạp sau
+   ============================== */
+
+@media (max-width: 480px) {
+  /* Ép header xếp dọc, vừa khít 100% viewport */
+  header.dau-trang,
+  .dau-trang {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 10px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .dau-trang .thuong-hieu {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Form tìm kiếm co giãn 100% */
+  .dau-trang form.o-tim-kiem {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .dau-trang form.o-tim-kiem input[type="search"] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Khu vực nút tài khoản */
+  .dau-trang .tai-khoan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Đảm bảo toàn bộ khung nội dung không tràn */
+  .ho-so-trang {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+}
+
+/* ==============================
+   9. ĐỊNH KIỂU NÚT TIẾP CẬN BÀN PHÍM (A11Y)
+   (Thẻ gợi ý từ khóa và nút đóng modal)
+   ============================== */
+
+/* Nút gợi ý từ khóa */
+button.tag-mon-an {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  margin-right: 8px;
+  color: #d35400;
+  font-size: 13px;
+  font-family: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+button.tag-mon-an:hover {
+  opacity: 0.8;
+}
+
+/* Nút đóng modal */
+#btn-close-login {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  color: #666;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+#btn-close-login:hover {
+  color: #d35400;
+}
+
+/* Trạng thái focus-visible khi duyệt bằng bàn phím (Tab) */
+button.tag-mon-an:focus-visible,
+#btn-close-login:focus-visible {
+  outline: 2px solid var(--mau-chinh);
+  outline-offset: 2px;
+}
+
+/* ==============================
+   10. RESPONSIVE - TABLET
    ============================== */
 
 @media (min-width: 768px) {
-
   /* Thông tin chung */
   .ho-so-trang > .thong-tin-chung {
     grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
