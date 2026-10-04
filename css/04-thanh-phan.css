@@ -882,19 +882,6 @@
   border-radius: 6px;
 }
 
-/* Responsive */
-@media (max-width: 991px) {
-  .mon-duoc-goi-y-moi .danh-sach-mon-goi-y {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .mon-duoc-goi-y-moi .danh-sach-mon-goi-y {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ==============================
    11. CHIA SẺ CÔNG THỨC
    ============================== */

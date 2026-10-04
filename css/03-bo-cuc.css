@@ -380,7 +380,7 @@
     }
 
 /* =========================================================
-   BỐ CỤC CHUẨN TRANG LIÊN HỆ (THEO MẪU PHOTO)
+   BỐ CỤC CHUẨN TRANG LIÊN HỆ (KHỚP 100% VỚI ẢNH MẪU)
    ========================================================= */
 
 .lien-he-trang {
@@ -388,17 +388,21 @@
     color: var(--mau-chu);
 }
 
-/* Banner xanh lá nhạt đầu trang */
+/* 1. Banner xanh nhạt - Căn giữa chuẩn ảnh */
 .lien-he-banner {
     display: flex;
     align-items: center;
+    justify-content: center; /* Căn giữa nội dung banner */
+    text-align: center;
     gap: 16px;
-    min-height: 100px;
+    min-height: 110px;
     padding: 20px 28px;
     margin-bottom: 24px;
     border: 1px solid #DDE8D8;
     border-radius: 16px;
     background-color: #F3F8F0;
+    position: relative;
+    overflow: hidden;
 }
 
 .lien-he-banner-icon {
@@ -420,23 +424,95 @@
 
 .tieu-de-lien-he {
     margin: 0 0 4px 0;
-    color: var(--mau-chu);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 28px;
+    color: #1A301D;
+    font-size: 26px;
     font-weight: 700;
 }
 
 .tieu-de-phu-lien-he {
     margin: 0;
-    color: var(--mau-chu-phu);
+    color: #4A5568;
     font-size: 14px;
 }
 
-/* Lưới 2 Cột: Form bên trái & Thông tin bên phải */
+/* 2. Chia lưới 2 Cột trên Desktop (Không dùng !important) */
 .khu-vuc-lien-he {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Mặc định 1 cột cho Mobile */
     gap: 24px;
+    align-items: start;
+}
+
+/* Media Query riêng cho màn hình Laptop / Desktop (>= 868px) */
+@media (min-width: 868px) {
+    .khu-vuc-lien-he {
+        grid-template-columns: 1.8fr 1fr; /* Cột Form rộng gấp ~1.8 lần cột Thông tin bên phải */
+    }
+}
+
+/* 3. Style thẻ thông tin và Form bên trong */
+.khu-vuc-form-lien-he,
+.the-thong-tin-lien-he,
+.loi-nhan-lien-he {
+    background-color: #FAFCF9;
+    border: 1px solid #E2EFE0;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+}
+
+.the-thong-tin-lien-he h2 {
+    font-size: 18px;
+    color: #1A301D;
+    margin: 0 0 16px;
+}
+
+/* Mục thông tin liên hệ (Email, Điệp thoại, Địa chỉ) */
+.thong-tin-lien-he-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.khung-icon-svg {
+    width: 36px;
+    height: 36px;
+    background-color: #E2EFE0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noi-dung-item-lh strong {
+    display: block;
+    font-size: 13px;
+    color: #2E6B34;
+}
+
+.noi-dung-item-lh p {
+    margin: 0;
+    font-size: 13px;
+    color: #4A5568;
+}
+
+/* Mạng xã hội xếp ngang */
+.mang-xa-hoi-lien-he {
+    display: flex;
+    gap: 12px;
+}
+
+.mang-xa-hoi-lien-he a {
+    width: 38px;
+    height: 38px;
+    background-color: #2E6B34;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 /* ==============================
