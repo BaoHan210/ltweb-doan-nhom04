@@ -81,7 +81,7 @@ const taoKhuVucTaiKhoan = (
             document.createElement('a');
 
         nutDangKy.href =
-            'dang-ky.html';
+            'dang-ky.php';
 
         nutDangKy.className =
             'nut nut-dang-ky';
@@ -94,7 +94,7 @@ const taoKhuVucTaiKhoan = (
             document.createElement('a');
 
         nutDangNhap.href =
-            'dang-nhap.html';
+            'dang-nhap.php';
 
         nutDangNhap.className =
             'nut nut-dang-nhap';
@@ -116,12 +116,12 @@ const taoKhuVucTaiKhoan = (
    ĐÃ ĐĂNG NHẬP (TRANG CÁ NHÂN NGƯỜI DÙNG / KHÁCH HÀNG)
    ===================================================== */
 
-// Nếu người dùng đang duyệt ở thư mục con (thanhvien/...) thì lùi ra gốc, ngược lại gọi ca-nhan.html
+// Nếu người dùng đang duyệt ở thư mục con (thanhvien/...) thì lùi ra gốc, ngược lại gọi ca-nhan.php
 const đangỞThưMụcThànhViên = window.location.pathname.includes('/thanhvien/');
 
 const duongDanTrangCaNhan = đangỞThưMụcThànhViên
-    ? '../../ca-nhan.html'
-    : 'ca-nhan.html';
+    ? '../../ca-nhan.php'
+    : 'ca-nhan.php';
 
     // Avatar mặc định nếu người dùng chưa đặt hoặc không có ảnh
     const duongDanAvatar =
@@ -523,14 +523,14 @@ const duongDanTrangCaNhan = đangỞThưMụcThànhViên
                 window.location.pathname;
 
             if (
-                duongDanHienTai.endsWith('index.html')
+                duongDanHienTai.endsWith('index.php')
                 ||
                 duongDanHienTai === '/'
             ) {
                 window.location.reload();
             } else {
                 window.location.href =
-                    'index.html';
+                    'index.php';
             }
         }
     );
@@ -645,7 +645,7 @@ const xuLyTimKiemMonAn = (
 
     const url =
         new URL(
-            'danh-sach.html',
+            'danh-sach.php',
             window.location.href
         );
 

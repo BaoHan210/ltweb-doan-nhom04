@@ -171,7 +171,7 @@ const taoTheMonAn = (monAn) => {
         document.createElement('a');
 
     lienKet.href =
-        `chi-tiet.html?id=${monAn.id}`;
+        `chi-tiet.php?id=${monAn.id}`;
 
     const hinhAnh =
         document.createElement('img');

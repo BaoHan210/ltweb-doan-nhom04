@@ -247,7 +247,7 @@ const taoTheBaiVietNguoiDung = (
         );
 
     nutXem.href =
-        `chi-tiet.html?id=${encodeURIComponent(
+        `chi-tiet.php?id=${encodeURIComponent(
             baiViet.id
         )}`;
 
@@ -266,7 +266,7 @@ const taoTheBaiVietNguoiDung = (
         );
 
     nutSua.href =
-        `dang-bai-viet.html?id=${encodeURIComponent(
+        `dang-bai-viet.php?id=${encodeURIComponent(
             baiViet.id
         )}&cheDo=sua`;
 
@@ -570,7 +570,7 @@ const taoTheMonDaLuu = (
         );
 
     nutXem.href =
-        `chi-tiet.html?id=${encodeURIComponent(
+        `chi-tiet.php?id=${encodeURIComponent(
             monAn.id
         )}`;
 
@@ -1013,7 +1013,7 @@ const khoiTaoTrangCaNhan =
         ) {
 
             window.location.href =
-                'dang-nhap.html';
+                'dang-nhap.php';
 
             return;
         }

@@ -1257,7 +1257,7 @@ const xuLyDangXuat = () => {
     dangXuat();
 
     window.location.href =
-        'index.html';
+        'index.php';
 };
 
 
@@ -1319,7 +1319,7 @@ const xuLyXoaTaiKhoan = () => {
 
 
     window.location.href =
-        'index.html';
+        'index.php';
 };
 
 

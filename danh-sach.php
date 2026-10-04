@@ -1,119 +1,10 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+$pageTitle = "Khám phá công thức nấu ăn | Cook with me";
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta
-    name="description"
-    content="Khám phá các danh mục món ăn và tìm kiếm những công thức phù hợp trên Cook with me."
-  >
-
-  <title>Khám phá | Cook with me</title>
-
-  <link rel="stylesheet" href="css/01-bien.css">
-  <link rel="stylesheet" href="css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="css/03-bo-cuc.css">
-  <link rel="stylesheet" href="css/04-thanh-phan.css">
-  <link rel="stylesheet" href="css/05-tien-ich.css">
-</head>
-
-
-<body class="trang trang-kham-pha">
-
-  <header class="dau-trang">
-
-    <p class="thuong-hieu">
-      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
-      <span class="khoi-chu-logo">
-        <span class="ten-website">Cook with me</span>
-        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-      </span>
-    </p>
-
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
-      <label for="search">Tìm kiếm</label>
-      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
-      <button class="nut" type="submit">Tìm kiếm</button>
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-
-  </header>
-
-
-  <nav
-    class="thanh-dieu-huong"
-    aria-label="Điều hướng chính"
-  >
-
-    <ul class="menu">
-
-      <li>
-        <a href="index.html">
-          Trang chủ
-        </a>
-      </li>
-
-      <li>
-        <a
-          class="dang-chon"
-          href="danh-sach.html"
-        >
-          Khám phá
-        </a>
-      </li>
-
-      <li>
-        <a href="chi-tiet.html">
-          Chi tiết công thức
-        </a>
-      </li>
-
-      <li>
-        <a href="goi-y-mon-an.html">
-          Gợi ý món ăn
-        </a>
-      </li>
-
-      <li>
-        <a href="cai-dat.html">
-          Cài đặt
-        </a>
-      </li>
-
-      <li>
-        <a href="gioi-thieu.html">
-          Giới thiệu
-        </a>
-      </li>
-
-      <li>
-        <a href="lien-he.html">
-          Liên hệ
-        </a>
-      </li>
-
-    </ul>
-
-    <div class="khu-vuc-yeu-thich">
-
-      <span class="nhan-yeu-thich">
-        Yêu thích
-      </span>
-
-      <span
-        class="so-luong-yeu-thich"
-        role="status"
-        aria-label="Số món ăn yêu thích"
-      >
-        0
-      </span>
-
-    </div>
-
-  </nav>
+// Nhúng Header và Nav
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
+?>
 
 
   <main class="kham-pha">
@@ -181,7 +72,7 @@
           <form
             class="o-tim-mon-an"
             id="o-tim-mon-an"
-            action="danh-sach.html"
+            action="danh-sach.php"
             method="get"
           >
 
@@ -373,46 +264,7 @@
   </main>
 
 
-  <footer>
-
-    <p>
-      &copy; 2026 Cook with me - Nhóm 04
-    </p>
-
-
-    <nav aria-label="Điều hướng phụ">
-
-      <ul class="menu">
-
-        <li>
-          <a href="gioi-thieu.html">
-            Giới thiệu
-          </a>
-        </li>
-
-        <li>
-          <a href="lien-he.html">
-            Liên hệ
-          </a>
-        </li>
-
-      </ul>
-
-    </nav>
-
-  </footer>
-
-
-  <script
-    type="module"
-    src="js/main.js"
-  ></script>
-
-  <script
-    type="module"
-    src="js/trang-danh-sach.js"
-  ></script>
-
-</body>
-
-</html>
+  <?php
+$customJS = 'js/trang-danh-sach.js';
+require_once 'includes/footer.php';
+?>

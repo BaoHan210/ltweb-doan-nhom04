@@ -1,114 +1,19 @@
-<!DOCTYPE html>
+<?php
+// 1. Khai báo tiêu đề trang và CSS riêng (nếu có)
+$pageTitle = "Trang cá nhân | Cook with me";
 
-<html lang="vi">
+// 2. Nhúng Header và Nav từ thư mục includes/
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
 
-<head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-<meta
-name="description"
-content="Trang cá nhân của người dùng Cook with me."
-
->
-
-  <title>Trang cá nhân | Cook with me</title>
-
-  <link rel="stylesheet" href="css/01-bien.css">
-  <link rel="stylesheet" href="css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="css/03-bo-cuc.css">
-  <link rel="stylesheet" href="css/04-thanh-phan.css">
-  <link rel="stylesheet" href="css/05-tien-ich.css">
-</head>
-
-<body class="trang trang-ca-nhan">
-
-  <header class="dau-trang">
-
-    <p class="thuong-hieu">
-      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
-      <span class="khoi-chu-logo">
-        <span class="ten-website">Cook with me</span>
-        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-      </span>
-    </p>
-
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
-      <label for="search">Tìm kiếm</label>
-      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
-      <button class="nut" type="submit">Tìm kiếm</button>
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-
-  </header>
-
-  <nav
-    class="thanh-dieu-huong"
-    aria-label="Điều hướng chính"
-  >
-
-<ul class="menu">
-
-  <li>
-    <a href="index.html">
-      Trang chủ
-    </a>
-  </li>
-
-  <li>
-    <a href="danh-sach.html">
-      Khám phá
-    </a>
-  </li>
-
-  <li>
-    <a href="chi-tiet.html">
-      Chi tiết công thức
-    </a>
-  </li>
-
-  <li>
-    <a href="goi-y-mon-an.html">
-      Gợi ý món ăn
-    </a>
-  </li>
-
-  <li>
-    <a href="cai-dat.html">
-      Cài đặt
-    </a>
-  </li>
-
-  <li>
-    <a href="gioi-thieu.html">
-      Giới thiệu
-    </a>
-  </li>
-
-  <li>
-    <a href="lien-he.html">
-      Liên hệ
-    </a>
-  </li>
-
-  <!-- B6: Yêu thích và số lượng món đã lưu -->
-  <li>
-    <a
-      href="yeu-thich.html"
-      class="lien-ket-yeu-thich"
-    >
-      Yêu thích
-      <span class="so-luong-yeu-thich">0</span>
-    </a>
-  </li>
-
-</ul>
-
-  </nav>
+// 3. (Tùy chọn) Kiểm tra đăng nhập ở Server-side:
+// Nếu người dùng chưa đăng nhập thì chuyển hướng về trang đăng nhập
+if (!isset($_SESSION['user'])) {
+    // Để phục vụ test giao diện, bạn có thể tạm comment dòng header redirect này
+    // header('Location: dang-nhap.php');
+    // exit;
+}
+?>
 
   <main class="ca-nhan-trang">
 
@@ -155,7 +60,7 @@ content="Trang cá nhân của người dùng Cook with me."
 
 
     <a
-      href="cai-dat.html"
+      href="cai-dat.php"
       class="nut nut-chinh-sua-ca-nhan"
     >
       Chỉnh sửa
@@ -238,7 +143,7 @@ content="Trang cá nhân của người dùng Cook with me."
       </h2>
 
       <a
-        href="dang-bai-viet.html"
+        href="dang-bai-viet.php"
         class="nut nut-dang-bai"
       >
         Đăng bài viết
@@ -284,13 +189,13 @@ content="Trang cá nhân của người dùng Cook with me."
   <ul class="menu">
 
     <li>
-      <a href="gioi-thieu.html">
+      <a href="gioi-thieu.php">
         Giới thiệu
       </a>
     </li>
 
     <li>
-      <a href="lien-he.html">
+      <a href="lien-he.php">
         Liên hệ
       </a>
     </li>
@@ -299,18 +204,10 @@ content="Trang cá nhân của người dùng Cook with me."
 
 </nav>
 
-  </footer>
+  <?php
+// 4. Khai báo JS riêng cho trang cá nhân (nằm trong mục js/trang-ca-nhan.js)
+$customJS = 'js/trang-ca-nhan.js';
 
-  <script
-    type="module"
-    src="js/main.js"
-  ></script>
-
-  <script
-    type="module"
-    src="js/trang-ca-nhan.js"
-  ></script>
-
-</body>
-
-</html>
+// 5. Nhúng Footer từ thư mục includes/
+require_once 'includes/footer.php';
+?>

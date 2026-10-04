@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.value = tuKhoa;
         searchInput.focus();
 
-        // Nếu có form tìm kiếm thì gửi form để chuyển trang sang danh-sach.html
+        // Nếu có form tìm kiếm thì gửi form để chuyển trang sang danh-sach.php
         if (searchForm) {
           searchForm.submit();
         }

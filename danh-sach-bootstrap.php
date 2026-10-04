@@ -33,7 +33,7 @@
   <nav class="navbar navbar-expand-lg bg-white border-bottom">
     <div class="container">
 
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand" href="index.php">
         Cook with me
       </a>
 
@@ -54,7 +54,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="index.php">
               Trang chủ
             </a>
           </li>
@@ -63,38 +63,38 @@
             <a
               class="nav-link active"
               aria-current="page"
-              href="danh-sach-bootstrap.html"
+              href="danh-sach-bootstrap.php"
             >
               Khám phá
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="chi-tiet.html">
+            <a class="nav-link" href="chi-tiet.php">
               Chi tiết công thức
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="goi-y-mon-an.html">
+            <a class="nav-link" href="goi-y-mon-an.php">
               Gợi ý món ăn
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="cai-dat.html">
+            <a class="nav-link" href="cai-dat.php">
               Cài đặt
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="gioi-thieu.html">
+            <a class="nav-link" href="gioi-thieu.php">
               Giới thiệu
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="lien-he.html">
+            <a class="nav-link" href="lien-he.php">
               Liên hệ
             </a>
           </li>
@@ -211,7 +211,7 @@
                 <div class="list-group">
 
                   <a
-                    href="chi-tiet.html#cao-lau"
+                    href="chi-tiet.php#cao-lau"
                     class="list-group-item list-group-item-action mon-an-link"
                   >
                     <div class="d-flex align-items-center gap-3">
@@ -232,7 +232,7 @@
 
 
                   <a
-                    href="chi-tiet.html#ca-kho-to"
+                    href="chi-tiet.php#ca-kho-to"
                     class="list-group-item list-group-item-action mon-an-link"
                   >
                     <div class="d-flex align-items-center gap-3">
@@ -330,7 +330,7 @@
                 <div class="list-group">
 
                   <a
-                    href="chi-tiet.html#goi-ngo-sen"
+                    href="chi-tiet.php#goi-ngo-sen"
                     class="list-group-item list-group-item-action mon-an-link"
                   >
                     <div class="d-flex align-items-center gap-3">
@@ -467,7 +467,7 @@
                 <div class="list-group">
 
                   <a
-                    href="chi-tiet.html#banh-xeo"
+                    href="chi-tiet.php#banh-xeo"
                     class="list-group-item list-group-item-action mon-an-link"
                   >
                     <div class="d-flex align-items-center gap-3">
@@ -681,13 +681,13 @@
         <ul class="nav gap-2">
 
           <li class="nav-item">
-            <a class="nav-link footer-link" href="gioi-thieu.html">
+            <a class="nav-link footer-link" href="gioi-thieu.php">
               Giới thiệu
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link footer-link" href="lien-he.html">
+            <a class="nav-link footer-link" href="lien-he.php">
               Liên hệ
             </a>
           </li>

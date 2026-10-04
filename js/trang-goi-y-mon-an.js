@@ -858,7 +858,7 @@ const taoTheMonAn = (
         );
 
     linkChiTiet.href =
-        `chi-tiet.html?id=${
+        `chi-tiet.php?id=${
             encodeURIComponent(
                 String(
                     monAn.id

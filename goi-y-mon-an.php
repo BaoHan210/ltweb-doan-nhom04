@@ -1,57 +1,9 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+$pageTitle = "Gợi ý món ăn | Cook with me";
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gợi ý món ăn theo nguyên liệu, ngân sách, thời gian nấu và số người ăn với tính năng Tủ lạnh của tôi trên Cook with me.">
-  <title>Gợi ý món ăn | Cook with me</title>
-
-  <link rel="stylesheet" href="css/01-bien.css">
-  <link rel="stylesheet" href="css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="css/03-bo-cuc.css">
-  <link rel="stylesheet" href="css/04-thanh-phan.css">
-  <link rel="stylesheet" href="css/05-tien-ich.css">
-</head>
-
-<body class="trang trang-goi-y">
-
-  <!-- HEADER (GIỮ NGUYÊN) -->
-  <header class="dau-trang">
-    <p class="thuong-hieu">
-      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
-      <span class="khoi-chu-logo">
-        <span class="ten-website">Cook with me</span>
-        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-      </span>
-    </p>
-
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
-      <label for="search">Tìm kiếm</label>
-      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
-      <button class="nut" type="submit">Tìm kiếm</button>
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-  </header>
-
-  <!-- SIDEBAR (GIỮ NGUYÊN) -->
-  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
-    <ul class="menu">
-      <li><a class="icon-trang-chu" href="index.html">Trang chủ</a></li>
-      <li><a class="icon-kham-pha" href="danh-sach.html">Khám phá</a></li>
-      <li><a class="icon-chi-tiet" href="chi-tiet.html">Chi tiết công thức</a></li>
-      <li><a class="dang-chon icon-goi-y" href="goi-y-mon-an.html">Gợi ý món ăn</a></li>
-      <li><a class="icon-cai-dat" href="cai-dat.html">Cài đặt</a></li>
-      <li><a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a></li>
-      <li><a class="icon-lien-he" href="lien-he.html">Liên hệ</a></li>
-    </ul>
-
-    <div class="khu-vuc-yeu-thich">
-      <span class="nhan-yeu-thich">Yêu thích</span>
-      <span class="so-luong-yeu-thich" role="status" aria-label="Số món ăn yêu thích">0</span>
-    </div>
-  </nav>
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
+?>
 
   <!-- NỘI DUNG CHÍNH (CẬP NHẬT THEO THIẾT KẾ MỚI) -->
   <main class="goi-y-trang">
@@ -148,7 +100,7 @@
 <section class="mon-duoc-goi-y-moi" aria-labelledby="tieu-de-mon-goi-y">
   <div class="thanh-tieu-de-mon">
     <h2 id="tieu-de-mon-goi-y">Món ăn phù hợp</h2>
-    <a href="danh-sach.html" class="xem-tat-ca">Xem tất cả &rarr;</a>
+    <a href="danh-sach.php" class="xem-tat-ca">Xem tất cả &rarr;</a>
   </div>
 
   <p class="thong-bao-goi-y" id="thong-bao-goi-y">
@@ -195,18 +147,7 @@
 
   </main>
 
-  <!-- FOOTER (GIỮ NGUYÊN) -->
-  <footer>
-    <p>&copy; 2026 Cook with me - Nhóm 04</p>
-    <nav aria-label="Điều hướng phụ">
-      <ul class="menu">
-        <li><a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a></li>
-        <li><a class="icon-lien-he" href="lien-he.html">Liên hệ</a></li>
-      </ul>
-    </nav>
-  </footer>
-
-  <script type="module" src="js/main.js"></script>
-  <script type="module" src="js/trang-goi-y-mon-an.js"></script>
-</body>
-</html>
+  <?php
+$customJS = 'js/trang-goi-y.js';
+require_once 'includes/footer.php';
+?>

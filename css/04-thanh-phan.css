@@ -258,7 +258,7 @@
 
 /* =========================================================
    B6 - SỐ LƯỢNG YÊU THÍCH
-   Không tạo trang yeu-thich.html.
+   Không tạo trang yeu-thich.php.
    Chỉ hiển thị số lượng được đọc từ localStorage.
    ========================================================= */
 
@@ -1905,7 +1905,7 @@ input:checked + .the-gieu-khiem:before {
 
 /* =====================================================================
    24. TRANG CHỦ - GIAO DIỆN COOK WITH ME
-   Phần bổ sung chỉ áp dụng cho index.html thông qua .trang-trang-chu.
+   Phần bổ sung chỉ áp dụng cho index.php thông qua .trang-trang-chu.
    ===================================================================== */
 
 .trang-trang-chu {

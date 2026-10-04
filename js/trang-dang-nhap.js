@@ -413,7 +413,7 @@ if (
                 () => {
 
                     window.location.href =
-                        'index.html';
+                        'index.php';
 
                 },
                 500

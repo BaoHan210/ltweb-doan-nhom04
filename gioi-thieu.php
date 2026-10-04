@@ -1,64 +1,9 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+$pageTitle = "Giới thiệu | Cook with me";
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta
-    name="description"
-    content="Giới thiệu website Cook with me và thông tin các thành viên Nhóm 04 thực hiện đồ án."
-  >
-
-  <title>Giới thiệu | Cook with me</title>
-
-  <link rel="stylesheet" href="css/01-bien.css">
-  <link rel="stylesheet" href="css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="css/03-bo-cuc.css">
-  <link rel="stylesheet" href="css/04-thanh-phan.css">
-  <link rel="stylesheet" href="css/05-tien-ich.css">
-</head>
-
-
-<body class="trang trang-trang-chu trang-gioi-thieu">
-
-  <!-- HEADER ĐỒNG BỘ -->
-  <header class="dau-trang">
-    <p class="thuong-hieu">
-      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
-      <span class="khoi-chu-logo">
-        <span class="ten-website">Cook with me</span>
-        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-      </span>
-    </p>
-
-    <form class="o-tim-kiem" action="danh-sach.html" method="get">
-      <label for="search">Tìm kiếm</label>
-      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, nguyên liệu, công thức..." autocomplete="off">
-      <button class="nut" type="submit">Tìm kiếm</button>
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-  </header>
-
-
-  <!-- SIDEBAR ĐỒNG BỘ -->
-  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
-    <ul class="menu">
-      <li><a class="icon-trang-chu" href="index.html">Trang chủ</a></li>
-      <li><a class="icon-kham-pha" href="danh-sach.html">Khám phá</a></li>
-      <li><a class="menu-chi-tiet icon-chi-tiet" href="chi-tiet.html">Chi tiết công thức</a></li>
-      <li><a class="icon-goi-y" href="goi-y-mon-an.html">Gợi ý món ăn</a></li>
-      <li><a class="icon-cai-dat" href="cai-dat.html">Cài đặt</a></li>
-      <li><a class="dang-chon icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a></li>
-      <li><a class="icon-lien-he" href="lien-he.html">Liên hệ</a></li>
-    </ul>
-
-    <div class="khu-vuc-yeu-thich">
-      <span class="nhan-yeu-thich">Yêu thích</span>
-      <span class="so-luong-yeu-thich" role="status" aria-label="Số món ăn yêu thích">0</span>
-    </div>
-  </nav>
+require_once 'includes/header.php';
+require_once 'includes/nav.php';
+?>
 
 
   <!-- NỘI DUNG CHÍNH (GIAO DIỆN MỚI CHUẨN MẪU) -->
@@ -132,7 +77,7 @@
 
         <ul class="danh-sach-thanh-vien">
           <li class="the-thanh-vien thanh-vien-1">
-            <a href="thanhvien/3120224045_baohan/gioithieu.html">
+            <a href="thanhvien/3120224045_baohan/gioithieu.php">
               <img src="images/avatar-baohan.jpg" alt="Phan Thị Bảo Hân" class="avatar-thanh-vien">
               <h3>Phan Thị Bảo Hân</h3>
               <p>Trưởng nhóm</p>
@@ -140,7 +85,7 @@
           </li>
 
           <li class="the-thanh-vien thanh-vien-2">
-            <a href="thanhvien/3120224155_trinh/gioithieu.html">
+            <a href="thanhvien/3120224155_trinh/gioithieu.php">
               <img src="images/avatar-trinh.jpg" alt="Nguyễn Thị Trinh" class="avatar-thanh-vien">
               <h3>Nguyễn Thị Trinh</h3>
               <p>Lập trình viên</p>
@@ -148,7 +93,7 @@
           </li>
 
           <li class="the-thanh-vien thanh-vien-3">
-            <a href="thanhvien/3120224013_binh/gioithieu.html">
+            <a href="thanhvien/3120224013_binh/gioithieu.php">
               <img src="images/avatar-binh.jpg" alt="Nguyễn Thị Ngọc Bình" class="avatar-thanh-vien">
               <h3>Nguyễn Thị Ngọc Bình</h3>
               <p>Thiết kế giao diện</p>
@@ -156,7 +101,7 @@
           </li>
 
           <li class="the-thanh-vien thanh-vien-4">
-            <a href="thanhvien/3120224096_lena/gioithieu.html">
+            <a href="thanhvien/3120224096_lena/gioithieu.php">
               <img src="images/avatar-lena.jpg" alt="Lê Thị A Na" class="avatar-thanh-vien">
               <h3>Lê Thị A Na</h3>
               <p>Kiểm thử</p>
@@ -208,20 +153,6 @@
   </main>
 
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2026 Cook with me | Nấu ngon - Chia sẻ - Kết nối ♡</p>
-
-    <nav aria-label="Điều hướng phụ">
-      <ul class="menu">
-        <li><a href="gioi-thieu.html">Giới thiệu</a></li>
-        <li><a href="lien-he.html">Liên hệ</a></li>
-      </ul>
-    </nav>
-  </footer>
-
-  <!-- JAVASCRIPT CHUNG -->
-  <script type="module" src="js/main.js"></script>
-
-</body>
-</html>
+  <?php
+require_once 'includes/footer.php';
+?>

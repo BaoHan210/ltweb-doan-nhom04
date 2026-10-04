@@ -134,7 +134,7 @@ if (
     );
 
     window.location.href =
-        'dang-nhap.html';
+        'dang-nhap.php';
 }
 
 
@@ -328,7 +328,7 @@ if (
     );
 
     window.location.href =
-        'ca-nhan.html';
+        'ca-nhan.php';
 }
 
 
@@ -1559,7 +1559,7 @@ if (
                     );
 
                     window.location.href =
-                        'ca-nhan.html';
+                        'ca-nhan.php';
 
                     return;
                 }
@@ -1613,7 +1613,7 @@ if (
                 );
 
                 window.location.href =
-                    'ca-nhan.html';
+                    'ca-nhan.php';
 
             } catch (error) {
 
