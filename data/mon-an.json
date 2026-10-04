@@ -750,5 +750,575 @@
       "Nặn thành từng miếng tròn rồi chiên vàng ngập dầu."
     ],
     "video": ""
-  }
+  },
+    ,
+{
+  "id": "bun-bo-hue",
+  "ten": "Bún bò Huế",
+  "danhMuc": "Món chính",
+  "thoiGian": 120,
+  "khauPhan": 4,
+  "doKho": "Khó",
+  "nganSach": 120000,
+  "hinhAnh": "images/bun-bo-hue.jpg",
+  "danhGia": 4.9,
+  "soLuotDanhGia": 180,
+  "moTa": "Bún bò Huế cay thơm đậm đà với nước dùng ninh xương, thịt bò và chả.",
+  "nguyenLieu": [
+    {
+      "ten": "500 g bún tươi",
+      "icon": "nguyen-lieu-soi.svg"
+    },
+    {
+      "ten": "300 g thịt bò",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "300 g xương bò",
+      "icon": "nguyen-lieu-xuong-bo.svg"
+    },
+    {
+      "ten": "2 cây sả",
+      "icon": "nguyen-lieu-sa.svg"
+    },
+    {
+      "ten": "Mắm ruốc Huế",
+      "icon": "nguyen-lieu-mam-ruoc.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Ớt",
+      "icon": "nguyen-lieu-ot.svg"
+    },
+    {
+      "ten": "Rau sống",
+      "icon": "nguyen-lieu-rau.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Sơ chế xương bò và thịt bò.",
+    "Ninh xương bò với sả để tạo nước dùng.",
+    "Hòa mắm ruốc Huế rồi lọc lấy phần nước trong.",
+    "Nêm nước dùng với gia vị vừa ăn.",
+    "Trụng bún, xếp thịt bò và chan nước dùng nóng.",
+    "Thêm rau sống và ớt khi thưởng thức."
+  ],
+  "video": ""
+},
+{
+  "id": "com-chien-duong-chau",
+  "ten": "Cơm chiên Dương Châu",
+  "danhMuc": "Món chính",
+  "thoiGian": 30,
+  "khauPhan": 3,
+  "doKho": "Dễ",
+  "nganSach": 70000,
+  "hinhAnh": "images/com-chien-duong-chau.jpg",
+  "danhGia": 4.7,
+  "soLuotDanhGia": 145,
+  "moTa": "Cơm chiên Dương Châu thơm ngon với trứng, thịt, tôm và rau củ.",
+  "nguyenLieu": [
+    {
+      "ten": "500 g cơm nguội",
+      "icon": "nguyen-lieu-com.svg"
+    },
+    {
+      "ten": "2 quả trứng gà",
+      "icon": "nguyen-lieu-trung.svg"
+    },
+    {
+      "ten": "100 g tôm",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "100 g thịt heo",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "50 g cà rốt",
+      "icon": "nguyen-lieu-rau.svg"
+    },
+    {
+      "ten": "50 g đậu Hà Lan",
+      "icon": "nguyen-lieu-dau-ha-lan.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Nước tương",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Chuẩn bị cơm nguội và sơ chế các nguyên liệu.",
+    "Đánh tan trứng rồi chiên sơ.",
+    "Xào tôm, thịt và rau củ.",
+    "Cho cơm nguội vào đảo đều.",
+    "Thêm trứng, nước tương và gia vị.",
+    "Đảo cơm trên lửa lớn đến khi săn và thơm."
+  ],
+  "video": ""
+},
+{
+  "id": "bo-luc-lac",
+  "ten": "Bò lúc lắc",
+  "danhMuc": "Món chính",
+  "thoiGian": 35,
+  "khauPhan": 3,
+  "doKho": "Trung bình",
+  "nganSach": 110000,
+  "hinhAnh": "images/bo-luc-lac.jpg",
+  "danhGia": 4.8,
+  "soLuotDanhGia": 160,
+  "moTa": "Bò lúc lắc mềm thơm, đậm đà kết hợp với hành tây và ớt chuông.",
+  "nguyenLieu": [
+    {
+      "ten": "400 g thịt bò",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "1 củ hành tây",
+      "icon": "nguyen-lieu-hanh-tay.svg"
+    },
+    {
+      "ten": "1 quả ớt chuông",
+      "icon": "nguyen-lieu-ot-chuong.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Nước tương",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    },
+    {
+      "ten": "Dầu hào",
+      "icon": "nguyen-lieu-dau-hao.svg"
+    },
+    {
+      "ten": "Tiêu",
+      "icon": "nguyen-lieu-ngu-vi.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Cắt thịt bò thành từng miếng vuông vừa ăn.",
+    "Ướp bò với nước tương, dầu hào, tỏi và tiêu.",
+    "Sơ chế hành tây và ớt chuông.",
+    "Làm nóng chảo rồi áp chảo thịt bò trên lửa lớn.",
+    "Cho hành tây và ớt chuông vào đảo nhanh.",
+    "Nêm lại gia vị rồi thưởng thức."
+  ],
+  "video": ""
+},
+{
+  "id": "ga-kho-gung",
+  "ten": "Gà kho gừng",
+  "danhMuc": "Món chính",
+  "thoiGian": 45,
+  "khauPhan": 4,
+  "doKho": "Dễ",
+  "nganSach": 85000,
+  "hinhAnh": "images/ga-kho-gung.jpg",
+  "danhGia": 4.8,
+  "soLuotDanhGia": 135,
+  "moTa": "Gà kho gừng đậm đà, thơm nồng vị gừng và phù hợp với bữa cơm gia đình.",
+  "nguyenLieu": [
+    {
+      "ten": "700 g thịt gà",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "50 g gừng",
+      "icon": "nguyen-lieu-gung.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Nước mắm",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    },
+    {
+      "ten": "Đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "Tiêu",
+      "icon": "nguyen-lieu-ngu-vi.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Làm sạch và chặt thịt gà thành miếng vừa ăn.",
+    "Ướp gà với nước mắm, đường, tiêu và tỏi.",
+    "Gừng rửa sạch rồi thái sợi.",
+    "Phi thơm tỏi và gừng.",
+    "Cho gà vào đảo săn rồi thêm nước.",
+    "Kho nhỏ lửa đến khi thịt gà chín mềm và nước sốt sánh lại."
+  ],
+  "video": ""
+},
+{
+  "id": "tom-rang-me",
+  "ten": "Tôm rang me",
+  "danhMuc": "Món chính",
+  "thoiGian": 30,
+  "khauPhan": 3,
+  "doKho": "Dễ",
+  "nganSach": 95000,
+  "hinhAnh": "images/tom-rang-me.jpg",
+  "danhGia": 4.8,
+  "soLuotDanhGia": 125,
+  "moTa": "Tôm rang me chua ngọt hấp dẫn với phần sốt me đậm đà.",
+  "nguyenLieu": [
+    {
+      "ten": "500 g tôm",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "50 g me chín",
+      "icon": "nguyen-lieu-me.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "Nước mắm",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    },
+    {
+      "ten": "Ớt",
+      "icon": "nguyen-lieu-ot.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Làm sạch tôm và để ráo.",
+    "Pha me với nước ấm rồi lọc lấy nước cốt.",
+    "Phi thơm tỏi rồi cho tôm vào rang.",
+    "Thêm nước cốt me, đường và nước mắm.",
+    "Đảo đều đến khi sốt me sánh lại.",
+    "Thêm ớt và hoàn thiện món ăn."
+  ],
+  "video": ""
+},
+{
+  "id": "canh-bi-do-ham-xuong",
+  "ten": "Canh bí đỏ hầm xương",
+  "danhMuc": "Món canh",
+  "thoiGian": 50,
+  "khauPhan": 4,
+  "doKho": "Dễ",
+  "nganSach": 65000,
+  "hinhAnh": "images/canh-bi-do-ham-xuong.jpg",
+  "danhGia": 4.7,
+  "soLuotDanhGia": 105,
+  "moTa": "Canh bí đỏ hầm xương có vị ngọt tự nhiên, mềm thơm và bổ dưỡng.",
+  "nguyenLieu": [
+    {
+      "ten": "500 g bí đỏ",
+      "icon": "nguyen-lieu-bi-do.svg"
+    },
+    {
+      "ten": "300 g xương heo",
+      "icon": "nguyen-lieu-xuong-heo.svg"
+    },
+    {
+      "ten": "Hành tím",
+      "icon": "nguyen-lieu-hanh-tim.svg"
+    },
+    {
+      "ten": "Hành lá",
+      "icon": "nguyen-lieu-rau.svg"
+    },
+    {
+      "ten": "Tiêu",
+      "icon": "nguyen-lieu-ngu-vi.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Rửa sạch xương heo và chần qua nước sôi.",
+    "Bí đỏ gọt vỏ, bỏ hạt và cắt miếng vừa ăn.",
+    "Hầm xương với hành tím để lấy nước ngọt.",
+    "Cho bí đỏ vào nấu đến khi mềm.",
+    "Nêm gia vị vừa ăn rồi thêm hành lá và tiêu."
+  ],
+  "video": ""
+},
+{
+  "id": "dau-que-xao-toi",
+  "ten": "Đậu que xào tỏi",
+  "danhMuc": "Món xào",
+  "thoiGian": 20,
+  "khauPhan": 3,
+  "doKho": "Dễ",
+  "nganSach": 45000,
+  "hinhAnh": "images/dau-que-xao-toi.jpg",
+  "danhGia": 4.6,
+  "soLuotDanhGia": 98,
+  "moTa": "Đậu que xào tỏi giòn xanh, thơm mùi tỏi và dễ thực hiện.",
+  "nguyenLieu": [
+    {
+      "ten": "400 g đậu que",
+      "icon": "nguyen-lieu-dau-que.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Dầu ăn",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "Nước mắm",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    },
+    {
+      "ten": "Tiêu",
+      "icon": "nguyen-lieu-ngu-vi.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Rửa sạch và tước xơ đậu que.",
+    "Băm nhỏ tỏi.",
+    "Phi thơm tỏi với dầu.",
+    "Cho đậu que vào xào trên lửa lớn.",
+    "Nêm nước mắm và tiêu rồi đảo đều.",
+    "Xào đến khi đậu vừa chín tới và vẫn giữ độ giòn."
+  ],
+  "video": ""
+},
+{
+  "id": "nem-nuong-nha-trang",
+  "ten": "Nem nướng Nha Trang",
+  "danhMuc": "Món khai vị",
+  "thoiGian": 50,
+  "khauPhan": 4,
+  "doKho": "Trung bình",
+  "nganSach": 90000,
+  "hinhAnh": "images/nem-nuong-nha-trang.jpg",
+  "danhGia": 4.8,
+  "soLuotDanhGia": 115,
+  "moTa": "Nem nướng thơm mềm ăn kèm bánh tráng, rau sống và nước chấm đặc trưng.",
+  "nguyenLieu": [
+    {
+      "ten": "400 g thịt heo xay",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "Tỏi",
+      "icon": "nguyen-lieu-toi.svg"
+    },
+    {
+      "ten": "Nước mắm",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    },
+    {
+      "ten": "Đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "Bánh tráng",
+      "icon": "nguyen-lieu-banh-trang.svg"
+    },
+    {
+      "ten": "Rau sống",
+      "icon": "nguyen-lieu-rau.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Trộn thịt heo xay với tỏi, nước mắm và đường.",
+    "Ướp thịt rồi tạo thành từng que nem.",
+    "Nướng nem đến khi chín vàng thơm.",
+    "Chuẩn bị bánh tráng và rau sống.",
+    "Cuốn nem cùng rau sống và thưởng thức với nước chấm."
+  ],
+  "video": ""
+},
+{
+  "id": "banh-cuon-nong",
+  "ten": "Bánh cuốn nóng",
+  "danhMuc": "Món chính",
+  "thoiGian": 45,
+  "khauPhan": 3,
+  "doKho": "Trung bình",
+  "nganSach": 60000,
+  "hinhAnh": "images/banh-cuon-nong.jpg",
+  "danhGia": 4.7,
+  "soLuotDanhGia": 108,
+  "moTa": "Bánh cuốn nóng mềm mỏng với nhân thịt băm, mộc nhĩ và hành phi.",
+  "nguyenLieu": [
+    {
+      "ten": "300 g bột gạo",
+      "icon": "nguyen-lieu-bot-gao.svg"
+    },
+    {
+      "ten": "200 g thịt heo xay",
+      "icon": "nguyen-lieu-thit.svg"
+    },
+    {
+      "ten": "50 g mộc nhĩ",
+      "icon": "nguyen-lieu-moc-nhi.svg"
+    },
+    {
+      "ten": "Hành tím",
+      "icon": "nguyen-lieu-hanh-tim.svg"
+    },
+    {
+      "ten": "Nước mắm",
+      "icon": "nguyen-lieu-nuoc-tuong.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Pha bột gạo với nước thành hỗn hợp loãng.",
+    "Xào thịt heo với mộc nhĩ và hành tím.",
+    "Tráng từng lớp bột mỏng trên nồi hơi.",
+    "Cho nhân vào giữa bánh rồi cuộn lại.",
+    "Xếp bánh ra đĩa và dùng với nước mắm."
+  ],
+  "video": ""
+},
+{
+  "id": "che-ba-mau",
+  "ten": "Chè ba màu",
+  "danhMuc": "Món tráng miệng",
+  "thoiGian": 60,
+  "khauPhan": 4,
+  "doKho": "Trung bình",
+  "nganSach": 60000,
+  "hinhAnh": "images/che-ba-mau.jpg",
+  "danhGia": 4.8,
+  "soLuotDanhGia": 112,
+  "moTa": "Chè ba màu nhiều lớp với đậu xanh, đậu đỏ, thạch và nước cốt dừa béo thơm.",
+  "nguyenLieu": [
+    {
+      "ten": "100 g đậu xanh",
+      "icon": "nguyen-lieu-rau.svg"
+    },
+    {
+      "ten": "100 g đậu đỏ",
+      "icon": "nguyen-lieu-dau-do.svg"
+    },
+    {
+      "ten": "100 g thạch rau câu",
+      "icon": "nguyen-lieu-thach.svg"
+    },
+    {
+      "ten": "Nước cốt dừa",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "100 g đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Nấu chín đậu xanh và đậu đỏ.",
+    "Nấu thạch rau câu rồi để nguội và cắt nhỏ.",
+    "Nấu nước đường.",
+    "Chuẩn bị nước cốt dừa.",
+    "Cho lần lượt đậu xanh, đậu đỏ và thạch vào ly.",
+    "Thêm nước đường và nước cốt dừa rồi thưởng thức."
+  ],
+  "video": ""
+},
+{
+  "id": "panna-cotta-xoai",
+  "ten": "Panna cotta xoài",
+  "danhMuc": "Món tráng miệng",
+  "thoiGian": 30,
+  "khauPhan": 4,
+  "doKho": "Trung bình",
+  "nganSach": 85000,
+  "hinhAnh": "images/panna-cotta-xoai.jpg",
+  "danhGia": 4.9,
+  "soLuotDanhGia": 96,
+  "moTa": "Panna cotta xoài mềm mịn, béo nhẹ kết hợp với vị ngọt thơm của xoài.",
+  "nguyenLieu": [
+    {
+      "ten": "2 quả xoài",
+      "icon": "nguyen-lieu-rau.svg"
+    },
+    {
+      "ten": "200 ml sữa tươi",
+      "icon": "nguyen-lieu-sua-tuoi.svg"
+    },
+    {
+      "ten": "100 ml whipping cream",
+      "icon": "nguyen-lieu-whipping-cream.svg"
+    },
+    {
+      "ten": "10 g gelatin",
+      "icon": "nguyen-lieu-gelatin.svg"
+    },
+    {
+      "ten": "50 g đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Gọt xoài và xay nhuyễn phần thịt xoài.",
+    "Ngâm gelatin trong nước lạnh cho nở.",
+    "Đun sữa tươi, whipping cream và đường ở lửa nhỏ.",
+    "Cho gelatin vào hỗn hợp và khuấy tan.",
+    "Đổ hỗn hợp vào khuôn rồi để nguội.",
+    "Làm lạnh đến khi đông nhẹ rồi thêm xoài lên trên."
+  ],
+  "video": ""
+},
+{
+  "id": "nuoc-chanh-sa",
+  "ten": "Nước chanh sả",
+  "danhMuc": "Đồ uống",
+  "thoiGian": 20,
+  "khauPhan": 3,
+  "doKho": "Dễ",
+  "nganSach": 35000,
+  "hinhAnh": "images/nuoc-chanh-sa.jpg",
+  "danhGia": 4.7,
+  "soLuotDanhGia": 88,
+  "moTa": "Nước chanh sả thanh mát, thơm nhẹ và thích hợp dùng trong những ngày nóng.",
+  "nguyenLieu": [
+    {
+      "ten": "3 quả chanh",
+      "icon": "nguyen-lieu-chanh.svg"
+    },
+    {
+      "ten": "3 cây sả",
+      "icon": "nguyen-lieu-sa.svg"
+    },
+    {
+      "ten": "80 g đường",
+      "icon": "nguyen-lieu-mat-ong.svg"
+    },
+    {
+      "ten": "500 ml nước lọc",
+      "icon": "nguyen-lieu-nuoc-loc.svg"
+    },
+    {
+      "ten": "Đá viên",
+      "icon": "nguyen-lieu-da-vien.svg"
+    }
+  ],
+  "cacBuoc": [
+    "Rửa sạch sả và đập dập.",
+    "Đun sả với nước trong vài phút để lấy mùi thơm.",
+    "Thêm đường rồi khuấy tan.",
+    "Để nước sả nguội rồi vắt nước chanh vào.",
+    "Cho đá viên vào ly và rót nước chanh sả.",
+    "Khuấy đều và thưởng thức."
+  ],
+  "video": ""
+}
 ]
