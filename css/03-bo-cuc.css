@@ -1,0 +1,1053 @@
+/* =========================================================
+   03-bo-cuc.css
+   Bố cục trang bằng Grid và Flexbox
+   Đã sắp xếp theo từng trang để dễ quản lý.
+   ========================================================= */
+
+/* =========================================================
+   1. KHUNG TỔNG THỂ DÙNG CHUNG (NGUYÊN BẢN TRANG KHÁM PHÁ)
+   ========================================================= */
+
+.trang {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "dau"
+        "menu"
+        "chinh"
+        "chan";
+}
+
+.trang > .dau-trang { grid-area: dau; }
+.trang > .thanh-dieu-huong { grid-area: menu; }
+.trang > main { grid-area: chinh; min-width: 0; }
+.trang > footer { grid-area: chan; }
+
+/* =========================================================
+   KHUNG NỘI DUNG TRANG CHỦ
+   ========================================================= */
+
+.trang-trang-chu > .noi-dung-trang {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
+    grid-template-areas:
+        "tieude"
+        "hero"
+        "gioi-thieu"
+        "khu-vuc"
+        "bang-tin";
+
+    gap: 16px;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 12px;
+}
+
+
+/* Tiêu đề */
+
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang {
+    grid-area: tieude;
+}
+
+
+/* Hero */
+
+.trang-trang-chu > .noi-dung-trang > .hero {
+    grid-area: hero;
+
+    min-width: 0;
+}
+
+
+/* Ba thẻ giới thiệu */
+
+.trang-trang-chu > .noi-dung-trang > .the-gioi-thieu {
+    grid-area: gioi-thieu;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   KHU VỰC 3 KHỐI CHÍNH
+   ========================================================= */
+
+.trang-trang-chu .khu-vuc-trang-chu {
+    grid-area: khu-vuc;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
+    grid-template-rows: auto;
+
+    gap: 16px;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   KHỐI GỢI Ý MÓN ĂN API (THAY CHO BANNER TỦ LẠNH)
+   ========================================================= */
+
+.trang-trang-chu .khu-vuc-trang-chu .du-lieu-api {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+/* =========================================================
+   MÓN ĂN NỔI BẬT
+   ========================================================= */
+
+.trang-trang-chu .khu-vuc-trang-chu .mon-noi-bat {
+    grid-column: 1;
+    grid-row: auto;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   GỢI Ý NGƯỜI THEO DÕI
+   ========================================================= */
+
+.trang-trang-chu .khu-vuc-trang-chu .goi-y-theo-doi {
+    grid-column: 1;
+    grid-row: auto;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   BẢNG TIN
+   ========================================================= */
+
+.trang-trang-chu > .noi-dung-trang > .bang-tin {
+    grid-area: bang-tin;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   TIÊU ĐỀ H1 KỸ THUẬT
+   Giữ h1 trong DOM nhưng không chiếm diện tích giao diện.
+   ========================================================= */
+
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+/* =========================================================
+   TRANG KHÁM PHÁ - GIAO DIỆN MỚI
+   Bố cục giữ nguyên cấu trúc semantic hiện có.
+   ========================================================= */
+
+.trang-kham-pha {
+    width: 100%;
+    max-width: 1440px;
+}
+
+/* ==============================
+   4. TRANG CHI TIẾT CÔNG THỨC
+   ============================== */
+
+.chi-tiet-trang {
+    min-width: 0;
+
+    padding: 12px 0;
+}
+
+
+/* Tiêu đề */
+.chi-tiet-trang > h1 {
+    margin: 0 0 16px;
+
+    text-align: center;
+
+    font-size: var(--co-chu-tieu-de);
+}
+
+/* Một công thức */
+/* =========================================================
+   BỐ CỤC CHUẨN DÙNG CHUNG CHO TRANG CHI TIẾT MÓN ĂN
+   ========================================================= */
+
+/* Bố cục Mobile (< 768px) */
+.chi-tiet-mon-an {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "tieude"
+        "anh"
+        "chia"
+        "congthuc"
+        "nguyen"
+        "cach"
+        "video";
+    gap: 16px;
+    padding: 12px;
+    align-items: start;
+}
+
+/* ==============================
+   6. TRANG CÀI ĐẶT
+   ============================== */
+
+.cai-dat-trang {
+    min-width: 0;
+
+    padding: 12px 0;
+}
+
+
+.cai-dat-trang > .tieu-de-cai-dat {
+    margin: 0 0 18px;
+}
+
+
+/* Form */
+.form-cai-dat {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+
+/* Khu vực */
+.khu-vuc-cai-dat {
+    min-width: 0;
+}
+
+
+.khu-vuc-cai-dat > h2 {
+    margin: 0 0 8px;
+}
+
+
+/* Khung */
+.khung-cai-dat {
+    min-width: 0;
+}
+
+
+/* Thông tin tài khoản */
+.thong-tin-tai-khoan {
+    grid-column: 1;
+}
+
+
+/* Một dòng */
+.dong-cai-dat {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 6px;
+
+    align-items: center;
+
+    min-width: 0;
+}
+
+
+/* Một dòng thông báo */
+.dong-thong-bao {
+    width: 100%;
+}
+
+
+/* Nút bảo mật */
+.hanh-dong-bao-mat {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+
+/* Nút cuối */
+.hanh-dong-cai-dat {
+    grid-column: 1;
+
+    display: flex;
+
+    justify-content: stretch;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin: 0;
+}
+
+
+.hanh-dong-cai-dat .nut {
+    flex: 1 1 140px;
+}
+
+    /* ==========================
+       Cài đặt
+       ========================== */
+
+    .cai-dat-trang {
+        padding: 16px;
+    }
+
+
+    .form-cai-dat {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+
+        gap: 16px;
+    }
+
+
+    .thong-tin-tai-khoan {
+        grid-column: 1 / -1;
+    }
+
+
+    .dong-cai-dat {
+        grid-template-columns:
+            160px
+            minmax(0, 1fr);
+    }
+
+
+    .hanh-dong-cai-dat {
+        grid-column: 1 / -1;
+    }
+
+    /* ==========================
+       Cài đặt
+       ========================== */
+
+    .dong-cai-dat {
+        grid-template-columns:
+            190px
+            minmax(0, 1fr);
+    }
+
+/* =========================================================
+   BỐ CỤC CHUẨN TRANG LIÊN HỆ (THEO MẪU PHOTO)
+   ========================================================= */
+
+.lien-he-trang {
+    padding: 20px 24px 40px;
+    color: var(--mau-chu);
+}
+
+/* Banner xanh lá nhạt đầu trang */
+.lien-he-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 100px;
+    padding: 20px 28px;
+    margin-bottom: 24px;
+    border: 1px solid #DDE8D8;
+    border-radius: 16px;
+    background-color: #F3F8F0;
+}
+
+.lien-he-banner-icon {
+    width: 52px;
+    height: 52px;
+    border: 2px solid var(--mau-chinh);
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-svg-banner {
+    width: 30px;
+    height: 30px;
+}
+
+.tieu-de-lien-he {
+    margin: 0 0 4px 0;
+    color: var(--mau-chu);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.tieu-de-phu-lien-he {
+    margin: 0;
+    color: var(--mau-chu-phu);
+    font-size: 14px;
+}
+
+/* Lưới 2 Cột: Form bên trái & Thông tin bên phải */
+.khu-vuc-lien-he {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* ==============================
+   8. TRANG GIỚI THIỆU
+   ============================== */
+
+.gioi-thieu-trang {
+    min-width: 0;
+
+    padding: 12px 0;
+}
+
+
+.gioi-thieu-trang > .tieu-de-gioi-thieu {
+    margin: 0 0 18px;
+}
+
+
+/* Nội dung văn bản */
+.gioi-thieu-website,
+.muc-tieu-do-an,
+.khu-vuc-thanh-vien {
+    min-width: 0;
+}
+
+
+.gioi-thieu-website,
+.muc-tieu-do-an {
+    max-width: 65ch;
+}
+
+
+.gioi-thieu-website {
+    margin-bottom: 16px;
+}
+
+
+.muc-tieu-do-an {
+    margin-bottom: 16px;
+}
+
+
+/* Danh sách thành viên */
+.danh-sach-thanh-vien {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.the-thanh-vien {
+    flex: 1 1 220px;
+
+    min-width: 0;
+}
+
+    /* ==========================
+       Giới thiệu
+       ========================== */
+
+    .gioi-thieu-trang {
+        padding: 16px;
+    }
+
+
+    .danh-sach-thanh-vien {
+        gap: 14px;
+    }
+
+    /* ==========================
+       Giới thiệu
+       ========================== */
+
+    .gioi-thieu-trang {
+        padding: 20px;
+    }
+
+/* Main khám phá */
+.trang-kham-pha .kham-pha {
+    padding: 18px 20px 28px;
+}
+
+
+/* Hero */
+.trang-kham-pha .hero-kham-pha {
+    grid-area: hero;
+    min-height: 170px;
+
+    display: flex;
+    align-items: center;
+
+    margin: 0 0 22px;
+    padding: 24px 36px;
+
+    overflow: hidden;
+
+    border: 1px solid #E2EBDD;
+    border-radius: 16px;
+
+    background:
+        radial-gradient(circle at 88% 46%, rgba(202, 226, 184, 0.65) 0 12%, transparent 13%),
+        radial-gradient(circle at 92% 65%, rgba(202, 226, 184, 0.42) 0 9%, transparent 10%),
+        linear-gradient(100deg, #F1F8EC 0%, #F8FBF4 62%, #EEF6E8 100%);
+}
+
+
+/* =========================================================
+   TRANG GIỚI THIỆU - BỐ CỤC V4
+   Hero full-width theo phong cách Hero trang chủ.
+   Mục tiêu và Đội ngũ giữ cùng chiều ngang.
+   ========================================================= */
+.trang.trang-gioi-thieu {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+.trang-gioi-thieu > .gioi-thieu-trang {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "tieude"
+        "hero"
+        "muc-dich"
+        "doi-ngu";
+    gap: 16px;
+    padding: 18px 24px 28px;
+}
+
+.trang-gioi-thieu > .gioi-thieu-trang > .tieu-de-gioi-thieu {
+    grid-area: tieude;
+    min-width: 0;
+}
+
+.trang-gioi-thieu > .gioi-thieu-trang > .hero-gioi-thieu {
+    grid-area: hero;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+.trang-gioi-thieu > .gioi-thieu-trang > .card-muc-dich {
+    grid-area: muc-dich;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+.trang-gioi-thieu > .gioi-thieu-trang > .card-doi-ngu {
+    grid-area: doi-ngu;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+/* ==============================
+   9. HỒ SƠ THÀNH VIÊN
+   ============================== */
+
+.ho-so-trang {
+    min-width: 0;
+
+    padding: 12px 0;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+        "tieu-de"
+        "thong-tin"
+        "du-an"
+        "ky-nang"
+        "thoi-khoa-bieu"
+        "quay-lai";
+
+    gap: 14px;
+}
+
+
+/* Tiêu đề */
+.ho-so-trang > .tieu-de-ho-so {
+    grid-area: tieu-de;
+}
+
+
+/* Thông tin chung */
+.ho-so-trang > .thong-tin-chung {
+    grid-area: thong-tin;
+}
+
+
+/* Dự án */
+.ho-so-trang > .du-an-so-thich {
+    grid-area: du-an;
+}
+
+
+/* Kỹ năng */
+.ho-so-trang > .ky-nang {
+    grid-area: ky-nang;
+}
+
+
+/* Thời khóa biểu */
+.ho-so-trang > .thoi-khoa-bieu {
+    grid-area: thoi-khoa-bieu;
+
+    min-width: 0;
+
+    overflow-x: auto;
+}
+
+
+/* Quay lại */
+.ho-so-trang > .quay-lai {
+    grid-area: quay-lai;
+}
+
+
+/* Bố cục thông tin chung */
+.thong-tin-chung {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+
+.thong-tin-chung > h2 {
+    grid-column: 1;
+}
+
+
+.anh-dai-dien {
+    margin: 0;
+
+    text-align: center;
+}
+
+
+.thong-tin-ca-nhan {
+    min-width: 0;
+
+    margin: 0;
+
+    padding-left: 20px;
+}
+
+/* =========================================================
+   TRANG GỢI Ý MÓN ĂN
+   BỐ CỤC THEO GIAO DIỆN MẪU
+   ========================================================= */
+
+.trang-goi-y .goi-y-trang {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 24px 24px;
+}
+
+/* Tiêu đề */
+
+.trang-goi-y .tieu-de-goi-y {
+    margin: 0 0 12px;
+}
+
+/* Khối Tủ lạnh */
+
+.trang-goi-y .tu-lanh-cua-toi {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Form */
+
+.trang-goi-y .form-goi-y {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.2fr)
+        minmax(0, 3fr);
+
+    column-gap: 18px;
+    row-gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.trang-goi-y .form-goi-y .nhom-nguyen-lieu {
+    grid-column: 1;
+}
+
+.trang-goi-y .form-goi-y .nhom-thong-tin {
+    grid-column: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+.trang-goi-y .form-goi-y .nhom-thong-tin legend {
+    grid-column: 1 / -1;
+}
+
+.trang-goi-y .form-goi-y .hanh-dong-goi-y {
+    grid-column: 1 / -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    margin: 0;
+}
+
+/* Khu vực món được gợi ý */
+
+.trang-goi-y .mon-duoc-goi-y {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 18px;
+
+    min-width: 0;
+}
+
+.trang-goi-y .mon-duoc-goi-y > h2 {
+    grid-column: 1 / -1;
+}
+
+/* Danh sách đi chợ */
+
+.trang-goi-y .danh-sach-di-cho {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.trang-goi-y .danh-sach-di-cho[hidden] {
+    display: none;
+}
+
+/* =========================================================
+   TRANG GỢI Ý MÓN ĂN - BỐ CỤC MỚI (03-bo-cuc.css)
+   ========================================================= */
+.goi-y-trang {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+/* Lưới món ăn 4 cột trên Desktop */
+.danh-sach-mon-goi-y {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+/* =====================================================================
+   03-BO-CUC.CSS - BỐ CỤC KHUNG CHÍNH VÀ RESPONSIVE TOÀN TRANG
+   ===================================================================== */
+
+/* 1. KHÓA TRÀN NGANG TOÀN BỘ WEBSITE */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. CẤU TRÚC LƯỚI TRANG CHỦ */
+.trang-trang-chu > .noi-dung-trang {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "tieude"
+        "hero"
+        "gioi-thieu"
+        "khu-vuc"
+        "bang-tin";
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+}
+
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang { grid-area: tieude; }
+.trang-trang-chu > .noi-dung-trang > .hero { grid-area: hero; min-width: 0; }
+.trang-trang-chu > .noi-dung-trang > .the-gioi-thieu { grid-area: gioi-thieu; min-width: 0; }
+.trang-trang-chu > .noi-dung-trang > .bang-tin { grid-area: bang-tin; width: 100%; min-width: 0; }
+
+.trang-trang-chu .khu-vuc-trang-chu {
+    grid-area: khu-vuc;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* Tiêu đề H1 ẩn kỹ thuật */
+.trang-trang-chu > .noi-dung-trang > .tieu-de-trang {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 3. DESKTOP (Màn hình lớn >= 992px) */
+@media (min-width: 992px) {
+    .trang-trang-chu > .noi-dung-trang {
+        gap: 20px;
+        padding: 18px 24px 24px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+        grid-template-rows: auto auto;
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .du-lieu-api {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .mon-noi-bat {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu .goi-y-theo-doi {
+        grid-column: 2;
+        grid-row: 2;
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* 4. TABLET (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .trang-trang-chu > .noi-dung-trang {
+        padding: 16px;
+    }
+
+    .trang-trang-chu .khu-vuc-trang-chu {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .trang-trang-chu .the-gioi-thieu-item {
+        flex: 1 1 calc(33.333% - 16px);
+    }
+}
+
+/* 5. MOBILE (< 767px) - KHÔNG TRÀN NGANG, BỐ CỤC ÔM KHÍT */
+/* =========================================================
+   FIX TRÀN 360PX BẰNG SELECTOR CHUẨN (SẠCH CODE, KHÔNG !IMPORTANT)
+   ========================================================= */
+@media (max-width: 767px) {
+
+    /* 1. Đảm bảo container chính thu khít 100% */
+    .trang-trang-chu > .noi-dung-trang {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 8px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* 2. Dùng selector cụ thể ép Header xếp thành hàng dọc */
+    .trang-trang-chu .dau-trang,
+    .dau-trang {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 8px;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    /* 3. Logo thương hiệu căn giữa xếp dọc */
+    .trang-trang-chu .thuong-hieu,
+    .thuong-hieu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .thuong-hieu .logo-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 2px;
+    }
+
+    .thuong-hieu .ten-website {
+        font-size: 22px;
+        line-height: 1.1;
+    }
+
+    .thuong-hieu .slogan {
+        font-size: 11px;
+    }
+
+    /* 4. Ô tìm kiếm phủ rộng 100% ở tầng dưới */
+    .trang-trang-chu .o-tim-kiem,
+    .o-tim-kiem {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        gap: 6px;
+        box-sizing: border-box;
+    }
+
+    /* Bắt buộc min-width: 0 để flexbox không đẩy phình ô input vượt quá 360px */
+    .trang-trang-chu .o-tim-kiem input[type="search"],
+    .o-tim-kiem input[type="search"] {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 12px;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+
+    .trang-trang-chu .o-tim-kiem .nut,
+    .o-tim-kiem .nut {
+        flex-shrink: 0;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* 5. Khóa phình lề cho Banner Hero */
+    .trang-trang-chu .hero {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px;
+        box-sizing: border-box;
+    }
+
+    .trang-trang-chu .hero h2 {
+        font-size: 22px;
+        word-break: break-word;
+    }
+}
+
+@media (max-width: 480px) {
+    .trang-trang-chu .mon-noi-bat {
+        grid-template-columns: 1fr;
+    }
+
+    .trang-trang-chu .mon-noi-bat .tieu-de-khu-vuc {
+        grid-column: auto;
+    }
+
+    .trang-trang-chu .goi-y-theo-doi .the-nguoi-dung {
+        grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    .trang-trang-chu .goi-y-theo-doi .the-nguoi-dung .nut {
+        grid-column: 2;
+        justify-self: start;
+    }
+}

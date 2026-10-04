@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Khám phá các danh mục món ăn và tìm kiếm những công thức phù hợp trên Cook with me."
+  >
+
+  <title>Khám phá | Cook with me</title>
+
+  <link rel="stylesheet" href="css/01-bien.css">
+  <link rel="stylesheet" href="css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="css/03-bo-cuc.css">
+  <link rel="stylesheet" href="css/04-thanh-phan.css">
+  <link rel="stylesheet" href="css/05-tien-ich.css">
+</head>
+
+
+<body class="trang trang-kham-pha">
+
+  <header class="dau-trang">
+
+    <p class="thuong-hieu">
+      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
+      <span class="khoi-chu-logo">
+        <span class="ten-website">Cook with me</span>
+        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+      </span>
+    </p>
+
+    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+      <label for="search">Tìm kiếm</label>
+      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
+      <button class="nut" type="submit">Tìm kiếm</button>
+    </form>
+
+    <div class="khu-vuc-tai-khoan"></div>
+
+  </header>
+
+
+  <nav
+    class="thanh-dieu-huong"
+    aria-label="Điều hướng chính"
+  >
+
+    <ul class="menu">
+
+      <li>
+        <a href="index.html">
+          Trang chủ
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="dang-chon"
+          href="danh-sach.html"
+        >
+          Khám phá
+        </a>
+      </li>
+
+      <li>
+        <a href="chi-tiet.html">
+          Chi tiết công thức
+        </a>
+      </li>
+
+      <li>
+        <a href="goi-y-mon-an.html">
+          Gợi ý món ăn
+        </a>
+      </li>
+
+      <li>
+        <a href="cai-dat.html">
+          Cài đặt
+        </a>
+      </li>
+
+      <li>
+        <a href="gioi-thieu.html">
+          Giới thiệu
+        </a>
+      </li>
+
+      <li>
+        <a href="lien-he.html">
+          Liên hệ
+        </a>
+      </li>
+
+    </ul>
+
+    <div class="khu-vuc-yeu-thich">
+
+      <span class="nhan-yeu-thich">
+        Yêu thích
+      </span>
+
+      <span
+        class="so-luong-yeu-thich"
+        role="status"
+        aria-label="Số món ăn yêu thích"
+      >
+        0
+      </span>
+
+    </div>
+
+  </nav>
+
+
+  <main class="kham-pha">
+
+    <!-- 1. TIÊU ĐỀ TRANG KHÁM PHÁ NẰM TRÊN CÙNG -->
+    <div class="tieu-de-danh-sach">
+      <div>
+        <p class="nhan-danh-sach">Khám phá</p>
+        <h1 id="tieu-de-mon-an">Món ăn</h1>
+      </div>
+    </div>
+
+
+    <!-- 2. HERO BANNER "TỦ LẠNH CỦA TÔI" -->
+    <section class="hero-kham-pha">
+
+      <div class="hero-kham-pha-icon-trai">
+        <img
+          src="images/icons/fridge.svg"
+          alt="Tủ lạnh"
+          width="60"
+          height="60"
+        >
+      </div>
+
+      <div class="hero-kham-pha-noi-dung">
+        <p class="hero-kham-pha-nhan">
+          Tủ lạnh của tôi
+        </p>
+
+        <h2>
+          Hôm nay ăn gì?
+        </h2>
+
+        <p>
+          Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!
+        </p>
+      </div>
+
+      <div class="hero-kham-pha-icon-phai">
+        <img
+          src="images/basket-vegetables.svg"
+          alt="Rau củ tươi"
+          width="160"
+          height="120"
+        >
+      </div>
+
+    </section>
+
+
+    <!-- KHU VỰC BỘ LỌC VÀ TÌM KIẾM MÓN ĂN -->
+    <section
+      class="khu-vuc-danh-sach-mon-an"
+      aria-labelledby="tieu-de-mon-an"
+    >
+
+      <!-- THANH CÔNG CỤ BAO GỒM TÌM KIẾM, LỌC VÀ SẮP XẾP DUY NHẤT -->
+      <div class="thanh-cong-cu-mon-an">
+
+        <!-- Hàng trên: Ô Tìm kiếm bên trái + Ô Sắp xếp bên phải -->
+        <div class="hang-tim-kiem-bo-loc">
+
+          <!-- ĐÃ BỎ onsubmit NỘI TUYẾN TẠI ĐÂY -->
+          <form
+            class="o-tim-mon-an"
+            id="o-tim-mon-an"
+            action="danh-sach.html"
+            method="get"
+          >
+
+            <label for="tim-mon-an">
+              Tìm món ăn
+            </label>
+
+            <input
+              type="search"
+              id="tim-mon-an"
+              name="keyword"
+              placeholder="Tìm món ăn..."
+              autocomplete="off"
+            >
+
+          </form>
+
+
+          <div class="khu-vuc-sap-xep">
+
+            <label for="sap-xep">
+              Sắp xếp
+            </label>
+
+            <select
+              id="sap-xep"
+              name="sapXep"
+            >
+              <option value="">Mặc định</option>
+              <option value="danhGiaGiam">Đánh giá cao nhất</option>
+              <option value="thoiGianTang">Thời gian ngắn nhất</option>
+              <option value="nganSachTang">Ngân sách thấp nhất</option>
+              <option value="tenTang">Tên A → Z</option>
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- Hàng dưới: Thanh các nút bấm lọc theo Danh mục đã được chuẩn hóa theo mon-an.json -->
+        <nav
+          class="bo-loc-mon-an"
+          aria-label="Lọc món ăn"
+        >
+
+          <button
+            class="nut-bo-loc dang-loc"
+            type="button"
+            data-danh-muc="tat-ca"
+          >
+            Tất cả
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món chính"
+          >
+            Món chính
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món canh"
+          >
+            Món canh
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món xào"
+          >
+            Món xào
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món rau"
+          >
+            Món rau
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món khai vị"
+          >
+            Món khai vị
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Đồ uống"
+          >
+            Đồ uống
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món tráng miệng"
+          >
+            Món tráng miệng
+          </button>
+
+          <button
+            class="nut-bo-loc"
+            type="button"
+            data-danh-muc="Món chay"
+          >
+            Món chay
+          </button>
+
+        </nav>
+
+      </div>
+
+
+      <!-- Kết quả danh sách món ăn -->
+      <section
+        class="khu-vuc-ket-qua"
+        aria-labelledby="tieu-de-ket-qua"
+      >
+
+        <div class="tieu-de-ket-qua">
+
+          <h2 id="tieu-de-ket-qua">
+            Các món ăn
+          </h2>
+
+          <p
+            class="so-luong-mon-an"
+            id="so-luong-mon-an"
+          >
+            Đang tải món ăn...
+          </p>
+
+        </div>
+
+
+        <div
+          class="danh-sach-mon-an"
+          id="danh-sach-mon-an"
+          aria-live="polite"
+        >
+          <p class="thong-bao-dang-tai">
+            Đang tải món ăn...
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- Thông báo khi JavaScript bị tắt -->
+      <noscript>
+
+        <p class="thong-bao-noscript">
+          JavaScript đang được tắt. Danh sách món ăn, tìm kiếm, lọc và sắp xếp động không thể được tải đầy đủ.
+        </p>
+
+      </noscript>
+
+
+      <!-- Phân trang -->
+      <nav
+        class="phan-trang"
+        id="phan-trang"
+        aria-label="Phân trang danh sách món ăn"
+      >
+
+        <button
+          class="nut-phan-trang"
+          type="button"
+          data-trang="truoc"
+          aria-label="Trang trước"
+        >
+          ‹
+        </button>
+
+      </nav>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <p>
+      &copy; 2026 Cook with me - Nhóm 04
+    </p>
+
+
+    <nav aria-label="Điều hướng phụ">
+
+      <ul class="menu">
+
+        <li>
+          <a href="gioi-thieu.html">
+            Giới thiệu
+          </a>
+        </li>
+
+        <li>
+          <a href="lien-he.html">
+            Liên hệ
+          </a>
+        </li>
+
+      </ul>
+
+    </nav>
+
+  </footer>
+
+
+  <script
+    type="module"
+    src="js/main.js"
+  ></script>
+
+  <script
+    type="module"
+    src="js/trang-danh-sach.js"
+  ></script>
+
+</body>
+
+</html>

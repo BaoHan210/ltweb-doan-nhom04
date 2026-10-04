@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gợi ý món ăn theo nguyên liệu, ngân sách, thời gian nấu và số người ăn với tính năng Tủ lạnh của tôi trên Cook with me.">
+  <title>Gợi ý món ăn | Cook with me</title>
+
+  <link rel="stylesheet" href="css/01-bien.css">
+  <link rel="stylesheet" href="css/02-chuan-hoa.css">
+  <link rel="stylesheet" href="css/03-bo-cuc.css">
+  <link rel="stylesheet" href="css/04-thanh-phan.css">
+  <link rel="stylesheet" href="css/05-tien-ich.css">
+</head>
+
+<body class="trang trang-goi-y">
+
+  <!-- HEADER (GIỮ NGUYÊN) -->
+  <header class="dau-trang">
+    <p class="thuong-hieu">
+      <img src="images/icons/chef.svg" alt="Cook with me" class="logo-icon">
+      <span class="khoi-chu-logo">
+        <span class="ten-website">Cook with me</span>
+        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
+      </span>
+    </p>
+
+    <form class="o-tim-kiem" action="danh-sach.html" method="get">
+      <label for="search">Tìm kiếm</label>
+      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
+      <button class="nut" type="submit">Tìm kiếm</button>
+    </form>
+
+    <div class="khu-vuc-tai-khoan"></div>
+  </header>
+
+  <!-- SIDEBAR (GIỮ NGUYÊN) -->
+  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
+    <ul class="menu">
+      <li><a class="icon-trang-chu" href="index.html">Trang chủ</a></li>
+      <li><a class="icon-kham-pha" href="danh-sach.html">Khám phá</a></li>
+      <li><a class="icon-chi-tiet" href="chi-tiet.html">Chi tiết công thức</a></li>
+      <li><a class="dang-chon icon-goi-y" href="goi-y-mon-an.html">Gợi ý món ăn</a></li>
+      <li><a class="icon-cai-dat" href="cai-dat.html">Cài đặt</a></li>
+      <li><a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a></li>
+      <li><a class="icon-lien-he" href="lien-he.html">Liên hệ</a></li>
+    </ul>
+
+    <div class="khu-vuc-yeu-thich">
+      <span class="nhan-yeu-thich">Yêu thích</span>
+      <span class="so-luong-yeu-thich" role="status" aria-label="Số món ăn yêu thích">0</span>
+    </div>
+  </nav>
+
+  <!-- NỘI DUNG CHÍNH (CẬP NHẬT THEO THIẾT KẾ MỚI) -->
+  <main class="goi-y-trang">
+
+    <!-- BANNER TỦ LẠNH CỦA TÔI (GIAO DIỆN MỚI NỔI BẬT) -->
+<section class="banner-tu-lanh">
+  
+  <!-- Hình ảnh Tủ lạnh bên trái -->
+  <div class="hinh-anh-banner hinh-anh-tu-lanh">
+    <img src="images/icons/fridge.svg" alt="Tủ lạnh" class="anh-tu-lanh">
+  </div>
+
+  <!-- Khối chữ ở giữa / đẩy sang phải -->
+  <div class="noi-dung-banner">
+    <p class="nhan-tu-lanh">Tủ lạnh của tôi</p>
+    <h1 class="tieu-de-banner">Hôm nay ăn gì?</h1>
+    <p class="mo-ta-banner">Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!</p>
+  </div>
+  
+  <!-- Hình ảnh Rổ rau củ bên phải -->
+  <div class="hinh-anh-banner hinh-anh-ro-rau">
+    <img src="images/basket-vegetables.svg" alt="Rổ rau củ quả" class="anh-ro-rau-cu">
+  </div>
+
+</section>
+
+    <!-- FORM BỘ LỌC TÌM KIẾM -->
+<section class="khung-bo-loc-goi-y">
+  <form class="form-goi-y-moi" id="form-goi-y" action="#" method="get">
+    
+    <!-- Hàng 1: Các ô bộ lọc -->
+    <div class="khong-gian-loc">
+      
+      <!-- Ô 1: Nguyên liệu -->
+      <div class="o-nhap-loc o-nguyen-lieu">
+        <label for="ingredients">Nguyên liệu (có thể chọn nhiều)</label>
+        <input type="text" id="ingredients" name="ingredients" placeholder="Nhập nguyên liệu...">
+        
+        <!-- Tags nguyên liệu nằm ngay dưới ô nhập -->
+        <div class="danh-sach-tags">
+          <span class="tag-item">Thịt heo <button type="button" class="nut-xoa-tag">&times;</button></span>
+          <span class="tag-item">Trứng <button type="button" class="nut-xoa-tag">&times;</button></span>
+          <span class="tag-item">Cà chua <button type="button" class="nut-xoa-tag">&times;</button></span>
+          <span class="tag-item">Rau cải <button type="button" class="nut-xoa-tag">&times;</button></span>
+        </div>
+      </div>
+
+      <!-- Ô 2: Ngân sách -->
+      <div class="o-nhap-loc">
+        <label for="budget">Ngân sách</label>
+        <select id="budget" name="budget">
+          <option value="">Chọn ngân sách</option>
+          <option value="50000">Dưới 50.000đ</option>
+          <option value="100000" selected>50.000đ - 100.000đ</option>
+          <option value="200000">100.000đ - 200.000đ</option>
+        </select>
+      </div>
+
+      <!-- Ô 3: Thời gian nấu -->
+      <div class="o-nhap-loc">
+        <label for="cooking-time">Thời gian nấu</label>
+        <select id="cooking-time" name="cooking_time">
+          <option value="">Chọn thời gian</option>
+          <option value="15">Dưới 15 phút</option>
+          <option value="30" selected>Dưới 30 phút</option>
+          <option value="60">Dưới 60 phút</option>
+        </select>
+      </div>
+
+      <!-- Ô 4: Số người ăn -->
+      <div class="o-nhap-loc">
+        <label for="servings">Số người ăn</label>
+        <select id="servings" name="servings">
+          <option value="">Chọn số người</option>
+          <option value="1">1 người</option>
+          <option value="2" selected>2 - 3 người</option>
+          <option value="4">4 người trở lên</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Hàng 2: Nút Tìm kiếm (Căn giữa) -->
+    <div class="hanh-dong-goi-y">
+      <button class="nut-goi-y-tim" type="submit">
+        🔍 Gợi ý món ăn
+      </button>
+    </div>
+
+  </form>
+</section>
+
+    <!-- MÓN ĂN PHÙ HỢP -->
+<section class="mon-duoc-goi-y-moi" aria-labelledby="tieu-de-mon-goi-y">
+  <div class="thanh-tieu-de-mon">
+    <h2 id="tieu-de-mon-goi-y">Món ăn phù hợp</h2>
+    <a href="danh-sach.html" class="xem-tat-ca">Xem tất cả &rarr;</a>
+  </div>
+
+  <p class="thong-bao-goi-y" id="thong-bao-goi-y">
+    Nhập thông tin ở trên để nhận gợi ý món ăn phù hợp.
+  </p>
+
+  <!-- Lưới 4 cột chỉ áp dụng riêng cho khung chứa các card -->
+  <div class="danh-sach-mon-goi-y" id="danh-sach-mon-goi-y"></div>
+</section>
+
+    <!-- DANH SÁCH ĐI CHỢ (ẨN MẶC ĐỊNH KHI CHƯA THÊM MÓN) -->
+<section
+  class="danh-sach-di-cho"
+  id="khu-vuc-danh-sach-di-cho"
+  aria-labelledby="tieu-de-danh-sach-di-cho"
+  hidden
+>
+  <h2 id="tieu-de-danh-sach-di-cho">
+    Danh sách đi chợ
+  </h2>
+
+  <p>
+    Các nguyên liệu dưới đây là những nguyên liệu còn thiếu để chuẩn bị món ăn đã chọn.
+  </p>
+
+  <article class="the-danh-sach">
+    <h3 id="ten-mon-danh-sach-di-cho">
+      Nguyên liệu cần mua
+    </h3>
+
+    <ul id="danh-sach-nguyen-lieu-can-mua"></ul>
+  </article>
+
+  <div class="hanh-dong-danh-sach">
+    <button
+      class="nut nut-phu"
+      id="nut-xoa-danh-sach"
+      type="button"
+    >
+      Xóa danh sách
+    </button>
+  </div>
+</section>
+
+  </main>
+
+  <!-- FOOTER (GIỮ NGUYÊN) -->
+  <footer>
+    <p>&copy; 2026 Cook with me - Nhóm 04</p>
+    <nav aria-label="Điều hướng phụ">
+      <ul class="menu">
+        <li><a class="icon-gioi-thieu" href="gioi-thieu.html">Giới thiệu</a></li>
+        <li><a class="icon-lien-he" href="lien-he.html">Liên hệ</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/trang-goi-y-mon-an.js"></script>
+</body>
+</html>
