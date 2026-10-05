@@ -1,9 +1,17 @@
 <?php
-$pageTitle = "Trang chủ | Cook with me";
+// PHẦN XỬ LÝ (Không echo)
+require __DIR__ . '/inc/config.php';
 
-// Nhúng Header và Nav
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn;
+
+$kho    = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$moiVe  = array_slice($kho->tatCa(), 0, 3); // Lấy 3 món ăn nổi bật
+
+$tieuDe   = 'Trang chủ';
+$trang    = 'index';
+$customJS = 'js/trang-chu.js';
+
+require __DIR__ . '/inc/header.php';
 ?>
 
 
@@ -417,11 +425,6 @@ require_once 'includes/nav.php';
 
   </main>
 
-
-  <?php
-// Khai báo file JS riêng của trang chủ
-$customJS = 'js/trang-chu.js';
-
-// Nhúng Footer
-require_once 'includes/footer.php';
+<?php 
+require __DIR__ . '/inc/footer.php'; 
 ?>

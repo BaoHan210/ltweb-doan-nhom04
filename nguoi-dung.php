@@ -1,9 +1,14 @@
 <?php
-$pageTitle = "Người dùng | Cook with me";
+// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-// Nhúng Header và Nav
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+// Thiết lập thông số header
+$tieuDe   = 'Trang người dùng'; 
+$trang    = 'nguoi-dung'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$customJS = 'js/trang-nguoi-dung.js'; // Nạp JS riêng (nếu có)
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
 
 
@@ -143,9 +148,5 @@ require_once 'includes/nav.php';
 
 
     <?php
-// Khai báo file JS riêng của trang chủ
-$customJS = 'js/trang-nguoi-dung.js';
-
-// Nhúng Footer
-require_once 'includes/footer.php';
+require __DIR__ . '/inc/footer.php';
 ?>

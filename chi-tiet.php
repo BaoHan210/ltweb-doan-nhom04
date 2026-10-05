@@ -1,8 +1,25 @@
 <?php
-$pageTitle = "Chi tiết công thức | Cook with me";
+// 1. PHẦN XỬ LÝ LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn;
+
+// Nạp dữ liệu từ file JSON
+$kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+
+// Lấy ID từ URL (Ví dụ: chi-tiet.php?id=ca-kho-to). Nếu không có ID thì mặc định lấy 'ca-kho-to'
+$id = $_GET['id'] ?? 'ca-kho-to';
+
+// Tìm món ăn theo ID
+$monAn = $kho->timTheoId($id);
+
+// Thiết lập tiêu đề trang theo tên món ăn
+$tieuDe   = $monAn ? $monAn->ten : 'Chi tiết món ăn'; 
+$trang    = 'chi-tiet';
+$customJS = 'js/trang-chi-tiet.js';
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
 
   <main class="chi-tiet-trang">
@@ -14,22 +31,22 @@ require_once 'includes/nav.php';
 
       <article class="chi-tiet-mon-an">
 
-        <!-- CỘT TRÊN TRÁI: ẢNH MÓN ĂN -->
+        <!-- CỘT TRÊN TRÁI: ẢNH MÓN ĂN (ĐỘNG) -->
         <div class="khu-vuc-hinh-anh">
 
           <figure class="hinh-anh-mon-an">
 
-            <img src="images/cao-lau.jpg" alt="Cao lầu Hội An">
+            <img src="<?= e($monAn->hinhAnh ?? 'images/cao-lau.jpg') ?>" alt="<?= e($monAn->ten ?? 'Chi tiết món ăn') ?>">
 
           </figure>
 
         </div>
 
-        <!-- CỘT BÊN PHẢI: THÔNG TIN MÓN ĂN -->
+        <!-- CỘT BÊN PHẢI: THÔNG TIN MÓN ĂN (ĐỘNG) -->
         <div class="thong-tin-mon-an">
 
           <h1 class="tieu-de-mon-an">
-            Cao lầu Hội An
+            <?= e($monAn->ten ?? 'Cao lầu Hội An') ?>
           </h1>
 
           <div class="thong-tin-danh-gia">
@@ -63,12 +80,11 @@ require_once 'includes/nav.php';
 
           </div>
 
-          <!-- Container mô tả, không cần section -->
+          <!-- Container mô tả (ĐỘNG) -->
           <div class="mo-ta-mon-an">
 
             <p>
-              Cao lầu là món ăn đặc trưng của Hội An với sợi mì đặc biệt,
-              thịt xá xíu, rau sống và các nguyên liệu ăn kèm.
+              <?= e($monAn->moTaNgan ?? 'Món ăn đặc trưng thơm ngon, hấp dẫn.') ?>
             </p>
 
           </div>
@@ -100,7 +116,7 @@ require_once 'includes/nav.php';
 
               <li class="nguyen-lieu-soi">
                 <span>
-                  Sợi cao lầu
+                  Sợi mì / Nguyên liệu chính
                 </span>
                 <strong>
                   300g
@@ -109,7 +125,7 @@ require_once 'includes/nav.php';
 
               <li class="nguyen-lieu-thit">
                 <span>
-                  Thịt heo (ba chỉ)
+                  Thịt heo / Thịt kèm
                 </span>
                 <strong>
                   200g
@@ -125,27 +141,9 @@ require_once 'includes/nav.php';
                 </strong>
               </li>
 
-              <li class="nguyen-lieu-hanh">
-                <span>
-                  Hành tím
-                </span>
-                <strong>
-                  2 củ
-                </strong>
-              </li>
-
-              <li class="nguyen-lieu-toi">
-                <span>
-                  Tỏi, tiêu
-                </span>
-                <strong>
-                  3 tép
-                </strong>
-              </li>
-
               <li class="nguyen-lieu-gia-vi">
                 <span>
-                  Gia vị (nước mắm, đường...)
+                  Gia vị (nước mắm, đường, hành, tỏi...)
                 </span>
                 <strong>
                   vừa đủ
@@ -178,19 +176,15 @@ require_once 'includes/nav.php';
               </li>
 
               <li>
-                Ướp thịt với gia vị, để 15 phút.
+                Ướp nguyên liệu với gia vị vừa ăn, để 15 phút.
               </li>
 
               <li>
-                Nấu nước dùng, hầm xương, thêm gia vị.
+                Chế biến theo công thức truyền thống.
               </li>
 
               <li>
-                Trụng mì cao lầu, cho ra tô, thêm thịt, rau sống...
-              </li>
-
-              <li>
-                Thưởng thức khi còn nóng.
+                Thưởng thức món ăn khi còn nóng.
               </li>
 
             </ol>
@@ -207,7 +201,7 @@ require_once 'includes/nav.php';
 
               <div class="video-preview-card">
 
-                <img src="images/cao-lau.jpg" alt="Xem video hướng dẫn">
+                <img src="<?= e($monAn->hinhAnh ?? 'images/cao-lau.jpg') ?>" alt="Xem video hướng dẫn">
 
                 <div class="nut-play-video">
                   ▶
@@ -232,6 +226,5 @@ require_once 'includes/nav.php';
   </main>
 
   <?php
-$customJS = 'js/trang-chi-tiet.js';
-require_once 'includes/footer.php';
+require_once 'inc/footer.php';
 ?>

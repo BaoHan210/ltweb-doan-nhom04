@@ -1,9 +1,20 @@
 <?php
-$pageTitle = "Liên hệ và gửi công thức | Cook with me";
+// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-// Nhúng Header và Nav từ thư mục includes/
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
+
+// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
+$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->tatCa(); 
+
+// Thiết lập thông số header
+$tieuDe   = 'Liên hệ'; 
+$trang    = 'lien-he'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$customJS = 'js/trang-lien-he.js'; // Nạp JS riêng (nếu có)
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
 
 
@@ -394,9 +405,5 @@ require_once 'includes/nav.php';
 
 
 <?php
-// Khai báo file JS riêng cho trang liên hệ (đuôi .js)
-$customJS = 'js/trang-lien-he.js';
-
-// Nhúng Footer từ thư mục includes/
-require_once 'includes/footer.php';
+require __DIR__ . '/inc/footer.php';
 ?>

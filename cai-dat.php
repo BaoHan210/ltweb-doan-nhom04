@@ -1,10 +1,21 @@
 <?php
-$pageTitle = "Cài đặt | Cook with me";
+// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
+
+// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
+$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->tatCa(); 
+
+// Thiết lập thông số header
+$tieuDe   = 'Cài đặt'; 
+$trang    = 'cai-dat'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$customJS = 'js/trang-cai-dat.js'; // Nạp JS riêng (nếu có)
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
-
 
   <main class="cai-dat-trang">
 
@@ -201,6 +212,5 @@ require_once 'includes/nav.php';
 
 
   <?php
-$customJS = 'js/trang-cai-dat.js';
-require_once 'includes/footer.php';
+require_once 'inc/footer.php';
 ?>

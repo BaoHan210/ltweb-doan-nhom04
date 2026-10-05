@@ -1,18 +1,20 @@
 <?php
-// 1. Khai báo tiêu đề trang và CSS riêng (nếu có)
-$pageTitle = "Trang cá nhân | Cook with me";
+// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-// 2. Nhúng Header và Nav từ thư mục includes/
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 
-// 3. (Tùy chọn) Kiểm tra đăng nhập ở Server-side:
-// Nếu người dùng chưa đăng nhập thì chuyển hướng về trang đăng nhập
-if (!isset($_SESSION['user'])) {
-    // Để phục vụ test giao diện, bạn có thể tạm comment dòng header redirect này
-    // header('Location: dang-nhap.php');
-    // exit;
-}
+// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
+$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->tatCa(); 
+
+// Thiết lập thông số header
+$tieuDe   = 'Trang cá nhân'; 
+$trang    = 'ca-nhan'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$customJS = 'js/trang-ca-nhan.js'; // Nạp JS riêng (nếu có)
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
 
   <main class="ca-nhan-trang">
@@ -205,9 +207,6 @@ if (!isset($_SESSION['user'])) {
 </nav>
 
   <?php
-// 4. Khai báo JS riêng cho trang cá nhân (nằm trong mục js/trang-ca-nhan.js)
-$customJS = 'js/trang-ca-nhan.js';
-
-// 5. Nhúng Footer từ thư mục includes/
-require_once 'includes/footer.php';
+// 4. Nhúng Footer từ thư mục includes/
+require_once 'inc/footer.php';
 ?>

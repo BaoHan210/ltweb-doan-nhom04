@@ -1,11 +1,21 @@
 <?php
-$pageTitle = "Khám phá công thức nấu ăn | Cook with me";
+// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
+require __DIR__ . '/inc/config.php';
 
-// Nhúng Header và Nav
-require_once 'includes/header.php';
-require_once 'includes/nav.php';
+use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
+
+// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
+$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->tatCa(); 
+
+// Thiết lập thông số header
+$tieuDe   = 'Khám phá'; 
+$trang    = 'danh-sach'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$customJS = 'js/trang-danh-sach.js'; // Nạp JS riêng (nếu có)
+
+// Nhúng Header (đã bao gồm Nav)
+require __DIR__ . '/inc/header.php';
 ?>
-
 
   <main class="kham-pha">
 
@@ -218,15 +228,20 @@ require_once 'includes/nav.php';
         </div>
 
 
-        <div
-          class="danh-sach-mon-an"
-          id="danh-sach-mon-an"
-          aria-live="polite"
-        >
-          <p class="thong-bao-dang-tai">
-            Đang tải món ăn...
-          </p>
-        </div>
+        <div class="danh-sach-mon-an" id="danh-sach-mon-an">
+  <?php if (!empty($danhSach)): ?>
+    <?php foreach ($danhSach as $mon): ?>
+      <article class="the-mon-an">
+        <img src="<?= e($mon->hinhAnh) ?>" alt="<?= e($mon->ten) ?>">
+        <h3><?= e($mon->ten) ?></h3>
+        <p><?= e($mon->moTaNgan) ?></p>
+        <a href="chi-tiet.php?id=<?= e($mon->id) ?>" class="nut">Xem chi tiết</a>
+      </article>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p>Chưa có món ăn nào.</p>
+  <?php endif; ?>
+</div>
 
       </section>
 
@@ -265,6 +280,5 @@ require_once 'includes/nav.php';
 
 
   <?php
-$customJS = 'js/trang-danh-sach.js';
-require_once 'includes/footer.php';
+require __DIR__ . '/inc/footer.php';
 ?>
