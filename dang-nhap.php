@@ -107,3 +107,9 @@ require __DIR__ . '/inc/header.php';
 <?php
 require __DIR__ . '/inc/footer.php';
 ?>
+
+<?php
+require_once __DIR__ . '/inc/tai-khoan.php';
+
+// Logic kiểm tra tài khoản
+?>

@@ -1,1 +1,7 @@
 /vendor/
+# Bỏ qua thư mục thư viện của Composer
+/vendor/
+
+# Bỏ qua các tệp tạm / log / dung lượng động
+/logs/*.log
+/storage/

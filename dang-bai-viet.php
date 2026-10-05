@@ -1,6 +1,7 @@
 <?php
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/inc/bao-ve.php';
 
 use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 
@@ -326,4 +327,10 @@ require __DIR__ . '/inc/header.php';
 
 <?php
 require __DIR__ . '/inc/footer.php';
+?>
+
+<?php
+require_once __DIR__ . '/inc/tai-khoan.php';
+
+// Logic kiểm tra tài khoản
 ?>

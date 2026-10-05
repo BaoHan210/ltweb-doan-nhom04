@@ -17,3 +17,9 @@ if (MOI_TRUONG === 'dev') {
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// inc/config.php
+$goc = '/ltweb-doan-nhom04-main/'; // Khai báo trực tiếp ở phạm vi toàn cục
+
+// Hoặc khuyên dùng HẰNG SỐ để tránh lỗi Scope:
+define('URL_GOC', '/ltweb-doan-nhom04-main/');

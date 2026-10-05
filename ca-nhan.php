@@ -15,6 +15,7 @@ $customJS = 'js/trang-ca-nhan.js'; // Nạp JS riêng (nếu có)
 
 // Nhúng Header (đã bao gồm Nav)
 require __DIR__ . '/inc/header.php';
+require_once __DIR__ . '/inc/bao-ve.php';
 ?>
 
   <main class="ca-nhan-trang">
@@ -179,34 +180,13 @@ require __DIR__ . '/inc/header.php';
 
   </main>
 
-  <footer>
-
-<p>
-  &copy; 2026 Cook with me - Nhóm 04
-</p>
-
-
-<nav aria-label="Điều hướng phụ">
-
-  <ul class="menu">
-
-    <li>
-      <a href="gioi-thieu.php">
-        Giới thiệu
-      </a>
-    </li>
-
-    <li>
-      <a href="lien-he.php">
-        Liên hệ
-      </a>
-    </li>
-
-  </ul>
-
-</nav>
-
   <?php
 // 4. Nhúng Footer từ thư mục includes/
 require_once 'inc/footer.php';
+?>
+
+<?php
+require_once __DIR__ . '/inc/tai-khoan.php';
+
+// Logic kiểm tra tài khoản
 ?>
