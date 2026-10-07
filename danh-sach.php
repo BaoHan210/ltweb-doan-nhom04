@@ -6,7 +6,27 @@ use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
 $kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$danhSach = $kho->tatCa(); 
+
+// Lấy tham số GET và Whitelist kiểm tra
+$tuKhoa = trim($_GET['q'] ?? '');
+$danhMuc = trim($_GET['dm'] ?? '');
+$sapXep = trim($_GET['sx'] ?? 'ten-az');
+
+$danhMucHopLe = ['', 'Món xào', 'Món kho', 'Món canh', 'Món nướng'];
+$sapXepHopLe = ['ten-az', 'ten-za', 'thoi-gian-tang'];
+
+if (!in_array($danhMuc, $danhMucHopLe, true)) $danhMuc = '';
+if (!in_array($sapXep, $sapXepHopLe, true)) $sapXep = 'ten-az';
+
+// Lọc dữ liệu
+$danhSach = $kho->timKiem($tuKhoa, $danhMuc);
+
+// Sắp xếp dữ liệu bằng usort
+usort($danhSach, function($a, $b) use ($sapXep) {
+    if ($sapXep === 'ten-za') return strcmp($b->ten, $a->ten);
+    if ($sapXep === 'thoi-gian-tang') return $a->thoiGian <=> $b->thoiGian;
+    return strcmp($a->ten, $b->ten); // ten-az
+});
 
 // Thiết lập thông số header
 $tieuDe   = 'Khám phá'; 
@@ -17,7 +37,7 @@ $customJS = 'js/trang-danh-sach.js'; // Nạp JS riêng (nếu có)
 require __DIR__ . '/inc/header.php';
 ?>
 
-  <main class="kham-pha">
+  <main class="trang-kham-pha kham-pha">
 
     <!-- 1. TIÊU ĐỀ TRANG KHÁM PHÁ NẰM TRÊN CÙNG -->
     <div class="tieu-de-danh-sach">
@@ -232,10 +252,10 @@ require __DIR__ . '/inc/header.php';
   <?php if (!empty($danhSach)): ?>
     <?php foreach ($danhSach as $mon): ?>
       <article class="the-mon-an">
-        <img src="<?= e($mon->hinhAnh) ?>" alt="<?= e($mon->ten) ?>">
-        <h3><?= e($mon->ten) ?></h3>
-        <p><?= e($mon->moTaNgan) ?></p>
-        <a href="chi-tiet.php?id=<?= e($mon->id) ?>" class="nut">Xem chi tiết</a>
+        <img src="<?= e($mon->hinhAnh ?? $mon->hinh_anh ?? '') ?>" alt="<?= e($mon->ten ?? '') ?>">
+        <h3><?= e($mon->ten ?? '') ?></h3>
+        <p><?= e($mon->moTaNgan ?? $mon->mo_ta_ngan ?? '') ?></p>
+        <a href="chi-tiet.php?id=<?= e($mon->id ?? '') ?>" class="nut">Xem chi tiết</a>
       </article>
     <?php endforeach; ?>
   <?php else: ?>

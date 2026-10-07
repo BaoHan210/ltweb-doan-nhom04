@@ -8,15 +8,35 @@ use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 $kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
 $danhSach = $kho->tatCa(); 
 
+$loiChung = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $matKhau = $_POST['mat_khau'] ?? '';
+    $danhSachTaiKhoan = require __DIR__ . '/inc/tai-khoan.php';
+
+    if (isset($danhSachTaiKhoan[$email]) && password_verify($matKhau, $danhSachTaiKhoan[$email]['mat_khau'])) {
+        session_regenerate_id(true); // Cấp mã phiên mới phòng chống Session Fixation
+        $_SESSION['user'] = $danhSachTaiKhoan[$email];
+        gan_thong_bao('success', 'Đăng nhập thành công!');
+        chuyen_huong('quan-tri.php');
+    } else {
+        // Ghi log đăng nhập thất bại
+        $logMsg = sprintf("[%s] Đăng nhập thất bại - Email: %s - IP: %s\n", date('Y-m-d H:i:s'), $email, $_SERVER['REMOTE_ADDR']);
+        file_put_contents(__DIR__ . '/logs/access-error.log', $logMsg, FILE_APPEND);
+        
+        $loiChung = 'Email hoặc mật khẩu không chính xác!';
+    }
+}
+
 // Thiết lập thông số header
 $tieuDe   = 'Đăng nhập'; 
-$trang    = 'dang-nhap'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
+$trang    = 'dang-nhap'; // Đánh dấu class active trên Menu
 $customJS = 'js/trang-dang-nhap.js'; // Nạp JS riêng (nếu có)
 
 // Nhúng Header (đã bao gồm Nav)
 require __DIR__ . '/inc/header.php';
 ?>
-
 
 <main class="dang-nhap-trang">
 
@@ -26,19 +46,25 @@ require __DIR__ . '/inc/header.php';
 
         <div class="the-dang-nhap">
 
-    <header class="tieu-de-dang-nhap">
-        <p>
-            Đăng nhập để quản lý tài khoản
-            và chia sẻ công thức của bạn.
-        </p>
-    </header>
+            <header class="tieu-de-dang-nhap">
+                <p>
+                    Đăng nhập để quản lý tài khoản
+                    và chia sẻ công thức của bạn.
+                </p>
+            </header>
 
+            <!-- 1. Bổ sung hiển thị thông báo lỗi chung -->
+            <?php if (!empty($loiChung)): ?>
+                <div class="thong-bao-loi" style="color: #d9534f; background-color: #f2dede; border: 1px solid #ebccd1; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+                    <?= e($loiChung) ?>
+                </div>
+            <?php endif; ?>
 
             <form
-                class="form-dang-nhap"
-                action="#"
-                method="post"
-                novalidate
+              class="form-dang-nhap"
+              action="dang-nhap.php"
+              method="post"
+              novalidate
             >
 
                 <div class="nhom-truong">
@@ -47,10 +73,12 @@ require __DIR__ . '/inc/header.php';
                         Email
                     </label>
 
+                    <!-- 2. Bổ sung giữ lại email bằng e($email) -->
                     <input
                         type="email"
                         id="email-dang-nhap"
                         name="email"
+                        value="<?= e($email ?? '') ?>"
                         autocomplete="email"
                         required
                         placeholder="Nhập email"
@@ -103,13 +131,6 @@ require __DIR__ . '/inc/header.php';
 
 </main>
 
-
 <?php
 require __DIR__ . '/inc/footer.php';
-?>
-
-<?php
-require_once __DIR__ . '/inc/tai-khoan.php';
-
-// Logic kiểm tra tài khoản
 ?>

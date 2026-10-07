@@ -1,11 +1,29 @@
 <?php
-// PHẦN XỬ LÝ (Không echo)
-require __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Data\KhoMonAn;
 
+// Khai báo đường dẫn gốc chính xác cho thư mục gốc của dự án
+$goc = URL_GOC;
+
 $kho    = new KhoMonAn(__DIR__ . '/data/mon-an.json');
 $moiVe  = array_slice($kho->tatCa(), 0, 3); // Lấy 3 món ăn nổi bật
+
+// Đọc cookie danh sách món đã xem gần đây (Chức năng 3)
+$daXemIds = [];
+if (!empty($_COOKIE['da_xem'])) {
+    $giaiMa = json_decode($_COOKIE['da_xem'], true);
+    if (is_array($giaiMa)) {
+        $daXemIds = array_filter(array_map('intval', $giaiMa));
+    }
+}
+
+$danhSachDaXem = [];
+foreach ($daXemIds as $id) {
+    $m = $kho->timTheoId($id);
+    if ($m !== null) $danhSachDaXem[] = $m;
+}
 
 $tieuDe   = 'Trang chủ';
 $trang    = 'index';

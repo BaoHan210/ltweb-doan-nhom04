@@ -65,3 +65,24 @@ if (!function_exists('hien_thi_thong_bao')) {
         return '';
     }
 }
+
+if (!function_exists('lam_sach_chuoi')) {
+    /**
+     * Làm sạch chuỗi đầu vào (Trim khoảng trắng)
+     */
+    function lam_sach_chuoi(?string $chuoi): string
+    {
+        return trim($chuoi ?? '');
+    }
+}
+
+if (!function_exists('tao_ten_file_ngau_nhien')) {
+    /**
+     * Tạo tên file ngẫu nhiên bằng chuỗi Hex an toàn để lưu vào thư mục uploads/
+     */
+    function tao_ten_file_ngau_nhien(string $tenGoc): string
+    {
+        $ext = pathinfo($tenGoc, PATHINFO_EXTENSION);
+        return bin2hex(random_bytes(16)) . '.' . strtolower($ext);
+    }
+}

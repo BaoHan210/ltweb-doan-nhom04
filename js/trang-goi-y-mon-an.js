@@ -1209,192 +1209,27 @@ const xoaDanhSachDiCho = () => {
 
 
 /* =========================================================
-   10. LOAD JSON
+   10. ĐỌC DỮ LIỆU MÓN ĂN TỪ MÁY CHỦ PHP (KHÔNG DÙNG FETCH)
    ========================================================= */
-
-/*
- * Trạng thái đang tải.
- */
-const hienThiDangTaiDuLieu = () => {
-
-    const thongBao =
-        document.querySelector(
-            '#thong-bao-goi-y'
-        );
-
-
-    if (
-        thongBao === null
-    ) {
-        return;
-    }
-
-
-    thongBao.textContent =
-        'Đang tải dữ liệu món ăn...';
-};
-
-
-/*
- * Trạng thái lỗi.
- */
-const hienThiLoiTaiDuLieu = () => {
-
-    const thongBao =
-        document.querySelector(
-            '#thong-bao-goi-y'
-        );
-
-
-    if (
-        thongBao === null
-    ) {
-        return;
-    }
-
-
-    thongBao.replaceChildren();
-
-
-    const noiDungLoi =
-        document.createElement(
-            'span'
-        );
-
-    noiDungLoi.textContent =
-        'Không thể tải dữ liệu món ăn. Vui lòng thử lại.';
-
-
-    const nutThuLai =
-        document.createElement(
-            'button'
-        );
-
-    nutThuLai.type =
-        'button';
-
-    nutThuLai.className =
-        'nut nut-phu';
-
-    nutThuLai.textContent =
-        'Thử lại';
-
-
-    nutThuLai.addEventListener(
-        'click',
-        async () => {
-
-            await taiDanhSachMonAn();
-        }
-    );
-
-
-    thongBao.appendChild(
-        noiDungLoi
-    );
-
-    thongBao.appendChild(
-        document.createTextNode(
-            ' '
-        )
-    );
-
-    thongBao.appendChild(
-        nutThuLai
-    );
-};
-
-
-/*
- * Tải danh sách món ăn từ JSON.
- */
-const taiDanhSachMonAn = async () => {
-
-    hienThiDangTaiDuLieu();
-
-
-    try {
-
-        const response =
-            await fetch(
-                duongDanDuLieuMonAn
-            );
-
-
-        if (
-            response.ok === false
-        ) {
-
-            throw new Error(
-                `Không thể tải dữ liệu món ăn: ${response.status}`
-            );
-        }
-
-
-        const duLieu =
-            await response.json();
-
-
-        if (
-            Array.isArray(
-                duLieu
-            ) === false
-        ) {
-
-            throw new Error(
-                'Dữ liệu món ăn không đúng định dạng.'
-            );
-        }
-
-
-        danhSachMonAn =
-            duLieu;
-
-
-        /*
-         * Không có dữ liệu.
-         */
-        if (
-            danhSachMonAn.length === 0
-        ) {
-
-            const thongBao =
-                document.querySelector(
-                    '#thong-bao-goi-y'
-                );
-
-
-            if (
-                thongBao !== null
-            ) {
-
-                thongBao.textContent =
-                    'Hiện chưa có dữ liệu món ăn để gợi ý.';
-            }
-
-            return false;
-        }
-
-
+const taiDanhSachMonAn = () => {
+    // PHP đã in sẵn danh sách món ăn vào biến window.danhSachMonAnGoc ở trang goi-y-mon-an.php
+    if (Array.isArray(window.danhSachMonAnGoc) && window.danhSachMonAnGoc.length > 0) {
+        danhSachMonAn = window.danhSachMonAnGoc;
         return true;
-
-    } catch (error) {
-
-        console.error(
-            'Lỗi tải dữ liệu món ăn:',
-            error
-        );
-
-
-        danhSachMonAn =
-            [];
-
-
-        hienThiLoiTaiDuLieu();
-
-
-        return false;
     }
+
+    // Nếu chưa có biến toàn cục, thử đọc từ thẻ script chứa JSON do PHP nhúng
+    const theJson = document.getElementById('du-lieu-mon-an-json');
+    if (theJson) {
+        try {
+            danhSachMonAn = JSON.parse(theJson.textContent) || [];
+            return true;
+        } catch (e) {
+            console.error('Lỗi đọc dữ liệu món ăn từ PHP:', e);
+        }
+    }
+
+    return false;
 };
 
 
@@ -1627,81 +1462,30 @@ const xuLyNhapLai = () => {
 
 
 /* =========================================================
-   13. KHỞI TẠO
+   13. KHỞI TẠO TRANG GỢI Ý
    ========================================================= */
+const khoiTaoTrangGoiY = () => {
+    const form = document.querySelector('#form-goi-y');
+    const nutXoa = document.querySelector('#nut-xoa-danh-sach');
+    const nutNhapLai = document.querySelector('#nut-nhap-lai');
 
-const khoiTaoTrangGoiY = async () => {
-
-    const form =
-        document.querySelector(
-            '#form-goi-y'
-        );
-
-    const nutXoa =
-        document.querySelector(
-            '#nut-xoa-danh-sach'
-        );
-
-    const nutNhapLai =
-        document.querySelector(
-            '#nut-nhap-lai'
-        );
-
-
-    /*
-     * Form gợi ý.
-     */
-    if (
-        form !== null
-    ) {
-
-        form.addEventListener(
-            'submit',
-            xuLyFormGoiY
-        );
+    if (form !== null) {
+        form.addEventListener('submit', xuLyFormGoiY);
     }
 
-
-    /*
-     * Nút nhập lại.
-     */
-    if (
-        nutNhapLai !== null
-    ) {
-
-        nutNhapLai.addEventListener(
-            'click',
-            xuLyNhapLai
-        );
+    if (nutNhapLai !== null) {
+        nutNhapLai.addEventListener('click', xuLyNhapLai);
     }
 
-
-    /*
-     * Nút xóa danh sách đi chợ.
-     */
-    if (
-        nutXoa !== null
-    ) {
-
-        nutXoa.addEventListener(
-            'click',
-            xoaDanhSachDiCho
-        );
+    if (nutXoa !== null) {
+        nutXoa.addEventListener('click', xoaDanhSachDiCho);
     }
 
+    // Nạp dữ liệu do PHP cung cấp
+    taiDanhSachMonAn();
 
-    /*
-     * Tải dữ liệu món ăn.
-     */
-    await taiDanhSachMonAn();
-
-
-    /*
-     * Khôi phục danh sách đi chợ
-     * sau khi tải trang.
-     */
+    // Khôi phục danh sách đi chợ từ localStorage
     hienThiDanhSachDiCho();
 };
 
-
-khoiTaoTrangGoiY();
+document.addEventListener('DOMContentLoaded', khoiTaoTrangGoiY);

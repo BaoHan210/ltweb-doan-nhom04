@@ -681,10 +681,10 @@ const hienThiTrangThaiMonDaLuu = (
 
 
 /* =========================================================
-   7. HIỂN THỊ MÓN ĐÃ LƯU
+   7. HIỂN THỊ MÓN ĐÃ LƯU (ĐỌC DỮ LIỆU TỪ PHP, KHÔNG DÙNG FETCH)
    ========================================================= */
 
-const hienThiMonDaLuu = async () => {
+const hienThiMonDaLuu = () => {
 
     if (
         khuVucMonDaLuu === null
@@ -696,11 +696,6 @@ const hienThiMonDaLuu = async () => {
     khuVucMonDaLuu.replaceChildren();
 
 
-    hienThiTrangThaiMonDaLuu(
-        'Đang tải danh sách món đã lưu...'
-    );
-
-
     const danhSachYeuThich =
         docYeuThich();
 
@@ -708,9 +703,6 @@ const hienThiMonDaLuu = async () => {
     if (
         danhSachYeuThich.length === 0
     ) {
-
-        khuVucMonDaLuu.replaceChildren();
-
 
         const tieuDe =
             document.createElement(
@@ -734,136 +726,86 @@ const hienThiMonDaLuu = async () => {
     }
 
 
-    try {
-
-        const danhSachMonAn =
-            await taiJSON(
-                'data/mon-an.json'
-            );
+    // Lấy dữ liệu món ăn do PHP nhúng sẵn hoặc đọc từ mảng toàn cục
+    const danhSachMonAn = window.danhSachMonAnGoc || [];
 
 
-        if (
-            Array.isArray(
-                danhSachMonAn
-            ) === false
-        ) {
-
-            throw new Error(
-                'Dữ liệu món ăn không hợp lệ.'
-            );
-        }
-
-
-        const monAnDaLuu =
-            danhSachMonAn.filter(
-                (monAn) => {
-
-                    return danhSachYeuThich.some(
-                        (idMonAn) => {
-
-                            return (
-                                String(
-                                    idMonAn
-                                )
-                                ===
-                                String(
-                                    monAn.id
-                                )
-                            );
-                        }
-                    );
-                }
-            );
-
-
-        khuVucMonDaLuu.replaceChildren();
-
-
-        const tieuDe =
-            document.createElement(
-                'h2'
-            );
-
-        tieuDe.textContent =
-            'Món đã lưu';
-
-
-        khuVucMonDaLuu.appendChild(
-            tieuDe
-        );
-
-
-        if (
-            monAnDaLuu.length === 0
-        ) {
-
-            hienThiTrangThaiMonDaLuu(
-                'Không tìm thấy món ăn đã lưu.'
-            );
-
-            return;
-        }
-
-
-        const danhSach =
-            document.createElement(
-                'div'
-            );
-
-        danhSach.className =
-            'danh-sach-bai-viet-cua-toi';
-
-
-        monAnDaLuu.forEach(
+    const monAnDaLuu =
+        danhSachMonAn.filter(
             (monAn) => {
 
-                const monAnItem =
-                    taoTheMonDaLuu(
-                        monAn
-                    );
+                return danhSachYeuThich.some(
+                    (idMonAn) => {
 
-                danhSach.appendChild(
-                    monAnItem
+                        return (
+                            String(
+                                idMonAn
+                            )
+                            ===
+                            String(
+                                monAn.id
+                            )
+                        );
+                    }
                 );
             }
         );
 
 
-        khuVucMonDaLuu.appendChild(
-            danhSach
+    const tieuDe =
+        document.createElement(
+            'h2'
         );
 
-    } catch (error) {
-
-        console.error(
-            'Lỗi tải món ăn đã lưu:',
-            error
-        );
+    tieuDe.textContent =
+        'Món đã lưu';
 
 
-        khuVucMonDaLuu.replaceChildren();
+    khuVucMonDaLuu.appendChild(
+        tieuDe
+    );
 
 
-        const tieuDe =
-            document.createElement(
-                'h2'
-            );
-
-        tieuDe.textContent =
-            'Món đã lưu';
-
-        khuVucMonDaLuu.appendChild(
-            tieuDe
-        );
-
+    if (
+        monAnDaLuu.length === 0
+    ) {
 
         hienThiTrangThaiMonDaLuu(
-            'Không thể tải danh sách món đã lưu.',
-            true
+            'Không tìm thấy món ăn đã lưu.'
         );
-    }
-};
 
+        return;
+    }
+
+
+    const danhSach =
+        document.createElement(
+            'div'
+        );
+
+    danhSach.className =
+        'danh-sach-bai-viet-cua-toi';
+
+
+    monAnDaLuu.forEach(
+        (monAn) => {
+
+            const monAnItem =
+                taoTheMonDaLuu(
+                    monAn
+                );
+
+            danhSach.appendChild(
+                monAnItem
+            );
+        }
+    );
+
+
+    khuVucMonDaLuu.appendChild(
+        danhSach
+    );
+};
 
 /* =========================================================
    8. CHUYỂN TAB
@@ -1001,49 +943,43 @@ const khoiTaoTab = () => {
    10. KHỞI TẠO TRANG CÁ NHÂN
    ========================================================= */
 
-const khoiTaoTrangCaNhan =
-    async () => {
+const khoiTaoTrangCaNhan = () => {
 
-        const nguoiDung =
-            docNguoiDungHienTai();
-
-
-        if (
-            nguoiDung === null
-        ) {
-
-            window.location.href =
-                'dang-nhap.php';
-
-            return;
-        }
+    const nguoiDung =
+        docNguoiDungHienTai();
 
 
-        hienThiThongTinNguoiDung(
-            nguoiDung
-        );
+    if (
+        nguoiDung === null
+    ) {
+
+        window.location.href =
+            'dang-nhap.php';
+
+        return;
+    }
 
 
-        hienThiBaiVietCuaToi(
-            nguoiDung
-        );
+    hienThiThongTinNguoiDung(
+        nguoiDung
+    );
 
 
-        khoiTaoTab();
+    hienThiBaiVietCuaToi(
+        nguoiDung
+    );
 
 
-        /*
-         * Chỉ cần tải dữ liệu món đã lưu
-         * khi khu vực này tồn tại.
-         */
-
-        if (
-            khuVucMonDaLuu !== null
-        ) {
-
-            await hienThiMonDaLuu();
-        }
-    };
+    khoiTaoTab();
 
 
-khoiTaoTrangCaNhan();
+    if (
+        khuVucMonDaLuu !== null
+    ) {
+
+        hienThiMonDaLuu();
+    }
+};
+
+
+document.addEventListener('DOMContentLoaded', khoiTaoTrangCaNhan);

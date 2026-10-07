@@ -849,10 +849,60 @@ const khoiTaoMenuMobile = () => {
     );
 };
 
+/* =========================================================
+   KIỂM TRA BIỂU MẪU PHÍA CLIENT (CLIENT-SIDE VALIDATION)
+   ========================================================= */
+const khoiTaoKiemTraBieuMau = () => {
+    // Tìm các form có class form-kiem-tra hoặc form đăng nhập/đăng ký
+    const cácBiểuMẫu = document.querySelectorAll(
+        '.form-kiem-tra, form[action*="dang-nhap"], form[action*="dang-ky"]'
+    );
+
+    cácBiểuMẫu.forEach((form) => {
+        form.addEventListener('submit', (e) => {
+            let hợpLệ = true;
+            const cácTrườngBắtBuộc = form.querySelectorAll('[required]');
+
+            cácTrườngBắtBuộc.forEach((input) => {
+                input.classList.remove('is-invalid');
+                if (!input.value.trim()) {
+                    hợpLệ = false;
+                    input.classList.add('is-invalid');
+                }
+            });
+
+            if (!hợpLệ) {
+                e.preventDefault(); // Dừng gửi form nếu bỏ trống
+                alert('Vui lòng điền đầy đủ các thông tin bắt buộc!');
+            }
+        });
+    });
+};
+
 
 /* =========================================================
-   KHỞI TẠO TRANG
+   KHỐI TÍNH NĂNG REST API TẠI TRANG CHỦ
    ========================================================= */
+const khoiTaoRestApiTrangChu = () => {
+    const khốiApi = document.getElementById('khoi-rest-api');
+    if (khốiApi === null) {
+        return;
+    }
+
+    fetch('https://api.quotable.io/random')
+        .then((res) => res.json())
+        .then((data) => {
+            khốiApi.innerHTML = `
+                <blockquote class="blockquote mb-0">
+                    <p>"${data.content}"</p>
+                    <footer class="blockquote-footer">${data.author}</footer>
+                </blockquote>
+            `;
+        })
+        .catch(() => {
+            khốiApi.innerHTML = '<p class="text-muted">Chúc bạn một ngày nấu ăn vui vẻ!</p>';
+        });
+};
 
 const khoiTaoTrang = () => {
 
@@ -861,6 +911,11 @@ const khoiTaoTrang = () => {
     capNhatSoLuongYeuThich();
 
     khoiTaoTimKiemMonAn();
+
+    // Bổ sung 2 hàm mới ở đây
+    khoiTaoKiemTraBieuMau();
+
+    khoiTaoRestApiTrangChu();
 
 
     const nguoiDung =
@@ -880,6 +935,5 @@ const khoiTaoTrang = () => {
         capNhatSoLuongYeuThich
     );
 };
-
 
 khoiTaoTrang();

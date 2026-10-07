@@ -1,5 +1,4 @@
 <?php
-// Biến $goc hỗ trợ đường dẫn tương đối khi trang nằm trong thư mục con (ví dụ thanhvien/...)
 $goc   ??= '';
 $trang ??= '';
 
@@ -11,6 +10,16 @@ $menu = [
     'gioi-thieu'    => 'Giới thiệu',
     'lien-he'       => 'Liên hệ'
 ];
+
+$mapClass = [
+    'index'        => 'trang-trang-chu',
+    'danh-sach'    => 'trang-kham-pha',
+    'goi-y-mon-an' => 'trang-goi-y',
+    'cai-dat'      => 'cai-dat-trang',
+    'gioi-thieu'   => 'trang-gioi-thieu',
+    'lien-he'      => 'lien-he-trang'
+];
+$bodyClass = $mapClass[$trang ?? ''] ?? ('trang-' . ($trang ?? ''));
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -25,7 +34,7 @@ $menu = [
   <link rel="stylesheet" href="<?= $goc ?>css/04-thanh-phan.css">
   <link rel="stylesheet" href="<?= $goc ?>css/05-tien-ich.css">
 </head>
-<body class="trang">
+<body class="trang <?= $bodyClass ?>">
 
   <header class="dau-trang">
     <p class="thuong-hieu">

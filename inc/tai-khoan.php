@@ -1,10 +1,28 @@
 <?php
-// inc/tai-khoan.php - Lưu danh sách tài khoản hợp lệ (Mật khẩu: admin123)
+// inc/tai-khoan.php - Danh sách tài khoản Quản trị viên của nhóm (Mật khẩu chung: admin123)
 return [
-    'admin@cookwithme.com' => [
-        'id' => 1,
-        'ho_ten' => 'Quản trị viên (Bảo Hân)',
-        'email' => 'admin@cookwithme.com',
-        'mat_khau' => '$2y$10$eImiTXuWVxfMjp2cd7.Oce6p2.R2k1pE0f3A9L8/z9K8.1O2Xv3aC' // admin123
+    'baohan@cookwithme.com' => [
+        'id'       => 1,
+        'ho_ten'   => 'Phan Thị Bảo Hân (Trưởng nhóm)',
+        'email'    => 'baohan@cookwithme.com',
+        'mat_khau' => password_hash('admin123', PASSWORD_DEFAULT)
+    ],
+    'ngoctrinh@cookwithme.com' => [
+        'id'       => 2,
+        'ho_ten'   => 'Nguyễn Thị Trinh',
+        'email'    => 'ngoctrinh@cookwithme.com',
+        'mat_khau' => password_hash('admin123', PASSWORD_DEFAULT)
+    ],
+    'ngocbinh@cookwithme.com' => [
+        'id'       => 3,
+        'ho_ten'   => 'Nguyễn Thị Ngọc Bình',
+        'email'    => 'ngocbinh@cookwithme.com',
+        'mat_khau' => password_hash('admin123', PASSWORD_DEFAULT)
+    ],
+    'ana@cookwithme.com' => [
+        'id'       => 4,
+        'ho_ten'   => 'Lê Thị A Na',
+        'email'    => 'ana@cookwithme.com',
+        'mat_khau' => password_hash('admin123', PASSWORD_DEFAULT)
     ]
 ];

@@ -1,7 +1,7 @@
 /*
  * trang-nguoi-dung.js
- * Xử lý chức năng theo dõi người dùng trên trang
- * Khám phá người dùng.
+ * Xử lý chức năng theo dõi người dùng trên trang Khám phá người dùng.
+ * Lưu và quản lý trạng thái theo dõi bằng localStorage.
  */
 
 const khoaTheoDoi = 'nguoiDungDangTheoDoi';
@@ -43,7 +43,7 @@ const capNhatTrangThaiTheoDoi = () => {
     cacTheNguoiDung.forEach((theNguoiDung) => {
 
         const tenNguoiDungElement =
-            theNguoiDung.querySelector('h2');
+            theNguoiDung.querySelector('h2, h3'); // Hỗ trợ cả thẻ h2 và h3 do PHP render
 
         const nutTheoDoi =
             theNguoiDung.querySelector('.nut-phu');
@@ -95,7 +95,7 @@ const xuLyTheoDoi = (event) => {
     }
 
     const tenNguoiDungElement =
-        theNguoiDung.querySelector('h2');
+        theNguoiDung.querySelector('h2, h3');
 
     if (tenNguoiDungElement === null) {
         return;
@@ -128,7 +128,7 @@ const khoiTaoTrangNguoiDung = () => {
 
     const danhSachNguoiDung =
         document.querySelector(
-            '.danh-sach-nguoi-dung'
+            '.danh-sach-nguoi-dung, main'
         );
 
     if (danhSachNguoiDung === null) {
@@ -143,4 +143,4 @@ const khoiTaoTrangNguoiDung = () => {
     capNhatTrangThaiTheoDoi();
 };
 
-khoiTaoTrangNguoiDung();
+document.addEventListener('DOMContentLoaded', khoiTaoTrangNguoiDung);

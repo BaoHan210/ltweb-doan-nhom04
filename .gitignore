@@ -1,7 +1,14 @@
-/vendor/
-# Bỏ qua thư mục thư viện của Composer
+# Bỏ qua thư viện do Composer sinh ra
 /vendor/
 
-# Bỏ qua các tệp tạm / log / dung lượng động
-/logs/*.log
-/storage/
+# Bỏ qua tất cả các file log phát sinh, chỉ giữ lại tệp .htaccess
+/logs/*
+!/logs/.htaccess
+
+# Bỏ qua tất cả dữ liệu lưu trữ phát sinh, chỉ giữ lại tệp .htaccess
+/storage/*
+!/storage/.htaccess
+
+# Bỏ qua tất cả ảnh upload, chỉ giữ lại tệp giữ thư mục .gitkeep
+/uploads/*
+!/uploads/.gitkeep
