@@ -2,44 +2,56 @@
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
 
-use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
+use App\Data\KhoMonAn;
 
-// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+// Khai báo dữ liệu, lấy danh sách từ JSON
+$kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
 
-// Lấy tham số GET và Whitelist kiểm tra
-$tuKhoa = trim($_GET['q'] ?? '');
+// 1. Lấy tham số GET (Đã đồng bộ tên keyword, dm, sapXep)
+$tuKhoa  = trim($_GET['keyword'] ?? $_GET['q'] ?? '');
 $danhMuc = trim($_GET['dm'] ?? '');
-$sapXep = trim($_GET['sx'] ?? 'ten-az');
+$sapXep  = trim($_GET['sapXep'] ?? $_GET['sx'] ?? 'ten-az');
 
-$danhMucHopLe = ['', 'Món xào', 'Món kho', 'Món canh', 'Món nướng'];
-$sapXepHopLe = ['ten-az', 'ten-za', 'thoi-gian-tang'];
+// Whitelist danh mục và sắp xếp hợp lệ
+$danhMucHopLe = ['', 'Món chính', 'Món canh', 'Món xào', 'Món rau', 'Món khai vị', 'Đồ uống', 'Món tráng miệng', 'Món chay'];
+$sapXepHopLe  = ['ten-az', 'ten-za', 'thoiGianTang', 'danhGiaGiam', 'nganSachTang'];
 
 if (!in_array($danhMuc, $danhMucHopLe, true)) $danhMuc = '';
 if (!in_array($sapXep, $sapXepHopLe, true)) $sapXep = 'ten-az';
 
-// Lọc dữ liệu
+// 2. Lọc dữ liệu theo Từ khóa và Danh mục
 $danhSach = $kho->timKiem($tuKhoa, $danhMuc);
 
-// Sắp xếp dữ liệu bằng usort
+// 3. Sắp xếp dữ liệu theo đúng value của thẻ <select>
 usort($danhSach, function($a, $b) use ($sapXep) {
-    if ($sapXep === 'ten-za') return strcmp($b->ten, $a->ten);
-    if ($sapXep === 'thoi-gian-tang') return $a->thoiGian <=> $b->thoiGian;
-    return strcmp($a->ten, $b->ten); // ten-az
+    if ($sapXep === 'ten-za') return strcmp($b->ten ?? '', $a->ten ?? '');
+    if ($sapXep === 'thoiGianTang') return ($a->thoiGian ?? 0) <=> ($b->thoiGian ?? 0);
+    if ($sapXep === 'danhGiaGiam') return ($b->danhGia ?? 0) <=> ($a->danhGia ?? 0);
+    if ($sapXep === 'nganSachTang') return ($a->nganSach ?? $a->gia ?? 0) <=> ($b->nganSach ?? $b->gia ?? 0);
+    return strcmp($a->ten ?? '', $b->ten ?? ''); // ten-az
 });
+
+// 4. Logic Phân trang 9 món/trang
+$soMonTrenTrang = 9;
+$tongSoMon      = count($danhSach);
+$tongSoTrang    = max(1, (int)ceil($tongSoMon / $soMonTrenTrang));
+$trangHienTai   = max(1, min($tongSoTrang, (int)($_GET['page'] ?? 1)));
+$viTriBatDau    = ($trangHienTai - 1) * $soMonTrenTrang;
+
+// Cắt lấy đúng 9 món cho trang hiện tại
+$danhSachHienThi = array_slice($danhSach, $viTriBatDau, $soMonTrenTrang);
 
 // Thiết lập thông số header
 $tieuDe   = 'Khám phá'; 
-$trang    = 'danh-sach'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
-$customJS = 'js/trang-danh-sach.js'; // Nạp JS riêng (nếu có)
+$trang    = 'danh-sach'; 
+$customJS = 'js/trang-danh-sach.js';
 
-// Nhúng Header (đã bao gồm Nav)
 require __DIR__ . '/inc/header.php';
 ?>
 
   <main class="trang-kham-pha kham-pha">
 
-    <!-- 1. TIÊU ĐỀ TRANG KHÁM PHÁ NẰM TRÊN CÙNG -->
+    <!-- 1. TIÊU ĐỀ TRANG KHÁM PHÁ -->
     <div class="tieu-de-danh-sach">
       <div>
         <p class="nhan-danh-sach">Khám phá</p>
@@ -47,258 +59,196 @@ require __DIR__ . '/inc/header.php';
       </div>
     </div>
 
-
-    <!-- 2. HERO BANNER "TỦ LẠNH CỦA TÔI" -->
+    <!-- 2. HERO BANNER -->
     <section class="hero-kham-pha">
-
       <div class="hero-kham-pha-icon-trai">
-        <img
-          src="images/icons/fridge.svg"
-          alt="Tủ lạnh"
-          width="60"
-          height="60"
-        >
+        <img src="images/icons/fridge.svg" alt="Tủ lạnh" width="60" height="60">
       </div>
-
       <div class="hero-kham-pha-noi-dung">
-        <p class="hero-kham-pha-nhan">
-          Tủ lạnh của tôi
-        </p>
-
-        <h2>
-          Hôm nay ăn gì?
-        </h2>
-
-        <p>
-          Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!
-        </p>
+        <p class="hero-kham-pha-nhan">Tủ lạnh của tôi</p>
+        <h2>Hôm nay ăn gì?</h2>
+        <p>Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!</p>
       </div>
-
       <div class="hero-kham-pha-icon-phai">
-        <img
-          src="images/basket-vegetables.svg"
-          alt="Rau củ tươi"
-          width="160"
-          height="120"
-        >
+        <img src="images/basket-vegetables.svg" alt="Rau củ tươi" width="160" height="120">
       </div>
-
     </section>
 
-
     <!-- KHU VỰC BỘ LỌC VÀ TÌM KIẾM MÓN ĂN -->
-    <section
-      class="khu-vuc-danh-sach-mon-an"
-      aria-labelledby="tieu-de-mon-an"
-    >
+    <section class="khu-vuc-danh-sach-mon-an" aria-labelledby="tieu-de-mon-an">
 
-      <!-- THANH CÔNG CỤ BAO GỒM TÌM KIẾM, LỌC VÀ SẮP XẾP DUY NHẤT -->
       <div class="thanh-cong-cu-mon-an">
 
-        <!-- Hàng trên: Ô Tìm kiếm bên trái + Ô Sắp xếp bên phải -->
+        <!-- Hàng trên: Tìm kiếm + Sắp xếp -->
         <div class="hang-tim-kiem-bo-loc">
 
-          <!-- ĐÃ BỎ onsubmit NỘI TUYẾN TẠI ĐÂY -->
-          <form
-            class="o-tim-mon-an"
-            id="o-tim-mon-an"
-            action="danh-sach.php"
-            method="get"
-          >
+          <!-- Form tìm kiếm -->
+          <form class="o-tim-mon-an" id="o-tim-mon-an" action="danh-sach.php" method="get">
+            <?php if (!empty($danhMuc)): ?>
+              <input type="hidden" name="dm" value="<?= e($danhMuc) ?>">
+            <?php endif; ?>
+            <?php if (!empty($sapXep)): ?>
+              <input type="hidden" name="sapXep" value="<?= e($sapXep) ?>">
+            <?php endif; ?>
 
-            <label for="tim-mon-an">
-              Tìm món ăn
-            </label>
-
+            <label for="tim-mon-an">Tìm món ăn</label>
             <input
               type="search"
               id="tim-mon-an"
               name="keyword"
               placeholder="Tìm món ăn..."
+              value="<?= e($tuKhoa) ?>"
               autocomplete="off"
             >
-
           </form>
 
+          <!-- Ô sắp xếp tự động reload trang khi chọn -->
+          <form class="khu-vuc-sap-xep" action="danh-sach.php" method="get">
+            <?php if (!empty($tuKhoa)): ?>
+              <input type="hidden" name="keyword" value="<?= e($tuKhoa) ?>">
+            <?php endif; ?>
+            <?php if (!empty($danhMuc)): ?>
+              <input type="hidden" name="dm" value="<?= e($danhMuc) ?>">
+            <?php endif; ?>
 
-          <div class="khu-vuc-sap-xep">
-
-            <label for="sap-xep">
-              Sắp xếp
-            </label>
-
-            <select
-              id="sap-xep"
-              name="sapXep"
-            >
-              <option value="">Mặc định</option>
-              <option value="danhGiaGiam">Đánh giá cao nhất</option>
-              <option value="thoiGianTang">Thời gian ngắn nhất</option>
-              <option value="nganSachTang">Ngân sách thấp nhất</option>
-              <option value="tenTang">Tên A → Z</option>
+            <label for="sap-xep">Sắp xếp</label>
+            <select id="sap-xep" name="sapXep" onchange="this.form.submit()">
+              <option value="ten-az" <?= $sapXep === 'ten-az' ? 'selected' : '' ?>>Mặc định (A → Z)</option>
+              <option value="danhGiaGiam" <?= $sapXep === 'danhGiaGiam' ? 'selected' : '' ?>>Đánh giá cao nhất</option>
+              <option value="thoiGianTang" <?= $sapXep === 'thoiGianTang' ? 'selected' : '' ?>>Thời gian ngắn nhất</option>
+              <option value="nganSachTang" <?= $sapXep === 'nganSachTang' ? 'selected' : '' ?>>Ngân sách thấp nhất</option>
+              <option value="ten-za" <?= $sapXep === 'ten-za' ? 'selected' : '' ?>>Tên Z → A</option>
             </select>
-
-          </div>
+          </form>
 
         </div>
 
+        <!-- Hàng dưới: Thanh nút lọc danh mục -->
+        <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
+          <?php
+          $dsDanhMuc = [
+            ''               => 'Tất cả',
+            'Món chính'      => 'Món chính',
+            'Món canh'       => 'Món canh',
+            'Món xào'        => 'Món xào',
+            'Món rau'        => 'Món rau',
+            'Món khai vị'    => 'Món khai vị',
+            'Đồ uống'        => 'Đồ uống',
+            'Món tráng miệng' => 'Món tráng miệng',
+            'Món chay'       => 'Món chay'
+          ];
 
-        <!-- Hàng dưới: Thanh các nút bấm lọc theo Danh mục đã được chuẩn hóa theo mon-an.json -->
-        <nav
-          class="bo-loc-mon-an"
-          aria-label="Lọc món ăn"
-        >
-
-          <button
-            class="nut-bo-loc dang-loc"
-            type="button"
-            data-danh-muc="tat-ca"
-          >
-            Tất cả
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món chính"
-          >
-            Món chính
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món canh"
-          >
-            Món canh
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món xào"
-          >
-            Món xào
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món rau"
-          >
-            Món rau
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món khai vị"
-          >
-            Món khai vị
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Đồ uống"
-          >
-            Đồ uống
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món tráng miệng"
-          >
-            Món tráng miệng
-          </button>
-
-          <button
-            class="nut-bo-loc"
-            type="button"
-            data-danh-muc="Món chay"
-          >
-            Món chay
-          </button>
-
+          foreach ($dsDanhMuc as $key => $label):
+            $isDangChon = ($danhMuc === $key) || ($key === '' && $danhMuc === '');
+            
+            $params = $_GET;
+            $params['dm'] = $key;
+            $params['page'] = 1;
+            if (empty($key)) unset($params['dm']);
+            
+            $url = 'danh-sach.php?' . http_build_query($params);
+          ?>
+            <a 
+              href="<?= e($url) ?>" 
+              class="nut-bo-loc <?= $isDangChon ? 'dang-loc active' : '' ?>"
+            >
+              <?= e($label) ?>
+            </a>
+          <?php endforeach; ?>
         </nav>
 
       </div>
 
-
       <!-- Kết quả danh sách món ăn -->
-      <section
-        class="khu-vuc-ket-qua"
-        aria-labelledby="tieu-de-ket-qua"
-      >
+      <section class="khu-vuc-ket-qua" aria-labelledby="tieu-de-ket-qua">
 
         <div class="tieu-de-ket-qua">
-
-          <h2 id="tieu-de-ket-qua">
-            Các món ăn
-          </h2>
-
-          <p
-            class="so-luong-mon-an"
-            id="so-luong-mon-an"
-          >
-            Đang tải món ăn...
+          <h2 id="tieu-de-ket-qua">Các món ăn</h2>
+          <p class="so-luong-mon-an" id="so-luong-mon-an">
+            Hiển thị <?= count($danhSachHienThi) ?> / <?= $tongSoMon ?> món ăn (Trang <?= $trangHienTai ?>/<?= $tongSoTrang ?>)
           </p>
-
         </div>
 
-
         <div class="danh-sach-mon-an" id="danh-sach-mon-an">
-  <?php if (!empty($danhSach)): ?>
-    <?php foreach ($danhSach as $mon): ?>
-      <article class="the-mon-an">
-        <img src="<?= e($mon->hinhAnh ?? $mon->hinh_anh ?? '') ?>" alt="<?= e($mon->ten ?? '') ?>">
-        <h3><?= e($mon->ten ?? '') ?></h3>
-        <p><?= e($mon->moTaNgan ?? $mon->mo_ta_ngan ?? '') ?></p>
-        <a href="chi-tiet.php?id=<?= e($mon->id ?? '') ?>" class="nut">Xem chi tiết</a>
-      </article>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <p>Chưa có món ăn nào.</p>
-  <?php endif; ?>
-</div>
+          <?php if (!empty($danhSachHienThi)): ?>
+            <?php foreach ($danhSachHienThi as $mon): ?>
+              <article class="the-mon-an" data-danh-muc="<?= e($mon->danhMuc ?? $mon->danh_muc ?? $mon->loai_mon ?? '') ?>">
+                <div class="khung-anh-mon">
+                  <img 
+                    src="<?= e($mon->hinhAnh ?? $mon->hinh_anh ?? 'images/ca-kho-to.jpg') ?>" 
+                    alt="<?= e($mon->ten ?? '') ?>"
+                    loading="lazy"
+                  >
+                  <button 
+                    class="nut-yeu-thich" 
+                    type="button"
+                    data-id-mon-an="<?= e($mon->id ?? '') ?>" 
+                    aria-label="Thêm vào yêu thích"
+                  >♡</button>
+                </div>
+
+                <div class="noi-dung-the-mon">
+                  <h3><?= e($mon->ten ?? '') ?></h3>
+                  
+                  <p class="thong-tin-phu">
+                    <span class="item-thong-tin">
+                      <img src="images/icons/icon-thoi-gian.svg" alt="Thời gian" class="icon-phu">
+                      <?= e($mon->thoiGian ?? $mon->thoi_gian ?? '20') ?> phút
+                    </span>
+                    <span class="cham-phan-cach">•</span>
+                    <span class="item-thong-tin">
+                      <img src="images/icons/icon-ngan-sach.svg" alt="Ngân sách" class="icon-phu">
+                      <?= isset($mon->nganSach) ? number_format($mon->nganSach, 0, ',', '.') . 'đ' : (isset($mon->gia) ? number_format($mon->gia, 0, ',', '.') . 'đ' : '30.000đ') ?>
+                    </span>
+                    <span class="cham-phan-cach">•</span>
+                    <span class="item-thong-tin">
+                      <img src="images/icons/icon-do-kho.svg" alt="Độ khó" class="icon-phu">
+                      <?= e($mon->doKho ?? $mon->do_kho ?? 'Dễ') ?>
+                    </span>
+                  </p>
+
+                  <a href="chi-tiet.php?id=<?= e($mon->id ?? '') ?>" class="nut">
+                    Chi tiết món ăn
+                  </a>
+                </div>
+              </article>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p style="padding: 20px; text-align: center; width: 100%;">Không tìm thấy món ăn nào phù hợp với lựa chọn của bạn.</p>
+          <?php endif; ?>
+        </div>
 
       </section>
 
+      <!-- Phân trang động -->
+      <?php if ($tongSoTrang > 1): ?>
+        <nav class="phan-trang" id="phan-trang" aria-label="Phân trang danh sách món ăn">
+          <?php if ($trangHienTai > 1): ?>
+            <?php $params = $_GET; $params['page'] = $trangHienTai - 1; ?>
+            <a href="?<?= http_build_query($params) ?>" class="nut-phan-trang" aria-label="Trang trước">‹</a>
+          <?php endif; ?>
 
-      <!-- Thông báo khi JavaScript bị tắt -->
-      <noscript>
+          <?php for ($i = 1; $i <= $tongSoTrang; $i++): ?>
+            <?php $params = $_GET; $params['page'] = $i; ?>
+            <a 
+              href="?<?= http_build_query($params) ?>" 
+              class="nut-phan-trang <?= $i === $trangHienTai ? 'active dang-chon' : '' ?>"
+            >
+              <?= $i ?>
+            </a>
+          <?php endfor; ?>
 
-        <p class="thong-bao-noscript">
-          JavaScript đang được tắt. Danh sách món ăn, tìm kiếm, lọc và sắp xếp động không thể được tải đầy đủ.
-        </p>
-
-      </noscript>
-
-
-      <!-- Phân trang -->
-      <nav
-        class="phan-trang"
-        id="phan-trang"
-        aria-label="Phân trang danh sách món ăn"
-      >
-
-        <button
-          class="nut-phan-trang"
-          type="button"
-          data-trang="truoc"
-          aria-label="Trang trước"
-        >
-          ‹
-        </button>
-
-      </nav>
+          <?php if ($trangHienTai < $tongSoTrang): ?>
+            <?php $params = $_GET; $params['page'] = $trangHienTai + 1; ?>
+            <a href="?<?= http_build_query($params) ?>" class="nut-phan-trang" aria-label="Trang sau">›</a>
+          <?php endif; ?>
+        </nav>
+      <?php endif; ?>
 
     </section>
 
   </main>
 
-
-  <?php
+<?php
 require __DIR__ . '/inc/footer.php';
 ?>
