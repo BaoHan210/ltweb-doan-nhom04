@@ -1,13 +1,13 @@
 <?php
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
-require __DIR__ . '/inc/config.php';
-require_once __DIR__ . '/src/Services/LienHeService.php';
+require _DIR_ . '/inc/config.php';
+require_once _DIR_ . '/src/Services/LienHeService.php';
 
 use App\Data\KhoMonAn; 
 use App\Services\LienHeService;
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$kho      = new KhoMonAn(_DIR_ . '/data/mon-an.json');
 $danhSach = $kho->tatCa(); 
 
 $duLieu = ['ho_ten' => '', 'email' => '', 'noi_dung' => ''];
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $loi['anh_dinh_kem'] = 'Chỉ chấp nhận tệp ảnh JPG, PNG hoặc WEBP!';
             } else {
                 $tenAnhNhatKy = bin2hex(random_bytes(8)) . $mimeHopLe[$mime];
-                $thuMucUpload = __DIR__ . '/uploads/';
+                $thuMucUpload = _DIR_ . '/uploads/';
                 if (!is_dir($thuMucUpload)) {
                     mkdir($thuMucUpload, 0755, true);
                 }
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Nếu không có lỗi -> Lưu file và Redirect (PRG)
     if (empty($loi)) {
-        $service = new LienHeService(__DIR__ . '/storage/lien-he.jsonl');
+        $service = new LienHeService(_DIR_ . '/storage/lien-he.jsonl');
         $service->guiPhanHoi([
             'ho_ten' => $duLieu['ho_ten'],
             'email' => $duLieu['email'],
@@ -69,7 +69,7 @@ $trang    = 'lien-he';
 $customJS = 'js/trang-lien-he.js'; 
 
 // Nhúng Header (đã bao gồm Nav)
-require __DIR__ . '/inc/header.php';
+require _DIR_ . '/inc/header.php';
 ?>
 
   <main class="lien-he-trang">
@@ -263,5 +263,5 @@ require __DIR__ . '/inc/header.php';
   </main>
 
 <?php
-require __DIR__ . '/inc/footer.php';
+require _DIR_ . '/inc/footer.php';
 ?>
