@@ -1,130 +1,68 @@
 <?php
-// 1. PHẦN XỬ LÝ LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
 
 use App\Data\KhoMonAn;
 
-// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$danhSach = $kho->tatCa(); 
+// 1. Kiểm tra nếu chưa đăng nhập -> Chuyển hướng ngay sang trang đăng nhập
+if (!isset($_SESSION['user'])) {
+    chuyen_huong('dang-nhap.php');
+    exit;
+}
 
-$loiChung = '';
+// 2. Lấy ID từ URL
+$id = trim($_GET['id'] ?? '');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
-    $matKhau = $_POST['mat_khau'] ?? '';
-    $danhSachTaiKhoan = require __DIR__ . '/inc/tai-khoan.php';
+$kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->tatCa();
 
-    if (isset($danhSachTaiKhoan[$email]) && password_verify($matKhau, $danhSachTaiKhoan[$email]['mat_khau'])) {
-        session_regenerate_id(true); // Cấp mã phiên mới phòng chống Session Fixation
-        $_SESSION['user'] = $danhSachTaiKhoan[$email];
-        gan_thong_bao('success', 'Đăng nhập thành công!');
-        chuyen_huong('quan-tri.php');
-    } else {
-        // Ghi log đăng nhập thất bại
-        $logMsg = sprintf("[%s] Đăng nhập thất bại - Email: %s - IP: %s\n", date('Y-m-d H:i:s'), $email, $_SERVER['REMOTE_ADDR']);
-        file_put_contents(__DIR__ . '/logs/access-error.log', $logMsg, FILE_APPEND);
-        
-        $loiChung = 'Email hoặc mật khẩu không chính xác!';
+// Tìm món ăn tương ứng với ID trong file JSON
+$monAn = null;
+if (!empty($id)) {
+    foreach ($danhSach as $item) {
+        $itemId = is_object($item) ? ($item->id ?? '') : ($item['id'] ?? '');
+        if ((string)$itemId === (string)$id) {
+            $monAn = $item;
+            break;
+        }
     }
 }
 
-// Thiết lập thông số header
-$tieuDe   = 'Đăng nhập'; 
-$trang    = 'dang-nhap';
-$customJS = 'js/trang-dang-nhap.js';
+// 3. XỬ LÝ CA 7: Nếu thiếu ID hoặc ID không tồn tại -> Trả về trang LỖI 404
+if (empty($id) || !$monAn) {
+    http_response_code(404); // Đặt mã trạng thái HTTP 404 cho tab Network
 
-// Nhúng Header (đã bao gồm Nav)
+    if (file_exists(__DIR__ . '/404.php')) {
+        require __DIR__ . '/404.php';
+    } else {
+        $tieuDe = '404 - Không tìm thấy món ăn';
+        $trang  = 'chi-tiet';
+        require __DIR__ . '/inc/header.php';
+        ?>
+        <main class="trang-loi-404" style="padding: 60px 20px; text-align: center;">
+            <h1 style="font-size: 48px; color: #e74c3c; margin-bottom: 10px;">404</h1>
+            <h2>Không tìm thấy món ăn</h2>
+            <p style="color: #666; margin-bottom: 20px;">Món ăn bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.</p>
+            <a href="danh-sach.php" class="nut" style="display: inline-block; padding: 10px 20px; background: #2E6230; color: #fff; text-decoration: none; border-radius: 8px;">Quay lại danh sách</a>
+        </main>
+        <?php
+        require __DIR__ . '/inc/footer.php';
+    }
+    exit;
+}
+
+// 4. Nếu tìm thấy món ăn hợp lệ -> Hiển thị chi tiết món ăn
+$tenMon = is_object($monAn) ? ($monAn->ten ?? 'Chi tiết món ăn') : ($monAn['ten'] ?? 'Chi tiết món ăn');
+$tieuDe = $tenMon . ' - Cook with Me'; 
+$trang  = 'chi-tiet'; 
+
 require __DIR__ . '/inc/header.php';
 ?>
 
-<main class="dang-nhap-trang">
-
-    <h1>Đăng nhập</h1>
-
-    <div class="khung-dang-nhap">
-
-        <div class="the-dang-nhap">
-
-            <header class="tieu-de-dang-nhap">
-                <p>
-                    Đăng nhập để quản lý tài khoản và chia sẻ công thức của bạn.
-                </p>
-            </header>
-
-            <?php if (!empty($loiChung)): ?>
-                <div class="thong-bao-loi" style="color: red; margin-bottom: 15px;">
-                    <?= e($loiChung) ?>
-                </div>
-            <?php endif; ?>
-
-            <form
-                class="form-dang-nhap"
-                action="dang-nhap.php"
-                method="post"
-                novalidate
-            >
-
-                <div class="nhom-truong">
-
-                    <label for="email-dang-nhap">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email-dang-nhap"
-                        name="email"
-                        autocomplete="email"
-                        required
-                        placeholder="Nhập email"
-                    >
-
-                </div>
-
-
-                <div class="nhom-truong">
-
-                    <label for="mat-khau-dang-nhap">
-                        Mật khẩu
-                    </label>
-
-                    <input
-                        type="password"
-                        id="mat-khau-dang-nhap"
-                        name="mat_khau"
-                        autocomplete="current-password"
-                        required
-                        placeholder="Nhập mật khẩu"
-                    >
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="nut nut-dang-nhap"
-                >
-                    Đăng nhập
-                </button>
-
-
-                <p class="thong-tin-chuyen-trang">
-
-                    Chưa có tài khoản?
-
-                    <a href="dang-ky.php">
-                        Đăng ký
-                    </a>
-
-                </p>
-
-            </form>
-
-        </div>
-
-    </div>
-
+<main class="trang-chi-tiet-container" style="padding: 20px;">
+    <h1><?= e($tenMon) ?></h1>
+    
+    <p>Xin chào <strong><?= e($_SESSION['user']['ho_ten'] ?? $_SESSION['user']['hoTen'] ?? $_SESSION['user']['email']) ?></strong>!</p>
+    <p>Nội dung công thức nấu ăn sẽ hiển thị tại đây...</p>
 </main>
 
 <?php
