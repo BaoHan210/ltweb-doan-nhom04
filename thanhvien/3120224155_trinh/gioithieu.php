@@ -9,33 +9,17 @@
  */
 
 require_once __DIR__ . '/../../inc/config.php';
-$goc    = '../../'; 
-$tieuDe = 'Thông tin cá nhân - Nguyễn Thị Trinh';
-$trang  = ''; // Không active trang nào trên menu chính
 
 // ==========================================
-// 1. CHỨC NĂNG PHÍA SERVER: BỘ ĐẾM LƯỢT XEM
-// ==========================================
-$tepDem = __DIR__ . '/../../storage/3120224155_views.txt';
-if (!is_dir(__DIR__ . '/../../storage')) {
-    mkdir(__DIR__ . '/../../storage', 0777, true);
-}
-
-if (empty($_SESSION['da_xem_trinh'])) {
-    $luotXem = is_file($tepDem) ? (int)file_get_contents($tepDem) : 0;
-    $luotXem++;
-    file_put_contents($tepDem, (string)$luotXem, LOCK_EX);
-    $_SESSION['da_xem_trinh'] = true;
-} else {
-    $luotXem = is_file($tepDem) ? (int)file_get_contents($tepDem) : 0;
-}
-
-// ==========================================
-// 2. CHỨC NĂNG PHÍA SERVER: SỔ LƯU BÚT (PRG)
+// 1. CHỨC NĂNG PHÍA SERVER: SỔ LƯU BÚT (PRG)
 // ==========================================
 $tepLuuBut = __DIR__ . '/../../storage/3120224155_luubut.jsonl';
 $loi = [];
 $du  = ['ten' => '', 'loinhan' => ''];
+
+if (!is_dir(__DIR__ . '/../../storage')) {
+    mkdir(__DIR__ . '/../../storage', 0777, true);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $du['ten']     = trim($_POST['ten'] ?? '');
@@ -62,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         file_put_contents($tepLuuBut, $dong, FILE_APPEND | LOCK_EX);
         $_SESSION['flash_trinh'] = 'Đã gửi lời nhắn thành công!';
-        header('Location: gioithieu.php');
+        header('Location: gioithieu.php'); // PRG: F5 không bị gửi lại dữ liệu
         exit;
     }
 }
@@ -78,11 +62,31 @@ if (is_file($tepLuuBut)) {
     $danhSachLuuBut = array_slice($danhSachLuuBut, 0, 5);
 }
 
-// NẠP HEADER DÙNG CHUNG CỦA NHÓM
+// ==========================================
+// 2. CHỨC NĂNG PHÍA SERVER: BỘ ĐẾM LƯỢT XEM
+// ==========================================
+$tepDem = __DIR__ . '/../../storage/3120224155_views.txt';
+
+if (empty($_SESSION['da_xem_trinh'])) {
+    $luotXem = is_file($tepDem) ? (int)file_get_contents($tepDem) : 0;
+    $luotXem++;
+    file_put_contents($tepDem, (string)$luotXem, LOCK_EX);
+    $_SESSION['da_xem_trinh'] = true;
+} else {
+    $luotXem = is_file($tepDem) ? (int)file_get_contents($tepDem) : 0;
+}
+
+// ==========================================
+// THIẾT LẬP THÔNG SỐ VÀ NẠP HEADER NHÓM
+// ==========================================
+$goc    = '../../'; 
+$tieuDe = 'Thông tin cá nhân - Nguyễn Thị Trinh';
+$trang  = ''; // Không active mục nào trên menu chính
+
 require __DIR__ . '/../../inc/header.php';
 ?>
 
-<!-- Giữ CSS riêng của cá nhân bạn -->
+<!-- Giữ CSS riêng của cá nhân -->
 <link rel="stylesheet" href="trang-ca-nhan.css">
 
 <!-- NỘI DUNG CHÍNH TRANG CÁ NHÂN -->
@@ -99,7 +103,7 @@ require __DIR__ . '/../../inc/header.php';
   <section class="thong-tin-chung">
     <h2>Thông tin chung</h2>
     <figure class="anh-dai-dien">
-      <img src="../../images/avatar-trinh.jpg" alt="Ảnh chân dung thành viên Nguyễn Thị Trinh" width="200" height="200">
+      <img src="<?= $goc ?>images/avatar-trinh.jpg" alt="Ảnh chân dung thành viên Nguyễn Thị Trinh" width="200" height="200">
       <figcaption>Ảnh chân dung thành viên Nguyễn Thị Trinh - Nhóm 04.</figcaption>
     </figure>
 
@@ -216,12 +220,12 @@ require __DIR__ . '/../../inc/header.php';
   </section>
 
   <p class="quay-lai" style="margin-top: 20px;">
-    <a href="../../index.php">Quay lại trang chủ</a>
+    <a href="<?= $goc ?>index.php">Quay lại trang chủ</a>
   </p>
 
 </main>
 
-<!-- Giữ JS riêng của cá nhân bạn -->
+<!-- Giữ JS riêng của cá nhân -->
 <script type="module" src="js/canhan.js"></script>
 
 <?php 
