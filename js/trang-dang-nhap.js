@@ -140,4 +140,15 @@ if (formDangNhap !== null) {
 
         // Khi dữ liệu hợp lệ, để trình duyệt submit tự nhiên sang dang-nhap.php
     });
+
+    /* =========================================================
+   XỬ LÝ ẨN / HIỆN MẬT KHẨU
+   ========================================================= */
+const nutToggleMatKhau = document.querySelector('#nut-toggle-mat-khau');
+if (nutToggleMatKhau && matKhau) {
+    nutToggleMatKhau.addEventListener('click', () => {
+        const isPassword = matKhau.getAttribute('type') === 'password';
+        matKhau.setAttribute('type', isPassword ? 'text' : 'password');
+    });
+}
 }

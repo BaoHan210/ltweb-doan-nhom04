@@ -1,985 +1,142 @@
 /*
  * trang-ca-nhan.js
- * Hiển thị thông tin tài khoản, bài viết của người dùng
- * và danh sách món ăn đã lưu trên trang cá nhân.
  */
 
-import {
-    docNguoiDungHienTai
-} from './tai-khoan.js';
+import { docNguoiDungHienTai } from './tai-khoan.js';
+import { docBaiViet } from './bai-viet.js';
 
-import {
-    docBaiViet,
-    xoaBaiViet
-} from './bai-viet.js';
+/* 1. LẤY PHẦN TỬ HTML */
+const tenNguoiDung = document.querySelector('.ten-nguoi-dung');
+const emailNguoiDung = document.querySelector('.email-nguoi-dung');
+const chuCaiDaiDien = document.querySelector('.chu-cai-dai-dien');
+const danhSachBaiViet = document.querySelector('.danh-sach-bai-viet-cua-toi');
+const khuVucCongThuc = document.querySelector('.khu-vuc-cong-thuc-ca-nhan');
+const khuVucMonDaLuu = document.querySelector('.khu-vuc-mon-da-luu');
+const cacTab = document.querySelectorAll('.tab-ca-nhan');
 
-import {
-    docYeuThich
-} from './yeu-thich.js';
-
-import {
-    taiJSON
-} from './api.js';
-
-
-/* =========================================================
-   1. LẤY CÁC PHẦN TỬ HTML
-   ========================================================= */
-
-const tenNguoiDung =
-    document.querySelector(
-        '.ten-nguoi-dung'
-    );
-
-const emailNguoiDung =
-    document.querySelector(
-        '.email-nguoi-dung'
-    );
-
-const chuCaiDaiDien =
-    document.querySelector(
-        '.chu-cai-dai-dien'
-    );
-
-const danhSachBaiViet =
-    document.querySelector(
-        '.danh-sach-bai-viet-cua-toi'
-    );
-
-const khuVucCongThuc =
-    document.querySelector(
-        '.khu-vuc-cong-thuc-ca-nhan'
-    );
-
-const khuVucMonDaLuu =
-    document.querySelector(
-        '.khu-vuc-mon-da-luu'
-    );
-
-const cacTab =
-    document.querySelectorAll(
-        '.tab-ca-nhan'
-    );
-
-
-/* =========================================================
-   2. HIỂN THỊ THÔNG TIN NGƯỜI DÙNG
-   ========================================================= */
-
-const hienThiThongTinNguoiDung = (
-    nguoiDung
-) => {
-
-    if (
-        nguoiDung === null
-        ||
-        typeof nguoiDung !== 'object'
-    ) {
-        return;
+/* 2. HIỂN THỊ THÔNG TIN NGƯỜI DÙNG */
+const hienThiThongTinNguoiDung = (nguoiDung) => {
+    if (!nguoiDung || typeof nguoiDung !== 'object') return;
+    const hoTen = String(nguoiDung.hoTen || '').trim();
+    
+    // Chỉ cập nhật lại bằng JS nếu localStorage có lưu tên, tránh ghi đè chữ "Người dùng" khi rỗng
+    if (hoTen && tenNguoiDung) {
+        tenNguoiDung.textContent = hoTen;
     }
-
-    const hoTen =
-        String(
-            nguoiDung.hoTen || ''
-        ).trim();
-
-    if (
-        tenNguoiDung !== null
-    ) {
-        tenNguoiDung.textContent =
-            hoTen || 'Người dùng';
-    }
-
-    if (
-        emailNguoiDung !== null
-    ) {
-        emailNguoiDung.textContent =
-            String(
-                nguoiDung.email || ''
-            );
-    }
-
-    if (
-        chuCaiDaiDien !== null
-    ) {
-
-        chuCaiDaiDien.textContent =
-            hoTen === ''
-                ? '?'
-                : hoTen
-                    .charAt(0)
-                    .toUpperCase();
-    }
+    if (emailNguoiDung) emailNguoiDung.textContent = String(nguoiDung.email || '');
+    if (chuCaiDaiDien && hoTen) chuCaiDaiDien.textContent = hoTen.charAt(0).toUpperCase();
 };
 
+/* 3. TẠO THẺ BÀI VIẾT / MÓN ĂN */
+const taoTheBaiVietNguoiDung = (baiViet) => {
+    const article = document.createElement('article');
+    article.className = 'the-mon-an-cn';
 
-/* =========================================================
-   3. TẠO THẺ BÀI VIẾT
-   ========================================================= */
-
-const taoTheBaiVietNguoiDung = (
-    baiViet
-) => {
-
-    const baiVietItem =
-        document.createElement(
-            'article'
-        );
-
-    baiVietItem.className =
-        'the-bai-viet-cua-toi';
-
-
-    /* Hình ảnh */
-
-    if (
-        Array.isArray(
-            baiViet.hinhAnh
-        )
-        &&
-        baiViet.hinhAnh.length > 0
-    ) {
-
-        const khuVucHinhAnh =
-            document.createElement(
-                'div'
-            );
-
-        khuVucHinhAnh.className =
-            'anh-bai-viet';
-
-
-        const hinhAnh =
-            document.createElement(
-                'img'
-            );
-
-        hinhAnh.src =
-            String(
-                baiViet.hinhAnh[0]
-            );
-
-        hinhAnh.alt =
-            String(
-                baiViet.tenMon
-                ||
-                'Hình ảnh món ăn'
-            );
-
-        khuVucHinhAnh.appendChild(
-            hinhAnh
-        );
-
-        baiVietItem.appendChild(
-            khuVucHinhAnh
-        );
+    const id = baiViet.id || '';
+    const ten = baiViet.tenMon || baiViet.ten || 'Món ăn';
+    
+    let hinhAnh = 'images/cao-lau.jpg';
+    if (Array.isArray(baiViet.hinhAnh) && baiViet.hinhAnh.length > 0) {
+        hinhAnh = baiViet.hinhAnh[0];
+    } else if (typeof baiViet.hinhAnh === 'string' && baiViet.hinhAnh) {
+        hinhAnh = baiViet.hinhAnh;
     }
 
+    const thoiGian = baiViet.thoiGianNau || baiViet.thoiGian || 30;
+    const khauPhan = baiViet.soNguoiAn || baiViet.khauPhan || 2;
 
-    /* Nội dung */
+    article.innerHTML = `
+        <div class="khung-anh-mon-cn">
+            <a href="chi-tiet.php?id=${encodeURIComponent(id)}">
+                <img src="${hinhAnh}" alt="${ten}" onerror="this.src='images/cao-lau.jpg'">
+            </a>
+            <button class="nut-yeu-thich-cn" type="button" aria-label="Yêu thích">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </div>
+        <div class="noi-dung-mon-cn">
+            <h3 class="tieu-de-mon-cn">
+                <a href="chi-tiet.php?id=${encodeURIComponent(id)}" style="color:inherit;text-decoration:none;">${ten}</a>
+            </h3>
+            <div class="thong-tin-meta-cn">
+                <span class="item-meta-cn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${thoiGian} phút
+                </span>
+                <span class="item-meta-cn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 1 0 7.75"/></svg>
+                    ${khauPhan} người
+                </span>
+            </div>
+        </div>
+    `;
 
-    const noiDung =
-        document.createElement(
-            'div'
-        );
-
-    noiDung.className =
-        'noi-dung-the-bai-viet';
-
-
-    const tieuDe =
-        document.createElement(
-            'h3'
-        );
-
-    tieuDe.textContent =
-        String(
-            baiViet.tenMon
-            ||
-            'Bài viết món ăn'
-        );
-
-
-    const moTa =
-        document.createElement(
-            'p'
-        );
-
-    moTa.className =
-        'mo-ta-bai-viet';
-
-    moTa.textContent =
-        String(
-            baiViet.moTa || ''
-        );
-
-
-    const thongTin =
-        document.createElement(
-            'p'
-        );
-
-    thongTin.className =
-        'thong-tin-bai-viet';
-
-    thongTin.textContent =
-        `${baiViet.thoiGianNau || 0} phút · `
-        +
-        `${baiViet.soNguoiAn || 0} người`;
-
-
-    /* Khu vực thao tác */
-
-    const khuVucThaoTac =
-        document.createElement(
-            'div'
-        );
-
-    khuVucThaoTac.className =
-        'khu-vuc-thao-tac-bai-viet';
-
-
-    /* Nút xem */
-
-    const nutXem =
-        document.createElement(
-            'a'
-        );
-
-    nutXem.href =
-        `chi-tiet.php?id=${encodeURIComponent(
-            baiViet.id
-        )}`;
-
-    nutXem.className =
-        'nut-xem-bai-viet';
-
-    nutXem.textContent =
-        'Xem bài viết';
-
-
-    /* Nút sửa */
-
-    const nutSua =
-        document.createElement(
-            'a'
-        );
-
-    nutSua.href =
-        `dang-bai-viet.php?id=${encodeURIComponent(
-            baiViet.id
-        )}&cheDo=sua`;
-
-    nutSua.className =
-        'nut-sua-bai-viet';
-
-    nutSua.textContent =
-        'Sửa';
-
-
-    /* Nút xóa */
-
-    const nutXoa =
-        document.createElement(
-            'button'
-        );
-
-    nutXoa.type =
-        'button';
-
-    nutXoa.className =
-        'nut-xoa-bai-viet';
-
-    nutXoa.textContent =
-        'Xóa';
-
-    nutXoa.setAttribute(
-        'aria-label',
-        `Xóa bài viết ${
-            String(
-                baiViet.tenMon || ''
-            )
-        }`
-    );
-
-
-    nutXoa.addEventListener(
-        'click',
-        () => {
-
-            const xacNhan =
-                window.confirm(
-                    'Bạn có chắc muốn xóa bài viết này không?'
-                );
-
-            if (
-                xacNhan === false
-            ) {
-                return;
-            }
-
-
-            const daXoa =
-                xoaBaiViet(
-                    baiViet.id
-                );
-
-
-            if (
-                daXoa === false
-            ) {
-
-                window.alert(
-                    'Không thể xóa bài viết.'
-                );
-
-                return;
-            }
-
-
-            hienThiBaiVietCuaToi(
-                docNguoiDungHienTai()
-            );
-        }
-    );
-
-
-    khuVucThaoTac.appendChild(
-        nutXem
-    );
-
-    khuVucThaoTac.appendChild(
-        nutSua
-    );
-
-    khuVucThaoTac.appendChild(
-        nutXoa
-    );
-
-
-    noiDung.appendChild(
-        tieuDe
-    );
-
-    noiDung.appendChild(
-        moTa
-    );
-
-    noiDung.appendChild(
-        thongTin
-    );
-
-    noiDung.appendChild(
-        khuVucThaoTac
-    );
-
-
-    baiVietItem.appendChild(
-        noiDung
-    );
-
-
-    return baiVietItem;
+    return article;
 };
 
-
-/* =========================================================
-   4. HIỂN THỊ BÀI VIẾT CỦA TÔI
-   ========================================================= */
-
-const hienThiBaiVietCuaToi = (
-    nguoiDung
-) => {
-
-    if (
-        danhSachBaiViet === null
-        ||
-        nguoiDung === null
-    ) {
-        return;
-    }
-
-
+/* 4. HIỂN THỊ BÀI VIẾT CỦA TÔI */
+const hienThiBaiVietCuaToi = (nguoiDung) => {
+    if (!danhSachBaiViet) return;
     danhSachBaiViet.replaceChildren();
 
+    const tatCaBaiViet = docBaiViet();
+    const baiVietCuaToi = tatCaBaiViet.filter((baiViet) => {
+        if (!baiViet || typeof baiViet !== 'object') return false;
+        return String(baiViet.userId) === String(nguoiDung?.id);
+    });
 
-    const tatCaBaiViet =
-        docBaiViet();
+    const soBaiDang = document.querySelector('.so-bai-dang');
+    if (soBaiDang) soBaiDang.textContent = String(baiVietCuaToi.length);
 
-
-    const baiVietCuaToi =
-        tatCaBaiViet.filter(
-            (baiViet) => {
-
-                if (
-                    baiViet === null
-                    ||
-                    typeof baiViet !== 'object'
-                ) {
-                    return false;
-                }
-
-                return (
-                    String(
-                        baiViet.userId
-                    )
-                    ===
-                    String(
-                        nguoiDung.id
-                    )
-                );
-            }
-        );
-
-
-    const soBaiDang =
-        document.querySelector(
-            '.so-bai-dang'
-        );
-
-
-    if (
-        soBaiDang !== null
-    ) {
-
-        soBaiDang.textContent =
-            String(
-                baiVietCuaToi.length
-            );
-    }
-
-
-    if (
-        baiVietCuaToi.length === 0
-    ) {
-
-        const thongBao =
-            document.createElement(
-                'p'
-            );
-
-        thongBao.className =
-            'thong-bao-chua-co-bai-viet';
-
-        thongBao.setAttribute(
-            'aria-live',
-            'polite'
-        );
-
-        thongBao.textContent =
-            'Bạn chưa có bài viết nào.';
-
-
-        danhSachBaiViet.appendChild(
-            thongBao
-        );
-
+    if (baiVietCuaToi.length === 0) {
+        const thongBao = document.createElement('p');
+        thongBao.style.padding = '0 28px 28px';
+        thongBao.textContent = 'Bạn chưa có bài viết nào.';
+        danhSachBaiViet.appendChild(thongBao);
         return;
     }
 
-
-    baiVietCuaToi.forEach(
-        (baiViet) => {
-
-            const baiVietItem =
-                taoTheBaiVietNguoiDung(
-                    baiViet
-                );
-
-            danhSachBaiViet.appendChild(
-                baiVietItem
-            );
-        }
-    );
+    baiVietCuaToi.forEach((baiViet) => {
+        danhSachBaiViet.appendChild(taoTheBaiVietNguoiDung(baiViet));
+    });
 };
 
+/* 6. CHUYỂN TAB */
+const chuyenTab = (tabDuocChon) => {
+    cacTab.forEach((tab) => {
+        const dangChon = tab === tabDuocChon;
+        tab.classList.toggle('dang-chon', dangChon);
+        tab.setAttribute('aria-selected', String(dangChon));
+    });
 
-/* =========================================================
-   5. TẠO THẺ MÓN ĂN ĐÃ LƯU
-   ========================================================= */
+    const viTriTab = Array.from(cacTab).indexOf(tabDuocChon);
 
-const taoTheMonDaLuu = (
-    monAn
-) => {
-
-    const monAnItem =
-        document.createElement(
-            'article'
-        );
-
-    monAnItem.className =
-        'the-bai-viet-cua-toi';
-
-
-    const hinhAnh =
-        document.createElement(
-            'img'
-        );
-
-    hinhAnh.className =
-        'anh-bai-viet';
-
-    hinhAnh.src =
-        String(
-            monAn.hinhAnh || ''
-        );
-
-    hinhAnh.alt =
-        String(
-            monAn.ten || 'Món ăn'
-        );
-
-
-    const noiDung =
-        document.createElement(
-            'div'
-        );
-
-    noiDung.className =
-        'noi-dung-the-bai-viet';
-
-
-    const tieuDe =
-        document.createElement(
-            'h3'
-        );
-
-    tieuDe.textContent =
-        String(
-            monAn.ten || 'Món ăn'
-        );
-
-
-    const thongTin =
-        document.createElement(
-            'p'
-        );
-
-    thongTin.className =
-        'thong-tin-bai-viet';
-
-    thongTin.textContent =
-        `${monAn.thoiGian || 0} phút · `
-        +
-        `${monAn.khauPhan || 0} người`;
-
-
-    const nutXem =
-        document.createElement(
-            'a'
-        );
-
-    nutXem.href =
-        `chi-tiet.php?id=${encodeURIComponent(
-            monAn.id
-        )}`;
-
-    nutXem.className =
-        'nut-xem-bai-viet';
-
-    nutXem.textContent =
-        'Xem công thức';
-
-
-    noiDung.appendChild(
-        tieuDe
-    );
-
-    noiDung.appendChild(
-        thongTin
-    );
-
-    noiDung.appendChild(
-        nutXem
-    );
-
-
-    monAnItem.appendChild(
-        hinhAnh
-    );
-
-    monAnItem.appendChild(
-        noiDung
-    );
-
-
-    return monAnItem;
-};
-
-
-/* =========================================================
-   6. TRẠNG THÁI MÓN ĐÃ LƯU
-   ========================================================= */
-
-const hienThiTrangThaiMonDaLuu = (
-    noiDung,
-    laLoi = false
-) => {
-
-    if (
-        khuVucMonDaLuu === null
-    ) {
-        return;
-    }
-
-
-    const thongBao =
-        document.createElement(
-            'p'
-        );
-
-    thongBao.className =
-        'thong-bao-mon-da-luu';
-
-    thongBao.setAttribute(
-        'aria-live',
-        'polite'
-    );
-
-    thongBao.textContent =
-        noiDung;
-
-
-    khuVucMonDaLuu.appendChild(
-        thongBao
-    );
-
-
-    if (
-        laLoi
-    ) {
-
-        const nutThuLai =
-            document.createElement(
-                'button'
-            );
-
-        nutThuLai.type =
-            'button';
-
-        nutThuLai.className =
-            'nut nut-phu';
-
-        nutThuLai.textContent =
-            'Thử lại';
-
-
-        nutThuLai.addEventListener(
-            'click',
-            async () => {
-
-                await hienThiMonDaLuu();
-            }
-        );
-
-
-        khuVucMonDaLuu.appendChild(
-            nutThuLai
-        );
+    if (viTriTab === 0) {
+        if (khuVucCongThuc) khuVucCongThuc.hidden = false;
+        if (khuVucMonDaLuu) khuVucMonDaLuu.hidden = true;
+    } else if (viTriTab === 1) {
+        if (khuVucCongThuc) khuVucCongThuc.hidden = true;
+        if (khuVucMonDaLuu) khuVucMonDaLuu.hidden = false;
     }
 };
 
-
-/* =========================================================
-   7. HIỂN THỊ MÓN ĐÃ LƯU (ĐỌC DỮ LIỆU TỪ PHP, KHÔNG DÙNG FETCH)
-   ========================================================= */
-
-const hienThiMonDaLuu = () => {
-
-    if (
-        khuVucMonDaLuu === null
-    ) {
-        return;
-    }
-
-
-    khuVucMonDaLuu.replaceChildren();
-
-
-    const danhSachYeuThich =
-        docYeuThich();
-
-
-    if (
-        danhSachYeuThich.length === 0
-    ) {
-
-        const tieuDe =
-            document.createElement(
-                'h2'
-            );
-
-        tieuDe.textContent =
-            'Món đã lưu';
-
-
-        khuVucMonDaLuu.appendChild(
-            tieuDe
-        );
-
-
-        hienThiTrangThaiMonDaLuu(
-            'Bạn chưa lưu món ăn nào.'
-        );
-
-        return;
-    }
-
-
-    // Lấy dữ liệu món ăn do PHP nhúng sẵn hoặc đọc từ mảng toàn cục
-    const danhSachMonAn = window.danhSachMonAnGoc || [];
-
-
-    const monAnDaLuu =
-        danhSachMonAn.filter(
-            (monAn) => {
-
-                return danhSachYeuThich.some(
-                    (idMonAn) => {
-
-                        return (
-                            String(
-                                idMonAn
-                            )
-                            ===
-                            String(
-                                monAn.id
-                            )
-                        );
-                    }
-                );
-            }
-        );
-
-
-    const tieuDe =
-        document.createElement(
-            'h2'
-        );
-
-    tieuDe.textContent =
-        'Món đã lưu';
-
-
-    khuVucMonDaLuu.appendChild(
-        tieuDe
-    );
-
-
-    if (
-        monAnDaLuu.length === 0
-    ) {
-
-        hienThiTrangThaiMonDaLuu(
-            'Không tìm thấy món ăn đã lưu.'
-        );
-
-        return;
-    }
-
-
-    const danhSach =
-        document.createElement(
-            'div'
-        );
-
-    danhSach.className =
-        'danh-sach-bai-viet-cua-toi';
-
-
-    monAnDaLuu.forEach(
-        (monAn) => {
-
-            const monAnItem =
-                taoTheMonDaLuu(
-                    monAn
-                );
-
-            danhSach.appendChild(
-                monAnItem
-            );
-        }
-    );
-
-
-    khuVucMonDaLuu.appendChild(
-        danhSach
-    );
-};
-
-/* =========================================================
-   8. CHUYỂN TAB
-   ========================================================= */
-
-const chuyenTab = (
-    tabDuocChon
-) => {
-
-    cacTab.forEach(
-        (tab) => {
-
-            const dangChon =
-                tab === tabDuocChon;
-
-
-            tab.classList.toggle(
-                'dang-chon',
-                dangChon
-            );
-
-
-            tab.setAttribute(
-                'aria-selected',
-                String(
-                    dangChon
-                )
-            );
-        }
-    );
-
-
-    /*
-     * Dùng vị trí của tab thay vì phụ thuộc
-     * vào nội dung text của nút.
-     */
-
-    const viTriTab =
-        Array.from(
-            cacTab
-        ).indexOf(
-            tabDuocChon
-        );
-
-
-    if (
-        viTriTab === 0
-    ) {
-
-        if (
-            khuVucCongThuc !== null
-        ) {
-
-            khuVucCongThuc.hidden =
-                false;
-        }
-
-
-        if (
-            khuVucMonDaLuu !== null
-        ) {
-
-            khuVucMonDaLuu.hidden =
-                true;
-        }
-
-        return;
-    }
-
-
-    if (
-        viTriTab === 1
-    ) {
-
-        if (
-            khuVucCongThuc !== null
-        ) {
-
-            khuVucCongThuc.hidden =
-                true;
-        }
-
-
-        if (
-            khuVucMonDaLuu !== null
-        ) {
-
-            khuVucMonDaLuu.hidden =
-                false;
-        }
-    }
-};
-
-
-/* =========================================================
-   9. KHỞI TẠO TAB
-   ========================================================= */
-
+/* 7. KHỞI TẠO TAB */
 const khoiTaoTab = () => {
+    cacTab.forEach((tab) => {
+        tab.addEventListener('click', () => chuyenTab(tab));
+    });
 
-    cacTab.forEach(
-        (tab) => {
-
-            tab.setAttribute(
-                'aria-selected',
-                'false'
-            );
-
-
-            tab.addEventListener(
-                'click',
-                () => {
-
-                    chuyenTab(
-                        tab
-                    );
-                }
-            );
-        }
-    );
-
-
-    if (
-        cacTab.length > 0
-    ) {
-
-        chuyenTab(
-            cacTab[0]
-        );
+    if (cacTab.length > 0) {
+        chuyenTab(cacTab[0]);
     }
 };
 
-
-/* =========================================================
-   10. KHỞI TẠO TRANG CÁ NHÂN
-   ========================================================= */
-
+/* 8. KHỞI TẠO TRANG */
 const khoiTaoTrangCaNhan = () => {
-
-    const nguoiDung =
-        docNguoiDungHienTai();
-
-
-    if (
-        nguoiDung === null
-    ) {
-
-        window.location.href =
-            'dang-nhap.php';
-
-        return;
-    }
-
-
-    hienThiThongTinNguoiDung(
-        nguoiDung
-    );
-
-
-    hienThiBaiVietCuaToi(
-        nguoiDung
-    );
-
-
+    const nguoiDung = docNguoiDungHienTai();
+    hienThiThongTinNguoiDung(nguoiDung);
+    hienThiBaiVietCuaToi(nguoiDung);
     khoiTaoTab();
-
-
-    if (
-        khuVucMonDaLuu !== null
-    ) {
-
-        hienThiMonDaLuu();
-    }
 };
-
 
 document.addEventListener('DOMContentLoaded', khoiTaoTrangCaNhan);

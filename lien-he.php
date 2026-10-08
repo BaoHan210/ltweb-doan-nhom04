@@ -7,8 +7,13 @@ use App\Data\KhoMonAn;
 use App\Services\LienHeService;
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
+<<<<<<< HEAD
 $kho      = new KhoMonAn(_DIR_ . '/data/mon-an.json');
 $danhSach = $kho->tatCa(); 
+=======
+$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$danhSach = $kho->layTatCa(); 
+>>>>>>> e6e0155 (Update part A)
 
 $duLieu = ['ho_ten' => '', 'email' => '', 'noi_dung' => ''];
 $loi = [];

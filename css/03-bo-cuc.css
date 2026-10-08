@@ -383,7 +383,7 @@
    BỐ CỤC CHUẨN TRANG LIÊN HỆ (KHỚP 100% VỚI ẢNH MẪU)
    ========================================================= */
 
-.lien-he-trang {
+.lien-he-trang > main {
     padding: 20px 24px 40px;
     color: var(--mau-chu);
 }
@@ -1127,3 +1127,178 @@ html, body {
         justify-self: start;
     }
 }
+
+/* =========================================================
+   BỐ CỤC KHUNG XEM TRƯỚC HÌNH ẢNH (TRANG ĐĂNG BÀI)
+   ========================================================= */
+
+/* Biến khu vực xem trước thành dạng lưới (Grid) hoặc Flexbox dàn ngang */
+.xem-truoc-hinh-anh {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+    min-width: 0;
+}
+
+/* Từng ô khung ảnh thu nhỏ */
+.khung-hinh-anh-xem-truoc {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Ép hình vuông đều đặn */
+    border: 1px solid var(--mau-vien, #E0E0E0);
+    border-radius: var(--bo-goc, 8px);
+    overflow: hidden;
+    background-color: #F7F7F7;
+}
+
+/* Ảnh bên trong khung */
+.khung-hinh-anh-xem-truoc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Tránh bị méo ảnh */
+    display: block;
+}
+
+/* Nút xóa ảnh (dấu nhân ×) ở góc trên bên phải */
+.khung-hinh-anh-xem-truoc .nut-xoa-hinh-anh {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    z-index: 2;
+}
+
+.khung-hinh-anh-xem-truoc .nut-xoa-hinh-anh:hover {
+    background-color: #E53935; /* Đổi sang màu đỏ khi hover xóa */
+}
+
+/* =========================================================
+   BỐ CỤC TRANG QUẢN TRỊ (ADMIN LAYOUT)
+   ========================================================= */
+
+.quan-tri-wrapper {
+    display: flex;
+    min-height: calc(100vh - 80px);
+    background-color: #F8F9FA;
+    padding: 24px 0;
+}
+
+.quan-tri-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 992px) {
+    .quan-tri-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.quan-tri-sidebar-wrapper {
+    width: 100%;
+}
+
+.quan-tri-main-content {
+    width: 100%;
+    min-width: 0; /* Tránh tràn layout flex/grid */
+}
+
+/* =========================================================
+   BỐ CỤC RESPONSIVE TRANG QUẢN TRỊ (ADMIN RESPONSIVE)
+   ========================================================= */
+
+/* Mặc định trên Mobile/Tablet (< 992px): Khung xếp 1 cột dọc */
+.khung-quan-tri-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    min-width: 0;
+}
+
+.noi-dung-dashboard {
+    width: 100%;
+    min-width: 0; /* Khóa tràn cho Flex/Grid con bên trong */
+}
+
+/* Lưới 4 thẻ thống kê: Mobile xếp 1 cột */
+.luoi-the-thong-ke {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Màn hình nhỏ (>= 576px): Thẻ thống kê dàn 2 cột */
+@media (min-width: 576px) {
+    .luoi-the-thong-ke {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Màn hình Desktop (>= 992px): Chuyển sang 2 cột (Sidebar 280px - Nội dung 1fr) */
+@media (min-width: 992px) {
+    .khung-quan-tri-layout {
+        grid-template-columns: 280px 1fr;
+        gap: 24px;
+    }
+}
+
+/* ==============================
+   ĐÃ XEM GẦN ĐÂY - BỐ CỤC
+   ============================== */
+
+.mon-da-xem {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.mon-da-xem .danh-sach-mon {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 760px;
+}
+
+.mon-da-xem .the-mon-an {
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+
+    .mon-da-xem .danh-sach-mon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+
+    .mon-da-xem .danh-sach-mon {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .mon-da-xem .the-mon-an {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+    }
+}
+

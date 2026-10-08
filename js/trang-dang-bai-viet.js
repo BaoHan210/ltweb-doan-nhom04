@@ -354,13 +354,14 @@ const capNhatThongTinNguoiDang = () => {
             '.anh-dai-dien span'
         );
 
-    const tenNguoiDung =
-        String(
+    // Ép luôn hiển thị tên đầy đủ của bạn nếu đúng là tài khoản này
+    const tenNguoiDung = 
+        (nguoiDungHienTai.email === 'baohan@cookwithme.com') 
+        ? 'Phan Thị Bảo Hân' 
+        : String(
             nguoiDungHienTai.hoTen
             ||
             nguoiDungHienTai.ten
-            ||
-            nguoiDungHienTai.email
             ||
             'Người dùng'
         ).trim();
@@ -1676,4 +1677,14 @@ if (
         document.title =
             'Đăng bài viết | Cook with me';
     }
+}
+
+/* =========================================================
+   LẮNG NGHE SỰ KIỆN CHỌN HÌNH ẢNH
+   ========================================================= */
+
+if (oChonHinhAnh !== null) {
+    oChonHinhAnh.onchange = function() {
+        xuLyChonHinhAnh();
+    };
 }

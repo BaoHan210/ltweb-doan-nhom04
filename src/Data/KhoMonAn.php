@@ -1,9 +1,4 @@
 <?php
-/**
- * Tệp: src/Data/KhoMonAn.php
- * Chức năng: Lớp truy cập dữ liệu (Data Access Object) - Nơi DUY NHẤT trong hệ thống
- *            tiến hành đọc và xử lý dữ liệu từ tệp JSON mon-an.json.
- */
 
 namespace App\Data;
 
@@ -12,47 +7,67 @@ use RuntimeException;
 
 class KhoMonAn
 {
-    private ?array $ds = null;
+    /** @var MonAn[] */
+    private array $danhSach = [];
 
-    public function __construct(private string $tepJson) {}
-
-    public function tatCa(): array
+    public function __construct(string $duongDanJson)
     {
-        if ($this->ds === null) {
-            if (!is_file($this->tepJson)) {
-                throw new RuntimeException("Không tìm thấy tệp dữ liệu {$this->tepJson}");
-            }
-            $json = file_get_contents($this->tepJson);
-            $mang = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-            $this->ds = array_map(fn($d) => MonAn::tuMang($d), $mang);
+        if (!file_exists($duongDanJson)) {
+            throw new RuntimeException("Tệp dữ liệu không tồn tại: {$duongDanJson}");
         }
-        return $this->ds;
+
+        $noiDung = file_get_contents($duongDanJson);
+        $data = json_decode($noiDung, true);
+
+        if (!is_array($data)) {
+            $this->danhSach = [];
+            return;
+        }
+
+        foreach ($data as $item) {
+            if (is_array($item)) {
+                $this->danhSach[] = MonAn::tuMang($item);
+            }
+        }
     }
 
-    public function timTheoId(int $id): ?MonAn
+    public function layTatCa(): array
     {
-        foreach ($this->tatCa() as $monAn) {
-            if ($monAn->id === $id) {
-                return $monAn;
-            }
-        }
-        return null;
+        return $this->danhSach;
     }
 
     public function timKiem(string $tuKhoa = '', string $danhMuc = ''): array
     {
-        $ketQua = $this->tatCa();
-
-        if ($tuKhoa !== '') {
-            $ketQua = array_filter($ketQua, fn($m) => 
-                mb_strpos(mb_strtolower($m->ten), mb_strtolower($tuKhoa)) !== false
-            );
-        }
+        $ketQua = $this->danhSach;
 
         if ($danhMuc !== '') {
-            $ketQua = array_filter($ketQua, fn($m) => $m->danhMuc === $danhMuc);
+            $ketQua = array_filter($ketQua, function (MonAn $m) use ($danhMuc) {
+                return mb_strtolower($m->danhMuc) === mb_strtolower($danhMuc);
+            });
+        }
+
+        if ($tuKhoa !== '') {
+            $tuKhoaThuong = mb_strtolower($tuKhoa);
+            $ketQua = array_filter($ketQua, function (MonAn $m) use ($tuKhoaThuong) {
+                return str_contains(mb_strtolower($m->ten), $tuKhoaThuong)
+                    || str_contains(mb_strtolower($m->moTa), $tuKhoaThuong);
+            });
         }
 
         return array_values($ketQua);
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function timTheoId(string $id): ?MonAn
+    {
+        foreach ($this->danhSach as $mon) {
+            if ($mon->id === $id) {
+                return $mon;
+            }
+        }
+        return null;
+    }
+}
+>>>>>>> e6e0155 (Update part A)

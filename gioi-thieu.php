@@ -6,7 +6,7 @@ use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
 $kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$danhSach = $kho->tatCa(); 
+$danhSach = $kho->layTatCa(); 
 
 // Thiết lập thông số header
 $tieuDe   = 'Giới thiệu'; 

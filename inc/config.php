@@ -16,7 +16,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!defined('URL_GOC')) {
-    define('URL_GOC', '/ltweb-doan-nhom04-main/');
+    // Tự động lấy thư mục gốc linh hoạt dù chạy trên XAMPP/Laragon hay bất kỳ máy nào
+    $thuMucGoc = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+    define('URL_GOC', $thuMucGoc !== '' ? $thuMucGoc . '/' : '/'); 
 }
 
 set_exception_handler(function (Throwable $e) {

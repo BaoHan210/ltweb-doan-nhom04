@@ -8,21 +8,34 @@ use App\Data\KhoMonAn;
 $goc = URL_GOC;
 
 $kho    = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$moiVe  = array_slice($kho->tatCa(), 0, 3); // Lấy 3 món ăn nổi bật
+// Sửa $kho->tatCa() thành $kho->layTatCa()
+$moiVe  = array_slice($kho->layTatCa(), 0, 3); // Lấy 3 món ăn nổi bật
 
 // Đọc cookie danh sách món đã xem gần đây (Chức năng 3)
 $daXemIds = [];
+
 if (!empty($_COOKIE['da_xem'])) {
     $giaiMa = json_decode($_COOKIE['da_xem'], true);
+
     if (is_array($giaiMa)) {
-        $daXemIds = array_filter(array_map('intval', $giaiMa));
+        foreach ($giaiMa as $id) {
+            $id = trim((string)$id);
+
+            if ($id !== '' && $kho->timTheoId($id) !== null) {
+                $daXemIds[] = $id;
+            }
+        }
     }
 }
 
 $danhSachDaXem = [];
+
 foreach ($daXemIds as $id) {
     $m = $kho->timTheoId($id);
-    if ($m !== null) $danhSachDaXem[] = $m;
+
+    if ($m !== null) {
+        $danhSachDaXem[] = $m;
+    }
 }
 
 $tieuDe   = 'Trang chủ';
@@ -273,6 +286,41 @@ require __DIR__ . '/inc/header.php';
     <button class="nut nut-phu" type="button">Theo dõi</button>
   </article>
 </section>
+
+<?php if (!empty($danhSachDaXem)): ?>
+    <section class="mon-da-xem">
+        <div class="tieu-de-khu-vuc">
+            <h2>Đã xem gần đây</h2>
+        </div>
+
+        <div class="danh-sach-mon">
+            <?php foreach ($danhSachDaXem as $monAn): ?>
+                <article class="the-mon-an">
+                    <img
+                        src="<?= e($monAn->hinhAnh) ?>"
+                        alt="<?= e($monAn->ten) ?>"
+                        width="300"
+                        height="200"
+                        loading="lazy"
+                    >
+
+                    <div class="thong-tin-mon">
+                        <h3><?= e($monAn->ten) ?></h3>
+
+                        <p class="danh-gia-mon" role="img"
+                           aria-label="<?= e($monAn->danhGia) ?> trên 5 sao">
+                            ★★★★★
+                        </p>
+
+                        <a href="chi-tiet.php?id=<?= e($monAn->id) ?>">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
 
     </div> <!-- KẾT THÚC KHU VỰC TRANG CHỦ -->
 

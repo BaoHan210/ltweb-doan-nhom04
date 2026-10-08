@@ -3,12 +3,8 @@
  * Xử lý tương tác nút Yêu thích và Lọc món ăn theo danh mục.
  */
 
-import {
-    kiemTraYeuThich,
-    doiTrangThaiYeuThich
-} from './yeu-thich.js';
-
 /* =========================================================
+<<<<<<< HEAD
    1. XỬ LÝ CLICK NÚT YÊU THÍCH
    ========================================================= */
 const xuLyYeuThich = (event) => {
@@ -20,20 +16,24 @@ const xuLyYeuThich = (event) => {
 
     const idMonAn = nutYeuThich.dataset.idMonAn || nutYeuThich.getAttribute('data-id');
     if (!idMonAn) return;
+=======
+   3. XỬ LÝ LỌC DANH MỤC TRÊN CLIENT
+   ========================================================= */
+const khoiTaoBoLocDanhMuc = () => {
+    const dsNutBoLoc = document.querySelectorAll('.nut-bo-loc');
+    const dsTheMonAn = document.querySelectorAll('.danh-sach-mon-an .the-mon-an');
 
-    const daYeuThich = doiTrangThaiYeuThich(idMonAn);
+    if (dsNutBoLoc.length === 0) return;
+>>>>>>> e6e0155 (Update part A)
 
-    if (daYeuThich) {
-        nutYeuThich.textContent = '♥';
-        nutYeuThich.classList.add('da-luu');
-        nutYeuThich.setAttribute('aria-label', 'Bỏ khỏi yêu thích');
-    } else {
-        nutYeuThich.textContent = '♡';
-        nutYeuThich.classList.remove('da-luu');
-        nutYeuThich.setAttribute('aria-label', 'Thêm vào yêu thích');
-    }
-};
+    dsNutBoLoc.forEach((nut) => {
+        nut.addEventListener('click', () => {
+            dsNutBoLoc.forEach((n) => n.classList.remove('dang-loc', 'active'));
+            nut.classList.add('dang-loc');
 
+            const danhMucChon = nut.getAttribute('data-danh-muc');
+
+<<<<<<< HEAD
 /* =========================================================
    2. CẬP NHẬT TRẠNG THÁI TIM BAN ĐẦU
    ========================================================= */
@@ -52,10 +52,23 @@ const capNhatTrangThaiBanDau = () => {
             nut.classList.remove('da-luu');
             nut.setAttribute('aria-label', 'Thêm vào yêu thích');
         }
+=======
+            dsTheMonAn.forEach((theMon) => {
+                const danhMucMon = theMon.getAttribute('data-danh-muc');
+
+                if (danhMucChon === 'tat-ca' || danhMucMon === danhMucChon) {
+                    theMon.style.display = '';
+                } else {
+                    theMon.style.display = 'none';
+                }
+            });
+        });
+>>>>>>> e6e0155 (Update part A)
     });
 };
 
 /* =========================================================
+<<<<<<< HEAD
    3. XỬ LÝ LỌC DANH MỤC TRÊN CLIENT
    ========================================================= */
 const khoiTaoBoLocDanhMuc = () => {
@@ -97,6 +110,11 @@ const khoiTaoTrangDanhSach = () => {
     }
 
     capNhatTrangThaiBanDau();
+=======
+   4. KHỞI TẠO TRANG DANH SÁCH
+   ========================================================= */
+const khoiTaoTrangDanhSach = () => {
+>>>>>>> e6e0155 (Update part A)
     khoiTaoBoLocDanhMuc();
 };
 

@@ -1,5 +1,6 @@
 /*
  * trang-chi-tiet.js
+<<<<<<< HEAD
  * Xử lý tương tác phía Client cho trang chi tiết món ăn (Nút Yêu thích).
  * Việc hiển thị dữ liệu chi tiết đã do PHP Server-Side Rendering đảm nhận.
  */
@@ -51,3 +52,10 @@ const khoiTaoYeuThichTrangChiTiet = () => {
 
 // Khởi chạy khi DOM sẵn sàng
 document.addEventListener('DOMContentLoaded', khoiTaoYeuThichTrangChiTiet);
+=======
+ * Các chức năng phía Client riêng của trang chi tiết.
+ *
+ * Nút yêu thích được xử lý hoàn toàn bằng PHP Server-Side Rendering
+ * và PHP Session, nên không xử lý bằng JavaScript tại đây.
+ */
+>>>>>>> e6e0155 (Update part A)

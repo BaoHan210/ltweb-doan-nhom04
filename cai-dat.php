@@ -1,20 +1,16 @@
 <?php
-// 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
-require_once __DIR__ . '/inc/bao-ve.php';
 
-use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
-
-// Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$danhSach = $kho->tatCa(); 
+// 1. Kiểm tra nếu chưa đăng nhập -> Chuyển hướng sang trang đăng nhập
+if (!isset($_SESSION['user'])) {
+    chuyen_huong('dang-nhap.php'); 
+    exit;
+}
 
 // Thiết lập thông số header
-$tieuDe   = 'Cài đặt'; 
-$trang    = 'cai-dat'; // Đánh dấu class active trên Menu (ví dụ: 'index', 'danh-sach', 'lien-he'...)
-$customJS = 'js/trang-cai-dat.js'; // Nạp JS riêng (nếu có)
+$tieuDe = 'Cài đặt tài khoản - Cook with Me';
+$trang  = 'cai-dat';
 
-// Nhúng Header (đã bao gồm Nav)
 require __DIR__ . '/inc/header.php';
 ?>
 
@@ -24,14 +20,12 @@ require __DIR__ . '/inc/header.php';
       <span class="icon-banh-rang">⚙</span> Cài đặt
     </h1>
 
-
     <p
       class="thong-bao-cai-dat"
       id="thong-bao-cai-dat"
       aria-live="polite"
       hidden
     ></p>
-
 
     <form
       class="form-cai-dat-mau"
@@ -41,7 +35,7 @@ require __DIR__ . '/inc/header.php';
       novalidate
     >
 
-      <!-- KHỐI 1: THÔNG TIN CÁ NHÂN (GIAO DIỆN MỚI CHUẨN MẪU) -->
+      <!-- KHỐI 1: THÔNG TIN CÁ NHÂN -->
       <section class="card-cai-dat card-thong-tin-ca-nhan">
         <h2 class="tieu-de-card-cai-dat">Thông tin cá nhân</h2>
 
@@ -54,12 +48,12 @@ require __DIR__ . '/inc/header.php';
           <div class="khoi-input-ca-nhan">
             <div class="dong-form-ngang">
               <label for="fullname">Tên hiển thị</label>
-              <input type="text" id="fullname" name="fullname" value="Nguyễn Thị Ngọc Bình" required>
+              <input type="text" id="fullname" name="fullname" value="<?= e($_SESSION['user']['hoTen'] ?? $_SESSION['user']['ho_ten'] ?? 'Người dùng') ?>" required>
             </div>
 
             <div class="dong-form-ngang">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" value="ngocbinh@gmail.com" required>
+              <input type="email" id="email" name="email" value="<?= e($_SESSION['user']['email'] ?? '') ?>" required>
             </div>
 
             <div class="dong-form-ngang">
@@ -72,8 +66,7 @@ require __DIR__ . '/inc/header.php';
         </div>
       </section>
 
-
-      <!-- KHỐI 2: TÙY CHỌN (BỔ SUNG TỪ ẢNH) -->
+      <!-- KHỐI 2: TÙY CHỌN -->
       <section class="card-cai-dat card-tuy-chon">
         <h2 class="tieu-de-card-cai-dat">Tùy chọn</h2>
 
@@ -104,8 +97,7 @@ require __DIR__ . '/inc/header.php';
         </div>
       </section>
 
-
-      <!-- KHỐI 3: HIỂN THỊ (BỔ SUNG TỪ ẢNH) -->
+      <!-- KHỐI 3: HIỂN THỊ -->
       <section class="card-cai-dat card-hien-thi">
         <h2 class="tieu-de-card-cai-dat">Hiển thị</h2>
 
@@ -129,49 +121,46 @@ require __DIR__ . '/inc/header.php';
         </div>
       </section>
 
-
       <!-- KHỐI 4: TÙY CHỈNH SỞ THÍCH -->
-<section class="card-cai-dat card-so-thich">
-  <h2 class="tieu-de-card-cai-dat">Tùy chỉnh sở thích</h2>
+      <section class="card-cai-dat card-so-thich">
+        <h2 class="tieu-de-card-cai-dat">Tùy chỉnh sở thích</h2>
 
-  <div class="danh-sach-so-thich">
-    <div class="dong-form-ngang">
-      <label for="favorite-category">Danh mục món ăn yêu thích</label>
-      <select id="favorite-category" name="favorite_category">
-        <option value="">-- Chọn danh mục --</option>
-        <option value="mon-chinh" selected>Món chính</option>
-        <option value="mon-canh">Món canh</option>
-        <option value="mon-xao">Món xào</option>
-        <option value="mon-chien">Món chiên</option>
-        <option value="mon-an-vat">Món ăn vặt</option>
-        <option value="mon-an-nhanh">Món ăn nhanh</option>
-        <option value="mon-chay">Món chay</option>
-        <option value="mon-trang-mieng">Món tráng miệng</option>
-        <option value="do-uong">Đồ uống</option>
-      </select>
-    </div>
+        <div class="danh-sach-so-thich">
+          <div class="dong-form-ngang">
+            <label for="favorite-category">Danh mục món ăn yêu thích</label>
+            <select id="favorite-category" name="favorite_category">
+              <option value="">-- Chọn danh mục --</option>
+              <option value="mon-chinh" selected>Món chính</option>
+              <option value="mon-canh">Món canh</option>
+              <option value="mon-xao">Món xào</option>
+              <option value="mon-chien">Món chiên</option>
+              <option value="mon-an-vat">Món ăn vặt</option>
+              <option value="mon-an-nhanh">Món ăn nhanh</option>
+              <option value="mon-chay">Món chay</option>
+              <option value="mon-trang-mieng">Món tráng miệng</option>
+              <option value="do-uong">Đồ uống</option>
+            </select>
+          </div>
 
-    <div class="dong-form-ngang">
-      <label for="preferred-budget">Ngân sách thường sử dụng (VNĐ)</label>
-      <input type="number" id="preferred-budget" name="preferred_budget" min="10000" placeholder="Nhập số tiền...">
-    </div>
+          <div class="dong-form-ngang">
+            <label for="preferred-budget">Ngân sách thường sử dụng (VNĐ)</label>
+            <input type="number" id="preferred-budget" name="preferred_budget" min="10000" placeholder="Nhập số tiền...">
+          </div>
 
-    <div class="dong-form-ngang">
-      <label for="preferred-time">Thời gian nấu ưu tiên (phút)</label>
-      <input type="number" id="preferred-time" name="preferred_time" min="10" max="180" placeholder="Nhập số phút...">
-    </div>
+          <div class="dong-form-ngang">
+            <label for="preferred-time">Thời gian nấu ưu tiên (phút)</label>
+            <input type="number" id="preferred-time" name="preferred_time" min="10" max="180" placeholder="Nhập số phút...">
+          </div>
 
-    <div class="dong-form-ngang">
-      <label for="preferred-servings">Số người ăn thường xuyên</label>
-      <input type="number" id="preferred-servings" name="preferred_servings" min="1" max="20" placeholder="Nhập số người...">
-    </div>
-  </div>
-</section>
+          <div class="dong-form-ngang">
+            <label for="preferred-servings">Số người ăn thường xuyên</label>
+            <input type="number" id="preferred-servings" name="preferred_servings" min="1" max="20" placeholder="Nhập số người...">
+          </div>
+        </div>
+      </section>
 
-
-      <!-- KHỐI 5: TÀI KHOẢN VÀ BẢO MẬT (GIỮ NGUYÊN TỪ CODE CŨ) -->
+      <!-- KHỐI 5: TÀI KHOẢN VÀ BẢO MẬT -->
       <section class="card-cai-dat card-tai-khoan">
-
         <h2 class="tieu-de-card-cai-dat">Tài khoản và bảo mật</h2>
 
         <fieldset class="khung-cai-dat khung-tai-khoan">
@@ -182,9 +171,9 @@ require __DIR__ . '/inc/header.php';
               Đổi mật khẩu
             </button>
 
-            <button class="nut nut-phu" id="nut-dang-xuat" type="button">
+            <a href="dang-xuat.php" class="nut nut-nguy-hiem" style="text-decoration: none;">
               Đăng xuất
-            </button>
+            </a>
 
             <button class="nut nut-nguy-hiem" id="nut-xoa-tai-khoan" type="button">
               Xóa tài khoản
@@ -192,9 +181,7 @@ require __DIR__ . '/inc/header.php';
           </p>
 
         </fieldset>
-
       </section>
-
 
       <!-- NÚT THAO TÁC FORM -->
       <p class="hanh-dong-cai-dat">
@@ -211,7 +198,6 @@ require __DIR__ . '/inc/header.php';
 
   </main>
 
-
-  <?php
+<?php
 require_once 'inc/footer.php';
 ?>

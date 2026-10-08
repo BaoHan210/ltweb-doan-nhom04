@@ -6,9 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/config.php';
 
-if (!isset($_SESSION['user'])) {
+// Kiểm tra xem đã đăng nhập chưa
+if (empty($_SESSION['user']) && empty($_SESSION['nguoi_dung'])) {
+    // Nếu chưa đăng nhập mà vào trang quản trị, chuyển hướng ra trang đăng nhập
     gan_thong_bao('error', 'Bạn cần đăng nhập để truy cập trang quản trị!');
-    chuyen_huong(URL_GOC . 'dang-nhap.php'); // Dùng hằng số URL_GOC
-    exit();
+    chuyen_huong('dang-nhap.php');
 }
 ?>

@@ -51,12 +51,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </ul>
 
     <div class="khu-vuc-yeu-thich">
-      <span class="nhan-yeu-thich">
-        Yêu thích
-      </span>
-      <span class="so-luong-yeu-thich" role="status" aria-label="Số món ăn yêu thích">
-        0
-      </span>
-    </div>
+  <a href="yeu-thich.php" class="nhan-yeu-thich">
+    Yêu thích
+  </a>
+
+  <span
+    class="so-luong-yeu-thich"
+    role="status"
+    aria-label="Số món ăn yêu thích"
+  >
+    0
+  </span>
+</div>
 
 </nav>

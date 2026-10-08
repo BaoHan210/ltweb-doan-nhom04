@@ -1,8 +1,9 @@
 <?php
-namespace App\Models;
+namespace App\Services; // Sửa chữ Models thành Services cho khớp vị trí thư mục
 
 class NguoiDung
 {
+    // ... Giữ nguyên toàn bộ mã bên dưới
     public function __construct(
         public readonly int $id,
         public readonly string $hoTen,

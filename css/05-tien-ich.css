@@ -1027,3 +1027,47 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   TIỆN ÍCH HỖ TRỢ NHANH (ADMIN UTILITIES)
+   ========================================================= */
+
+.qt-flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.qt-flex-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qt-text-muted {
+    color: #718096 !important;
+    font-size: 13px;
+}
+
+.qt-fw-bold {
+    font-weight: 700 !important;
+}
+
+.qt-mb-24 {
+    margin-bottom: 24px !important;
+}
+
+.qt-badge-trang-thai {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #EDF2F7;
+    color: #4A5568;
+}
+
+.qt-badge-trang-thai.xanh {
+    background-color: #DEF7EC;
+    color: #03543F;
+}

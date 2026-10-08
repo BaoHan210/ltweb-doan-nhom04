@@ -12,39 +12,10 @@
  */
 document.documentElement.classList.add('js');
 
-
-import {
-    docYeuThich
-} from './yeu-thich.js';
-
 import {
     docNguoiDungHienTai,
     dangXuat
 } from './tai-khoan.js';
-
-
-/* =========================================================
-   CẬP NHẬT SỐ LƯỢNG YÊU THÍCH
-   ========================================================= */
-
-const capNhatSoLuongYeuThich = () => {
-
-    const danhSachYeuThich =
-        docYeuThich();
-
-    const soLuongYeuThich =
-        document.querySelector(
-            '.so-luong-yeu-thich'
-        );
-
-    if (soLuongYeuThich === null) {
-        return;
-    }
-
-    soLuongYeuThich.textContent =
-        String(danhSachYeuThich.length);
-};
-
 
 /* =========================================================
    TẠO KHU VỰC TÀI KHOẢN
@@ -445,67 +416,50 @@ const duongDanTrangCaNhan = đangỞThưMụcThànhViên
 
 
     /* =====================================================
-       MENU TÀI KHOẢN
+       MENU TÀI KHOẢN (CẬP NHẬT ĐẦY ĐỦ 4 MỤC)
        ===================================================== */
 
-    const menuDrop =
-        document.createElement('div');
+    const menuDrop = document.createElement('div');
+    menuDrop.className = 'menu-drop-tai-khoan';
+    menuDrop.id = 'menu-drop-tai-khoan';
 
-    menuDrop.className =
-        'menu-drop-tai-khoan';
-
-    menuDrop.id =
-        'menu-drop-tai-khoan';
-
-
-    const lienKetCaNhan =
-        document.createElement('a');
-
+    // 1. Trang cá nhân
+    const lienKetCaNhan = document.createElement('a');
     lienKetCaNhan.href = duongDanTrangCaNhan;
+    lienKetCaNhan.className = 'item-menu-drop';
+    lienKetCaNhan.textContent = `Trang cá nhân (${hoTen})`;
 
-    lienKetCaNhan.className =
-        'item-menu-drop';
+    // 2. Trang quản trị (Nếu là Admin hoặc cho phép truy cập)
+    const lienKetQuanTri = document.createElement('a');
+    lienKetQuanTri.href = đangỞThưMụcThànhViên ? '../../quan-tri.php' : 'quan-tri.php';
+    lienKetQuanTri.className = 'item-menu-drop';
+    lienKetQuanTri.textContent = 'Trang quản trị';
 
-    lienKetCaNhan.textContent =
-        `Trang cá nhân (${hoTen})`;
+    // 3. Cài đặt
+    const lienKetCaiDat = document.createElement('a');
+    lienKetCaiDat.href = đangỞThưMụcThànhViên ? '../../cai-dat.php' : 'cai-dat.php';
+    lienKetCaiDat.className = 'item-menu-drop';
+    lienKetCaiDat.textContent = 'Cài đặt';
 
+    // 4. Đăng xuất
+    const nutDangXuatDrop = document.createElement('button');
+    nutDangXuatDrop.type = 'button';
+    nutDangXuatDrop.className = 'item-menu-drop nut-dang-xuat-drop';
+    nutDangXuatDrop.id = 'nut-dang-xuat-drop';
+    nutDangXuatDrop.textContent = 'Đăng xuất';
 
-    const nutDangXuatDrop =
-        document.createElement('button');
+    // Ghép đầy đủ 4 mục vào Menu
+    if (nguoiDung.vaiTro === 'admin' || nguoiDung.isAdmin === true || nguoiDung.phanquyen === 'admin') {
+        menuDrop.append(lienKetCaNhan, lienKetQuanTri, lienKetCaiDat, nutDangXuatDrop);
+    } else {
+        menuDrop.append(lienKetCaNhan, lienKetCaiDat, nutDangXuatDrop);
+    }
 
-    nutDangXuatDrop.type =
-        'button';
-
-    nutDangXuatDrop.className =
-        'item-menu-drop nut-dang-xuat-drop';
-
-    nutDangXuatDrop.id =
-        'nut-dang-xuat-drop';
-
-    nutDangXuatDrop.textContent =
-        'Đăng xuất';
-
-
-    menuDrop.append(
-        lienKetCaNhan,
-        nutDangXuatDrop
-    );
-
-
+    //  BỔ SUNG THÊM ĐOẠN NÀY VÀO DƯỚI ĐÂY:
     khoiAvatar.append(
         lienKetAvatar,
         muiTen,
         menuDrop
-    );
-
-
-    khuVucNguoiDung.append(
-        khoiThongBao,
-        khoiAvatar
-    );
-
-    khuVuc.append(
-        khuVucNguoiDung
     );
 
 
@@ -904,36 +858,58 @@ const khoiTaoRestApiTrangChu = () => {
         });
 };
 
-const khoiTaoTrang = () => {
+/* =========================================================
+   TOGGLE CHUÔNG THÔNG BÁO & MENU AVATAR DROPDOWN
+   ========================================================= */
+const khoiTaoToggleHeaderPHP = () => {
+    const nutThongBao = document.getElementById('nut-thong-bao-header');
+    const bangThongBao = document.getElementById('bang-thong-bao-drop');
+    const khoiAvatar = document.querySelector('.khoi-avatar-header');
+    const menuDrop = document.querySelector('.menu-drop-tai-khoan');
 
-    khoiTaoMenuMobile();
+    // 1. Mở / Đóng bảng Thông báo
+    if (nutThongBao && bangThongBao) {
+        nutThongBao.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (menuDrop) menuDrop.classList.remove('hien-thi');
+            bangThongBao.classList.toggle('hien-thi');
 
-    capNhatSoLuongYeuThich();
+            const chamThongBao = nutThongBao.querySelector('.cham-thong-bao');
+            if (chamThongBao) chamThongBao.style.display = 'none';
+        });
+    }
 
-    khoiTaoTimKiemMonAn();
+    // 2. Mở / Đóng menu Avatar
+    if (khoiAvatar && menuDrop) {
+        khoiAvatar.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (bangThongBao) bangThongBao.classList.remove('hien-thi');
+            menuDrop.classList.toggle('hien-thi');
+        });
+    }
 
-    // Bổ sung 2 hàm mới ở đây
-    khoiTaoKiemTraBieuMau();
-
-    khoiTaoRestApiTrangChu();
-
-
-    const nguoiDung =
-        docNguoiDungHienTai();
-
-    taoKhuVucTaiKhoan(
-        nguoiDung
-    );
-
-
-    /*
-     * Khi yêu thích thay đổi ở trang hiện tại,
-     * cập nhật số lượng trên header.
-     */
-    window.addEventListener(
-        'yeuThichThayDoi',
-        capNhatSoLuongYeuThich
-    );
+    // 3. Click ra ngoài vùng header -> Đóng cả 2 popup
+    document.addEventListener('click', (event) => {
+        if (bangThongBao && !event.target.closest('.khoi-thong-bao-header')) {
+            bangThongBao.classList.remove('hien-thi');
+        }
+        if (menuDrop && khoiAvatar && !khoiAvatar.contains(event.target)) {
+            menuDrop.classList.remove('hien-thi');
+        }
+    });
 };
 
-khoiTaoTrang();
+/* =========================================================
+   KHỞI TẠO TOÀN TRANG
+   ========================================================= */
+const khoiTaoTrang = () => {
+    khoiTaoMenuMobile();
+    khoiTaoTimKiemMonAn();
+    khoiTaoKiemTraBieuMau();
+    khoiTaoRestApiTrangChu();
+
+    // KÍCH HOẠT TOGGLE HEADER PHP (CHUÔNG & AVATAR)
+    khoiTaoToggleHeaderPHP();
+};
+
+document.addEventListener('DOMContentLoaded', khoiTaoTrang);

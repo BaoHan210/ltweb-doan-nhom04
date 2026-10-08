@@ -3,10 +3,49 @@
 require __DIR__ . '/inc/config.php';
 
 use App\Data\KhoMonAn;
+<<<<<<< HEAD
 
 // Khai báo dữ liệu, lấy danh sách từ JSON
 $kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
 
+=======
+use App\Services\YeuThichService;
+
+// Khai báo dữ liệu, lấy danh sách từ JSON
+$kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$yeuThichService = new YeuThichService();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $idMonAn = trim((string)($_POST['doi_yeu_thich'] ?? ''));
+
+    if (
+        $idMonAn !== '' &&
+        $kho->timTheoId($idMonAn) !== null
+    ) {
+        $danhSachYeuThich = $yeuThichService->danhSachMonAn($kho);
+
+        $daYeuThich = false;
+
+        foreach ($danhSachYeuThich as $monYeuThich) {
+            if ($monYeuThich->id === $idMonAn) {
+                $daYeuThich = true;
+                break;
+            }
+        }
+
+        if ($daYeuThich) {
+            $yeuThichService->xoa($idMonAn);
+        } else {
+            $yeuThichService->them($idMonAn);
+        }
+    }
+
+    header('Location: ' . ($_SERVER['REQUEST_URI'] ?? 'danh-sach.php'));
+    exit;
+}
+
+>>>>>>> e6e0155 (Update part A)
 // 1. Lấy tham số GET (Đã đồng bộ tên keyword, dm, sapXep)
 $tuKhoa  = trim($_GET['keyword'] ?? $_GET['q'] ?? '');
 $danhMuc = trim($_GET['dm'] ?? '');
@@ -75,7 +114,11 @@ require __DIR__ . '/inc/header.php';
     </section>
 
     <!-- KHU VỰC BỘ LỌC VÀ TÌM KIẾM MÓN ĂN -->
+<<<<<<< HEAD
     <section class="khu-vuc-danh-sach-mon-an" aria-labelledby="tieu-de-mon-an">
+=======
+<div class="khu-vuc-danh-sach-mon-an">
+>>>>>>> e6e0155 (Update part A)
 
       <div class="thanh-cong-cu-mon-an">
 
@@ -104,6 +147,7 @@ require __DIR__ . '/inc/header.php';
 
           <!-- Ô sắp xếp tự động reload trang khi chọn -->
           <form class="khu-vuc-sap-xep" action="danh-sach.php" method="get">
+<<<<<<< HEAD
             <?php if (!empty($tuKhoa)): ?>
               <input type="hidden" name="keyword" value="<?= e($tuKhoa) ?>">
             <?php endif; ?>
@@ -120,6 +164,44 @@ require __DIR__ . '/inc/header.php';
               <option value="ten-za" <?= $sapXep === 'ten-za' ? 'selected' : '' ?>>Tên Z → A</option>
             </select>
           </form>
+=======
+  <?php if (!empty($tuKhoa)): ?>
+    <input type="hidden" name="keyword" value="<?= e($tuKhoa) ?>">
+  <?php endif; ?>
+
+  <?php if (!empty($danhMuc)): ?>
+    <input type="hidden" name="dm" value="<?= e($danhMuc) ?>">
+  <?php endif; ?>
+
+  <label for="sap-xep">Sắp xếp</label>
+
+  <select id="sap-xep" name="sapXep">
+    <option value="ten-az" <?= $sapXep === 'ten-az' ? 'selected' : '' ?>>
+      Mặc định (A → Z)
+    </option>
+
+    <option value="danhGiaGiam" <?= $sapXep === 'danhGiaGiam' ? 'selected' : '' ?>>
+      Đánh giá cao nhất
+    </option>
+
+    <option value="thoiGianTang" <?= $sapXep === 'thoiGianTang' ? 'selected' : '' ?>>
+      Thời gian ngắn nhất
+    </option>
+
+    <option value="nganSachTang" <?= $sapXep === 'nganSachTang' ? 'selected' : '' ?>>
+      Ngân sách thấp nhất
+    </option>
+
+    <option value="ten-za" <?= $sapXep === 'ten-za' ? 'selected' : '' ?>>
+      Tên Z → A
+    </option>
+  </select>
+
+  <button type="submit" class="nut">
+    Áp dụng
+  </button>
+</form>
+>>>>>>> e6e0155 (Update part A)
 
         </div>
 
@@ -179,12 +261,52 @@ require __DIR__ . '/inc/header.php';
                     alt="<?= e($mon->ten ?? '') ?>"
                     loading="lazy"
                   >
+<<<<<<< HEAD
                   <button 
                     class="nut-yeu-thich" 
                     type="button"
                     data-id-mon-an="<?= e($mon->id ?? '') ?>" 
                     aria-label="Thêm vào yêu thích"
                   >♡</button>
+=======
+                  <!-- Lấy chính xác ID dù $mon là Object hay Array, tránh rỗng data-id -->
+<?php 
+  $idChuan = '';
+  if (is_object($mon)) {
+      $idChuan = $mon->id ?? $mon->maMon ?? (method_exists($mon, 'getId') ? $mon->getId() : '');
+  } elseif (is_array($mon)) {
+      $idChuan = $mon['id'] ?? $mon['maMon'] ?? '';
+  }
+?>
+
+<?php
+$daYeuThich = false;
+
+$danhSachYeuThich = $yeuThichService->danhSachMonAn($kho);
+
+foreach ($danhSachYeuThich as $monYeuThich) {
+    if ($monYeuThich->id === $idChuan) {
+        $daYeuThich = true;
+        break;
+    }
+}
+?>
+
+<form
+  action="<?= e($_SERVER['REQUEST_URI'] ?? 'danh-sach.php') ?>"
+  method="post"
+>
+  <button
+    class="nut-yeu-thich"
+    type="submit"
+    name="doi_yeu_thich"
+    value="<?= e($idChuan) ?>"
+    aria-label="<?= $daYeuThich ? 'Bỏ khỏi yêu thích' : 'Thêm vào yêu thích' ?>"
+  >
+    <?= $daYeuThich ? '♥' : '♡' ?>
+  </button>
+</form>
+>>>>>>> e6e0155 (Update part A)
                 </div>
 
                 <div class="noi-dung-the-mon">
@@ -245,7 +367,11 @@ require __DIR__ . '/inc/header.php';
         </nav>
       <?php endif; ?>
 
+<<<<<<< HEAD
     </section>
+=======
+    </div> <!-- ĐỔI THÀNH DIV ĐỂ TƯƠNG ỨNG VỚI <div class="khu-vuc-danh-sach-mon-an"> DÒNG 61 -->
+>>>>>>> e6e0155 (Update part A)
 
   </main>
 

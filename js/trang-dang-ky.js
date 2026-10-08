@@ -204,4 +204,20 @@ if (formDangKy !== null) {
 
         // Nếu thông tin hợp lệ, để trình duyệt tự động submit về trang dang-ky.php
     });
+
+    // Thêm khai báo element ô checkbox điều khoản
+const chkDongY = document.querySelector('#dong-y-dieu-khoan');
+
+// Thêm hàm kiểm tra
+const kiemTraDongY = () => {
+    if (chkDongY === null) return true;
+    if (!chkDongY.checked) {
+        hienThiLoi(chkDongY, 'Bạn cần đồng ý với Điều khoản sử dụng.');
+        return false;
+    }
+    xoaLoi(chkDongY);
+    return true;
+};
+
+// Gọi kiemTraDongY() bên trong sự kiện 'submit' của formDangKy
 }

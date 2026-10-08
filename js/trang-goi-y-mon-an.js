@@ -1241,7 +1241,9 @@ const xuLyFormGoiY = (
     event
 ) => {
 
-    event.preventDefault();
+    if (typeof event !== 'undefined') {
+        event.preventDefault();
+    }
 
 
     const oNguyenLieu =
@@ -1468,10 +1470,6 @@ const khoiTaoTrangGoiY = () => {
     const form = document.querySelector('#form-goi-y');
     const nutXoa = document.querySelector('#nut-xoa-danh-sach');
     const nutNhapLai = document.querySelector('#nut-nhap-lai');
-
-    if (form !== null) {
-        form.addEventListener('submit', xuLyFormGoiY);
-    }
 
     if (nutNhapLai !== null) {
         nutNhapLai.addEventListener('click', xuLyNhapLai);
