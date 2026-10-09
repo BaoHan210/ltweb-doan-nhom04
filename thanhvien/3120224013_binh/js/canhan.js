@@ -1,114 +1,64 @@
-/*
- * Tệp tạo tương tác cho trang cá nhân Ngọc Bình.
- * Có chức năng tìm kiếm kỹ năng và thu gọn/mở rộng nội dung.
- * Cách thử: nhập từ khóa vào ô tìm kiếm hoặc bấm nút Thu gọn.
- */
+/* 
+ * Tệp tạo tương tác cho trang cá nhân Ngọc Bình. 
+ * Có chức năng tìm kiếm kỹ năng và thu gọn/mở rộng nội dung. 
+ * Cách thử: nhập từ khóa vào ô tìm kiếm hoặc bấm nút Thu gọn. 
+ */ 
 
-// ========================================
-// 1. TÌM KIẾM / LỌC DANH SÁCH KỸ NĂNG
-// ========================================
-
-const oTimKyNang = document.getElementById("tim-ky-nang");
-const danhSachKyNang = document.querySelectorAll(
-  ".danh-sach-ky-nang li"
-);
-const khungKyNang = document.querySelector(".danh-sach-ky-nang");
-
-if (oTimKyNang && khungKyNang) {
-
-  oTimKyNang.addEventListener("input", function () {
-
-    const tuKhoa = oTimKyNang.value
-      .toLowerCase()
-      .trim();
-
-    let soKyNangHienThi = 0;
-
-    danhSachKyNang.forEach(function (kyNang) {
-
-      const noiDungKyNang = kyNang.textContent
-        .toLowerCase();
-
-      if (noiDungKyNang.includes(tuKhoa)) {
-
-        kyNang.classList.remove("an-ky-nang");
-        soKyNangHienThi++;
-
-      } else {
-
-        kyNang.classList.add("an-ky-nang");
-
-      }
-    });
-
-
-    // Xóa thông báo cũ nếu có
-    const thongBaoCu = document.getElementById(
-      "khong-co-ky-nang"
-    );
-
-    if (thongBaoCu) {
-      thongBaoCu.remove();
-    }
-
-
-    // Tạo thông báo nếu không tìm thấy kỹ năng
-    if (soKyNangHienThi === 0) {
-
-      const thongBaoMoi = document.createElement("p");
-
-      thongBaoMoi.textContent =
-        "Không tìm thấy kỹ năng phù hợp.";
-
-      thongBaoMoi.id = "khong-co-ky-nang";
-
-      thongBaoMoi.classList.add("khong-co-ky-nang");
-
-      khungKyNang.parentElement.appendChild(
-        thongBaoMoi
-      );
-    }
-  });
+function khoiTaoTuongTacTrang() {
+    // 1. TƯƠNG TÁC THU GỌN / MỞ RỘNG DỰ ÁN VÀ SỞ THÍCH 
+    const nutMoRong = document.getElementById('nut-mo-rong'); 
+    const noiDungDuAn = document.getElementById('noi-dung-du-an'); 
+     
+    if (nutMoRong && noiDungDuAn) { 
+        nutMoRong.addEventListener('click', () => { 
+            const dangMo = noiDungDuAn.style.display !== 'none' && !noiDungDuAn.classList.contains('noi-dung-an');
+            
+            if (dangMo) {
+                noiDungDuAn.style.display = 'none';
+                noiDungDuAn.classList.add('noi-dung-an');
+                nutMoRong.setAttribute('aria-expanded', 'false'); 
+                nutMoRong.textContent = '▼ Mở rộng'; 
+            } else {
+                noiDungDuAn.style.display = '';
+                noiDungDuAn.classList.remove('noi-dung-an');
+                nutMoRong.setAttribute('aria-expanded', 'true'); 
+                nutMoRong.textContent = '▲ Thu gọn'; 
+            }
+        }); 
+    } 
+     
+    // 2. TƯƠNG TÁC TÌM KIẾM / LỌC KỸ NĂNG 
+    const oTimKyNang = document.getElementById('tim-ky-nang'); 
+    const danhSachKyNang = document.querySelectorAll('.danh-sach-ky-nang li'); 
+    const thongBaoKhongCo = document.getElementById('khong-co-ky-nang'); 
+     
+    if (oTimKyNang && danhSachKyNang.length > 0) { 
+        oTimKyNang.addEventListener('input', () => { 
+            const tuKhoa = oTimKyNang.value.toLowerCase().trim(); 
+            let soLuongKhop = 0; 
+     
+            danhSachKyNang.forEach((item) => { 
+                const text = item.textContent.toLowerCase(); 
+                if (text.includes(tuKhoa)) { 
+                    item.style.display = '';
+                    item.classList.remove('an-ky-nang'); 
+                    soLuongKhop++; 
+                } else { 
+                    item.style.display = 'none';
+                    item.classList.add('an-ky-nang'); 
+                } 
+            }); 
+     
+            if (thongBaoKhongCo) { 
+                thongBaoKhongCo.hidden = soLuongKhop > 0; 
+            } 
+        }); 
+    } 
 }
 
-
-// ========================================
-// 2. THU GỌN / MỞ RỘNG
-// ========================================
-
-const nutMoRong = document.getElementById(
-  "nut-mo-rong"
-);
-
-const noiDungDuAn = document.getElementById(
-  "noi-dung-du-an"
-);
-
-if (nutMoRong && noiDungDuAn) {
-
-  nutMoRong.addEventListener("click", function () {
-
-    noiDungDuAn.classList.toggle("noi-dung-an");
-
-    if (
-      noiDungDuAn.classList.contains("noi-dung-an")
-    ) {
-
-      nutMoRong.textContent = "▼ Xem thêm";
-
-      nutMoRong.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-    } else {
-
-      nutMoRong.textContent = "▲ Thu gọn";
-
-      nutMoRong.setAttribute(
-        "aria-expanded",
-        "true"
-      );
-    }
-  });
+// Đảm bảo mã luôn chạy dù nạp qua module hay script thông thường
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', khoiTaoTuongTacTrang);
+} else {
+    khoiTaoTuongTacTrang();
 }
