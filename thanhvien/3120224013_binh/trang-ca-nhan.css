@@ -1,24 +1,22 @@
+
 /* ========================================
    trang-ca-nhan.css
    CSS riêng cho trang cá nhân Ngọc Bình
    ======================================== */
 
-
-/* ==============================
-   1. TIÊU ĐỀ HỒ SƠ
-   ============================== */
+/* 1. TIÊU ĐỀ HỒ SƠ */
 
 .ho-so-trang > .tieu-de-ho-so {
   margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--mau-vien);
   color: var(--mau-chinh);
   font-size: var(--co-chu-tieu-de);
   line-height: 1.3;
+  text-align: center;
 }
 
-
-/* ==============================
-   2. CÁC KHỐI NỘI DUNG
-   ============================== */
+/* 2. CÁC KHỐI NỘI DUNG */
 
 .ho-so-trang > .thong-tin-chung,
 .ho-so-trang > .du-an-so-thich,
@@ -29,6 +27,7 @@
   border: 1px solid var(--mau-vien);
   border-radius: var(--bo-goc);
   background-color: var(--mau-nen);
+  box-sizing: border-box;
 }
 
 .ho-so-trang > .thong-tin-chung h2,
@@ -41,25 +40,27 @@
   line-height: 1.4;
 }
 
-
-/* ==============================
-   3. THÔNG TIN CÁ NHÂN
-   ============================== */
+/* 3. THÔNG TIN CÁ NHÂN */
 
 .anh-dai-dien {
+  width: 100%;
+  min-width: 0;
   margin: 0;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .anh-dai-dien img {
   display: block;
   width: 200px;
-  max-width: 100%;
   height: 200px;
+  max-width: 100%;
   margin: 0 auto;
   border: 3px solid var(--mau-vien);
   border-radius: 50%;
   object-fit: cover;
+  object-position: center;
+  box-sizing: border-box;
 }
 
 .anh-dai-dien figcaption {
@@ -67,16 +68,20 @@
   color: var(--mau-chu-phu);
   font-size: var(--co-chu-nho);
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .thong-tin-ca-nhan {
   min-width: 0;
   margin: 0;
   padding-left: 20px;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
 }
 
 .thong-tin-ca-nhan li {
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .thong-tin-ca-nhan li + li {
@@ -87,28 +92,24 @@
   color: var(--mau-chinh);
 }
 
-
-/* ==============================
-   4. DỰ ÁN VÀ SỞ THÍCH
-   ============================== */
+/* 4. DỰ ÁN VÀ SỞ THÍCH */
 
 .du-an-so-thich p {
   max-width: 65ch;
   margin: 0;
   line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .du-an-so-thich p + p {
   margin-top: 10px;
 }
 
-
-/* ==============================
-   5. NÚT THU GỌN / MỞ RỘNG
-   ============================== */
+/* 5. NÚT THU GỌN / MỞ RỘNG */
 
 .nut-mo-rong {
   display: inline-block;
+  max-width: 100%;
   margin-bottom: 12px;
   padding: 8px 14px;
   border: 1px solid var(--mau-chinh);
@@ -118,6 +119,7 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  box-sizing: border-box;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -138,16 +140,13 @@
   transform: translateY(1px);
 }
 
-
-/* ==============================
-   6. DANH SÁCH KỸ NĂNG
-   ============================== */
+/* 6. DANH SÁCH KỸ NĂNG */
 
 .ky-nang > label {
   display: block;
   margin-bottom: 6px;
-  font-weight: 600;
   color: var(--mau-chu);
+  font-weight: 600;
 }
 
 #tim-ky-nang {
@@ -175,7 +174,7 @@
 
 .danh-sach-ky-nang {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
   margin: 0;
   padding: 0;
@@ -190,6 +189,8 @@
   background-color: var(--mau-nen-phu);
   color: var(--mau-chu);
   line-height: 1.5;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 .danh-sach-ky-nang li::before {
@@ -199,10 +200,7 @@
   font-weight: 700;
 }
 
-
-/* ==============================
-   7. THÔNG BÁO KHÔNG TÌM THẤY
-   ============================== */
+/* 7. THÔNG BÁO KHÔNG TÌM THẤY */
 
 .khong-co-ky-nang {
   margin: 12px 0 0;
@@ -210,10 +208,7 @@
   font-size: var(--co-chu-nho);
 }
 
-
-/* ==============================
-   8. THỜI KHÓA BIỂU
-   ============================== */
+/* 8. THỜI KHÓA BIỂU */
 
 .thoi-khoa-bieu {
   min-width: 0;
@@ -239,15 +234,13 @@
   text-align: left;
 }
 
-
-/* Khung cuộn ngang riêng cho bảng */
-
 .khung-bang {
   width: 100%;
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 .khung-bang table {
@@ -279,10 +272,7 @@
   background-color: var(--mau-nen-phu);
 }
 
-
-/* ==============================
-   9. LIÊN KẾT QUAY LẠI
-   ============================== */
+/* 9. LIÊN KẾT QUAY LẠI */
 
 .quay-lai {
   margin: 0;
@@ -290,6 +280,7 @@
 
 .quay-lai a {
   display: inline-block;
+  max-width: 100%;
   padding: 8px 14px;
   border: 1px solid var(--mau-chinh);
   border-radius: var(--bo-goc);
@@ -297,6 +288,7 @@
   color: var(--mau-nen);
   font-weight: 600;
   text-decoration: none;
+  box-sizing: border-box;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -318,54 +310,39 @@
   transform: translateY(1px);
 }
 
-
-/* ==============================
-   10. RESPONSIVE - TABLET
-   ============================== */
+/* 10. TABLET VÀ MÁY TÍNH */
 
 @media (min-width: 768px) {
-
-  /* Thông tin chung */
-
   .ho-so-trang > .thong-tin-chung {
+    display: grid;
     grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
     column-gap: 24px;
-    align-items: center;
+    row-gap: 12px;
+    align-items: start;
   }
 
-  .thong-tin-chung > h2 {
+  .ho-so-trang > .thong-tin-chung > h2 {
     grid-column: 1 / -1;
   }
 
+  .ho-so-trang > .thong-tin-chung > .anh-dai-dien {
+    grid-column: 1;
+  }
 
-  /* Kỹ năng */
+  .ho-so-trang > .thong-tin-chung > .thong-tin-ca-nhan {
+    grid-column: 2;
+  }
 
   .danh-sach-ky-nang {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-
-  /* Bảng */
-
   .khung-bang table {
     min-width: 0;
   }
-
 }
 
-
-/* ==============================
-   11. TÙY CHỈNH RIÊNG - NGỌC BÌNH
-   ============================== */
-
-.tieu-de-ho-so {
-  text-align: center;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--mau-vien);
-}
-/* ==============================
-   12. CLASS ĐƯỢC JAVASCRIPT SỬ DỤNG
-   ============================== */
+/* 11. JAVASCRIPT SỬ DỤNG */
 
 .an-ky-nang {
   display: none !important;
@@ -374,397 +351,181 @@
 .noi-dung-an {
   display: none;
 }
-/* ========================================
-   13. RESPONSIVE MOBILE - NGỌC BÌNH
-   Sửa lỗi tràn ngang ở màn hình 360px
-   ======================================== */
+
+/* 12. ĐIỆN THOẠI */
 
 @media (max-width: 767px) {
-
-  /* ==============================
-     KHUNG TRANG CÁ NHÂN
-     ============================== */
-
   .ho-so-trang {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     padding: 8px 6px;
-
     box-sizing: border-box;
-
     overflow-wrap: break-word;
   }
-
-
-  /* ==============================
-     TIÊU ĐỀ HỒ SƠ
-     ============================== */
 
   .ho-so-trang > .tieu-de-ho-so {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
-    box-sizing: border-box;
-
     padding: 10px 8px;
-
     font-size: 22px;
     line-height: 1.3;
-
     text-align: center;
-
     overflow-wrap: anywhere;
-    word-break: break-word;
+    box-sizing: border-box;
   }
 
-
-  /* ==============================
-     KHỐI THÔNG TIN CHUNG
-     ============================== */
+  .ho-so-trang > .thong-tin-chung,
+  .ho-so-trang > .du-an-so-thich,
+  .ho-so-trang > .ky-nang,
+  .ho-so-trang > .thoi-khoa-bieu {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 12px;
+    box-sizing: border-box;
+  }
 
   .ho-so-trang > .thong-tin-chung {
     display: grid;
-
     grid-template-columns: minmax(0, 1fr);
-
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
-    padding: 12px;
-
-    box-sizing: border-box;
-
     gap: 10px;
   }
 
-
   .ho-so-trang > .thong-tin-chung > h2 {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
+    grid-column: 1;
     margin: 0 0 10px;
-
     font-size: 20px;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
   }
-
-
-  /* ==============================
-     ẢNH ĐẠI DIỆN
-     ============================== */
 
   .anh-dai-dien {
     display: block;
-
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     margin: 0;
-
     text-align: center;
-
     box-sizing: border-box;
   }
-
 
   .anh-dai-dien img {
-    display: block;
-
     width: 180px;
-    max-width: 100%;
-
     height: 180px;
-
+    max-width: 100%;
     margin: 0 auto;
-
-    border: 3px solid var(--mau-vien);
-    border-radius: 50%;
-
     object-fit: cover;
-
-    box-sizing: border-box;
+    object-position: center;
   }
 
-
-  /* ==============================
-     CHÚ THÍCH DƯỚI ẢNH
-     ============================== */
-
   .anh-dai-dien figcaption {
-    display: block;
-
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     margin-top: 10px;
-
     font-size: var(--co-chu-nho);
-
     line-height: 1.5;
-
     text-align: center;
-
     overflow-wrap: anywhere;
-    word-break: break-word;
-
     box-sizing: border-box;
   }
-
-
-  /* ==============================
-     THÔNG TIN CÁ NHÂN
-     ============================== */
 
   .thong-tin-ca-nhan {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     margin: 0;
-
     padding-left: 20px;
-
     box-sizing: border-box;
-
     overflow-wrap: anywhere;
-    word-break: break-word;
   }
-
 
   .thong-tin-ca-nhan li {
     max-width: 100%;
-
     line-height: 1.6;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-
-  /* ==============================
-     DỰ ÁN VÀ SỞ THÍCH
-     ============================== */
-
-  .ho-so-trang > .du-an-so-thich {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
-    padding: 12px;
-
-    box-sizing: border-box;
-
     overflow-wrap: anywhere;
   }
-
-
-  .ho-so-trang > .du-an-so-thich h2 {
-    max-width: 100%;
-
-    font-size: 20px;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
 
   .du-an-so-thich p {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     line-height: 1.6;
-
     overflow-wrap: anywhere;
-    word-break: break-word;
   }
-
-
-  /* ==============================
-     NÚT THU GỌN
-     ============================== */
 
   .nut-mo-rong {
     max-width: 100%;
-
-    box-sizing: border-box;
-
     white-space: normal;
-
     overflow-wrap: break-word;
-  }
-
-
-  /* ==============================
-     KHỐI KỸ NĂNG
-     ============================== */
-
-  .ho-so-trang > .ky-nang {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
-    padding: 12px;
-
     box-sizing: border-box;
   }
-
-
-  .ho-so-trang > .ky-nang h2 {
-    max-width: 100%;
-
-    font-size: 20px;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-
-  /* Ô tìm kiếm kỹ năng */
 
   #tim-ky-nang {
-    display: block;
-
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     box-sizing: border-box;
   }
-
-
-  /* Danh sách kỹ năng */
 
   .danh-sach-ky-nang {
-    display: grid;
-
     grid-template-columns: minmax(0, 1fr);
-
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     box-sizing: border-box;
   }
-
 
   .danh-sach-ky-nang li {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
-    box-sizing: border-box;
-
     overflow-wrap: anywhere;
-    word-break: break-word;
+    box-sizing: border-box;
   }
 
-
-  /* ==============================
-     THỜI KHÓA BIỂU
-     ============================== */
-
   .ho-so-trang > .thoi-khoa-bieu {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
-    padding: 12px;
-
-    box-sizing: border-box;
-
     overflow: hidden;
   }
 
-
-  .ho-so-trang > .thoi-khoa-bieu h2 {
-    max-width: 100%;
-
-    font-size: 20px;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-
-  /*
-   * Chỉ cho phép BẢNG cuộn ngang.
-   * Không để toàn bộ trang bị tràn ngang.
-   */
-
   .khung-bang {
     display: block;
-
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
     overflow-x: auto;
     overflow-y: hidden;
-
     box-sizing: border-box;
-
     -webkit-overflow-scrolling: touch;
   }
 
-
   .khung-bang table {
     width: 100%;
-
     min-width: 680px;
   }
-
-
-  /* ==============================
-     NÚT QUAY LẠI
-     ============================== */
 
   .ho-so-trang > .quay-lai {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-
-    box-sizing: border-box;
-
     text-align: left;
+    box-sizing: border-box;
   }
-
 
   .quay-lai a {
     max-width: 100%;
-
-    box-sizing: border-box;
-
     white-space: normal;
-
     overflow-wrap: break-word;
+    box-sizing: border-box;
   }
 }
 
-
-/* ========================================
-   MOBILE RẤT NHỎ - 360PX
-   ======================================== */
+/* 13. ĐIỆN THOẠI MÀN HÌNH NHỎ */
 
 @media (max-width: 380px) {
-
   .ho-so-trang {
     padding: 6px 4px;
   }
-
 
   .ho-so-trang > .thong-tin-chung,
   .ho-so-trang > .du-an-so-thich,
@@ -773,13 +534,10 @@
     padding: 10px;
   }
 
-
   .ho-so-trang > .tieu-de-ho-so {
     padding: 8px 6px;
-
     font-size: 20px;
   }
-
 
   .ho-so-trang > .thong-tin-chung h2,
   .ho-so-trang > .du-an-so-thich h2,
@@ -788,17 +546,14 @@
     font-size: 19px;
   }
 
-
   .anh-dai-dien img {
     width: 160px;
     height: 160px;
   }
 
-
   .anh-dai-dien figcaption {
     font-size: 12px;
   }
-
 
   .thong-tin-ca-nhan {
     padding-left: 18px;
