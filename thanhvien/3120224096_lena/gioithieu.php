@@ -405,6 +405,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <div>
             <label for="ma_mon">Chọn món ăn:</label>
             <select id="ma_mon" name="ma_mon" required>
+                <option value="">-- Chọn món ăn --</option>
                 <option value="thit-kho">Thịt kho trứng</option>
                 <option value="canh-rau">Canh rau nấu tôm</option>
                 <option value="com-chien">Cơm chiên trứng</option>
