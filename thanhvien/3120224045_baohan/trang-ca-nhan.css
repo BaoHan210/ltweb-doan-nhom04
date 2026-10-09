@@ -638,3 +638,18 @@ body.giao-dien-toi .tra-cuu-cong-nghe button:hover {
   border-color: #86b663;
   background-color: #466a35;
 }
+
+/* Trạng thái chỉnh sửa thông tin cá nhân */
+[data-editable].dang-chinh-sua {
+    outline: 1px dashed #64748b;
+    outline-offset: 4px;
+    border-radius: 4px;
+    cursor: text;
+    min-width: 40px;
+}
+
+/* Ẩn các nút không thuộc trạng thái hiện tại */
+.nhom-nut-chinh-sua button[hidden] {
+    display: none;
+}
+

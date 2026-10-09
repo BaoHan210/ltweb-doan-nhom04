@@ -116,3 +116,86 @@ const khoiTaoTrangCaNhan = () => {
 };
 
 khoiTaoTrangCaNhan();
+
+
+
+const nutChinhSua = document.querySelector('.nut-chinh-sua');
+const nutLuuThayDoi = document.querySelector('.nut-luu-thay-doi');
+const nutHuyChinhSua = document.querySelector('.nut-huy-chinh-sua');
+const cacTruongChinhSua = document.querySelectorAll('[data-editable]');
+
+let noiDungBanDau = [];
+
+console.log('Đã tải chức năng chỉnh sửa:', {
+    nutChinhSua: Boolean(nutChinhSua),
+    nutLuuThayDoi: Boolean(nutLuuThayDoi),
+    nutHuyChinhSua: Boolean(nutHuyChinhSua),
+    soTruong: cacTruongChinhSua.length
+});
+
+if (nutChinhSua && nutLuuThayDoi && nutHuyChinhSua) {
+    nutChinhSua.addEventListener('click', () => {
+    console.log('Đã nhấn nút Chỉnh sửa');
+
+    noiDungBanDau = Array.from(cacTruongChinhSua).map((truong) => ({
+        phanTu: truong,
+        noiDung: truong.textContent
+    }));
+
+        cacTruongChinhSua.forEach((truong) => {
+            truong.contentEditable = 'true';
+            truong.classList.add('dang-chinh-sua');
+        });
+
+        nutChinhSua.hidden = true;
+        nutLuuThayDoi.hidden = false;
+        nutHuyChinhSua.hidden = false;
+
+        console.log('Đã bật chế độ chỉnh sửa');
+    });
+
+    nutLuuThayDoi.addEventListener('click', () => {
+    const cacTruong = Array.from(cacTruongChinhSua);
+
+    const form = document.querySelector('#form-luu-ho-so');
+
+    const cacTruongGuiDi = [
+        document.querySelector('#du-lieu-email'),
+        document.querySelector('#du-lieu-ho-ten'),
+        document.querySelector('#du-lieu-vai-tro'),
+        document.querySelector('#du-lieu-nhiem-vu')
+    ];
+
+    if (
+        form === null
+        || cacTruong.length !== 4
+        || cacTruongGuiDi.some((truong) => truong === null)
+    ) {
+        console.error('Không tìm thấy đủ trường dữ liệu để lưu.');
+        return;
+    }
+
+    cacTruong.forEach((truong, viTri) => {
+        cacTruongGuiDi[viTri].value = truong.textContent.trim();
+    });
+
+    form.requestSubmit();
+});
+
+    nutHuyChinhSua.addEventListener('click', () => {
+        noiDungBanDau.forEach((banGhi) => {
+            banGhi.phanTu.textContent = banGhi.noiDung;
+        });
+
+        cacTruongChinhSua.forEach((truong) => {
+            truong.contentEditable = 'false';
+            truong.classList.remove('dang-chinh-sua');
+        });
+
+        nutChinhSua.hidden = false;
+        nutLuuThayDoi.hidden = true;
+        nutHuyChinhSua.hidden = true;
+    });
+} else {
+    console.error('Không tìm thấy đủ ba nút chỉnh sửa, lưu và hủy.');
+}
