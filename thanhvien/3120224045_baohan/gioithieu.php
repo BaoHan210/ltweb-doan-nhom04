@@ -1,123 +1,15 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+require_once __DIR__ . '/../../inc/config.php';
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+$goc = '../../';
+$tieuDe = 'Thông tin cá nhân - Bảo Hân';
+$trang = 'gioi-thieu';
 
-  <meta
-    name="description"
-    content="Trang thông tin cá nhân của Phan Thị Bảo Hân, thành viên Nhóm 04 thực hiện đồ án Cook with me."
-  >
+// CSS riêng của trang cá nhân
+$cssRieng = 'trang-ca-nhan.css';
+?>
 
-  <title>Thông tin cá nhân - Bảo Hân | Cook with me</title>
-
-  <!-- CSS chung của nhóm -->
-  <link rel="stylesheet" href="../../css/01-bien.css">
-  <link rel="stylesheet" href="../../css/02-chuan-hoa.css">
-  <link rel="stylesheet" href="../../css/03-bo-cuc.css">
-  <link rel="stylesheet" href="../../css/04-thanh-phan.css">
-  <link rel="stylesheet" href="../../css/05-tien-ich.css">
-
-  <!-- CSS riêng cho trang cá nhân -->
-  <link rel="stylesheet" href="trang-ca-nhan.css">
-
-  <!-- JavaScript riêng cho trang cá nhân -->
-  <script type="module" src="js/canhan.js"></script>
-
-</head>
-
-<body class="trang">
-
-  <!-- HEADER ĐỒNG BỘ CHUẨN ĐƯỜNG DẪN -->
-  <header class="dau-trang">
-
-    <p class="thuong-hieu">
-      <img src="../../images/icons/chef.svg" alt="Cook with me" class="logo-icon">
-      <span class="khoi-chu-logo">
-        <span class="ten-website">Cook with me</span>
-        <span class="slogan">Khơi nguồn cảm hứng vào bếp</span>
-      </span>
-    </p>
-
-    <form class="o-tim-kiem" action="../../danh-sach.php" method="get">
-      <label for="search">Tìm kiếm</label>
-      <input type="search" id="search" name="keyword" placeholder="Tìm kiếm món ăn, công thức..." autocomplete="off">
-      <button class="nut" type="submit">Tìm kiếm</button>
-    </form>
-
-    <div class="khu-vuc-tai-khoan"></div>
-
-  </header>
-
-  <!-- ĐIỀU HƯỚNG CHÍNH -->
-  <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
-
-    <ul class="menu">
-
-      <li>
-        <a href="../../index.php">
-          Trang chủ
-        </a>
-      </li>
-
-      <li>
-        <a href="../../danh-sach.php">
-          Khám phá
-        </a>
-      </li>
-
-      <li>
-        <a href="../../chi-tiet.php">
-          Chi tiết công thức
-        </a>
-      </li>
-
-      <li>
-        <a href="../../goi-y-mon-an.php">
-          Gợi ý món ăn
-        </a>
-      </li>
-
-      <li>
-        <a href="../../cai-dat.php">
-          Cài đặt
-        </a>
-      </li>
-
-      <li>
-        <a class="dang-chon" href="../../gioi-thieu.php">
-          Giới thiệu
-        </a>
-      </li>
-
-      <li>
-        <a href="../../lien-he.php">
-          Liên hệ
-        </a>
-      </li>
-
-    </ul>
-
-    <!-- BỔ SUNG KHỐI YÊU THÍCH -->
-    <div class="khu-vuc-yeu-thich">
-
-      <span class="nhan-yeu-thich">
-        Yêu thích
-      </span>
-
-      <span
-        class="so-luong-yeu-thich"
-        role="status"
-        aria-label="Số món ăn yêu thích"
-      >
-        0
-      </span>
-
-    </div>
-
-  </nav>
-
+<?php require __DIR__ . '/../../inc/header.php'; ?>
 
   <!-- NỘI DUNG CHÍNH -->
   <main class="ho-so-trang">
@@ -478,52 +370,14 @@
 
 
     <!-- QUAY LẠI -->
-    <p class="quay-lai">
-
-      <a href="../../index.php">
+        <p class="quay-lai">
+      <a href="<?= e($goc) ?>index.php">
         Quay lại trang chủ
       </a>
-
     </p>
 
   </main>
 
-
-  <!-- FOOTER -->
-  <footer>
-
-    <p>
-      &copy; 2026 Cook with me - Nhóm 04
-    </p>
-
-    <nav aria-label="Điều hướng phụ">
-
-      <ul class="menu">
-
-        <li>
-          <a href="../../gioi-thieu.php">
-            Giới thiệu
-          </a>
-        </li>
-
-        <li>
-          <a href="../../lien-he.php">
-            Liên hệ
-          </a>
-        </li>
-
-      </ul>
-
-    </nav>
-
-  </footer>
-
-    <!-- JavaScript chung của nhóm -->
-  <script type="module" src="../../js/main.js"></script>
-
-  <!-- JavaScript riêng cho trang cá nhân -->
   <script type="module" src="js/canhan.js"></script>
 
-</body>
-
-</html>
+<?php require __DIR__ . '/../../inc/footer.php'; ?>

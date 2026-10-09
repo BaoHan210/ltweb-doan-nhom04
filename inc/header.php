@@ -66,6 +66,11 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
   <link rel="stylesheet" href="<?= $goc ?>css/03-bo-cuc.css">
   <link rel="stylesheet" href="<?= $goc ?>css/04-thanh-phan.css">
   <link rel="stylesheet" href="<?= $goc ?>css/05-tien-ich.css">
+
+  <?php if (!empty($cssRieng)): ?>
+    <link rel="stylesheet" href="<?= e($cssRieng) ?>">
+<?php endif; ?>
+
 </head>
 <body class="trang <?= $bodyClass ?>">
 

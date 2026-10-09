@@ -56,10 +56,6 @@ class KhoMonAn
 
         return array_values($ketQua);
     }
-<<<<<<< HEAD
-}
-=======
-
     public function timTheoId(string $id): ?MonAn
     {
         foreach ($this->danhSach as $mon) {
@@ -67,7 +63,7 @@ class KhoMonAn
                 return $mon;
             }
         }
+
         return null;
     }
 }
->>>>>>> e6e0155 (Update part A)
