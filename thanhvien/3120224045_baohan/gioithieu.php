@@ -1,4 +1,9 @@
 <?php
+/*
+ * Chức năng: Hiển thị thông tin cá nhân và tra cứu thông tin website.
+ * Dữ liệu: Đọc lịch sử phiên bản và công nghệ từ các tệp JSON.
+ * Kiểm thử: Mở trang, lọc theo nhóm và thử gửi tham số GET không hợp lệ.
+ */
 require_once __DIR__ . '/../../inc/config.php';
 
 $goc = '../../';
@@ -6,10 +11,100 @@ $tieuDe = 'Thông tin cá nhân - Bảo Hân';
 $trang = 'gioi-thieu';
 
 // CSS riêng của trang cá nhân
-$cssRieng = 'trang-ca-nhan.css';
+$cssRieng = $goc . 'thanhvien/3120224045_baohan/trang-ca-nhan.css';
 ?>
 
 <?php require __DIR__ . '/../../inc/header.php'; ?>
+
+<?php
+// Đường dẫn đến thư mục storage ở thư mục gốc dự án.
+$thuMucStorage = dirname(__DIR__, 2) . '/storage';
+
+// Đọc dữ liệu JSON từ tệp.
+function docDuLieuJson(string $duongDan): array
+{
+    if (!is_file($duongDan) || !is_readable($duongDan)) {
+        return [];
+    }
+
+    $noiDung = file_get_contents($duongDan);
+
+    if ($noiDung === false || trim($noiDung) === '') {
+        return [];
+    }
+
+    $duLieu = json_decode($noiDung, true);
+
+    return is_array($duLieu) ? $duLieu : [];
+}
+
+// CHỨC NĂNG 1: Đọc lịch sử phiên bản từ storage.
+$cacPhienBan = docDuLieuJson(
+    $thuMucStorage . '/3120224045_phienban.json'
+);
+
+$nhomPhienBanHopLe = [
+    'tat-ca',
+    'giao-dien',
+    'tinh-nang',
+    'sua-loi'
+];
+
+$nhomPhienBan = $_GET['nhom_phien_ban'] ?? 'tat-ca';
+
+if (
+    !is_string($nhomPhienBan)
+    || !in_array($nhomPhienBan, $nhomPhienBanHopLe, true)
+) {
+    $nhomPhienBan = 'tat-ca';
+}
+
+$phienBanHienThi = array_filter(
+    $cacPhienBan,
+    function ($phienBan) use ($nhomPhienBan) {
+        return is_array($phienBan)
+            && isset($phienBan['nhom'])
+            && (
+                $nhomPhienBan === 'tat-ca'
+                || $phienBan['nhom'] === $nhomPhienBan
+            );
+    }
+);
+
+// CHỨC NĂNG 2: Đọc danh sách công nghệ từ storage.
+$cacCongNghe = docDuLieuJson(
+    $thuMucStorage . '/3120224045_congnghe.json'
+);
+
+$nhomCongNgheHopLe = [
+    'tat-ca',
+    'frontend',
+    'backend',
+    'co-so-du-lieu',
+    'cong-cu'
+];
+
+$nhomCongNghe = $_GET['nhom_cong_nghe'] ?? 'tat-ca';
+
+if (
+    !is_string($nhomCongNghe)
+    || !in_array($nhomCongNghe, $nhomCongNgheHopLe, true)
+) {
+    $nhomCongNghe = 'tat-ca';
+}
+
+$congNgheHienThi = array_filter(
+    $cacCongNghe,
+    function ($congNghe) use ($nhomCongNghe) {
+        return is_array($congNghe)
+            && isset($congNghe['nhom'])
+            && (
+                $nhomCongNghe === 'tat-ca'
+                || $congNghe['nhom'] === $nhomCongNghe
+            );
+    }
+);
+?>
 
   <!-- NỘI DUNG CHÍNH -->
   <main class="ho-so-trang">
@@ -132,7 +227,141 @@ $cssRieng = 'trang-ca-nhan.css';
       </p>
 
     </article>
+<!-- LỊCH SỬ PHIÊN BẢN WEBSITE -->
+<section class="lich-su-phien-ban">
 
+  <h2>Lịch sử phiên bản Cook with me</h2>
+
+  <p>
+    Theo dõi các thay đổi và cải tiến trong quá trình phát triển website.
+  </p>
+
+  <form method="GET">
+    <label for="nhom-phien-ban">Lọc theo nhóm cập nhật:</label>
+
+    <select id="nhom-phien-ban" name="nhom_phien_ban">
+      <option value="tat-ca"
+        <?= $nhomPhienBan === 'tat-ca' ? 'selected' : '' ?>>
+        Tất cả phiên bản
+      </option>
+
+      <option value="giao-dien"
+        <?= $nhomPhienBan === 'giao-dien' ? 'selected' : '' ?>>
+        Giao diện
+      </option>
+
+      <option value="tinh-nang"
+        <?= $nhomPhienBan === 'tinh-nang' ? 'selected' : '' ?>>
+        Tính năng
+      </option>
+
+      <option value="sua-loi"
+        <?= $nhomPhienBan === 'sua-loi' ? 'selected' : '' ?>>
+        Sửa lỗi
+      </option>
+    </select>
+
+     <input
+  type="hidden"
+  name="nhom_cong_nghe"
+  value="<?= e($nhomCongNghe) ?>"
+>
+
+    <button type="submit">Lọc phiên bản</button>
+  </form>
+
+  <?php if (empty($phienBanHienThi)): ?>
+    <p>Không tìm thấy phiên bản phù hợp.</p>
+  <?php else: ?>
+    <?php foreach ($phienBanHienThi as $phienBan): ?>
+      <article class="muc-phien-ban">
+
+        <h3>
+          <?= e($phienBan['ma']) ?> -
+          <?= e($phienBan['ten']) ?>
+        </h3>
+
+        <p>
+          <strong>Ngày cập nhật:</strong>
+          <?= e($phienBan['ngay']) ?>
+        </p>
+
+        <p>
+          <strong>Nhóm:</strong>
+          <?= e($phienBan['nhom']) ?>
+        </p>
+
+        <p><?= e($phienBan['mo_ta']) ?></p>
+
+      </article>
+    <?php endforeach; ?>
+  <?php endif; ?>
+
+</section>
+
+
+<!-- TRA CỨU CÔNG NGHỆ -->
+<section class="tra-cuu-cong-nghe">
+
+  <h2>Công nghệ sử dụng</h2>
+
+  <p>
+    Các công nghệ và công cụ được sử dụng trong quá trình xây dựng Cook with me.
+  </p>
+
+  <form method="GET">
+    <label for="nhom-cong-nghe">Lọc theo nhóm công nghệ:</label>
+
+    <select id="nhom-cong-nghe" name="nhom_cong_nghe">
+      <option value="tat-ca"
+        <?= $nhomCongNghe === 'tat-ca' ? 'selected' : '' ?>>
+        Tất cả công nghệ
+      </option>
+
+      <option value="frontend"
+        <?= $nhomCongNghe === 'frontend' ? 'selected' : '' ?>>
+        Frontend
+      </option>
+
+      <option value="backend"
+        <?= $nhomCongNghe === 'backend' ? 'selected' : '' ?>>
+        Backend
+      </option>
+
+      <option value="co-so-du-lieu"
+        <?= $nhomCongNghe === 'co-so-du-lieu' ? 'selected' : '' ?>>
+        Cơ sở dữ liệu
+      </option>
+
+      <option value="cong-cu"
+        <?= $nhomCongNghe === 'cong-cu' ? 'selected' : '' ?>>
+        Công cụ
+      </option>
+    </select>
+
+      <input
+  type="hidden"
+  name="nhom_phien_ban"
+  value="<?= e($nhomPhienBan) ?>"
+>
+
+    <button type="submit">Tra cứu</button>
+  </form>
+
+  <?php if (empty($congNgheHienThi)): ?>
+    <p>Không tìm thấy công nghệ phù hợp.</p>
+  <?php else: ?>
+    <ul class="danh-sach-cong-nghe">
+      <?php foreach ($congNgheHienThi as $congNghe): ?>
+        <li>
+          <strong><?= e($congNghe['ten']) ?></strong>
+          <p><?= e($congNghe['mo_ta']) ?></p>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+
+</section>
 
     <!-- KỸ NĂNG -->
     <section class="ky-nang">

@@ -238,9 +238,8 @@
    ============================== */
 
 @media (min-width: 768px) {
-
-  /* Thông tin chung */
   .ho-so-trang > .thong-tin-chung {
+    display: grid;
     grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
     column-gap: 24px;
     align-items: center;
@@ -325,18 +324,34 @@ body.giao-dien-toi .thong-bao-sao-chep {
   color: #f5f5f5;
 }
 
+
+/* Email và thông báo sao chép */
+.email-ca-nhan {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.thong-bao-sao-chep {
+  margin: 6px 0 0;
+  color: var(--mau-chu-phu);
+  font-size: var(--co-chu-nho);
+  line-height: 1.5;
+}
+
 body.giao-dien-toi .nut-chuyen-giao-dien,
 body.giao-dien-toi .nut-sao-chep-email,
 body.giao-dien-toi .nut-chinh-sua {
-  border-color: #9bd36a;
-  background-color: #2b2b2b;
-  color: #f5f5f5;
+  border-color: #6f994f;
+  background-color: #35512b;
+  color: #ffffff;
 }
 
 body.giao-dien-toi .nut-chuyen-giao-dien:hover,
 body.giao-dien-toi .nut-sao-chep-email:hover,
 body.giao-dien-toi .nut-chinh-sua:hover {
-  background-color: #3a3a3a;
+  border-color: #86b663;
+  background-color: #466a35;
+  color: #ffffff;
 }
 
 body.giao-dien-toi a {
@@ -354,6 +369,54 @@ body.giao-dien-toi .khung-bang thead th {
 .nut-sao-chep-email:focus-visible {
   outline: 2px solid var(--mau-chinh);
   outline-offset: 2px;
+}
+
+
+/* Đồng bộ các nút chức năng trên hồ sơ */
+.nut-chinh-sua,
+.nut-chuyen-giao-dien,
+.nut-sao-chep-email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--mau-chinh);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-chinh);
+  color: var(--mau-nen);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nut-chinh-sua:hover,
+.nut-chuyen-giao-dien:hover,
+.nut-sao-chep-email:hover {
+  background-color: var(--mau-nhan);
+  border-color: var(--mau-nhan);
+  color: var(--mau-nen);
+}
+
+.nut-chinh-sua:active,
+.nut-chuyen-giao-dien:active,
+.nut-sao-chep-email:active {
+  transform: translateY(1px);
+}
+
+.nut-chinh-sua:disabled,
+.nut-chuyen-giao-dien:disabled,
+.nut-sao-chep-email:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 /* Điều chỉnh bố cục để không tràn ngang trên màn hình nhỏ */
@@ -393,4 +456,185 @@ body.giao-dien-toi .khung-bang thead th {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
+}
+
+
+/* ==============================
+   LỊCH SỬ PHIÊN BẢN VÀ TRA CỨU CÔNG NGHỆ
+   ============================== */
+
+.ho-so-trang > .lich-su-phien-ban,
+.ho-so-trang > .tra-cuu-cong-nghe {
+  min-width: 0;
+  padding: var(--khoang-cach);
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen);
+}
+
+.ho-so-trang > .lich-su-phien-ban h2,
+.ho-so-trang > .tra-cuu-cong-nghe h2 {
+  margin: 0 0 12px;
+  color: var(--mau-chinh);
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.lich-su-phien-ban > p,
+.tra-cuu-cong-nghe > p {
+  margin: 0 0 12px;
+  color: var(--mau-chu-phu);
+  line-height: 1.65;
+}
+
+.lich-su-phien-ban form,
+.tra-cuu-cong-nghe form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.lich-su-phien-ban label,
+.tra-cuu-cong-nghe label {
+  font-weight: 600;
+}
+
+.lich-su-phien-ban select,
+.tra-cuu-cong-nghe select {
+  max-width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen);
+  color: var(--mau-chu);
+  font: inherit;
+}
+
+.lich-su-phien-ban button,
+.tra-cuu-cong-nghe button {
+  padding: 9px 14px;
+  border: 1px solid var(--mau-chinh);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-chinh);
+  color: var(--mau-nen);
+  font: inherit;
+  cursor: pointer;
+}
+
+
+.lich-su-phien-ban button:hover,
+.tra-cuu-cong-nghe button:hover {
+  background-color: var(--mau-nhan);
+  border-color: var(--mau-nhan);
+}
+
+.lich-su-phien-ban button:focus-visible,
+.tra-cuu-cong-nghe button:focus-visible,
+.lich-su-phien-ban select:focus-visible,
+.tra-cuu-cong-nghe select:focus-visible {
+  outline: 2px solid var(--mau-chinh);
+  outline-offset: 2px;
+}
+
+.muc-phien-ban p,
+.danh-sach-cong-nghe li p {
+  color: var(--mau-chu-phu);
+}
+
+.muc-phien-ban,
+.danh-sach-cong-nghe li {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background-color: var(--mau-nen-phu);
+  overflow-wrap: anywhere;
+}
+
+.muc-phien-ban + .muc-phien-ban {
+  margin-top: 12px;
+}
+
+.muc-phien-ban h3 {
+  margin: 0 0 8px;
+  color: var(--mau-chinh);
+  font-size: 17px;
+}
+
+.muc-phien-ban p,
+.danh-sach-cong-nghe li p {
+  margin: 6px 0 0;
+  line-height: 1.6;
+}
+
+.danh-sach-cong-nghe {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.danh-sach-cong-nghe li strong {
+  color: var(--mau-chinh);
+}
+
+/* Tương thích với giao diện tối hiện có */
+body.giao-dien-toi
+.ho-so-trang > .lich-su-phien-ban,
+body.giao-dien-toi
+.ho-so-trang > .tra-cuu-cong-nghe {
+  border-color: #444;
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .muc-phien-ban,
+body.giao-dien-toi .danh-sach-cong-nghe li {
+  border-color: #4a4a4a;
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+body.giao-dien-toi .muc-phien-ban h3,
+body.giao-dien-toi .danh-sach-cong-nghe li strong {
+  color: #9bd36a;
+}
+
+body.giao-dien-toi
+.lich-su-phien-ban select,
+body.giao-dien-toi
+.tra-cuu-cong-nghe select {
+  border-color: #4a4a4a;
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+@media (min-width: 768px) {
+  .danh-sach-cong-nghe {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+body.giao-dien-toi .lich-su-phien-ban > p,
+body.giao-dien-toi .tra-cuu-cong-nghe > p,
+body.giao-dien-toi .muc-phien-ban p,
+body.giao-dien-toi .danh-sach-cong-nghe li p {
+  color: #d0d0d0;
+}
+
+body.giao-dien-toi .lich-su-phien-ban button,
+body.giao-dien-toi .tra-cuu-cong-nghe button {
+  border-color: #6f994f;
+  background-color: #35512b;
+  color: #ffffff;
+}
+
+body.giao-dien-toi .lich-su-phien-ban button:hover,
+body.giao-dien-toi .tra-cuu-cong-nghe button:hover {
+  border-color: #86b663;
+  background-color: #466a35;
 }
