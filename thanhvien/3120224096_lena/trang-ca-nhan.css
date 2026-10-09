@@ -326,3 +326,38 @@
   background-color: var(--mau-nhan);
   border-color: var(--mau-nhan);
 }
+/* ==============================
+   10. NÚT LỌC KỸ NĂNG VÀ DỰ ÁN
+   ============================== */
+
+.ho-so-trang .danh-sach-ca-nhan nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.ho-so-trang .danh-sach-ca-nhan nav a {
+  display: inline-block;
+  min-width: 100px;
+  padding: 10px 18px;
+  border: 2px solid var(--mau-chinh);
+  border-radius: 6px;
+  background-color: var(--mau-nen-phu);
+  color: var(--mau-chu);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.ho-so-trang .danh-sach-ca-nhan nav a:hover {
+  background-color: var(--mau-chinh);
+  border-color: var(--mau-chinh);
+  color: var(--mau-nen);
+}
