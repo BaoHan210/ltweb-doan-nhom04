@@ -1,68 +1,73 @@
-ltweb-doan-nhom04
-Dự án Lập trình Web - Cook with me (Nhóm 04)
+# ltweb-doan-nhom04
+
+**Dự án Lập trình Web - Cook with me (Nhóm 04)**
 
 Website chia sẻ công thức nấu ăn, gợi ý món ngon, lưu trữ món ăn yêu thích và kết nối cộng đồng yêu ẩm thực.
 
-1. Hướng dẫn cài đặt và khởi chạy dự án
-Cách 1: Chạy bằng PHP Built-in Server (Khuyên dùng)
-Mở Terminal / Git Bash tại thư mục gốc của dự án (ltweb-doan-nhom04).
+## 1. Hướng dẫn cài đặt và khởi chạy dự án
 
-Cập nhật trình tự động nạp Autoload của Composer (nếu chưa chạy):
+### Cách 1: Chạy bằng PHP Built-in Server (Khuyên dùng)
+
+Mở Terminal / Git Bash tại thư mục gốc của dự án (`ltweb-doan-nhom04`).
+
+**Cài đặt các phụ thuộc của dự án:**
+
+composer install
+
+**Cập nhật trình tự động nạp Autoload của Composer (nếu cần):**
+
 composer dump-autoload
 
-Khởi động server PHP tích hợp:
+**Khởi động server PHP tích hợp:**
+
 php -S localhost:8000
 
-Truy cập website trên trình duyệt theo địa chỉ: http://localhost:8000
+Truy cập website trên trình duyệt theo địa chỉ:
 
-Cách 2: Chạy bằng XAMPP (Apache)
-Sao chép thư mục dự án vào thư mục htdocs của XAMPP theo đường dẫn:
+`http://localhost:8000`
 
-C:\xampp\htdocs\ltweb-doan-nhom04
+### Cách 2: Chạy bằng XAMPP (Apache)
+
+Sao chép thư mục dự án vào thư mục `htdocs` của XAMPP theo đường dẫn:
+
+`C:\xampp\htdocs\ltweb-doan-nhom04`
 
 Mở XAMPP Control Panel và nhấn Start dịch vụ Apache.
 
-Truy cập website trên trình duyệt theo địa chỉ: http://localhost/ltweb-doan-nhom04
+Truy cập website trên trình duyệt theo địa chỉ:
 
-2. Tài khoản thử nghiệm Quản trị
-Hệ thống hỗ trợ tài khoản quản trị viên cho cả 4 thành viên trong nhóm để phục vụ việc kiểm thử trang Quản trị (quan-tri.php).
+`http://localhost/ltweb-doan-nhom04`
 
-Mật khẩu chung cho tất cả tài khoản: admin123
+## 2. Tài khoản thử nghiệm Quản trị
 
-Phan Thị Bảo Hân (Trưởng nhóm): baohan@cookwithme.com
+Hệ thống hỗ trợ tài khoản quản trị viên cho cả 4 thành viên trong nhóm để phục vụ việc kiểm thử trang Quản trị (`quan-tri.php`).
 
-Nguyễn Thị Trinh (Thành viên): ngoctrinh@cookwithme.com
+**Mật khẩu chung cho tất cả tài khoản:** `admin123`
 
-Nguyễn Thị Ngọc Bình (Thành viên): ngocbinh@cookwithme.com
+- **Phan Thị Bảo Hân (Trưởng nhóm):** `baohan@cookwithme.com`
+- **Nguyễn Thị Trinh (Thành viên):** `ngoctrinh@cookwithme.com`
+- **Nguyễn Thị Ngọc Bình (Thành viên):** `ngocbinh@cookwithme.com`
+- **Lê Thị A Na (Thành viên):** `ana@cookwithme.com`
 
-Lê Thị A Na (Thành viên): ana@cookwithme.com
+## 3. Danh sách các trang chính & URL chức năng
 
-3. Danh sách các trang chính & URL chức năng
-Trang chủ: index.php (Khám phá món ăn nổi bật, gợi ý từ API và danh sách xem gần đây)
+| Chức năng | URL | Tệp PHP |
+|---|---|---|
+| Trang chủ | `http://localhost:8000/` | `index.php` |
+| Khám phá món ăn | `http://localhost:8000/danh-sach.php` | `danh-sach.php` |
+| Chi tiết món ăn | `http://localhost:8000/chi-tiet.php?id=1` | `chi-tiet.php` |
+| Danh sách yêu thích | `http://localhost:8000/yeu-thich.php` | `yeu-thich.php` |
+| Gợi ý món ăn | `http://localhost:8000/goi-y-mon-an.php` | `goi-y-mon-an.php` |
+| Đăng bài viết | `http://localhost:8000/dang-bai-viet.php` | `dang-bai-viet.php` |
+| Liên hệ & Góp ý | `http://localhost:8000/lien-he.php` | `lien-he.php` |
+| Đăng nhập hệ thống | `http://localhost:8000/dang-nhap.php` | `dang-nhap.php` |
+| Trang quản trị liên hệ | `http://localhost:8000/quan-tri.php` | `quan-tri.php` |
+| Đăng xuất | `http://localhost:8000/dang-xuat.php` | `dang-xuat.php` |
+| Trang giới thiệu dự án | `http://localhost:8000/gioi-thieu.php` | `gioi-thieu.php` |
+| Trang cá nhân thành viên | `http://localhost:8000/thanhvien/3120224045_baohan/gioithieu.php` | `thanhvien/3120224045_baohan/gioithieu.php` |
 
-Khám phá món ăn: danh-sach.php (Tìm kiếm từ khóa, lọc theo danh mục, sắp xếp món ăn)
+## 4. Cấu trúc thư mục dự án
 
-Chi tiết món ăn: chi-tiet.php?id=1 (Xem nguyên liệu, các bước chế biến và lưu Cookie đã xem)
-
-Danh sách yêu thích: yeu-thich.php (Quản lý các món ăn đã lưu)
-
-Gợi ý món ăn: goi-y-mon-an.php (Tìm món ngon theo nguyên liệu có sẵn)
-
-Đăng bài viết: dang-bai-viet.php (Chia sẻ công thức nấu ăn mới)
-
-Liên hệ & Góp ý: lien-he.php (Gửi phản hồi, đính kèm hình ảnh)
-
-Đăng nhập hệ thống: dang-nhap.php (Xác thực tài khoản người dùng / quản trị viên)
-
-Trang quản trị liên hệ: quan-tri.php (Yêu cầu đăng nhập - Xem thư liên hệ đã nhận)
-
-Đăng xuất: dang-xuat.php (Hủy phiên làm việc người dùng)
-
-Trang giới thiệu dự án: gioi-thieu.php
-
-Trang cá nhân thành viên: thanhvien/3120224045_baohan/gioithieu.php
-
-4. Cấu trúc thư mục dự án
 ltweb-doan-nhom04/
 ├── 404.php                     # Trang báo lỗi 404 Not Found
 ├── 500.php                     # Trang báo lỗi 500 Internal Server Error
@@ -93,7 +98,7 @@ ltweb-doan-nhom04/
 ├── src/                        # Mã nguồn ứng dụng (App)
 │   ├── Data/                   # Lớp truy xuất dữ liệu (KhoMonAn.php)
 │   ├── Models/                 # Lớp đối tượng (MonAn.php)
-│   └── Services/               # Lớp dịch vụ nghiệp vụ (LienHeService.php, YeuThichService.php)
+│   └── Services/                # Lớp dịch vụ nghiệp vụ (LienHeService.php, YeuThichService.php)
 ├── data/                       # Chứa dữ liệu mẫu (mon-an.json)
 ├── storage/                    # Chứa dữ liệu ghi log phản hồi (lien-he.jsonl, .htaccess)
 ├── logs/                       # Chứa log truy cập lỗi hệ thống (access-error.log, .htaccess)
