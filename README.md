@@ -2,108 +2,161 @@
 
 **Dự án Lập trình Web - Cook with me (Nhóm 04)**
 
-Website chia sẻ công thức nấu ăn, gợi ý món ngon, lưu trữ món ăn yêu thích và kết nối cộng đồng yêu ẩm thực.
+Cook with me là website chia sẻ công thức nấu ăn, hỗ trợ người dùng khám phá món ăn, xem hướng dẫn chế biến, lưu món ăn yêu thích và tìm kiếm gợi ý món ăn phù hợp. Dự án được xây dựng bằng PHP, HTML, CSS và JavaScript.
 
-## 1. Hướng dẫn cài đặt và khởi chạy dự án
+## 1. Yêu cầu môi trường
 
-### Cách 1: Chạy bằng PHP Built-in Server (Khuyên dùng)
+Để cài đặt và chạy dự án, cần chuẩn bị các công cụ sau:
 
-Mở Terminal / Git Bash tại thư mục gốc của dự án (`ltweb-doan-nhom04`).
+- PHP phiên bản 8.1 trở lên.
+- Composer.
+- Trình duyệt web hiện đại.
+- Git để quản lý và cập nhật mã nguồn.
 
-**Cài đặt các phụ thuộc của dự án:**
+Kiểm tra phiên bản PHP:
+
+php -v
+
+Kiểm tra Composer:
+
+composer --version
+
+## 2. Cài đặt và chạy dự án
+
+### 2.1. Tải mã nguồn
+
+Kho mã nguồn GitHub:
+
+https://github.com/BaoHan210/ltweb-doan-nhom04.git
+
+Nếu chưa có mã nguồn trên máy, sử dụng lệnh:
+
+git clone https://github.com/BaoHan210/ltweb-doan-nhom04.git
+
+Di chuyển vào thư mục dự án vừa tải:
+
+cd ltweb-doan-nhom04
+
+Nếu đã có thư mục `ltweb-doan-nhom04-main` trên máy, mở terminal tại thư mục đó và thực hiện các bước tiếp theo.
+
+### 2.2. Cài đặt thư viện
+
+Tại thư mục gốc dự án, chạy:
 
 composer install
 
-**Cập nhật trình tự động nạp Autoload của Composer (nếu cần):**
+Nếu cần tạo lại bản đồ tự động nạp lớp của Composer, chạy:
 
 composer dump-autoload
 
-**Khởi động server PHP tích hợp:**
+### 2.3. Chạy bằng PHP tích hợp sẵn
+
+Mở terminal tại thư mục gốc dự án và chạy:
 
 php -S localhost:8000
 
-Truy cập website trên trình duyệt theo địa chỉ:
+Sau khi máy chủ khởi động, mở trình duyệt và truy cập:
 
-`http://localhost:8000`
+http://localhost:8000
 
-### Cách 2: Chạy bằng XAMPP (Apache)
+Giữ cửa sổ terminal đang chạy máy chủ trong suốt quá trình sử dụng website. Nhấn `Ctrl + C` để dừng máy chủ.
 
-Sao chép thư mục dự án vào thư mục `htdocs` của XAMPP theo đường dẫn:
+### 2.4. Chạy bằng XAMPP
 
-`C:\xampp\htdocs\ltweb-doan-nhom04`
+Nếu sử dụng XAMPP, đặt thư mục dự án tại đường dẫn:
 
-Mở XAMPP Control Panel và nhấn Start dịch vụ Apache.
+C:\xampp\htdocs\ltweb-doan-nhom04-main
 
-Truy cập website trên trình duyệt theo địa chỉ:
+Khởi động Apache trong XAMPP Control Panel, sau đó truy cập:
 
-`http://localhost/ltweb-doan-nhom04`
+http://localhost/ltweb-doan-nhom04-main/
 
-## 2. Tài khoản thử nghiệm Quản trị
+Nếu thư mục dự án được đặt tại vị trí khác, cần điều chỉnh đường dẫn truy cập cho phù hợp.
 
-Hệ thống hỗ trợ tài khoản quản trị viên cho cả 4 thành viên trong nhóm để phục vụ việc kiểm thử trang Quản trị (`quan-tri.php`).
+**Lưu ý:** Chạy bằng XAMPP và chạy bằng lệnh `php -S localhost:8000` là hai cách khởi động khác nhau. Khi kiểm tra bài tập, cần bảo đảm dự án hoạt động theo lệnh chạy PHP tích hợp sẵn được yêu cầu.
 
-**Mật khẩu chung cho tất cả tài khoản:** `admin123`
+## 3. Tài khoản kiểm thử
 
-- **Phan Thị Bảo Hân (Trưởng nhóm):** `baohan@cookwithme.com`
-- **Nguyễn Thị Trinh (Thành viên):** `ngoctrinh@cookwithme.com`
-- **Nguyễn Thị Ngọc Bình (Thành viên):** `ngocbinh@cookwithme.com`
-- **Lê Thị A Na (Thành viên):** `ana@cookwithme.com`
+Các tài khoản dưới đây được cung cấp để phục vụ việc kiểm thử chức năng đăng nhập và quản trị.
 
-## 3. Danh sách các trang chính & URL chức năng
+| STT | Họ và tên | Tài khoản | Mật khẩu |
+|---|---|---|---|
+| 1 | Phan Thị Bảo Hân | `baohan@cookwithme.com` | `admin123` |
+| 2 | Nguyễn Thị Trinh | `ngoctrinh@cookwithme.com` | `admin123` |
+| 3 | Nguyễn Thị Ngọc Bình | `ngocbinh@cookwithme.com` | `admin123` |
+| 4 | Lê Thị A Na | `ana@cookwithme.com` | `admin123` |
+
+Lưu ý: Đây là thông tin tài khoản kiểm thử được cung cấp trong tài liệu dự án. Cần xác nhận các tài khoản và mật khẩu còn hoạt động trong mã nguồn hiện tại trước khi nộp bài.
+
+## 4. Danh sách chức năng
 
 | Chức năng | URL | Tệp PHP |
 |---|---|---|
-| Trang chủ | `http://localhost:8000/` | `index.php` |
-| Khám phá món ăn | `http://localhost:8000/danh-sach.php` | `danh-sach.php` |
-| Chi tiết món ăn | `http://localhost:8000/chi-tiet.php?id=1` | `chi-tiet.php` |
-| Danh sách yêu thích | `http://localhost:8000/yeu-thich.php` | `yeu-thich.php` |
-| Gợi ý món ăn | `http://localhost:8000/goi-y-mon-an.php` | `goi-y-mon-an.php` |
-| Đăng bài viết | `http://localhost:8000/dang-bai-viet.php` | `dang-bai-viet.php` |
-| Liên hệ & Góp ý | `http://localhost:8000/lien-he.php` | `lien-he.php` |
-| Đăng nhập hệ thống | `http://localhost:8000/dang-nhap.php` | `dang-nhap.php` |
-| Trang quản trị liên hệ | `http://localhost:8000/quan-tri.php` | `quan-tri.php` |
-| Đăng xuất | `http://localhost:8000/dang-xuat.php` | `dang-xuat.php` |
-| Trang giới thiệu dự án | `http://localhost:8000/gioi-thieu.php` | `gioi-thieu.php` |
-| Trang cá nhân thành viên | `http://localhost:8000/thanhvien/3120224045_baohan/gioithieu.php` | `thanhvien/3120224045_baohan/gioithieu.php` |
+| Trang chủ | `/` | `index.php` |
+| Khám phá món ăn | `/danh-sach.php` | `danh-sach.php` |
+| Chi tiết món ăn | `/chi-tiet.php?id=1` | `chi-tiet.php` |
+| Danh sách yêu thích | `/yeu-thich.php` | `yeu-thich.php` |
+| Gợi ý món ăn | `/goi-y-mon-an.php` | `goi-y-mon-an.php` |
+| Đăng bài viết | `/dang-bai-viet.php` | `dang-bai-viet.php` |
+| Liên hệ và góp ý | `/lien-he.php` | `lien-he.php` |
+| Đăng nhập | `/dang-nhap.php` | `dang-nhap.php` |
+| Trang quản trị liên hệ | `/quan-tri.php` | `quan-tri.php` |
+| Đăng xuất | `/dang-xuat.php` | `dang-xuat.php` |
+| Giới thiệu | `/gioi-thieu.php` | `gioi-thieu.php` |
+| Trang giới thiệu cá nhân | `/thanhvien/3120224045_baohan/gioithieu.php` | `thanhvien/3120224045_baohan/gioithieu.php` |
 
-## 4. Cấu trúc thư mục dự án
+Các URL trong bảng được trình bày theo đường dẫn tương đối từ thư mục gốc dự án. Một số chức năng có thể yêu cầu người dùng đăng nhập hoặc có quyền truy cập phù hợp.
 
-ltweb-doan-nhom04/
-├── 404.php                     # Trang báo lỗi 404 Not Found
-├── 500.php                     # Trang báo lỗi 500 Internal Server Error
-├── index.php                   # Trang chủ
-├── danh-sach.php               # Trang danh sách & lọc món ăn
-├── chi-tiet.php                # Trang chi tiết món ăn
-├── yeu-thich.php               # Trang danh sách món ăn yêu thích
-├── goi-y-mon-an.php            # Trang gợi ý món ăn
-├── dang-bai-viet.php           # Trang đăng bài viết mới
-├── lien-he.php                 # Trang gửi biểu mẫu liên hệ
-├── dang-nhap.php               # Trang đăng nhập
-├── dang-xuat.php               # Trang đăng xuất
-├── quan-tri.php                # Trang quản trị xem thư liên hệ
-├── gioi-thieu.php              # Trang giới thiệu
-├── ca-nhan.php                 # Trang cá nhân người dùng
-├── cai-dat.php                 # Trang cài đặt tài khoản
-├── nguoi-dung.php              # Trang danh sách người dùng
-├── composer.json               # Cấu hình Composer Autoload (PSR-4)
-├── .gitignore                  # Cấu hình bỏ qua thư mục/file khi commit
-├── README.md                   # Tài liệu hướng dẫn dự án
-├── inc/                        # Thành phần dùng chung
-│   ├── config.php              # Cấu hình hệ thống, session, báo lỗi
-│   ├── ham.php                 # Các hàm tiện ích dùng chung
-│   ├── header.php              # Header và Menu điều hướng
-│   ├── footer.php              # Footer dùng chung
-│   ├── bao-ve.php              # Kiểm tra quyền truy cập bảo vệ trang quản trị
-│   └── tai-khoan.php           # Danh sách tài khoản thử nghiệm băm mật khẩu
-├── src/                        # Mã nguồn ứng dụng (App)
-│   ├── Data/                   # Lớp truy xuất dữ liệu (KhoMonAn.php)
-│   ├── Models/                 # Lớp đối tượng (MonAn.php)
-│   └── Services/                # Lớp dịch vụ nghiệp vụ (LienHeService.php, YeuThichService.php)
-├── data/                       # Chứa dữ liệu mẫu (mon-an.json)
-├── storage/                    # Chứa dữ liệu ghi log phản hồi (lien-he.jsonl, .htaccess)
-├── logs/                       # Chứa log truy cập lỗi hệ thống (access-error.log, .htaccess)
-├── uploads/                    # Thư mục lưu ảnh người dùng tải lên (.gitkeep)
-├── css/                        # Các tệp định dạng giao diện Modular CSS
-├── js/                         # Các tệp xử lý JavaScript phía Client
-├── images/                     # Hình ảnh tài nguyên của website
-└── thanhvien/                  # Trang giới thiệu cá nhân các thành viên
+## 5. Cấu trúc thư mục
+
+ltweb-doan-nhom04-main/
+├── 404.php
+├── 500.php
+├── index.php
+├── danh-sach.php
+├── chi-tiet.php
+├── yeu-thich.php
+├── goi-y-mon-an.php
+├── dang-bai-viet.php
+├── lien-he.php
+├── dang-nhap.php
+├── dang-xuat.php
+├── quan-tri.php
+├── gioi-thieu.php
+├── ca-nhan.php
+├── cai-dat.php
+├── nguoi-dung.php
+├── composer.json
+├── .gitignore
+├── README.md
+├── inc/
+│   ├── config.php
+│   ├── ham.php
+│   ├── header.php
+│   ├── footer.php
+│   ├── bao-ve.php
+│   └── tai-khoan.php
+├── src/
+│   ├── Data/
+│   │   └── KhoMonAn.php
+│   ├── Models/
+│   │   └── MonAn.php
+│   └── Services/
+│       ├── LienHeService.php
+│       └── YeuThichService.php
+├── data/
+│   └── mon-an.json
+├── storage/
+│   ├── lien-he.jsonl
+│   └── .htaccess
+├── logs/
+│   ├── access-error.log
+│   └── .htaccess
+├── uploads/
+│   └── .gitkeep
+├── css/
+├── js/
+├── images/
+└── thanhvien/
+
+Cấu trúc trên thể hiện các thư mục và tệp chính của dự án. Các thư mục `css/`, `js/`, `images/` và `thanhvien/` có thể chứa thêm các tệp con phục vụ giao diện và chức năng website.
