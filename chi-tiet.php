@@ -6,31 +6,6 @@
 
 require __DIR__ . '/inc/config.php';
 
-<<<<<<< HEAD
-// 1. Kiểm tra nếu chưa đăng nhập -> Chuyển hướng ngay sang trang đăng nhập
-if (!isset($_SESSION['user'])) {
-    chuyen_huong('dang-nhap.php');
-    exit;
-}
-
-// 2. Lấy ID từ URL
-$id = trim($_GET['id'] ?? '');
-
-// Tìm trực tiếp từ dữ liệu mảng thô trong tệp JSON
-$monAn = null;
-if (!empty($id)) {
-    $duongDanJson = __DIR__ . '/data/mon-an.json';
-    if (file_exists($duongDanJson)) {
-        $noiDungJson = file_get_contents($duongDanJson);
-        $danhSachMang = json_decode($noiDungJson, true);
-        
-        if (is_array($danhSachMang)) {
-            foreach ($danhSachMang as $item) {
-                if (isset($item['id']) && trim((string)$item['id']) === trim((string)$id)) {
-                    $monAn = $item;
-                    break;
-                }
-=======
 use App\Data\KhoMonAn;
 use App\Services\YeuThichService;
 
@@ -131,36 +106,11 @@ if (!empty($_COOKIE['da_xem'])) {
                 && $khoMonAn->timTheoId($idDaXem) !== null
             ) {
                 $daXemIds[] = $idDaXem;
->>>>>>> e6e0155 (Update part A)
             }
         }
     }
 }
 
-<<<<<<< HEAD
-// 3. XỬ LÝ: Nếu thiếu ID hoặc ID không tồn tại -> Trả về trang LỖI 404
-if (empty($id) || !$monAn) {
-    http_response_code(404);
-
-    if (file_exists(__DIR__ . '/404.php')) {
-        require __DIR__ . '/404.php';
-    } else {
-        $tieuDe = '404 - Không tìm thấy món ăn';
-        $trang  = 'chi-tiet';
-        require __DIR__ . '/inc/header.php';
-        ?>
-        <main class="trang-loi-404" style="padding: 60px 20px; text-align: center;">
-            <h1 style="font-size: 48px; color: #e74c3c; margin-bottom: 10px;">404</h1>
-            <h2>Không tìm thấy món ăn</h2>
-            <p style="color: #666; margin-bottom: 20px;">Món ăn bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.</p>
-            <a href="danh-sach.php" class="nut" style="display: inline-block; padding: 10px 20px; background: #2E6230; color: #fff; text-decoration: none; border-radius: 8px;">Quay lại danh sách</a>
-        </main>
-        <?php
-        require __DIR__ . '/inc/footer.php';
-    }
-    exit;
-}
-=======
 // Đưa món vừa xem lên đầu danh sách
 $daXemIds = array_values(
     array_unique(
@@ -178,7 +128,6 @@ setcookie('da_xem', json_encode($daXemIds), [
     'httponly' => true,
     'samesite' => 'Lax',
 ]);
->>>>>>> e6e0155 (Update part A)
 
 /**
  * Hàm phụ trợ tự động gán class icon nguyên liệu dựa theo tên tiếng Việt
@@ -202,11 +151,7 @@ function layClassNguyenLieu($ten) {
 }
 
 // 4. Nếu tìm thấy món ăn hợp lệ -> Hiển thị chi tiết theo đúng thiết kế mẫu
-<<<<<<< HEAD
-$tenMon  = $monAn['ten'] ?? 'Chi tiết món ăn';
-=======
 $tenMon = $monAn->ten ?: 'Chi tiết món ăn';
->>>>>>> e6e0155 (Update part A)
 $tieuDe  = $tenMon . ' - Cook with Me'; 
 $trang   = 'chi-tiet'; 
 
@@ -218,11 +163,7 @@ require __DIR__ . '/inc/header.php';
         <!-- Cột Trái / Hàng 1: Hình ảnh món ăn -->
         <div class="khu-vuc-hinh-anh">
             <figure class="hinh-anh-mon-an">
-<<<<<<< HEAD
-                <img src="<?= e($monAn['hinhAnh'] ?? 'images/default.jpg') ?>" alt="<?= e($tenMon) ?>">
-=======
                 <img src="<?= e($monAn->hinhAnh ?: 'images/default.jpg') ?>" alt="<?= e($tenMon) ?>">
->>>>>>> e6e0155 (Update part A)
             </figure>
         </div>
 
@@ -231,35 +172,16 @@ require __DIR__ . '/inc/header.php';
             <h1 class="tieu-de-mon-an"><?= e($tenMon) ?></h1>
             
             <div class="thong-tin-danh-gia">
-<<<<<<< HEAD
-                <span class="danh-gia">★★★★★</span>
-                <span class="so-luot-danh-gia">
-                    <?= e($monAn['diemDanhGia'] ?? '4.8') ?> (<?= e($monAn['soLuotDanhGia'] ?? '206') ?> đánh giá)
-                </span>
-            </div>
-=======
     <span class="danh-gia">★★★★★</span>
     <span class="so-luot-danh-gia">
         <?= e((string)$monAn->danhGia) ?> (<?= e((string)$monAn->soLuotDanhGia) ?> đánh giá)
     </span>
 </div>
->>>>>>> e6e0155 (Update part A)
 
             <!-- Thông tin cơ bản ngang kèm Icon chuẩn từ thư mục images/icons/ -->
             <div class="thong-tin-co-ban-ngang">
                 <div class="item-meta">
                     <img src="images/icons/khau-phan.svg" alt="Khẩu phần" style="width: 18px; height: 18px; object-fit: contain;"> 
-<<<<<<< HEAD
-                    <span><?= e($monAn['khauPhan'] ?? '2') ?> người</span>
-                </div>
-                <div class="item-meta">
-                    <img src="images/icons/thoi-gian.svg" alt="Thời gian" style="width: 18px; height: 18px; object-fit: contain;"> 
-                    <span><?= e($monAn['thoiGian'] ?? '60') ?> phút</span>
-                </div>
-                <div class="item-meta">
-                    <img src="images/icons/do-kho.svg" alt="Độ khó" style="width: 18px; height: 18px; object-fit: contain;"> 
-                    <span><?= e($monAn['doKho'] ?? 'Trung bình') ?></span>
-=======
                     <span><?= e($monAn->khauPhan) ?> người</span>
                 </div>
                 <div class="item-meta">
@@ -269,21 +191,10 @@ require __DIR__ . '/inc/header.php';
                 <div class="item-meta">
                     <img src="images/icons/do-kho.svg" alt="Độ khó" style="width: 18px; height: 18px; object-fit: contain;"> 
                     <span><?= e($monAn->doKho) ?></span>
->>>>>>> e6e0155 (Update part A)
                 </div>
             </div>
 
             <div class="mo-ta-mon-an">
-<<<<<<< HEAD
-                <p><?= e($monAn['moTa'] ?? '') ?></p>
-            </div>
-
-            <div class="khu-vuc-hanh-dong">
-                <!-- Thuộc tính data-id kết nối với trang-chi-tiet.js để lưu localStorage -->
-                <button type="button" class="nut nut-yeu-thich" data-id="<?= e($monAn['id']) ?>">♡ Lưu công thức</button>
-                <button type="button" class="nut nut-chia-se">Chia sẻ</button>
-            </div>
-=======
                 <p><?= e($monAn->moTa) ?></p>
             </div>
 
@@ -320,7 +231,6 @@ require __DIR__ . '/inc/header.php';
     </button>
 
 </div>
->>>>>>> e6e0155 (Update part A)
         </div>
 
         <!-- Cột Trái / Hàng 2: Nguyên liệu & Nút bình luận -->
@@ -328,13 +238,8 @@ require __DIR__ . '/inc/header.php';
             <section class="khu-vuc-nguyen-lieu">
                 <h2>Nguyên liệu</h2>
                 <ul class="danh-sach-nguyen-lieu">
-<<<<<<< HEAD
-                    <?php if (!empty($monAn['nguyenLieu']) && is_array($monAn['nguyenLieu'])): ?>
-                        <?php foreach ($monAn['nguyenLieu'] as $nl): ?>
-=======
                     <?php if (!empty($monAn->nguyenLieu) && is_array($monAn->nguyenLieu)): ?>
     <?php foreach ($monAn->nguyenLieu as $nl): ?>
->>>>>>> e6e0155 (Update part A)
                             <?php 
                                 $tenNL = is_array($nl) ? ($nl['ten'] ?? '') : $nl;
                                 $luongNL = is_array($nl) ? ($nl['soLuong'] ?? '') : '';
@@ -359,31 +264,18 @@ require __DIR__ . '/inc/header.php';
             <section class="khu-vuc-cac-buoc">
                 <h2>Các bước chế biến</h2>
                 <ol class="cac-buoc-che-bien">
-<<<<<<< HEAD
-                    <?php if (!empty($monAn['cacBuoc']) && is_array($monAn['cacBuoc'])): ?>
-                        <?php foreach ($monAn['cacBuoc'] as $buoc): ?>
-                            <li><?= e($buoc) ?></li>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </ol>
-=======
     <?php if (!empty($monAn->cacBuoc) && is_array($monAn->cacBuoc)): ?>
         <?php foreach ($monAn->cacBuoc as $buoc): ?>
             <li><?= e($buoc) ?></li>
         <?php endforeach; ?>
     <?php endif; ?>
 </ol>
->>>>>>> e6e0155 (Update part A)
             </section>
 
             <section class="video-huong-dan">
                 <h2>Video hướng dẫn</h2>
                 <div class="video-preview-card">
-<<<<<<< HEAD
-                    <img src="<?= e($monAn['hinhAnh'] ?? 'images/default.jpg') ?>" alt="Video hướng dẫn <?= e($tenMon) ?>">
-=======
                     <img src="<?= e($monAn->hinhAnh ?: 'images/default.jpg') ?>" alt="Video hướng dẫn <?= e($tenMon) ?>">
->>>>>>> e6e0155 (Update part A)
                     <div class="nut-play-video">▶</div>
                     <div class="thoi-luong-video">3:42</div>
                 </div>

@@ -1,83 +1,148 @@
 <?php
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
-require _DIR_ . '/inc/config.php';
-require_once _DIR_ . '/src/Services/LienHeService.php';
+require __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/src/Services/LienHeService.php';
 
-use App\Data\KhoMonAn; 
+use App\Data\KhoMonAn;
 use App\Services\LienHeService;
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-<<<<<<< HEAD
-$kho      = new KhoMonAn(_DIR_ . '/data/mon-an.json');
-$danhSach = $kho->tatCa(); 
-=======
 $kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
-$danhSach = $kho->layTatCa(); 
->>>>>>> e6e0155 (Update part A)
+$danhSach = $kho->layTatCa();
 
-$duLieu = ['ho_ten' => '', 'email' => '', 'noi_dung' => ''];
+$duLieu = [
+    'ho_ten'  => '',
+    'email'   => '',
+    'subject' => '',
+    'noi_dung' => ''
+];
+
 $loi = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $duLieu['ho_ten'] = trim($_POST['ho_ten'] ?? '');
     $duLieu['email'] = trim($_POST['email'] ?? '');
+    $duLieu['subject'] = trim($_POST['subject'] ?? '');
     $duLieu['noi_dung'] = trim($_POST['noi_dung'] ?? '');
 
     // Validate phía Server
-    if (mb_strlen($duLieu['ho_ten'], 'UTF-8') < 2) $loi['ho_ten'] = 'Họ tên phải từ 2 ký tự trở lên!';
-    if (!filter_var($duLieu['email'], FILTER_VALIDATE_EMAIL)) $loi['email'] = 'Email không hợp lệ!';
-    if (mb_strlen($duLieu['noi_dung'], 'UTF-8') < 10) $loi['noi_dung'] = 'Nội dung liên hệ phải từ 10 ký tự!';
+    if (mb_strlen($duLieu['ho_ten'], 'UTF-8') < 2) {
+        $loi['ho_ten'] = 'Họ tên phải từ 2 ký tự trở lên!';
+    }
+
+    if (!filter_var($duLieu['email'], FILTER_VALIDATE_EMAIL)) {
+        $loi['email'] = 'Email không hợp lệ!';
+    }
+
+    $chuDeHopLe = [
+        'gop-y',
+        'phan-hoi',
+        'bao-loi',
+        'gui-cong-thuc'
+    ];
+
+    if (!in_array($duLieu['subject'], $chuDeHopLe, true)) {
+        $loi['subject'] = 'Vui lòng chọn chủ đề liên hệ hợp lệ!';
+    }
+
+    if (mb_strlen($duLieu['noi_dung'], 'UTF-8') < 10) {
+        $loi['noi_dung'] = 'Nội dung liên hệ phải từ 10 ký tự!';
+    }
+
+    if (mb_strlen($duLieu['noi_dung'], 'UTF-8') > 500) {
+        $loi['noi_dung'] = 'Nội dung liên hệ không được vượt quá 500 ký tự!';
+    }
 
     // Xử lý Upload Ảnh (không bắt buộc)
     $tenAnhNhatKy = null;
-    if (isset($_FILES['anh_dinh_kem']) && $_FILES['anh_dinh_kem']['error'] === UPLOAD_ERR_OK) {
+
+    if (
+        isset($_FILES['anh_dinh_kem']) &&
+        $_FILES['anh_dinh_kem']['error'] === UPLOAD_ERR_OK
+    ) {
         $file = $_FILES['anh_dinh_kem'];
+
         if ($file['size'] > 2 * 1024 * 1024) {
-            $loi['anh_dinh_kem'] = 'Dung lượng ảnh đính kèm không được vượt quá 2 MB!';
+            $loi['anh_dinh_kem'] =
+                'Dung lượng ảnh đính kèm không được vượt quá 2 MB!';
         } else {
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime = $finfo->file($file['tmp_name']);
-            $mimeHopLe = ['image/jpeg' => '.jpg', 'image/png' => '.png', 'image/webp' => '.webp'];
+
+            $mimeHopLe = [
+                'image/jpeg' => '.jpg',
+                'image/png'  => '.png',
+                'image/webp' => '.webp'
+            ];
 
             if (!isset($mimeHopLe[$mime])) {
-                $loi['anh_dinh_kem'] = 'Chỉ chấp nhận tệp ảnh JPG, PNG hoặc WEBP!';
+                $loi['anh_dinh_kem'] =
+                    'Chỉ chấp nhận tệp ảnh JPG, PNG hoặc WEBP!';
             } else {
-                $tenAnhNhatKy = bin2hex(random_bytes(8)) . $mimeHopLe[$mime];
-                $thuMucUpload = _DIR_ . '/uploads/';
+                $tenAnhNhatKy = bin2hex(random_bytes(8))
+                    . $mimeHopLe[$mime];
+
+                $thuMucUpload = __DIR__ . '/uploads/';
+
                 if (!is_dir($thuMucUpload)) {
                     mkdir($thuMucUpload, 0755, true);
                 }
-                move_uploaded_file($file['tmp_name'], $thuMucUpload . $tenAnhNhatKy);
+
+                if (
+                    !move_uploaded_file(
+                        $file['tmp_name'],
+                        $thuMucUpload . $tenAnhNhatKy
+                    )
+                ) {
+                    $loi['anh_dinh_kem'] =
+                        'Không thể lưu ảnh đính kèm. Vui lòng thử lại!';
+                    $tenAnhNhatKy = null;
+                }
             }
         }
+    } elseif (
+        isset($_FILES['anh_dinh_kem']) &&
+        $_FILES['anh_dinh_kem']['error'] !== UPLOAD_ERR_NO_FILE &&
+        $_FILES['anh_dinh_kem']['error'] !== UPLOAD_ERR_OK
+    ) {
+        $loi['anh_dinh_kem'] =
+            'Đã xảy ra lỗi khi tải ảnh lên. Vui lòng thử lại!';
     }
 
     // Nếu không có lỗi -> Lưu file và Redirect (PRG)
     if (empty($loi)) {
-        $service = new LienHeService(_DIR_ . '/storage/lien-he.jsonl');
+        $service = new LienHeService(
+            __DIR__ . '/storage/lien-he.jsonl'
+        );
+
         $service->guiPhanHoi([
-            'ho_ten' => $duLieu['ho_ten'],
-            'email' => $duLieu['email'],
+            'ho_ten'   => $duLieu['ho_ten'],
+            'email'    => $duLieu['email'],
+            'subject'  => $duLieu['subject'],
             'noi_dung' => $duLieu['noi_dung'],
-            'anh' => $tenAnhNhatKy,
+            'anh'      => $tenAnhNhatKy,
             'ngay_gui' => date('Y-m-d H:i:s')
         ]);
 
-        gan_thong_bao('success', 'Gửi thông tin liên hệ thành công! Cảm ơn bạn đã đóng góp.');
+        gan_thong_bao(
+            'success',
+            'Gửi thông tin liên hệ thành công! Cảm ơn bạn đã đóng góp.'
+        );
+
         chuyen_huong('lien-he.php');
     }
 }
 
 // Thiết lập thông số header
-$tieuDe   = 'Liên hệ'; 
-$trang    = 'lien-he'; 
-$customJS = 'js/trang-lien-he.js'; 
+$tieuDe   = 'Liên hệ';
+$trang    = 'lien-he';
+$customJS = 'js/trang-lien-he.js';
 
 // Nhúng Header (đã bao gồm Nav)
-require _DIR_ . '/inc/header.php';
+require __DIR__ . '/inc/header.php';
 ?>
 
-  <main class="lien-he-trang">
+<main class="lien-he-trang">
 
     <!-- BANNER ĐẦU TRANG -->
     <section class="lien-he-banner">
@@ -107,7 +172,7 @@ require _DIR_ . '/inc/header.php';
           </p>
         </noscript>
 
-        <!-- BỔ SUNG: enctype="multipart/form-data" để upload được ảnh -->
+        <!-- FORM LIÊN HỆ -->
         <form
           class="form-lien-he"
           action="lien-he.php"
@@ -122,12 +187,12 @@ require _DIR_ . '/inc/header.php';
               Họ và tên
               <span class="bat-buoc">*</span>
             </label>
-            <input 
-              type="text" 
-              id="full-name" 
-              name="ho_ten" 
-              placeholder="Nhập họ và tên" 
-              value="<?= e($duLieu['ho_ten']) ?>" 
+            <input
+              type="text"
+              id="full-name"
+              name="ho_ten"
+              placeholder="Nhập họ và tên"
+              value="<?= e($duLieu['ho_ten']) ?>"
               required
             >
             <?php if (isset($loi['ho_ten'])): ?>
@@ -162,22 +227,25 @@ require _DIR_ . '/inc/header.php';
             </label>
             <select id="subject" name="subject" required>
               <option value="">Chọn chủ đề</option>
-              <option value="gop-y">Góp ý</option>
-              <option value="phan-hoi">Phản hồi</option>
-              <option value="bao-loi">Báo lỗi website</option>
-              <option value="gui-cong-thuc">Gửi công thức</option>
+              <option value="gop-y" <?= $duLieu['subject'] === 'gop-y' ? 'selected' : '' ?>>Góp ý</option>
+              <option value="phan-hoi" <?= $duLieu['subject'] === 'phan-hoi' ? 'selected' : '' ?>>Phản hồi</option>
+              <option value="bao-loi" <?= $duLieu['subject'] === 'bao-loi' ? 'selected' : '' ?>>Báo lỗi website</option>
+              <option value="gui-cong-thuc" <?= $duLieu['subject'] === 'gui-cong-thuc' ? 'selected' : '' ?>>Gửi công thức</option>
             </select>
+            <?php if (isset($loi['subject'])): ?>
+              <span class="thong-bao-loi" style="color:red; font-size:14px;"><?= e($loi['subject']) ?></span>
+            <?php endif; ?>
           </div>
 
-          <!-- BỔ SUNG TRƯỜNG UPLOAD ÁNH ĐÍNH KÈM -->
+          <!-- UPLOAD ẢNH ĐÍNH KÈM -->
           <div class="truong-form">
             <label for="anh-dinh-kem">
               Ảnh đính kèm (Tùy chọn)
             </label>
-            <input 
-              type="file" 
-              id="anh-dinh-kem" 
-              name="anh_dinh_kem" 
+            <input
+              type="file"
+              id="anh-dinh-kem"
+              name="anh_dinh_kem"
               accept="image/jpeg,image/png,image/webp"
             >
             <?php if (isset($loi['anh_dinh_kem'])): ?>
@@ -191,7 +259,14 @@ require _DIR_ . '/inc/header.php';
               Nội dung
               <span class="bat-buoc">*</span>
             </label>
-            <textarea id="message" name="noi_dung" rows="5" maxlength="500" placeholder="Nhập nội dung..." required><?= e($duLieu['noi_dung']) ?></textarea>
+            <textarea
+              id="message"
+              name="noi_dung"
+              rows="5"
+              maxlength="500"
+              placeholder="Nhập nội dung..."
+              required
+            ><?= e($duLieu['noi_dung']) ?></textarea>
             <?php if (isset($loi['noi_dung'])): ?>
               <span class="thong-bao-loi" style="color:red; font-size:14px;"><?= e($loi['noi_dung']) ?></span>
             <?php endif; ?>
@@ -265,8 +340,8 @@ require _DIR_ . '/inc/header.php';
 
     </div>
 
-  </main>
+</main>
 
 <?php
-require _DIR_ . '/inc/footer.php';
+require __DIR__ . '/inc/footer.php';
 ?>
