@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <!-- Nền hình tròn màu xanh lá nhạt -->
+  <circle cx="64" cy="64" r="64" fill="#E8EEE5"/>
+  
+  <!-- Đầu người dùng -->
+  <circle cx="64" cy="48" r="22" fill="#5A7B5C"/>
+  
+  <!-- Vai & Thân người dùng -->
+  <path d="M18 108 C18 82, 38 72, 64 72 C90 72, 110 82, 110 108 Z" fill="#5A7B5C"/>
+</svg>

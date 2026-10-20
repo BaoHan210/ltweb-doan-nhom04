@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" width="160" height="120" fill="none">
+  <!-- Rau củ nhô lên trên -->
+  <!-- Cà chua -->
+  <circle cx="60" cy="50" r="16" fill="#E54848"/>
+  <circle cx="56" cy="46" r="4" fill="#FFAAAA"/>
+  <path d="M58 32 C60 28, 64 30, 60 35" stroke="#386B40" stroke-width="2"/>
+
+  <!-- Cà rốt -->
+  <path d="M95 30 L115 55 L85 50 Z" fill="#FF8811"/>
+  <path d="M95 30 C98 22, 105 20, 102 15" stroke="#386B40" stroke-width="2"/>
+
+  <!-- Lá xanh -->
+  <circle cx="80" cy="42" r="18" fill="#52945B"/>
+  <circle cx="100" cy="45" r="14" fill="#386B40"/>
+
+  <!-- Quai giỏ -->
+  <path d="M40 60 C40 20, 120 20, 120 60" stroke="#8B5A2B" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Thân giỏ -->
+  <path d="M30 60 L40 100 Q42 105 80 105 Q118 105 120 100 L130 60 Z" fill="#D2B48C" stroke="#8B5A2B" stroke-width="3"/>
+  <!-- Họa tiết đan giỏ -->
+  <line x1="35" y1="75" x2="125" y2="75" stroke="#8B5A2B" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="38" y1="90" x2="122" y2="90" stroke="#8B5A2B" stroke-width="1.5" stroke-dasharray="6,4"/>
+</svg>
