@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Tệp: nguoi-dung.php
+ * Mục đích: Trang khám phá người dùng, nút theo dõi xử lý bằng JavaScript
+ * Dùng bởi: ./index.php
+ */
+
+declare(strict_types=1);
+
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
 

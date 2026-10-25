@@ -1,9 +1,15 @@
 <?php
-namespace App\Services; // Sửa chữ Models thành Services cho khớp vị trí thư mục
+
+/**
+ * Tệp: src/Services/NguoiDung.php
+ * Mục đích: Biểu diễn người dùng và kiểm tra mật khẩu bằng password_verify.
+ * Dùng bởi: hiện chưa có trang nào dùng lớp này.
+ */
+
+namespace App\Services;
 
 class NguoiDung
 {
-    // ... Giữ nguyên toàn bộ mã bên dưới
     public function __construct(
         public readonly int $id,
         public readonly string $hoTen,

@@ -102,7 +102,7 @@ require __DIR__ . '/../../inc/header.php';
   <!-- THÔNG TIN CHUNG -->
   <section class="thong-tin-chung">
     <h2>Thông tin chung</h2>
-    <figure class="anh-dai-dien">
+    <figure class="anh-chan-dung-thanh-vien">
       <img src="<?= $goc ?>images/avatar-trinh.jpg" alt="Ảnh chân dung thành viên Nguyễn Thị Trinh" width="200" height="200">
       <figcaption>Ảnh chân dung thành viên Nguyễn Thị Trinh - Nhóm 04.</figcaption>
     </figure>

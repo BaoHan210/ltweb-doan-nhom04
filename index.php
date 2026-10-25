@@ -1,13 +1,22 @@
 <?php
+
+/**
+ * Tệp: index.php
+ * Mục đích: Trang chủ: món nổi bật, món đã xem, bảng tin
+ * Dùng bởi: ./404.php, ./500.php, ./dang-bai-viet.php, ./goi-y-mon-an.php, ./inc/header.php, ./index.php, ./nguoi-dung.php, ./src/Data/KhoMonAn.php, ./thanhvien/3120224013_binh/gioithieu.php, ./thanhvien/3120224045_baohan/gioithieu.php, ./thanhvien/3120224096_lena/gioithieu.php, ./thanhvien/3120224155_trinh/gioithieu.php
+ */
+
+declare(strict_types=1);
+
 require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/vendor/autoload.php';
-
+require_once __DIR__ . '/inc/db.php';
 use App\Data\KhoMonAn;
 
 // Khai báo đường dẫn gốc chính xác cho thư mục gốc của dự án
 $goc = URL_GOC;
 
-$kho    = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$kho = new KhoMonAn(db());
 // Sửa $kho->tatCa() thành $kho->layTatCa()
 $moiVe  = array_slice($kho->layTatCa(), 0, 3); // Lấy 3 món ăn nổi bật
 
@@ -308,7 +317,7 @@ require __DIR__ . '/inc/header.php';
                         <h3><?= e($monAn->ten) ?></h3>
 
                         <p class="danh-gia-mon" role="img"
-                           aria-label="<?= e($monAn->danhGia) ?> trên 5 sao">
+                           aria-label="<?= e((string) $monAn->danhGia) ?> trên 5 sao">
                             ★★★★★
                         </p>
 

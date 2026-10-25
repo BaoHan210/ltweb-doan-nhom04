@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Tệp: thong-bao.php
+ * Mục đích: Danh sách thông báo, dữ liệu mẫu
+ * Dùng bởi: ./inc/header.php, ./thong-bao.php
+ */
+
+declare(strict_types=1);
+
 $tieuDe = 'Tất cả thông báo';
 $trang = 'thong-bao';
 include_once 'inc/header.php';

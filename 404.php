@@ -1,5 +1,13 @@
 <?php
-// Thiết lập mã phản hồi HTTP 404
+
+/**
+ * Tệp: 404.php
+ * Mục đích: Trang lỗi 404, đặt mã HTTP 404
+ * Dùng bởi: chi-tiet.php
+ */
+
+declare(strict_types=1);
+
 http_response_code(404);
 
 $tieuDe = '404 - Không tìm thấy trang';

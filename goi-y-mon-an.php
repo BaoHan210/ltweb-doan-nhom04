@@ -1,7 +1,16 @@
 <?php
+
+/**
+ * Tệp: goi-y-mon-an.php
+ * Mục đích: Gợi ý món theo nguyên liệu và danh sách đi chợ trong session
+ * Dùng bởi: ./dang-nhap.php, ./goi-y-mon-an.php, ./index.php, ./src/Data/KhoMonAn.php
+ */
+
+declare(strict_types=1);
+
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
-
+require_once __DIR__ . '/inc/db.php';
 // -------------------------------------------------------------
 // KIỂM TRA QUYỀN ĐĂNG NHẬP
 // Nếu chưa đăng nhập -> Chuyển hướng sang trang dang-nhap.php
@@ -14,101 +23,69 @@ if (empty($_SESSION['nguoi_dung']) && empty($_SESSION['user'])) {
 use App\Data\KhoMonAn;
 use App\Services\DanhSachDiChoService;
 
-$kho = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+/**
+ * Dựng URL trở về trang gợi ý, giữ nguyên bộ lọc người dùng đã chọn.
+ * Lấy từ $_POST vì các form trong danh sách đi chợ đều gửi kèm bộ lọc.
+ */
+function duongDanGoiY(): string
+{
+    $thamSo = array_filter([
+        'ingredients'  => trim((string) ($_POST['ingredients'] ?? '')),
+        'budget'       => trim((string) ($_POST['budget'] ?? '')),
+        'cooking_time' => trim((string) ($_POST['cooking_time'] ?? '')),
+        'servings'     => trim((string) ($_POST['servings'] ?? '')),
+    ], fn($giaTri) => $giaTri !== '');
+
+    return 'goi-y-mon-an.php' . ($thamSo ? '?' . http_build_query($thamSo) : '');
+}
+
+$kho = new KhoMonAn(db());
 $danhSachDiChoService = new DanhSachDiChoService();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  if (isset($_POST['xoa_danh_sach'])) {
+    // 1. Xóa toàn bộ danh sách đi chợ
+    if (isset($_POST['xoa_danh_sach'])) {
         $danhSachDiChoService->xoaHet();
-
-        header('Location: goi-y-mon-an.php');
-        exit;
+        chuyen_huong(duongDanGoiY());
     }
 
-    $idMonAn = trim((string)($_POST['them_danh_sach'] ?? ''));
-    $monAn = $kho->timTheoId($idMonAn);
+    // 2. Sửa số suất hoặc xóa một món trong danh sách đi chợ
+    $hanhDong = $_POST['hanh_dong'] ?? '';
 
-    if ($idMonAn !== '' && $monAn !== null) {
-        $nguyenLieuNguoiDung = trim(
-            (string)($_POST['ingredients'] ?? '')
-        );
+    if ($hanhDong === 'cap_nhat_di_cho' || $hanhDong === 'xoa_di_cho') {
+        $idSua = trim((string) ($_POST['id_mon'] ?? ''));
 
-        $danhSachNguyenLieuNguoiDung = [];
+        if ($hanhDong === 'xoa_di_cho') {
+            $danhSachDiChoService->xoa($idSua);
+        } else {
+            $soSuat = filter_var($_POST['so_luong'] ?? '', FILTER_VALIDATE_INT);
 
-        if ($nguyenLieuNguoiDung !== '') {
-            $danhSachNguyenLieuNguoiDung = array_filter(
-                array_map(
-                    'trim',
-                    explode(',', mb_strtolower($nguyenLieuNguoiDung, 'UTF-8'))
-                )
-            );
-        }
-
-        $nguyenLieuConThieu = [];
-
-        foreach ($monAn->nguyenLieu as $item) {
-            $tenNguyenLieu = trim((string)($item['ten'] ?? ''));
-
-            if ($tenNguyenLieu === '') {
-                continue;
-            }
-
-            $coNguyenLieu = false;
-
-            foreach ($danhSachNguyenLieuNguoiDung as $nguyenLieuCo) {
-                if (
-                    mb_stripos(
-                        $tenNguyenLieu,
-                        $nguyenLieuCo,
-                        0,
-                        'UTF-8'
-                    ) !== false
-                ) {
-                    $coNguyenLieu = true;
-                    break;
-                }
-            }
-
-            if (!$coNguyenLieu) {
-                $nguyenLieuConThieu[] = $item;
+            if ($soSuat === false || !$danhSachDiChoService->capNhatSoLuong($idSua, $soSuat)) {
+                gan_thong_bao('error', 'Số suất phải là số nguyên từ 1 đến 10.');
             }
         }
 
-        $danhSachDiChoService->them(
-            $idMonAn,
-            $nguyenLieuConThieu
-        );
+        chuyen_huong(duongDanGoiY());
     }
 
-    $thamSo = [
-        'ingredients' => trim((string)($_POST['ingredients'] ?? '')),
-        'budget' => trim((string)($_POST['budget'] ?? '')),
-        'cooking_time' => trim((string)($_POST['cooking_time'] ?? '')),
-        'servings' => trim((string)($_POST['servings'] ?? '')),
-    ];
+    // 3. Thêm món từ thẻ gợi ý (mỗi lần bấm cộng thêm 1 suất)
+    $idMonAn = trim((string) ($_POST['them_danh_sach'] ?? ''));
 
-    $thamSo = array_filter(
-        $thamSo,
-        fn($giaTri) => $giaTri !== ''
-    );
-
-    $url = 'goi-y-mon-an.php';
-
-    if (!empty($thamSo)) {
-        $url .= '?' . http_build_query($thamSo);
+    if ($idMonAn !== '' && $kho->timTheoId($idMonAn) !== null) {
+        $danhSachDiChoService->them($idMonAn);
+        gan_thong_bao('success', 'Đã thêm món vào danh sách đi chợ.');
     }
 
-    header('Location: ' . $url);
-    exit;
+    chuyen_huong(duongDanGoiY());
 }
 
 $danhSach = $kho->layTatCa();
 
 $nguyenLieu = trim($_GET['ingredients'] ?? '');
-$nganSach = trim($_GET['budget'] ?? '');
-$thoiGian = trim($_GET['cooking_time'] ?? '');
-$khauPhan = trim($_GET['servings'] ?? '');
+$nganSach   = trim($_GET['budget'] ?? '');
+$thoiGian   = trim($_GET['cooking_time'] ?? '');
+$khauPhan   = trim($_GET['servings'] ?? '');
 
 $danhSachGoiY = [];
 
@@ -119,16 +96,16 @@ foreach ($danhSach as $monAn) {
         $coNguyenLieu = false;
 
         foreach ($monAn->nguyenLieu as $item) {
-    $tenNguyenLieu = $item['ten'] ?? '';
+            $tenNguyenLieu = $item['ten'] ?? '';
 
-    if (
-        $tenNguyenLieu !== '' &&
-        mb_stripos($tenNguyenLieu, $tuKhoaNguyenLieu, 0, 'UTF-8') !== false
-    ) {
-        $coNguyenLieu = true;
-        break;
-    }
-}
+            if (
+                $tenNguyenLieu !== '' &&
+                mb_stripos($tenNguyenLieu, $tuKhoaNguyenLieu, 0, 'UTF-8') !== false
+            ) {
+                $coNguyenLieu = true;
+                break;
+            }
+        }
 
         if (!$coNguyenLieu) {
             continue;
@@ -136,29 +113,28 @@ foreach ($danhSach as $monAn) {
     }
 
     // Lọc theo ngân sách
-    if ($nganSach !== '' && (int)$monAn->nganSach > (int)$nganSach) {
+    if ($nganSach !== '' && (int) $monAn->nganSach > (int) $nganSach) {
         continue;
     }
 
     // Lọc theo thời gian
-    if ($thoiGian !== '' && (int)$monAn->thoiGian > (int)$thoiGian) {
+    if ($thoiGian !== '' && (int) $monAn->thoiGian > (int) $thoiGian) {
         continue;
     }
 
     // Lọc theo số người
-    if ($khauPhan !== '' && (int)$monAn->khauPhan < (int)$khauPhan) {
+    if ($khauPhan !== '' && (int) $monAn->khauPhan < (int) $khauPhan) {
         continue;
     }
 
     $danhSachGoiY[] = $monAn;
 }
 
-$danhSachDiCho = $danhSachDiChoService->danhSachMonAn($kho);
+$danhSachDiCho = $danhSachDiChoService->layDanhSach($kho);
 
 // Thiết lập thông số header
-$tieuDe   = 'Gợi ý món ăn'; 
-$trang    = 'goi-y-mon-an'; 
-$customJS = 'js/trang-goi-y-mon-an.js'; 
+$tieuDe = 'Gợi ý món ăn';
+$trang  = 'goi-y-mon-an';
 
 // Nhúng Header (đã bao gồm Nav)
 require __DIR__ . '/inc/header.php';
@@ -166,6 +142,8 @@ require __DIR__ . '/inc/header.php';
 
   <!-- NỘI DUNG CHÍNH -->
   <main class="goi-y-trang">
+
+    <?= hien_thi_thong_bao() ?>
 
     <!-- BANNER TỦ LẠNH CỦA TÔI -->
     <section class="banner-tu-lanh">
@@ -178,23 +156,24 @@ require __DIR__ . '/inc/header.php';
         <h1 class="tieu-de-banner">Hôm nay ăn gì?</h1>
         <p class="mo-ta-banner">Nhập nguyên liệu bạn có, chúng tôi sẽ gợi ý món ăn phù hợp!</p>
       </div>
-      
+
       <div class="hinh-anh-banner hinh-anh-ro-rau">
         <img src="images/basket-vegetables.svg" alt="Rổ rau củ quả" class="anh-ro-rau-cu">
       </div>
     </section>
 
     <!-- FORM BỘ LỌC TÌM KIẾM -->
-<div class="khung-bo-loc-goi-y">
+    <div class="khung-bo-loc-goi-y">
       <form class="form-goi-y-moi" id="form-goi-y" action="goi-y-mon-an.php" method="get">
-        
+
         <div class="khong-gian-loc">
-          
+
           <!-- Ô 1: Nguyên liệu -->
           <div class="o-nhap-loc o-nguyen-lieu">
             <label for="ingredients">Nguyên liệu (có thể chọn nhiều)</label>
-            <input type="text" id="ingredients" name="ingredients" placeholder="Nhập nguyên liệu...">
-            
+            <input type="text" id="ingredients" name="ingredients"
+                   value="<?= e($nguyenLieu) ?>" placeholder="Nhập nguyên liệu...">
+
             <div class="danh-sach-tags">
               <span class="tag-item">Thịt heo <button type="button" class="nut-xoa-tag">&times;</button></span>
               <span class="tag-item">Trứng <button type="button" class="nut-xoa-tag">&times;</button></span>
@@ -208,9 +187,9 @@ require __DIR__ . '/inc/header.php';
             <label for="budget">Ngân sách</label>
             <select id="budget" name="budget">
               <option value="">Chọn ngân sách</option>
-              <option value="50000">Dưới 50.000đ</option>
-              <option value="100000" selected>50.000đ - 100.000đ</option>
-              <option value="200000">100.000đ - 200.000đ</option>
+              <option value="50000"  <?= $nganSach === '50000' ? 'selected' : '' ?>>Dưới 50.000đ</option>
+              <option value="100000" <?= $nganSach === '100000' ? 'selected' : '' ?>>50.000đ - 100.000đ</option>
+              <option value="200000" <?= $nganSach === '200000' ? 'selected' : '' ?>>100.000đ - 200.000đ</option>
             </select>
           </div>
 
@@ -219,9 +198,9 @@ require __DIR__ . '/inc/header.php';
             <label for="cooking-time">Thời gian nấu</label>
             <select id="cooking-time" name="cooking_time">
               <option value="">Chọn thời gian</option>
-              <option value="15">Dưới 15 phút</option>
-              <option value="30" selected>Dưới 30 phút</option>
-              <option value="60">Dưới 60 phút</option>
+              <option value="15" <?= $thoiGian === '15' ? 'selected' : '' ?>>Dưới 15 phút</option>
+              <option value="30" <?= $thoiGian === '30' ? 'selected' : '' ?>>Dưới 30 phút</option>
+              <option value="60" <?= $thoiGian === '60' ? 'selected' : '' ?>>Dưới 60 phút</option>
             </select>
           </div>
 
@@ -230,9 +209,9 @@ require __DIR__ . '/inc/header.php';
             <label for="servings">Số người ăn</label>
             <select id="servings" name="servings">
               <option value="">Chọn số người</option>
-              <option value="1">1 người</option>
-              <option value="2" selected>2 - 3 người</option>
-              <option value="4">4 người trở lên</option>
+              <option value="1" <?= $khauPhan === '1' ? 'selected' : '' ?>>1 người</option>
+              <option value="2" <?= $khauPhan === '2' ? 'selected' : '' ?>>2 - 3 người</option>
+              <option value="4" <?= $khauPhan === '4' ? 'selected' : '' ?>>4 người trở lên</option>
             </select>
           </div>
 
@@ -256,183 +235,150 @@ require __DIR__ . '/inc/header.php';
 
       <?php if (!empty($danhSachGoiY)): ?>
 
-    <p class="thong-bao-goi-y">
-        Tìm thấy <?= count($danhSachGoiY) ?> món ăn phù hợp.
-    </p>
+        <p class="thong-bao-goi-y">
+          Tìm thấy <?= count($danhSachGoiY) ?> món ăn phù hợp.
+        </p>
 
-    <div class="danh-sach-mon-goi-y" id="danh-sach-mon-goi-y">
+        <div class="danh-sach-mon-goi-y" id="danh-sach-mon-goi-y">
 
-        <?php foreach ($danhSachGoiY as $monAn): ?>
+          <?php foreach ($danhSachGoiY as $monAn): ?>
 
             <article class="the-goi-y">
 
-    <img
-        src="<?= e($monAn->hinhAnh) ?>"
-        alt="Hình ảnh món <?= e($monAn->ten) ?>"
-        width="300"
-        height="200"
-        loading="lazy"
-    >
+              <img
+                src="<?= e($monAn->hinhAnh) ?>"
+                alt="Hình ảnh món <?= e($monAn->ten) ?>"
+                width="300"
+                height="200"
+                loading="lazy"
+              >
 
-    <h3><?= e($monAn->ten) ?></h3>
+              <h3><?= e($monAn->ten) ?></h3>
 
-    <p class="mo-ta-mon">
-        <?= e($monAn->moTa) ?>
-    </p>
+              <p class="mo-ta-mon">
+                <?= e($monAn->moTa) ?>
+              </p>
 
-    <p class="thong-tin-ngan">
-        <?= (int)$monAn->thoiGian ?> phút ·
-        <?= number_format((int)$monAn->nganSach, 0, ',', '.') ?> VNĐ ·
-        <?= (int)$monAn->khauPhan ?> người
-    </p>
+              <p class="thong-tin-ngan">
+                <?= (int) $monAn->thoiGian ?> phút ·
+                <?= number_format((int) $monAn->nganSach, 0, ',', '.') ?> VNĐ ·
+                <?= (int) $monAn->khauPhan ?> người
+              </p>
 
-    <div class="hanh-dong-the-goi-y">
+              <div class="hanh-dong-the-goi-y">
 
-    <a
-        href="chi-tiet.php?id=<?= e($monAn->id) ?>"
-        class="nut"
-    >
-        Xem chi tiết
-    </a>
+                <a href="chi-tiet.php?id=<?= e($monAn->id) ?>" class="nut">
+                  Xem chi tiết
+                </a>
 
-    <form action="goi-y-mon-an.php" method="post">
-    <input
-        type="hidden"
-        name="them_danh_sach"
-        value="<?= e($monAn->id) ?>"
-    >
+                <form action="goi-y-mon-an.php" method="post">
+                  <input type="hidden" name="them_danh_sach" value="<?= e($monAn->id) ?>">
 
-    <input
-    type="hidden"
-    name="ingredients"
-    value="<?= e($nguyenLieu) ?>"
->
+                  <?php foreach ([
+                      'ingredients'  => $nguyenLieu,
+                      'budget'       => $nganSach,
+                      'cooking_time' => $thoiGian,
+                      'servings'     => $khauPhan,
+                  ] as $ten => $giaTri): ?>
+                    <input type="hidden" name="<?= $ten ?>" value="<?= e($giaTri) ?>">
+                  <?php endforeach; ?>
 
-<input
-    type="hidden"
-    name="budget"
-    value="<?= e($nganSach) ?>"
->
+                  <button type="submit" class="nut">
+                    Thêm vào danh sách đi chợ
+                  </button>
+                </form>
 
-<input
-    type="hidden"
-    name="cooking_time"
-    value="<?= e($thoiGian) ?>"
->
+              </div>
 
-<input
-    type="hidden"
-    name="servings"
-    value="<?= e($khauPhan) ?>"
->
+            </article>
 
-    <button
-        type="submit"
-        class="nut"
-    >
-        Thêm vào danh sách đi chợ
-    </button>
-</form>
+          <?php endforeach; ?>
 
-</div>
+        </div>
 
-</article>
+      <?php elseif (
+        $nguyenLieu !== '' ||
+        $nganSach !== '' ||
+        $thoiGian !== '' ||
+        $khauPhan !== ''
+      ): ?>
 
-<?php endforeach; ?>
+        <p class="thong-bao-goi-y">
+          Không tìm thấy món ăn phù hợp với các tiêu chí đã chọn.
+        </p>
 
-</div>
+      <?php else: ?>
 
-<?php elseif (
-    $nguyenLieu !== '' ||
-    $nganSach !== '' ||
-    $thoiGian !== '' ||
-    $khauPhan !== ''
-): ?>
+        <p class="thong-bao-goi-y">
+          Nhập thông tin ở trên để nhận gợi ý món ăn phù hợp.
+        </p>
 
-    <p class="thong-bao-goi-y">
-        Không tìm thấy món ăn phù hợp với các tiêu chí đã chọn.
-    </p>
-
-<?php else: ?>
-
-    <p class="thong-bao-goi-y">
-        Nhập thông tin ở trên để nhận gợi ý món ăn phù hợp.
-    </p>
-
-<?php endif; ?>
+      <?php endif; ?>
     </section>
 
     <!-- DANH SÁCH ĐI CHỢ -->
     <?php if (!empty($danhSachDiCho)): ?>
+      <section class="danh-sach-di-cho" aria-labelledby="tieu-de-danh-sach-di-cho">
+        <h2 id="tieu-de-danh-sach-di-cho">Danh sách đi chợ</h2>
+        <p>Mỗi món kèm số suất cần nấu. Nguyên liệu của món được liệt kê bên dưới.</p>
 
-<section
-    class="danh-sach-di-cho"
-    id="khu-vuc-danh-sach-di-cho"
-    aria-labelledby="tieu-de-danh-sach-di-cho"
->
-    <h2 id="tieu-de-danh-sach-di-cho">
-        Danh sách đi chợ
-    </h2>
+        <?php foreach ($danhSachDiCho as $dong): ?>
+          <?php $mon = $dong['monAn']; ?>
 
-    <p>
-        Các nguyên liệu dưới đây là những nguyên liệu còn thiếu để chuẩn bị món ăn đã chọn.
-    </p>
+          <article class="the-danh-sach">
+            <h3><?= e($mon->ten) ?></h3>
 
-    <form action="goi-y-mon-an.php" method="post">
-    <button
-        class="nut nut-phu"
-        type="submit"
-        name="xoa_danh_sach"
-        value="1"
-    >
-        Xóa danh sách
-    </button>
-</form>
+            <form method="post" action="goi-y-mon-an.php">
+              <input type="hidden" name="id_mon" value="<?= e($mon->id) ?>">
 
-    <?php foreach ($danhSachDiCho as $item): ?>
+              <?php foreach ([
+                  'ingredients'  => $nguyenLieu,
+                  'budget'       => $nganSach,
+                  'cooking_time' => $thoiGian,
+                  'servings'     => $khauPhan,
+              ] as $ten => $giaTri): ?>
+                <input type="hidden" name="<?= $ten ?>" value="<?= e($giaTri) ?>">
+              <?php endforeach; ?>
 
-        <?php
-        $monAnDiCho = $item['monAn'];
-        $nguyenLieuConThieu = $item['nguyenLieuConThieu'];
-        ?>
+              <label for="sl-<?= e($mon->id) ?>">Số suất:</label>
+              <input
+                type="number"
+                id="sl-<?= e($mon->id) ?>"
+                name="so_luong"
+                value="<?= (int) $dong['soLuong'] ?>"
+                min="1"
+                max="10"
+                required
+              >
 
-        <article class="the-danh-sach">
-            <h3>
-                <?= e($monAnDiCho->ten) ?>
-            </h3>
+              <button type="submit" name="hanh_dong" value="cap_nhat_di_cho">Cập nhật</button>
+              <button type="submit" name="hanh_dong" value="xoa_di_cho">Xóa</button>
+            </form>
 
-            <?php if (!empty($nguyenLieuConThieu)): ?>
+            <ul>
+              <?php foreach ($mon->nguyenLieu as $nguyenLieuItem): ?>
+                <li><?= e($nguyenLieuItem['ten'] ?? '') ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </article>
+        <?php endforeach; ?>
 
-                <ul>
-                    <?php foreach ($nguyenLieuConThieu as $nguyenLieuItem): ?>
+        <form method="post" action="goi-y-mon-an.php">
+          <?php foreach ([
+              'ingredients'  => $nguyenLieu,
+              'budget'       => $nganSach,
+              'cooking_time' => $thoiGian,
+              'servings'     => $khauPhan,
+          ] as $ten => $giaTri): ?>
+            <input type="hidden" name="<?= $ten ?>" value="<?= e($giaTri) ?>">
+          <?php endforeach; ?>
 
-                        <li>
-                            <?= e($nguyenLieuItem['ten'] ?? '') ?>
-
-                            <?php if (!empty($nguyenLieuItem['soLuong'])): ?>
-                                -
-                                <?= e($nguyenLieuItem['soLuong']) ?>
-                            <?php endif; ?>
-
-                        </li>
-
-                    <?php endforeach; ?>
-                </ul>
-
-            <?php else: ?>
-
-                <p>
-                    Không còn nguyên liệu nào cần mua.
-                </p>
-
-            <?php endif; ?>
-        </article>
-
-    <?php endforeach; ?>
-
-</section>
-
-<?php endif; ?>
+          <button type="submit" name="xoa_danh_sach" value="1" class="nut nut-phu">
+            Xóa toàn bộ danh sách
+          </button>
+        </form>
+      </section>
+    <?php endif; ?>
 
   </main>
 

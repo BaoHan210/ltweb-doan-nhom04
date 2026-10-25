@@ -1,11 +1,20 @@
 <?php
+
+/**
+ * Tệp: gioi-thieu.php
+ * Mục đích: Giới thiệu website và các thành viên
+ * Dùng bởi: ./inc/footer.php
+ */
+
+declare(strict_types=1);
+
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
-
+require_once __DIR__ . '/inc/db.php';
 use App\Data\KhoMonAn; // (Nếu trang cần lấy dữ liệu món ăn)
 
 // Thực hiện khai báo dữ liệu, lấy danh sách từ JSON
-$kho      = new KhoMonAn(__DIR__ . '/data/mon-an.json');
+$kho = new KhoMonAn(db());
 $danhSach = $kho->layTatCa(); 
 
 // Thiết lập thông số header

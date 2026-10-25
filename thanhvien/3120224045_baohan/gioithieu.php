@@ -387,7 +387,7 @@ $congNgheHienThi = array_filter(
 
         <h2>Thông tin chung</h2>
 
-        <figure class="anh-dai-dien">
+        <figure class="anh-chan-dung-thanh-vien">
             <img
                 src="../../images/avatar-baohan.jpg"
                 alt="Ảnh chân dung thành viên Phan Thị Bảo Hân"

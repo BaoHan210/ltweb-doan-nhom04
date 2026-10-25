@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Tệp: cai-dat.php
+ * Mục đích: Trang cài đặt tài khoản, yêu cầu đăng nhập
+ * Dùng bởi: ./ca-nhan.php, ./cai-dat.php, ./inc/header.php, ./inc/nav-quan-tri.php, ./quan-tri.php
+ */
+
+declare(strict_types=1);
+
 require __DIR__ . '/inc/config.php';
 
 // 1. Kiểm tra nếu chưa đăng nhập -> Chuyển hướng sang trang đăng nhập

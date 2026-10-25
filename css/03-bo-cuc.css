@@ -1302,3 +1302,49 @@ html, body {
     }
 }
 
+/* Bố cục bổ sung cho trang quản trị */
+.trang-quan-tri-container {
+    width: 100%;
+    min-width: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+}
+
+.khung-bieu-do-hoat-dong {
+    position: relative;
+    width: 100%;
+    height: 260px;
+}
+
+.danh-sach-mon-an-yeu-thich {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dong-mon-an-yeu-thich {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+}
+
+.thong-tin-mon-an-yeu-thich {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.khu-vuc-bang-du-lieu {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 576px) {
+    .dong-mon-an-yeu-thich {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+}

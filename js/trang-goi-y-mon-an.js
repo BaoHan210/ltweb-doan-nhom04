@@ -4,9 +4,6 @@
  * Gợi ý món ăn và tạo danh sách đi chợ.
  */
 
-const khoaDanhSachDiCho =
-    'danhSachDiCho';
-
 const duongDanDuLieuMonAn =
     'data/mon-an.json';
 
@@ -1039,11 +1036,6 @@ const hienThiDanhSachDiCho = () => {
         return;
     }
 
-
-    const danhSach =
-        docDanhSachDiCho();
-
-
     danhSachNguyenLieu.replaceChildren();
 
 
@@ -1145,11 +1137,6 @@ const themVaoDanhSachDiCho = (
             nguyenLieuNguoiDung
         );
 
-
-    const danhSach =
-        docDanhSachDiCho();
-
-
     const daCo =
         danhSach.some(
             (item) => {
@@ -1188,9 +1175,6 @@ const themVaoDanhSachDiCho = (
             danhSach
         );
     }
-
-
-    hienThiDanhSachDiCho();
 };
 
 
@@ -1203,8 +1187,6 @@ const xoaDanhSachDiCho = () => {
     localStorage.removeItem(
         khoaDanhSachDiCho
     );
-
-    hienThiDanhSachDiCho();
 };
 
 
@@ -1481,9 +1463,6 @@ const khoiTaoTrangGoiY = () => {
 
     // Nạp dữ liệu do PHP cung cấp
     taiDanhSachMonAn();
-
-    // Khôi phục danh sách đi chợ từ localStorage
-    hienThiDanhSachDiCho();
 };
 
 document.addEventListener('DOMContentLoaded', khoiTaoTrangGoiY);

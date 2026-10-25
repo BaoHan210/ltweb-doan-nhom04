@@ -1,5 +1,3 @@
-
-
 <?php
 /*
  * Tệp hiển thị hồ sơ cá nhân và tính khẩu phần nguyên liệu.
@@ -174,7 +172,7 @@ require_once __DIR__ . '/../../inc/header.php';
       Thông tin chung
     </h2>
 
-    <figure class="anh-dai-dien">
+    <figure class="anh-chan-dung-thanh-vien">
 
       <img
         src="<?= $goc ?>images/avatar-lena.jpg"

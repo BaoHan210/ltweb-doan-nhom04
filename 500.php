@@ -1,5 +1,13 @@
 <?php
-// Thiết lập mã phản hồi HTTP 500 nếu trang được gọi trực tiếp
+
+/**
+ * Tệp: 500.php
+ * Mục đích: Trang lỗi 500 thân thiện, dùng khi môi trường là prod
+ * Dùng bởi: ./inc/config.php
+ */
+
+declare(strict_types=1);
+
 if (http_response_code() !== 500) {
     http_response_code(500);
 }

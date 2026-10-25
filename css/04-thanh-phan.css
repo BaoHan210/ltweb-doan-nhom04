@@ -1699,34 +1699,27 @@ input:checked + .the-gieu-khiem:before {
 }
 
 
-.anh-dai-dien {
+/* Ảnh chân dung trong trang giới thiệu thành viên */
+.anh-chan-dung-thanh-vien {
+    margin: 0;
     text-align: center;
 }
 
-
-.anh-dai-dien img {
+.anh-chan-dung-thanh-vien img {
     display: block;
-
     width: 150px;
     height: 150px;
-
     margin: 0 auto;
-
     object-fit: cover;
-
     border: 4px solid #EAF2E7;
     border-radius: 50%;
 }
 
-
-.anh-dai-dien figcaption {
+.anh-chan-dung-thanh-vien figcaption {
     margin-top: 8px;
-
     color: var(--mau-chu-phu);
-
     font-size: 13px;
     line-height: 1.5;
-
     text-align: center;
 }
 
@@ -5778,4 +5771,203 @@ body.trang header.dau-trang .link-xem-tat-ca-tb {
 .mon-da-xem .thong-tin-mon a:hover {
     background-color: var(--mau-chinh);
     color: #FFFFFF;
+}
+
+/* Chú thích biểu đồ hoạt động */
+.chu-thich-bieu-do {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #718096;
+}
+
+.mau-chu-bai-viet {
+    color: #2E7D32;
+}
+
+.mau-chu-luot-thich {
+    color: #FFA726;
+}
+
+/* Món ăn được yêu thích */
+.thu-tu-mon-an {
+    width: 20px;
+    flex-shrink: 0;
+    font-weight: 600;
+    color: #718096;
+}
+
+.hinh-mon-an-yeu-thich {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.ten-mon-an-yeu-thich {
+    font-size: 15px;
+    color: #2D3748;
+}
+
+.luot-thich-mon-an {
+    font-size: 13px;
+    color: #718096;
+}
+
+/* Thông báo chưa có dữ liệu */
+.thong-bao-chua-co-du-lieu {
+    padding: 16px;
+    background: #EBF8FF;
+    color: #2B6CB0;
+    border-radius: 8px;
+}
+
+/* Các ô trong bảng liên hệ */
+.thoi-gian-lien-he {
+    color: #718096;
+    font-size: 12px;
+}
+
+.ten-nguoi-lien-he {
+    font-weight: 600;
+    color: #2D3748;
+}
+
+.email-lien-he {
+    color: #3182CE;
+    text-decoration: none;
+}
+
+.noi-dung-lien-he {
+    max-width: 250px;
+    word-break: break-word;
+    color: #4A5568;
+}
+
+.anh-lien-he {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.khong-co-anh-lien-he {
+    color: #A0AEC0;
+    font-size: 12px;
+}
+
+/* ==============================
+   KHU VỰC QUẢN TRỊ
+   Sidebar bên trái, nội dung bên phải, toàn chiều rộng màn hình.
+   ============================== */
+
+body.trang.trang-quan-tri-body {
+    display: block;
+    max-width: none;
+    margin: 0;
+    grid-template-columns: none;
+    grid-template-areas: none;
+    background-color: #F8F9FA;
+}
+
+body.trang-quan-tri-body main.noi-dung-quan-tri {
+    display: flex;
+    flex-direction: column;
+    max-width: none;   /* bỏ giới hạn 1440px, không căn giữa */
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+body.trang-quan-tri-body .sidebar-quan-tri {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 24px 16px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+body.trang-quan-tri-body .noi-dung-dashboard {
+    box-sizing: border-box;
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 24px;
+}
+
+/* Khối thông tin quản trị viên và menu chiếm đúng chiều rộng sidebar */
+body.trang-quan-tri-body .the-nguoi-dung-admin {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+}
+
+body.trang-quan-tri-body .ten-admin {
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+body.trang-quan-tri-body .menu-dieu-huong-quan-tri {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: nowrap;
+    border-radius: 10px;
+    color: #4A5568;
+    text-decoration: none;
+}
+
+body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt span:first-child {
+    display: inline-flex;
+    justify-content: center;
+    width: 22px;
+    flex-shrink: 0;
+}
+
+body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt:hover {
+    background-color: #F4FAF1;
+    color: var(--mau-chinh);
+}
+
+body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt.active {
+    background-color: #EAF2E7;
+    color: var(--mau-chinh);
+    font-weight: 600;
+}
+
+/* Từ 992px: sidebar rộng 260px bên trái, nội dung chiếm phần còn lại */
+@media (min-width: 992px) {
+    body.trang-quan-tri-body main.noi-dung-quan-tri {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    body.trang-quan-tri-body .sidebar-quan-tri {
+        width: 260px;
+        border-right: 1px solid #E2E8F0;
+        border-bottom: none;
+    }
 }
