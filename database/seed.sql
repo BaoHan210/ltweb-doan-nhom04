@@ -1612,30 +1612,60 @@ INSERT INTO tv_phien_ban (mssv, ma, ten, ngay, nhom, mo_ta) VALUES
   ('3120224045', 'v1.2', 'Sửa lỗi hiển thị', '2026-09-20', 'sua-loi',
    'Điều chỉnh một số lỗi giao diện trong quá trình kiểm thử.');
 
+
+-- ==========================================
 -- PHAN B - DU LIEU MAU CUA NGUYEN THI TRINH
 -- MSSV: 3120224155
 -- ==========================================
 
--- 1. Thong tin thanh vien
+-- 1. Tai khoan thu nghiem cua Trinh
+-- Mat khau duoc bam bang PHP password_hash (BCrypt)
+INSERT INTO nguoi_dung
+    (email, ho_ten, mat_khau, vai_tro)
+VALUES
+    (
+        'ngoctrinh@cookwithme.com',
+        'Trinh Trinh',
+        '$2y$12$gvdwmVVIiOuMyMft3z3sIehDwiVBLhKZt/5j5P6v7rXiQr/PnF2BK',
+        'khach_hang'
+    );
+
+-- 2. Thong tin thanh vien va lien ket tai khoan
 INSERT INTO thanh_vien
     (mssv, ho_ten, nguoi_dung_id)
 VALUES
-    ('3120224155', 'Nguyễn Thị Trinh', NULL);
+    (
+        '3120224155',
+        'Nguyễn Thị Trinh',
+        (
+            SELECT id
+            FROM nguoi_dung
+            WHERE email = 'ngoctrinh@cookwithme.com'
+            LIMIT 1
+        )
+    );
 
--- 2. Du lieu mau so luu but
+-- 3. Du lieu mau so luu but
 INSERT INTO tv_trinh_luu_but
     (mssv, ten_khach, loi_nhan)
 VALUES
-    ('3120224155', 'Nguyễn Văn An',
-     'Chúc bạn học tốt và có nhiều công thức nấu ăn hay!'),
+    (
+        '3120224155',
+        'Nguyễn Văn An',
+        'Chúc bạn học tốt và có nhiều công thức nấu ăn hay!'
+    ),
+    (
+        '3120224155',
+        'Trần Thị Mai',
+        'Cảm ơn bạn đã chia sẻ những món ăn ngon.'
+    ),
+    (
+        '3120224155',
+        'Lê Minh',
+        'Mong bạn tiếp tục chia sẻ thêm nhiều công thức mới.'
+    );
 
-    ('3120224155', 'Trần Thị Mai',
-     'Cảm ơn bạn đã chia sẻ những món ăn ngon.'),
-
-    ('3120224155', 'Lê Minh',
-     'Mong bạn tiếp tục chia sẻ thêm nhiều công thức mới.');
-
--- 3. Du lieu mau luot xem
+-- 4. Du lieu mau luot xem theo ngay
 INSERT INTO tv_trinh_luot_xem
     (mssv, ngay, so_luot)
 VALUES
