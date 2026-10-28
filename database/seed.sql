@@ -1593,3 +1593,36 @@ INSERT INTO chi_tiet_don
 VALUES
 (1, 2, 1, 100000),
 (2, 3, 1, 70000);
+
+
+-- ==========================================
+-- PHAN B - DU LIEU MAU CUA NGUYEN THI TRINH
+-- MSSV: 3120224155
+-- ==========================================
+
+-- 1. Thong tin thanh vien
+INSERT INTO thanh_vien
+    (mssv, ho_ten, nguoi_dung_id)
+VALUES
+    ('3120224155', 'Nguyễn Thị Trinh', NULL);
+
+-- 2. Du lieu mau so luu but
+INSERT INTO tv_trinh_luu_but
+    (mssv, ten_khach, loi_nhan)
+VALUES
+    ('3120224155', 'Nguyễn Văn An',
+     'Chúc bạn học tốt và có nhiều công thức nấu ăn hay!'),
+
+    ('3120224155', 'Trần Thị Mai',
+     'Cảm ơn bạn đã chia sẻ những món ăn ngon.'),
+
+    ('3120224155', 'Lê Minh',
+     'Mong bạn tiếp tục chia sẻ thêm nhiều công thức mới.');
+
+-- 3. Du lieu mau luot xem
+INSERT INTO tv_trinh_luot_xem
+    (mssv, ngay, so_luot)
+VALUES
+    ('3120224155', '2026-10-25', 8),
+    ('3120224155', '2026-10-26', 12),
+    ('3120224155', '2026-10-27', 5);

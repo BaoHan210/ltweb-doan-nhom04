@@ -158,3 +158,47 @@ CREATE TABLE buoc_nau (
 
     CHECK (thu_tu > 0)
 ) ENGINE=InnoDB;
+
+
+-- ==========================================
+-- PHAN B - TRANG CA NHAN NGUYEN THI TRINH
+-- MSSV: 3120224155
+-- ==========================================
+
+-- 10. Bang thanh vien dung chung
+CREATE TABLE thanh_vien (
+    mssv CHAR(10) PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    nguoi_dung_id INT UNSIGNED NULL UNIQUE,
+
+    FOREIGN KEY (nguoi_dung_id)
+        REFERENCES nguoi_dung(id)
+        ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- 11. Bang so luu but cua Trinh
+CREATE TABLE tv_trinh_luu_but (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mssv CHAR(10) NOT NULL,
+    ten_khach VARCHAR(50) NOT NULL,
+    loi_nhan VARCHAR(500) NOT NULL,
+    thoi_gian DATETIME NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 12. Bang luot xem trang cua Trinh
+CREATE TABLE tv_trinh_luot_xem (
+    mssv CHAR(10) NOT NULL,
+    ngay DATE NOT NULL,
+    so_luot INT UNSIGNED NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (mssv, ngay),
+
+    FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
