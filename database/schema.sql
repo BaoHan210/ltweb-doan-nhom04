@@ -158,3 +158,24 @@ CREATE TABLE buoc_nau (
 
     CHECK (thu_tu > 0)
 ) ENGINE=InnoDB;
+
+
+-- Phần B - Bảng thanh_vien (mỗi thành viên một dòng)
+CREATE TABLE thanh_vien (
+  mssv          CHAR(10) PRIMARY KEY,
+  ho_ten        VARCHAR(100) NOT NULL,
+  nguoi_dung_id INT UNSIGNED NULL UNIQUE,
+  FOREIGN KEY (nguoi_dung_id) REFERENCES nguoi_dung(id)
+    ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Phần B - Bảng riêng của Bảo Hân (tên bắt đầu bằng tv_)
+CREATE TABLE tv_du_an (
+  id    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  mssv  CHAR(10) NOT NULL,
+  ten   VARCHAR(100) NOT NULL,
+  mo_ta VARCHAR(500) NULL,
+  nam   SMALLINT UNSIGNED NOT NULL,
+  CHECK (nam BETWEEN 2000 AND 2100),
+  FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
+) ENGINE=InnoDB;

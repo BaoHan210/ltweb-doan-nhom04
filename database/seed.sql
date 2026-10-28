@@ -1593,3 +1593,13 @@ INSERT INTO chi_tiet_don
 VALUES
 (1, 2, 1, 100000),
 (2, 3, 1, 70000);
+
+-- Phần B - Dòng thành viên của Phan Thị Bảo Hân
+INSERT INTO thanh_vien (mssv, ho_ten, nguoi_dung_id) VALUES
+  ('3120224045', 'Phan Thị Bảo Hân',
+   (SELECT id FROM nguoi_dung WHERE email = 'baohan@cookwithme.com' LIMIT 1));
+
+-- Phần B - Dữ liệu mẫu cho tv_du_an
+INSERT INTO tv_du_an (mssv, ten, mo_ta, nam) VALUES
+  ('3120224045', 'Website Cook with me',
+   'Website chia sẻ công thức nấu ăn của nhóm 04', 2026);
