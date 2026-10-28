@@ -6,6 +6,12 @@ declare(strict_types=1);
  * Chỉ dùng một lần khi chuyển dữ liệu Bài 5 -> Bài 6.
  */
 
+// Công cụ bảo trì: chỉ cho phép chạy qua PHP CLI.
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit('Chỉ được chạy lệnh import bằng Terminal.');
+}
+
 require_once __DIR__ . '/inc/db.php';
 
 header('Content-Type: text/plain; charset=utf-8');

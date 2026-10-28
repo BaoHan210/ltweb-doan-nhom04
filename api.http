@@ -1,0 +1,197 @@
+# api.http - Kiem thu API Cook with me (VS Code: extension "REST Client")
+# Bam "Send Request" phia tren moi khoi ### de chay.
+# KHONG ghi cookie phien that vao file truoc khi commit: de nguyen DAN_PHPSESSID_VAO_DAY.
+
+@host = http://localhost/ltweb-doan-nhom04-main
+@cookie = PHPSESSID=DAN_PHPSESSID_VAO_DAY
+###############################################################
+# API 1: /api/mon-an.php  (chi cho phep GET, khong can dang nhap)
+###############################################################
+
+### 1.1 Danh sach mon an -> 200, co "success": true
+GET {{host}}/api/mon-an.php
+
+### 1.2 Tim kiem theo tu khoa -> 200
+GET {{host}}/api/mon-an.php?q=bo
+
+### 1.3 Loc theo danh muc -> 200
+GET {{host}}/api/mon-an.php?dm=Món chính
+
+### 1.4 Chi tiet 1 mon theo slug -> 200
+GET {{host}}/api/mon-an.php?id=cao-lau
+
+### 1.5 Slug khong ton tai -> 404
+GET {{host}}/api/mon-an.php?id=mon-khong-ton-tai
+
+### 1.6 Slug sai dinh dang (chua ky tu hoa/dac biet) -> 400
+GET {{host}}/api/mon-an.php?id=ABC_@@
+
+### 1.7 Tham so dang mang ?id[]=x -> 400 (khong duoc gay TypeError)
+GET {{host}}/api/mon-an.php?id[]=x
+
+### 1.8 Tham so qua dai (q > 200 ky tu) -> 400
+GET {{host}}/api/mon-an.php?q=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+### 1.9 Sai phuong thuc (POST) -> 405, header Allow: GET
+POST {{host}}/api/mon-an.php
+Content-Type: application/json
+
+{}
+
+### 1.10 Sai phuong thuc (DELETE) -> 405
+DELETE {{host}}/api/mon-an.php
+
+###############################################################
+# API 2: /api/gio-hang.php  (GET, POST; can dang nhap)
+# Cach lay cookie: dang nhap bang trinh duyet -> F12 -> Application
+# -> Cookies -> sao chep gia tri PHPSESSID -> dan vao @cookie o tren.
+###############################################################
+
+### 2.1 Chua dang nhap (khong gui cookie) -> 401
+GET {{host}}/api/gio-hang.php
+
+### 2.2 Da dang nhap, xem gio -> 200 (nho dat ten de lay csrf_token)
+# @name layGio
+GET {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+
+### 2.3 Sai phuong thuc (DELETE) -> 405, header Allow: GET, POST
+DELETE {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+
+### 2.4 Them mon vao gio -> 200
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "them",
+  "id_mon": "cao-lau",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.5 Cap nhat so luong hop le -> 200
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "cap_nhat",
+  "id_mon": "cao-lau",
+  "so_luong": 2,
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.6 So luong ngoai khoang 1-10 -> 422
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "cap_nhat",
+  "id_mon": "cao-lau",
+  "so_luong": 99,
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.7 So luong khong phai so nguyen -> 422
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "cap_nhat",
+  "id_mon": "cao-lau",
+  "so_luong": "abc",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.8 Mon khong ton tai khi them -> 404
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "them",
+  "id_mon": "mon-khong-ton-tai",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.9 Ma mon sai dinh dang -> 422
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "them",
+  "id_mon": "ABC_@@",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.10 Hanh dong khong hop le -> 422
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "phap-thuat",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.11 Sai CSRF token -> 403
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "xoa_het",
+  "csrf_token": "token-sai"
+}
+
+### 2.12 Sai Content-Type -> 400
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: text/plain
+
+hanh_dong=xoa_het
+
+### 2.13 JSON hong -> 400
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "hanh_dong": "them", 
+
+### 2.14 JSON la mang chu khong phai doi tuong -> 400
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+[1, 2, 3]
+
+### 2.15 Xoa 1 mon -> 200
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "xoa",
+  "id_mon": "cao-lau",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+### 2.16 Xoa het -> 200
+POST {{host}}/api/gio-hang.php
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "hanh_dong": "xoa_het",
+  "csrf_token": "{{layGio.response.body.csrf_token}}"
+}
+
+###############################################################
+# Loi may chu 500 -> {"loi":"Loi may chu"}
+# Cach thu: tat MySQL trong XAMPP roi gui lai request 1.1 (mon-an).
+# Phai nhan Status 500 va body {"loi":"Lỗi máy chủ"}. Bat MySQL lai sau khi thu.
+###############################################################

@@ -26,6 +26,11 @@ $menuQuanTri = [
 <nav class="menu-dieu-huong-quan-tri" aria-label="Điều hướng quản trị">
     <?php foreach ($menuQuanTri as $ma => [$href, $bieuTuong, $nhan]): ?>
         <?php $dangChon = ($ma === $mucQuanTri); ?>
+        <?php if ($ma === 'dang-xuat'): ?>
+        <button type="submit" form="form-dang-xuat-toan-cuc" class="item-menu-qt">
+            <span aria-hidden="true"><?= e($bieuTuong) ?></span><?= e($nhan) ?>
+        </button>
+        <?php else: ?>
         <a
             href="<?= e($href) ?>"
             class="item-menu-qt<?= $dangChon ? ' active' : '' ?>"
@@ -34,5 +39,6 @@ $menuQuanTri = [
             <span aria-hidden="true"><?= e($bieuTuong) ?></span>
             <?= e($nhan) ?>
         </a>
+        <?php endif; ?>
     <?php endforeach; ?>
 </nav>

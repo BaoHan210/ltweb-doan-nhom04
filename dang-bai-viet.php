@@ -17,28 +17,10 @@
  */
 
 require_once __DIR__ . '/inc/config.php';
+require_once __DIR__ . '/inc/xac-thuc.php';
 
-// 1. KIỂM TRA PHIÊN ĐĂNG NHẬP
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (
-    empty($_SESSION['user']) ||
-    !is_array($_SESSION['user']) ||
-    empty($_SESSION['user']['id'])
-) {
-    gan_thong_bao(
-        'error',
-        'Bạn cần đăng nhập để đăng bài viết!'
-    );
-
-    chuyen_huong('dang-nhap.php');
-    exit;
-}
-
-// 2. LẤY THÔNG TIN NGƯỜI DÙNG
-$user = $_SESSION['user'];
+// Xác thực lại từ MySQL, không tin thông tin vai trò trong Session.
+$user = yeuCauDangNhap();
 
 $emailNguoiDung = (string) ($user['email'] ?? '');
 

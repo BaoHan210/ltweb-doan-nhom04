@@ -180,9 +180,9 @@ require __DIR__ . '/inc/header.php';
               Đổi mật khẩu
             </button>
 
-            <a href="dang-xuat.php" class="nut nut-nguy-hiem" style="text-decoration: none;">
+            <button type="submit" form="form-dang-xuat-toan-cuc" class="nut nut-nguy-hiem">
               Đăng xuất
-            </a>
+            </button>
 
             <button class="nut nut-nguy-hiem" id="nut-xoa-tai-khoan" type="button">
               Xóa tài khoản

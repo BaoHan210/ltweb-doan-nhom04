@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
+require_once __DIR__ . '/inc/xac-thuc.php';
 use App\Data\KhoMonAn;
 use App\Services\YeuThichService;
 
-if (empty($_SESSION['user']) && empty($_SESSION['nguoi_dung'])) {
-    chuyen_huong('dang-nhap.php');
-}
-
-$user   = $_SESSION['user'] ?? $_SESSION['nguoi_dung'];
+$user = yeuCauDangNhap();
 $hoTen  = (string) ($user['hoTen'] ?? $user['ho_ten'] ?? 'Người dùng');
 $avatar = !empty($user['avatar']) ? (string) $user['avatar'] : 'images/icons/avt-default.svg';
 

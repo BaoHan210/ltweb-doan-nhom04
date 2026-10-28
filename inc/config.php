@@ -18,7 +18,7 @@ if (session_status() === PHP_SESSION_NONE) {
 if (!defined('URL_GOC')) {
     // Tự động lấy thư mục gốc linh hoạt dù chạy trên XAMPP/Laragon hay bất kỳ máy nào
     $thuMucGoc = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-    define('URL_GOC', $thuMucGoc !== '' ? $thuMucGoc . '/' : '/'); 
+    define('URL_GOC', $thuMucGoc !== '' ? $thuMucGoc . '/' : '/');
 }
 
 set_exception_handler(function (Throwable $e) {
@@ -31,3 +31,17 @@ set_exception_handler(function (Throwable $e) {
         require __DIR__ . '/../500.php';
     }
 });
+
+// Dùng cho các file trong api/: lỗi không bắt được sẽ trả JSON 500 thay vì HTML
+function dangKyHandlerApi(): void
+{
+    set_exception_handler(function (Throwable $e) {
+        error_log((string) $e);
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['loi' => 'Lỗi máy chủ'], JSON_UNESCAPED_UNICODE);
+    });
+}

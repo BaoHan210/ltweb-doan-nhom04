@@ -36,11 +36,8 @@ $mapClass = [
 $bodyClass = $mapClass[$trang] ?? ('trang-' . $trang);
 
 // Người dùng đăng nhập
-$userHeader = $_SESSION['user']
-    ?? $_SESSION['nguoi_dung']
-    ?? $_SESSION['account']
-    ?? $_SESSION['auth']
-    ?? null;
+require_once __DIR__ . '/xac-thuc.php';
+$userHeader = nguoiDungHienTai();
 
 $isLoggedIn = !empty($userHeader);
 
@@ -73,6 +70,12 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
 </head>
 
 <body class="trang <?= e($bodyClass) ?><?= $trang === 'quan-tri' ? ' trang-quan-tri-body' : '' ?>">
+<?php if ($isLoggedIn): ?>
+  <?php if (empty($_SESSION['csrf_dang_xuat'])) $_SESSION['csrf_dang_xuat'] = bin2hex(random_bytes(32)); ?>
+  <form id="form-dang-xuat-toan-cuc" action="<?= e($goc) ?>dang-xuat.php" method="post" hidden>
+    <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_dang_xuat']) ?>">
+  </form>
+<?php endif; ?>
 
   <header class="dau-trang">
     <p class="thuong-hieu">
@@ -144,7 +147,7 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
               <a href="<?= e($goc) ?>ca-nhan.php" class="item-menu-drop">Trang cá nhân</a>
               <a href="<?= e($goc) ?>quan-tri.php" class="item-menu-drop">Trang quản trị</a>
               <a href="<?= e($goc) ?>cai-dat.php" class="item-menu-drop">Cài đặt</a>
-              <a href="<?= e($goc) ?>dang-xuat.php" class="item-menu-drop nut-dang-xuat-drop">Đăng xuất</a>
+              <button type="submit" form="form-dang-xuat-toan-cuc" class="item-menu-drop nut-dang-xuat-drop">Đăng xuất</button>
             </div>
           </div>
 

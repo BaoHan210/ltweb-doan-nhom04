@@ -107,30 +107,52 @@ class YeuThichService
      * Trả về ['mon' => [...], 'tongTien' => int].
      * Mỗi dòng gồm: monAn, soLuong, donGia, thanhTien.
      */
+   
+    /**
+     * Lấy giỏ hàng bằng truy vấn nhóm WHERE IN.
+     * Không truy vấn MySQL trong vòng lặp.
+     */
     public function layGioHang(KhoMonAn $kho): array
     {
-        $cacMon   = [];
+        $cacMon = [];
         $tongTien = 0;
 
-        foreach ($_SESSION[self::KEY] as $id => $soLuong) {
-            $monAn = $kho->timTheoId((string) $id);
+        // Lấy các slug món từ session
+        $cacSlug = array_keys($_SESSION[self::KEY]);
 
-            if ($monAn === null) {
+        // Truy vấn các món trong một lần gọi lớp dữ liệu
+        $danhSachMon = $kho->timNhieuTheoSlug($cacSlug);
+
+        foreach ($danhSachMon as $monAn) {
+            $slug = (string) $monAn->id;
+
+            $soLuong = (int) (
+                $_SESSION[self::KEY][$slug] ?? 0
+            );
+
+            if (
+                $soLuong < self::SO_LUONG_TOI_THIEU ||
+                $soLuong > self::SO_LUONG_TOI_DA
+            ) {
                 continue;
             }
 
-            $donGia    = $monAn->nganSach;
+            $donGia = (int) $monAn->nganSach;
             $thanhTien = $donGia * $soLuong;
             $tongTien += $thanhTien;
 
             $cacMon[] = [
-                'monAn'     => $monAn,
-                'soLuong'   => $soLuong,
-                'donGia'    => $donGia,
+                'monAn' => $monAn,
+                'soLuong' => $soLuong,
+                'donGia' => $donGia,
                 'thanhTien' => $thanhTien,
             ];
         }
 
-        return ['mon' => $cacMon, 'tongTien' => $tongTien];
+        return [
+            'mon' => $cacMon,
+            'tongTien' => $tongTien,
+        ];
     }
+
 }

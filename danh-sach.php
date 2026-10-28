@@ -23,6 +23,9 @@ $daDangNhap = !empty($_SESSION['user']) || !empty($_SESSION['nguoi_dung']);
 $tuKhoa  = trim((string) ($_GET['keyword'] ?? $_GET['q'] ?? ''));
 $danhMuc = trim((string) ($_GET['dm'] ?? ''));
 $sapXep  = trim((string) ($_GET['sapXep'] ?? $_GET['sx'] ?? 'ten-az'));
+$giaRaw  = trim((string) ($_GET['gia'] ?? ''));
+$giaToiDa = ($giaRaw !== '' && ctype_digit($giaRaw) && (float) $giaRaw <= 4294967295)
+    ? (int) $giaRaw : null;
 
 $danhMucHopLe = [
     '',
@@ -71,6 +74,7 @@ $thamSoGoc = [
     'keyword' => $tuKhoa,
     'dm'      => $danhMuc,
     'sapXep'  => $sapXep,
+    'gia'     => $giaToiDa,
     'page'    => $trangYeuCau,
 ];
 
@@ -102,33 +106,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // 3. LỌC, SẮP XẾP VÀ PHÂN TRANG
 
-$danhSach = $kho->timKiem($tuKhoa, $danhMuc);
-
-usort($danhSach, function ($a, $b) use ($sapXep) {
-    switch ($sapXep) {
-        case 'ten-za':
-            return strcmp($b->ten, $a->ten);
-        case 'thoiGianTang':
-            return $a->thoiGian <=> $b->thoiGian;
-        case 'danhGiaGiam':
-            return $b->danhGia <=> $a->danhGia;
-        case 'nganSachTang':
-            return $a->nganSach <=> $b->nganSach;
-        default:
-            return strcmp($a->ten, $b->ten);
-    }
-});
-
 $soMonTrenTrang = 9;
-$tongSoMon      = count($danhSach);
-$tongSoTrang    = max(1, (int) ceil($tongSoMon / $soMonTrenTrang));
-$trangHienTai   = min($trangYeuCau, $tongSoTrang);
 
-$danhSachHienThi = array_slice(
-    $danhSach,
-    ($trangHienTai - 1) * $soMonTrenTrang,
-    $soMonTrenTrang
+// COUNT(*) trước để tính tổng số trang.
+$tongSoMon = $kho->demTimKiemNangCao($tuKhoa, $danhMuc, $giaToiDa);
+$tongSoTrang = max(1, (int) ceil($tongSoMon / $soMonTrenTrang));
+$trangHienTai = min($trangYeuCau, $tongSoTrang);
+
+// MySQL lọc + sắp xếp + phân trang, PHP chỉ hiển thị dữ liệu đã lấy.
+$danhSachHienThi = $kho->timKiemPhanTrang(
+    $tuKhoa, $danhMuc, $giaToiDa, $sapXep, $trangHienTai, $soMonTrenTrang
 );
+
+// Điều chỉnh URL sau POST theo trang thực tế đang hiển thị.
+$thamSoGoc['page'] = $trangHienTai;
 
 // 4. HIỂN THỊ
 
@@ -168,7 +159,7 @@ require __DIR__ . '/inc/header.php';
     </section>
 
     <!-- 3. Tìm kiếm, sắp xếp, lọc danh mục -->
-    <section class="khu-vuc-danh-sach-mon-an" aria-labelledby="tieu-de-mon-an">
+    <div class="khu-vuc-danh-sach-mon-an">
         <div class="thanh-cong-cu-mon-an">
 
             <div class="hang-tim-kiem-bo-loc">
@@ -180,6 +171,9 @@ require __DIR__ . '/inc/header.php';
                     <?php endif; ?>
 
                     <input type="hidden" name="sapXep" value="<?= e($sapXep) ?>">
+                    <?php if ($giaToiDa !== null): ?>
+                        <input type="hidden" name="gia" value="<?= $giaToiDa ?>">
+                    <?php endif; ?>
 
                     <label for="tim-mon-an">Tìm món ăn</label>
                     <input
@@ -190,6 +184,7 @@ require __DIR__ . '/inc/header.php';
                         value="<?= e($tuKhoa) ?>"
                         autocomplete="off"
                     >
+                    <button class="nut" type="submit">Tìm kiếm</button>
                 </form>
 
                 <!-- Sắp xếp -->
@@ -200,6 +195,10 @@ require __DIR__ . '/inc/header.php';
 
                     <?php if ($danhMuc !== ''): ?>
                         <input type="hidden" name="dm" value="<?= e($danhMuc) ?>">
+                    <?php endif; ?>
+
+                    <?php if ($giaToiDa !== null): ?>
+                        <input type="hidden" name="gia" value="<?= $giaToiDa ?>">
                     <?php endif; ?>
 
                     <label for="sap-xep">Sắp xếp</label>
@@ -218,6 +217,19 @@ require __DIR__ . '/inc/header.php';
                 </form>
 
             </div>
+
+            <!-- Lọc ngân sách tối đa: biểu mẫu GET chạy được khi tắt JS -->
+            <form class="khu-vuc-loc-gia" action="danh-sach.php" method="get">
+                <input type="hidden" name="keyword" value="<?= e($tuKhoa) ?>">
+                <input type="hidden" name="dm" value="<?= e($danhMuc) ?>">
+                <input type="hidden" name="sapXep" value="<?= e($sapXep) ?>">
+                <label for="gia-toi-da">Ngân sách tối đa (đ)</label>
+                <input id="gia-toi-da" name="gia" type="number" min="0"
+                       step="1000" placeholder="Ví dụ: 100000"
+                       value="<?= $giaToiDa !== null ? $giaToiDa : '' ?>">
+                <button class="nut" type="submit">Áp dụng bộ lọc</button>
+                <a class="nut" href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['gia' => null, 'page' => 1]))) ?>">Bỏ lọc giá</a>
+            </form>
 
             <!-- Lọc danh mục: liên kết thường, không cần JavaScript -->
             <nav class="bo-loc-mon-an" aria-label="Lọc món ăn">
@@ -369,7 +381,8 @@ require __DIR__ . '/inc/header.php';
             </nav>
         <?php endif; ?>
 
-    </section>
+    </div>
+<script src="js/tim-kiem.js" defer></script>
 </main>
 
 <?php

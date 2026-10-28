@@ -1,123 +1,78 @@
-
 <?php
 /**
- * Tệp: dang-nhap.php
- * Website: Cook with me - Nhóm 04
- *
- * Chức năng:
- * - Đăng nhập bằng tài khoản lưu trong MySQL
- * - Truy vấn thông qua lớp KhoNguoiDung
- * - Kiểm tra mật khẩu bằng password_verify()
- * - Tạo session sau khi đăng nhập thành công
- * - Điều hướng theo vai trò người dùng
+ * Cook with me - Nhóm 04 | Bài thực hành 6 - Chức năng 4.
+ * Đăng nhập PDO, password_verify, password_needs_rehash, CSRF và PRG.
  */
+declare(strict_types=1);
 
 use App\Data\KhoNguoiDung;
 
-// 1. NẠP CẤU HÌNH VÀ KẾT NỐI MYSQL
 require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 
-// 2. KHỞI TẠO SESSION
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+if (empty($_SESSION['csrf_dang_nhap'])) {
+    $_SESSION['csrf_dang_nhap'] = bin2hex(random_bytes(32));
 }
 
 $loiChung = '';
 $email = '';
 
-// 3. XỬ LÝ ĐĂNG NHẬP
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = is_string($_POST['email'] ?? null) ? trim($_POST['email']) : '';
+    $matKhau = is_string($_POST['mat_khau'] ?? null) ? $_POST['mat_khau'] : '';
+    $token = is_string($_POST['csrf_token'] ?? null) ? $_POST['csrf_token'] : '';
 
-    $email = is_string($_POST['email'] ?? null)
-        ? trim($_POST['email'])
-        : '';
-
-    $matKhau = is_string($_POST['mat_khau'] ?? null)
-        ? $_POST['mat_khau']
-        : '';
-
-    // Kiểm tra dữ liệu phía máy chủ
-    if (
-        $email === '' ||
-        !filter_var($email, FILTER_VALIDATE_EMAIL) ||
-        $matKhau === ''
-    ) {
-        $loiChung = 'Vui lòng nhập email và mật khẩu hợp lệ!';
+    if ($token === '' || !hash_equals((string) $_SESSION['csrf_dang_nhap'], $token)) {
+        http_response_code(403);
+        $loiChung = 'Biểu mẫu hết hiệu lực. Vui lòng tải lại trang.';
+    } elseif ($email === '' || strlen($email) > 150
+        || !filter_var($email, FILTER_VALIDATE_EMAIL) || $matKhau === '') {
+        $loiChung = 'Vui lòng nhập email và mật khẩu hợp lệ.';
     } else {
-
-        // Lấy tài khoản từ MySQL thông qua lớp truy cập dữ liệu
         $khoNguoiDung = new KhoNguoiDung(db());
-
         $nguoiDung = $khoNguoiDung->timTheoEmail($email);
+        $hopLe = $nguoiDung !== null
+            && password_verify($matKhau, (string) ($nguoiDung['mat_khau'] ?? ''));
 
-        if (
-            $nguoiDung !== null &&
-            password_verify(
-                $matKhau,
-                $nguoiDung['mat_khau']
-            )
-        ) {
+        if ($hopLe) {
+            $id = (int) $nguoiDung['id'];
+            // Chỉ nâng cấp mã băm SAU KHI xác thực mật khẩu thành công.
+            if (password_needs_rehash((string) $nguoiDung['mat_khau'], PASSWORD_DEFAULT)) {
+                $hashMoi = password_hash($matKhau, PASSWORD_DEFAULT);
+                $khoNguoiDung->capNhatMatKhauDaBam($id, $hashMoi);
+            }
 
-            // Tạo ID session mới để bảo vệ phiên đăng nhập
             session_regenerate_id(true);
+            unset($_SESSION['user'], $_SESSION['nguoi_dung']);
+            $_SESSION['uid'] = $id;
 
-            // Chỉ lưu thông tin cần thiết vào session
-            // Không lưu mật khẩu hoặc mã băm mật khẩu
+            // Tương thích tạm thời: các trang hiện có (header, quan-tri.php,
+            // yeu-thich.php...) vẫn đọc $_SESSION['user']. Cần bỏ khi
+            // tất cả trang chuyển sang dùng duy nhất uid + đọc vai trò từ DB.
             $_SESSION['user'] = [
-                'id' => (int) $nguoiDung['id'],
-                'ho_ten' => $nguoiDung['ho_ten'],
-                'email' => $nguoiDung['email'],
-                'vai_tro' => $nguoiDung['vai_tro']
+                'id' => $id,
+                'ho_ten' => (string) $nguoiDung['ho_ten'],
+                'email' => (string) $nguoiDung['email'],
+                'vai_tro' => (string) $nguoiDung['vai_tro'],
             ];
+            unset($_SESSION['csrf_dang_nhap']);
+            gan_thong_bao('success', 'Đăng nhập thành công!');
 
-            gan_thong_bao(
-                'success',
-                'Đăng nhập thành công!'
-            );
-
-            // Điều hướng theo vai trò
-            if ($nguoiDung['vai_tro'] === 'quan_tri') {
+            if (($nguoiDung['vai_tro'] ?? '') === 'quan_tri') {
                 chuyen_huong('quan-tri.php');
             } else {
                 chuyen_huong('ca-nhan.php');
             }
-
             exit;
-
-        } else {
-
-            // Ghi nhật ký đăng nhập thất bại
-            // Không ghi mật khẩu vào nhật ký
-            $thuMucLog = __DIR__ . '/logs';
-
-            if (
-                is_dir($thuMucLog) ||
-                mkdir($thuMucLog, 0755, true)
-            ) {
-                $emailLog = str_replace(
-                    ["\r", "\n"],
-                    '',
-                    $email
-                );
-
-                $logMsg = sprintf(
-                    "[%s] Dang nhap that bai - Email: %s - IP: %s\n",
-                    date('Y-m-d H:i:s'),
-                    $emailLog,
-                    $_SERVER['REMOTE_ADDR'] ?? 'unknown'
-                );
-
-                error_log(
-                    $logMsg,
-                    3,
-                    $thuMucLog . '/access-error.log'
-                );
-            }
-
-            $loiChung = 'Email hoặc mật khẩu không chính xác!';
         }
+
+        // Không phân biệt email chưa đăng ký với mật khẩu không đúng.
+        $loiChung = 'Email hoặc mật khẩu không chính xác!';
     }
 }
 
@@ -191,6 +146,7 @@ require __DIR__ . '/inc/header.php';
             method="post"
             novalidate
         >
+            <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_dang_nhap']) ?>">
 
             <!-- EMAIL -->
             <div class="nhom-truong-nhap">

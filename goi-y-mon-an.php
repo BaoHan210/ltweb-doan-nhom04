@@ -11,14 +11,9 @@ declare(strict_types=1);
 // 1. PHẦN XỬ LÝ LÝ THUYẾT / LOGIC (Không echo)
 require __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
-// -------------------------------------------------------------
-// KIỂM TRA QUYỀN ĐĂNG NHẬP
-// Nếu chưa đăng nhập -> Chuyển hướng sang trang dang-nhap.php
-// -------------------------------------------------------------
-if (empty($_SESSION['nguoi_dung']) && empty($_SESSION['user'])) {
-    header('Location: dang-nhap.php?thong_bao=can_dang_nhap');
-    exit;
-}
+require_once __DIR__ . '/inc/xac-thuc.php';
+$nguoiDung = yeuCauDangNhap();
+if (empty($_SESSION['csrf_di_cho'])) { $_SESSION['csrf_di_cho'] = bin2hex(random_bytes(32)); }
 
 use App\Data\KhoMonAn;
 use App\Services\DanhSachDiChoService;
@@ -40,44 +35,45 @@ function duongDanGoiY(): string
 }
 
 $kho = new KhoMonAn(db());
-$danhSachDiChoService = new DanhSachDiChoService();
+$danhSachDiChoService = new DanhSachDiChoService(db(), (int)$nguoiDung['id']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // 1. Xóa toàn bộ danh sách đi chợ
-    if (isset($_POST['xoa_danh_sach'])) {
-        $danhSachDiChoService->xoaHet();
-        chuyen_huong(duongDanGoiY());
+    $csrf = $_POST['csrf_token'] ?? null;
+    if (!is_string($csrf) || !hash_equals($_SESSION['csrf_di_cho'], $csrf)) {
+        http_response_code(403); exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
     }
-
-    // 2. Sửa số suất hoặc xóa một món trong danh sách đi chợ
-    $hanhDong = $_POST['hanh_dong'] ?? '';
-
-    if ($hanhDong === 'cap_nhat_di_cho' || $hanhDong === 'xoa_di_cho') {
-        $idSua = trim((string) ($_POST['id_mon'] ?? ''));
-
-        if ($hanhDong === 'xoa_di_cho') {
-            $danhSachDiChoService->xoa($idSua);
+    try {
+        if (isset($_POST['xoa_danh_sach'])) {
+            $danhSachDiChoService->xoaHet();
+            gan_thong_bao('success', 'Đã xóa toàn bộ danh sách đi chợ.');
         } else {
-            $soSuat = filter_var($_POST['so_luong'] ?? '', FILTER_VALIDATE_INT);
-
-            if ($soSuat === false || !$danhSachDiChoService->capNhatSoLuong($idSua, $soSuat)) {
-                gan_thong_bao('error', 'Số suất phải là số nguyên từ 1 đến 10.');
+            $hanhDong = $_POST['hanh_dong'] ?? '';
+            $idMon = $_POST['id_mon'] ?? '';
+            if (!is_string($idMon)) { $idMon = ''; }
+            $idMon = trim($idMon);
+            if ($hanhDong === 'xoa_di_cho') {
+                $danhSachDiChoService->xoa($idMon);
+                gan_thong_bao('success', 'Đã xóa món khỏi danh sách đi chợ.');
+            } elseif ($hanhDong === 'cap_nhat_di_cho') {
+                $soSuat = filter_var($_POST['so_luong'] ?? '', FILTER_VALIDATE_INT);
+                if ($soSuat === false || !$danhSachDiChoService->capNhatSoLuong($idMon, $soSuat)) {
+                    gan_thong_bao('error', 'Món không có trong danh sách hoặc số suất không hợp lệ (1–10).');
+                } else { gan_thong_bao('success', 'Đã cập nhật số suất.'); }
+            } else {
+                $them = $_POST['them_danh_sach'] ?? '';
+                if (!is_string($them)) { $them = ''; }
+                $danhSachDiChoService->them(trim($them));
+                gan_thong_bao('success', 'Đã thêm món vào danh sách đi chợ.');
             }
         }
-
-        chuyen_huong(duongDanGoiY());
+    } catch (\DomainException $e) {
+        gan_thong_bao('error', $e->getMessage());
+    } catch (\Throwable $e) {
+        error_log('Loi danh sach di cho: ' . $e->getMessage());
+        gan_thong_bao('error', 'Không thể cập nhật danh sách đi chợ.');
     }
-
-    // 3. Thêm món từ thẻ gợi ý (mỗi lần bấm cộng thêm 1 suất)
-    $idMonAn = trim((string) ($_POST['them_danh_sach'] ?? ''));
-
-    if ($idMonAn !== '' && $kho->timTheoId($idMonAn) !== null) {
-        $danhSachDiChoService->them($idMonAn);
-        gan_thong_bao('success', 'Đã thêm món vào danh sách đi chợ.');
-    }
-
     chuyen_huong(duongDanGoiY());
+    exit;
 }
 
 $danhSach = $kho->layTatCa();
@@ -272,6 +268,7 @@ require __DIR__ . '/inc/header.php';
                 </a>
 
                 <form action="goi-y-mon-an.php" method="post">
+              <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_di_cho']) ?>">
                   <input type="hidden" name="them_danh_sach" value="<?= e($monAn->id) ?>">
 
                   <?php foreach ([
@@ -317,10 +314,12 @@ require __DIR__ . '/inc/header.php';
     </section>
 
     <!-- DANH SÁCH ĐI CHỢ -->
+    <?php $duTinh = 0; foreach ($danhSachDiCho as $item) { $duTinh += $item['monAn']->nganSach * $item['soLuong']; } ?>
     <?php if (!empty($danhSachDiCho)): ?>
       <section class="danh-sach-di-cho" aria-labelledby="tieu-de-danh-sach-di-cho">
         <h2 id="tieu-de-danh-sach-di-cho">Danh sách đi chợ</h2>
         <p>Mỗi món kèm số suất cần nấu. Nguyên liệu của món được liệt kê bên dưới.</p>
+        <p><strong>Ngân sách tham khảo theo món:</strong> <?= number_format($duTinh, 0, ',', '.') ?> VNĐ (không phải báo giá từng nguyên liệu).</p>
 
         <?php foreach ($danhSachDiCho as $dong): ?>
           <?php $mon = $dong['monAn']; ?>

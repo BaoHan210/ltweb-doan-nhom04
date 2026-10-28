@@ -7,7 +7,9 @@
  * - Đăng ký tài khoản mới
  * - Kiểm tra dữ liệu phía server
  * - Lưu tài khoản vào MySQL qua KhoNguoiDung
- * - Mã hóa mật khẩu bằng password_hash()
+ * - Mã hóa mật khẩu bằng password_hash() tại KhoNguoiDung
+ * - Chặn email trùng, kể cả trường hợp hai yêu cầu đồng thời (MySQL 1062)
+ * - Không lấy vai trò tài khoản từ dữ liệu POST
  * - Không sử dụng data/mon-an.json và inc/tai-khoan.php
  */
 
@@ -123,8 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } else {
 
-                // Phương thức taoTaiKhoan() trong KhoNguoiDung
-                // tự password_hash() và đặt vai trò khach_hang.
+                // KhoNguoiDung::taoTaiKhoan() phải tự password_hash()
+                // và đặt vai trò khach_hang ở phía server, bỏ qua mọi
+                // trường vai_tro do trình duyệt cố tình gửi lên.
                 $daTao = $khoNguoiDung->taoTaiKhoan(
                     $duLieu['ho_ten'],
                     $duLieu['email'],
@@ -160,8 +163,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'Loi dang ky MySQL: ' . $e->getMessage()
             );
 
-            // Email trùng do hai yêu cầu gửi gần như cùng lúc
-            if ($e->getCode() === '23000') {
+            // Chỉ coi mã MySQL 1062 là email/giá trị UNIQUE bị trùng.
+            // Các lỗi ràng buộc khác không nên gộp thành 'email trùng'.
+            if ((int) ($e->errorInfo[1] ?? 0) === 1062) {
                 $loi['email'] =
                     'Email này đã được đăng ký. Vui lòng dùng email khác.';
             } else {
