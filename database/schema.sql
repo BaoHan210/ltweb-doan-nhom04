@@ -179,3 +179,15 @@ CREATE TABLE tv_du_an (
   CHECK (nam BETWEEN 2000 AND 2100),
   FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE tv_phien_ban (
+  id    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  mssv  CHAR(10) NOT NULL,
+  ma    VARCHAR(20) NOT NULL,
+  ten   VARCHAR(100) NOT NULL,
+  ngay  DATE NOT NULL,
+  nhom  VARCHAR(20) NOT NULL,
+  mo_ta VARCHAR(500) NULL,
+  CHECK (nhom IN ('giao-dien', 'tinh-nang', 'sua-loi')),
+  FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
+) ENGINE=InnoDB;

@@ -1603,3 +1603,11 @@ INSERT INTO thanh_vien (mssv, ho_ten, nguoi_dung_id) VALUES
 INSERT INTO tv_du_an (mssv, ten, mo_ta, nam) VALUES
   ('3120224045', 'Website Cook with me',
    'Website chia sẻ công thức nấu ăn của nhóm 04', 2026);
+
+INSERT INTO tv_phien_ban (mssv, ma, ten, ngay, nhom, mo_ta) VALUES
+  ('3120224045', 'v1.0', 'Xây dựng giao diện ban đầu', '2026-09-01', 'giao-dien',
+   'Hoàn thiện cấu trúc giao diện cơ bản của website.'),
+  ('3120224045', 'v1.1', 'Cải thiện chức năng tìm kiếm', '2026-09-10', 'tinh-nang',
+   'Cập nhật chức năng tìm kiếm và khám phá công thức.'),
+  ('3120224045', 'v1.2', 'Sửa lỗi hiển thị', '2026-09-20', 'sua-loi',
+   'Điều chỉnh một số lỗi giao diện trong quá trình kiểm thử.');
