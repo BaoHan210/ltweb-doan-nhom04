@@ -191,3 +191,30 @@ CREATE TABLE tv_phien_ban (
   CHECK (nhom IN ('giao-dien', 'tinh-nang', 'sua-loi')),
   FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- 11. Bang so luu but cua Trinh
+CREATE TABLE tv_trinh_luu_but (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mssv CHAR(10) NOT NULL,
+    ten_khach VARCHAR(50) NOT NULL,
+    loi_nhan VARCHAR(500) NOT NULL,
+    thoi_gian DATETIME NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 12. Bang luot xem trang cua Trinh
+CREATE TABLE tv_trinh_luot_xem (
+    mssv CHAR(10) NOT NULL,
+    ngay DATE NOT NULL,
+    so_luot INT UNSIGNED NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (mssv, ngay),
+
+    FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
