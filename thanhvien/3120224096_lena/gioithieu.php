@@ -11,11 +11,20 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 require_once __DIR__ . '/../../inc/config.php';
+if (!isset($pdo)) {
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=ltweb_nhom04;charset=utf8mb4', 'root', '');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die('Kết nối CSDL thất bại: ' . $e->getMessage());
+    }
+}
 
 $tieuDe = 'Thông tin cá nhân - Lê Thị A Na';
 $trang = 'gioi-thieu';
 $goc = '../../';
 $customJS = 'thanhvien/3120224096_lena/js/canhan.js';
+$mssv = '3120224096'; // MSSV của bạn
 
 $congThuc = [
     'thit-kho' => [
@@ -95,6 +104,7 @@ $congThuc = [
     ]
 ];
 
+// Xử lý Form 1: Tính khẩu phần
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST'
     && isset($_POST['tinh_khau_phan'])
@@ -149,10 +159,36 @@ if (
     exit;
 }
 
+// Xử lý Form CSDL mới: Thêm dự án cá nhân (tv_du_an_ca_nhan)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['them_du_an'])) {
+    $tenDuAn = trim($_POST['ten_du_an'] ?? '');
+    $congNghe = trim($_POST['cong_nghe'] ?? '');
+    $trangThai = trim($_POST['trang_thai'] ?? '');
+    $moTa = trim($_POST['mo_ta'] ?? '');
+
+    if (!empty($tenDuAn) && !empty($congNghe) && !empty($trangThai)) {
+        $stmtInsert = $pdo->prepare("INSERT INTO tv_du_an_ca_nhan (mssv, ten_du_an, cong_nghe, trang_thai, mo_ta) VALUES (?, ?, ?, ?, ?)");
+        $stmtInsert->execute([$mssv, $tenDuAn, $congNghe, $trangThai, $moTa]);
+    }
+    header('Location: ' . $_SERVER['SCRIPT_NAME'] . '#quan-ly-du-an');
+    exit;
+}
+
 $khauPhanLoi = $_SESSION['khauPhanLoi'] ?? '';
 $khauPhanKetQua = $_SESSION['khauPhanKetQua'] ?? null;
 
 unset($_SESSION['khauPhanLoi'], $_SESSION['khauPhanKetQua']);
+
+// Lấy danh sách dự án từ CSDL có hỗ trợ lọc theo trạng thái
+$filterStatus = $_GET['trang_thai_loc'] ?? '';
+if (!empty($filterStatus)) {
+    $stmtDuAn = $pdo->prepare("SELECT * FROM tv_du_an_ca_nhan WHERE mssv = ? AND trang_thai = ? ORDER BY id DESC");
+    $stmtDuAn->execute([$mssv, $filterStatus]);
+} else {
+    $stmtDuAn = $pdo->prepare("SELECT * FROM tv_du_an_ca_nhan WHERE mssv = ? ORDER BY id DESC");
+    $stmtDuAn->execute([$mssv]);
+}
+$danhSachDuAn = $stmtDuAn->fetchAll();
 
 require_once __DIR__ . '/../../inc/header.php';
 ?>
@@ -461,6 +497,72 @@ require_once __DIR__ . '/../../inc/header.php';
     <?php endif; ?>
 </section>
 
+<!-- QUẢN LÝ DỰ ÁN CÁ NHÂN (2 Chức năng CSDL mới: Thêm & Lọc dự án) -->
+<section class="quan-ly-du-an" id="quan-ly-du-an" style="margin-top: 30px; padding: 20px; background: #fff; border-radius: 8px;">
+    <h2>Quản lý dự án cá nhân (Dữ liệu từ CSDL)</h2>
+    <p>Thêm dự án mới và lọc danh sách dự án trực tiếp từ cơ sở dữ liệu.</p>
+
+    <!-- Form thêm dự án mới -->
+    <form method="POST" action="#quan-ly-du-an" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+        <h3>Thêm dự án mới</h3>
+        <div style="margin-bottom: 10px;">
+            <label>Tên dự án:</label><br>
+            <input type="text" name="ten_du_an" required style="width: 100%; padding: 6px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label>Công nghệ sử dụng:</label><br>
+            <input type="text" name="cong_nghe" required style="width: 100%; padding: 6px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label>Trạng thái:</label><br>
+            <select name="trang_thai" style="width: 100%; padding: 6px;">
+                <option value="Đang thực hiện">Đang thực hiện</option>
+                <option value="Đã hoàn thành">Đã hoàn thành</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label>Mô tả:</label><br>
+            <textarea name="mo_ta" rows="2" required style="width: 100%; padding: 6px;"></textarea>
+        </div>
+        <button type="submit" name="them_du_an" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Thêm dự án</button>
+    </form>
+
+    <!-- Bộ lọc trạng thái dự án -->
+    <div style="margin-bottom: 15px;">
+        <strong>Lọc theo trạng thái: </strong>
+        <a href="gioithieu.php#quan-ly-du-an" style="margin-right: 10px;">Tất cả</a>
+        <a href="gioithieu.php?trang_thai_loc=Đang+thực+hiện#quan-ly-du-an" style="margin-right: 10px;">Đang thực hiện</a>
+        <a href="gioithieu.php?trang_thai_loc=Đã+hoàn+thành#quan-ly-du-an">Đã hoàn thành</a>
+    </div>
+
+    <!-- Hiển thị danh sách dự án -->
+    <h3>Danh sách dự án của tôi</h3>
+    <?php if (empty($danhSachDuAn)): ?>
+        <p>Không có dự án nào phù hợp.</p>
+    <?php else: ?>
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f4f4f4;">
+                    <th>Tên dự án</th>
+                    <th>Công nghệ</th>
+                    <th>Trạng thái</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($danhSachDuAn as $da): ?>
+                    <tr>
+                        <td><strong><?= e($da['ten_du_an']) ?></strong></td>
+                        <td><?= e($da['cong_nghe']) ?></td>
+                        <td><?= e($da['trang_thai']) ?></td>
+                        <td><?= e($da['mo_ta']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</section>
+
 <!-- DANH SÁCH KỸ NĂNG VÀ DỰ ÁN -->
 <?php
 $danhSachKyNang = [
@@ -471,7 +573,7 @@ $danhSachKyNang = [
     'Làm việc nhóm và thiết kế giao diện web cơ bản'
 ];
 
-$danhSachDuAn = [
+$danhSachDuAnCu = [
     'Website Cook with me - mạng xã hội chia sẻ công thức nấu ăn',
     'Thiết kế giao diện trang cá nhân thành viên',
     'Xây dựng chức năng tương tác cho trang cá nhân'
@@ -544,7 +646,7 @@ if (!in_array($nhom, ['tat-ca', 'ky-nang', 'du-an'], true)) {
 
       <ul>
 
-        <?php foreach ($danhSachDuAn as $duAn): ?>
+        <?php foreach ($danhSachDuAnCu as $duAn): ?>
 
           <li>
             <?= e($duAn) ?>
