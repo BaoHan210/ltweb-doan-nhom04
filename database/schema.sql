@@ -213,6 +213,35 @@ CREATE TABLE tv_trinh_luot_xem (
     so_luot INT UNSIGNED NOT NULL DEFAULT 0,
 
     PRIMARY KEY (mssv, ngay),
+    
+-- =====================================================
+-- PHAN B - BANG RIENG CUA NGUYEN THI NGOC BINH
+-- MSSV: 3120224013
+-- =====================================================
+
+CREATE TABLE tv_binh_danh_gia (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mssv CHAR(10) NOT NULL,
+    mon_an_id INT UNSIGNED NOT NULL,
+    so_sao TINYINT UNSIGNED NOT NULL,
+    nhan_xet VARCHAR(500),
+    thoi_gian DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_tv_binh_thanh_vien
+        FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_tv_binh_mon_an
+        FOREIGN KEY (mon_an_id)
+        REFERENCES mon_an(id),
+
+    CONSTRAINT chk_tv_binh_so_sao
+        CHECK (so_sao BETWEEN 1 AND 5)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
 
     FOREIGN KEY (mssv)
         REFERENCES thanh_vien(mssv)
