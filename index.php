@@ -289,13 +289,12 @@ require __DIR__ . '/inc/header.php';
                                 <?= e($monAn->ten) ?>
                             </h3>
 
-                            <div
-                                role="img"
+                            <p
                                 class="danh-gia-mon"
                                 aria-label="Đánh giá món ăn"
                             >
                                 ★★★★★
-                            </div>
+                            </p>
 
                             <p class="danh-muc-mon">
                                 <?= e($monAn->danhMuc) ?>
