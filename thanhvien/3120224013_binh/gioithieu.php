@@ -1,203 +1,144 @@
-
 <?php
-// Trang cá nhân Nguyễn Thị Ngọc Bình - Nhóm 04
-// Chức năng 1: Lọc món ăn theo danh mục (GET)
-// Chức năng 2: Đánh giá món ăn (POST, PRG)
-
-use App\Data\KhoMonAn;
+// Trang ca nhan Nguyen Thi Ngoc Binh - MSSV 3120224013.
+// Chuc nang 1: Loc danh gia theo danh muc bang PDO (GET, JOIN).
+// Chuc nang 2: Them/sua/xoa danh gia vao MySQL (POST, CSRF, PRG).
+// Thu: mo trang, loc danh muc, dang nhap chu trang de gui/sua/xoa.
 
 $goc = '../../';
-
 require_once __DIR__ . '/../../inc/config.php';
 require_once __DIR__ . '/../../inc/db.php';
+require_once __DIR__ . '/../../inc/xac-thuc.php';
 
-// Đọc dữ liệu món ăn từ MySQL qua PDO
-$kho = new KhoMonAn(db());
-$danhSachTatCa = $kho->layTatCa();
+$pdo = db();
+$mssvBinh = '3120224013';
 
-$danhMucChuan = [
-    'tat-ca' => 'Tất cả danh mục',
-    'Món chính' => 'Món chính',
-    'Món khai vị' => 'Món khai vị',
-    'Món canh' => 'Món canh',
-    'Món xào' => 'Món xào',
-    'Món rau' => 'Món rau',
-    'Món tráng miệng' => 'Món tráng miệng',
-    'Đồ uống' => 'Đồ uống',
-    'Món chay' => 'Món chay'
-];
+// Quyen chu trang duoc kiem tra o may chu theo ID tai khoan dang nhap.
+$stmt = $pdo->prepare('SELECT nguoi_dung_id FROM thanh_vien WHERE mssv = :mssv LIMIT 1');
+$stmt->execute(['mssv' => $mssvBinh]);
+$chuTrangId = $stmt->fetchColumn();
+$nguoiDungId = idNguoiDungHienTai();
+$laChuTrang = $chuTrangId !== false && $chuTrangId !== null
+    && $nguoiDungId > 0 && (int) $chuTrangId === $nguoiDungId;
 
-// CHỨC NĂNG 1: LỌC MÓN ĂN
-$chonDanhMuc = $_GET['danh_muc'] ?? 'tat-ca';
+if (!isset($_SESSION['csrf_binh']) || !is_string($_SESSION['csrf_binh'])) {
+    $_SESSION['csrf_binh'] = bin2hex(random_bytes(32));
+}
+$csrfBinh = $_SESSION['csrf_binh'];
 
-if (
-    !is_string($chonDanhMuc) ||
-    !array_key_exists($chonDanhMuc, $danhMucChuan)
-) {
-    $chonDanhMuc = 'tat-ca';
+// Danh muc lay truc tiep tu MySQL, khong can mang ten co dinh.
+$stmt = $pdo->query('SELECT id, ten FROM danh_muc ORDER BY ten ASC');
+$danhMuc = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$chonDanhMuc = filter_input(INPUT_GET, 'danh_muc', FILTER_VALIDATE_INT);
+$chonDanhMuc = ($chonDanhMuc === false || $chonDanhMuc === null || $chonDanhMuc < 1)
+    ? 0 : $chonDanhMuc;
+$idDanhMucHopLe = array_map('intval', array_column($danhMuc, 'id'));
+if ($chonDanhMuc !== 0 && !in_array($chonDanhMuc, $idDanhMucHopLe, true)) {
+    $chonDanhMuc = 0;
 }
 
-$monAnHienThi = array_filter(
-    $danhSachTatCa,
-    static function ($mon) use ($chonDanhMuc): bool {
-        return $chonDanhMuc === 'tat-ca'
-            || $mon->danhMuc === $chonDanhMuc;
+// Form danh gia chon mon tu bang mon_an (ID so la khoa ngoai).
+$stmt = $pdo->query('SELECT id, ten FROM mon_an ORDER BY ten ASC');
+$danhSachTatCa = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Xoa/sua/tao phai co POST, CSRF, quyen chu trang va truy van rang buoc MSSV.
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    if (!$laChuTrang) {
+        http_response_code(403);
+        exit('403 - Chi chu trang moi duoc quan ly danh gia.');
     }
-);
-
-// CHỨC NĂNG 2: ĐÁNH GIÁ MÓN ĂN
-$thuMucLuu = __DIR__ . '/../../storage';
-$tepDanhGia = $thuMucLuu . '/3120224013_binh_danhgia.json';
-
-if (!is_dir($thuMucLuu)) {
-    mkdir($thuMucLuu, 0755, true);
-}
-
-if (
-    ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' &&
-    isset($_POST['gui_danh_gia'])
-) {
-    $idMonGui = $_POST['id_mon'] ?? '';
-    $nhanXetGui = $_POST['nhan_xet'] ?? '';
-
-    $idMon = is_string($idMonGui)
-        ? trim($idMonGui) : '';
-
-    $nhanXet = is_string($nhanXetGui)
-        ? trim($nhanXetGui) : '';
-
-    $soSao = filter_var(
-        $_POST['so_sao'] ?? null,
-        FILTER_VALIDATE_INT
-    );
-
-    $doDai = mb_strlen($nhanXet, 'UTF-8');
-
-    $tenMonDuocChon = null;
-
-    foreach ($danhSachTatCa as $mon) {
-        if ((string)$mon->id === $idMon) {
-            $tenMonDuocChon = $mon->ten;
-            break;
-        }
+    $token = $_POST['csrf_token'] ?? null;
+    if (!is_string($token) || !hash_equals($csrfBinh, $token)) {
+        http_response_code(403);
+        exit('403 - CSRF token khong hop le.');
     }
 
-    if ($tenMonDuocChon === null) {
-        gan_thong_bao(
-            'error',
-            'Vui lòng chọn món ăn hợp lệ!'
-        );
-    } elseif (
-        $soSao === false ||
-        $soSao < 1 ||
-        $soSao > 5
-    ) {
-        gan_thong_bao(
-            'error',
-            'Số sao phải từ 1 đến 5!'
-        );
-    } elseif (
-        $nhanXet === '' ||
-        $doDai < 5 ||
-        $doDai > 500
-    ) {
-        gan_thong_bao(
-            'error',
-            'Nhận xét phải từ 5 đến 500 ký tự!'
-        );
-    } else {
-        $danhGiaMoi = [
-            'id_mon' => $idMon,
-            'ten_mon' => $tenMonDuocChon,
-            'so_sao' => $soSao,
-            'nhan_xet' => $nhanXet,
-            'thoi_gian' => date('d/m/Y H:i')
-        ];
+    $hanhDong = $_POST['hanh_dong'] ?? 'them';
+    if (!is_string($hanhDong) || !in_array($hanhDong, ['them', 'sua', 'xoa'], true)) {
+        http_response_code(400);
+        exit('400 - Thao tac khong hop le.');
+    }
+    $danhGiaId = filter_var($_POST['danh_gia_id'] ?? null, FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 1]]);
 
-        $fp = fopen($tepDanhGia, 'c+');
-        $daLuu = false;
-
-        if ($fp !== false) {
-            if (flock($fp, LOCK_EX)) {
-                rewind($fp);
-                $noiDungCu = stream_get_contents($fp);
-                $duLieuCu = [];
-
-                if (
-                    is_string($noiDungCu) &&
-                    trim($noiDungCu) !== ''
-                ) {
-                    $jsonCu = json_decode($noiDungCu, true);
-
-                    if (is_array($jsonCu)) {
-                        $duLieuCu = $jsonCu;
-                    }
-                }
-
-                $duLieuCu[] = $danhGiaMoi;
-
-                $jsonMoi = json_encode(
-                    $duLieuCu,
-                    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
-                );
-
-                if ($jsonMoi !== false) {
-                    rewind($fp);
-                    $daXoa = ftruncate($fp, 0);
-
-                    if ($daXoa) {
-                        $soByte = fwrite($fp, $jsonMoi);
-                        fflush($fp);
-
-                        $daLuu = $soByte !== false
-                            && $soByte === strlen($jsonMoi);
-                    }
-                }
-
-                flock($fp, LOCK_UN);
-            }
-
-            fclose($fp);
-        }
-
-        if ($daLuu) {
-            gan_thong_bao(
-                'success',
-                'Đánh giá món ăn đã được lưu thành công!'
-            );
+    if ($hanhDong === 'xoa') {
+        if ($danhGiaId === false || $danhGiaId === null) {
+            gan_thong_bao('error', 'Danh gia can xoa khong hop le.');
         } else {
-            gan_thong_bao(
-                'error',
-                'Không thể lưu đánh giá lúc này.'
-            );
+            $stmt = $pdo->prepare('DELETE FROM tv_binh_danh_gia WHERE id = :id AND mssv = :mssv');
+            $stmt->execute(['id' => $danhGiaId, 'mssv' => $mssvBinh]);
+            gan_thong_bao($stmt->rowCount() ? 'success' : 'error',
+                $stmt->rowCount() ? 'Da xoa danh gia.' : 'Khong tim thay danh gia de xoa.');
+        }
+    } else {
+        $soSao = filter_var($_POST['so_sao'] ?? null, FILTER_VALIDATE_INT);
+        $nhanXetInput = $_POST['nhan_xet'] ?? null;
+        $nhanXet = is_string($nhanXetInput) ? trim($nhanXetInput) : '';
+        $doDai = mb_strlen($nhanXet, 'UTF-8');
+        $idMon = filter_var($_POST['id_mon'] ?? null, FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]]);
+
+        if ($soSao === false || $soSao === null || $soSao < 1 || $soSao > 5) {
+            gan_thong_bao('error', 'So sao phai tu 1 den 5.');
+        } elseif ($doDai < 5 || $doDai > 500) {
+            gan_thong_bao('error', 'Nhan xet phai tu 5 den 500 ky tu.');
+        } elseif ($hanhDong === 'them') {
+            if ($idMon === false || $idMon === null) {
+                gan_thong_bao('error', 'Vui long chon mon an hop le.');
+            } else {
+                $stmt = $pdo->prepare('INSERT INTO tv_binh_danh_gia '
+                    . '(mssv, mon_an_id, so_sao, nhan_xet) '
+                    . 'SELECT :mssv, m.id, :so_sao, :nhan_xet FROM mon_an m WHERE m.id = :id_mon');
+                $stmt->execute(['mssv' => $mssvBinh, 'so_sao' => $soSao,
+                    'nhan_xet' => $nhanXet, 'id_mon' => $idMon]);
+                gan_thong_bao($stmt->rowCount() ? 'success' : 'error',
+                    $stmt->rowCount() ? 'Da luu danh gia vao MySQL.' : 'Mon an khong ton tai.');
+            }
+        } else {
+            if ($danhGiaId === false || $danhGiaId === null) {
+                gan_thong_bao('error', 'Danh gia can sua khong hop le.');
+            } else {
+                $stmt = $pdo->prepare('UPDATE tv_binh_danh_gia '
+                    . 'SET so_sao = :so_sao, nhan_xet = :nhan_xet '
+                    . 'WHERE id = :id AND mssv = :mssv');
+                $stmt->execute(['so_sao' => $soSao, 'nhan_xet' => $nhanXet,
+                    'id' => $danhGiaId, 'mssv' => $mssvBinh]);
+                gan_thong_bao('success', 'Da xu ly yeu cau cap nhat danh gia.');
+            }
         }
     }
-
-    $query = $chonDanhMuc !== 'tat-ca'
-        ? '?danh_muc=' . urlencode($chonDanhMuc)
-        : '';
-
-    chuyen_huong('gioithieu.php' . $query);
+    // POST/Redirect/GET: tai lai trang khong gui lai bieu mau.
+    $duongDan = 'gioithieu.php' . ($chonDanhMuc > 0 ? '?danh_muc=' . $chonDanhMuc : '');
+    chuyen_huong($duongDan);
 }
 
-// Đọc danh sách đánh giá
-$danhSachDanhGia = [];
-
-if (is_file($tepDanhGia) && is_readable($tepDanhGia)) {
-    $noiDung = file_get_contents($tepDanhGia);
-    $duLieu = json_decode($noiDung ?: '', true);
-
-    if (is_array($duLieu)) {
-        $danhSachDanhGia = $duLieu;
-    }
+// CHUC NANG 1: chi loc cac mon da duoc Binh danh gia (khong trung bo loc chung).
+$sql = 'SELECT dg.id, dg.so_sao, dg.nhan_xet, dg.thoi_gian, '
+    . 'm.ten AS ten_mon, m.slug, dm.ten AS danh_muc '
+    . 'FROM tv_binh_danh_gia dg '
+    . 'JOIN mon_an m ON dg.mon_an_id = m.id '
+    . 'JOIN danh_muc dm ON m.danh_muc_id = dm.id '
+    . 'WHERE dg.mssv = :mssv';
+$params = ['mssv' => $mssvBinh];
+if ($chonDanhMuc > 0) {
+    $sql .= ' AND dm.id = :danh_muc_id';
+    $params['danh_muc_id'] = $chonDanhMuc;
 }
+$sql .= ' ORDER BY dg.thoi_gian DESC, dg.id DESC';
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$monAnHienThi = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Cấu hình trang và CSS riêng
-$tieuDe = 'Thông tin cá nhân - Nguyễn Thị Ngọc Bình';
+// CHUC NANG 2: lich su danh gia tu MySQL (day du, khong phu thuoc bo loc).
+$stmt = $pdo->prepare('SELECT dg.id, dg.so_sao, dg.nhan_xet, dg.thoi_gian, '
+    . 'm.ten AS ten_mon FROM tv_binh_danh_gia dg '
+    . 'JOIN mon_an m ON dg.mon_an_id = m.id '
+    . 'WHERE dg.mssv = :mssv ORDER BY dg.thoi_gian DESC, dg.id DESC');
+$stmt->execute(['mssv' => $mssvBinh]);
+$danhSachDanhGia = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$tieuDe = 'Thong tin ca nhan - Nguyen Thi Ngoc Binh';
 $trang = 'gioi-thieu';
-$cssRieng = $goc .
-    'thanhvien/3120224013_binh/trang-ca-nhan.css';
-
+$cssRieng = $goc . 'thanhvien/3120224013_binh/trang-ca-nhan.css';
 require_once __DIR__ . '/../../inc/header.php';
 ?>
 
@@ -317,176 +258,105 @@ require_once __DIR__ . '/../../inc/header.php';
         </p>
     </section>
 
-    <!-- CHỨC NĂNG 1: LỌC MÓN ĂN -->
-    <section
-        class="chuc-nang-php"
-        aria-labelledby="tieu-de-loc-mon"
-    >
-        <h2 id="tieu-de-loc-mon">
-            1. Khám phá món ăn theo danh mục (PHP GET)
-        </h2>
-
-        <p>
-            Chọn danh mục để lọc các món ăn từ
-            kho dữ liệu máy chủ.
-        </p>
-
+    <!-- CHỨC NĂNG 1: LỌC ĐÁNH GIÁ THEO DANH MỤC BẰNG PDO -->
+    <section class="chuc-nang-php" aria-labelledby="tieu-de-loc-mon">
+        <h2 id="tieu-de-loc-mon">1. Lọc món Bình đã đánh giá theo danh mục (MySQL)</h2>
+        <p>Chọn danh mục để lọc các công thức đã được Bình đánh giá.</p>
         <form method="get" action="gioithieu.php">
-            <div>
-                <label for="danh_muc">
-                    Chọn danh mục món ăn:
-                </label>
-
-                <select name="danh_muc" id="danh_muc">
-                    <?php foreach ($danhMucChuan as $ma => $ten): ?>
-                        <option
-                            value="<?= e($ma) ?>"
-                            <?= $chonDanhMuc === $ma ? 'selected' : '' ?>
-                        >
-                            <?= e($ten) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-
-                <button type="submit">
-                    Lọc món ăn
-                </button>
-            </div>
+            <label for="danh_muc">Chọn danh mục món ăn:</label>
+            <select name="danh_muc" id="danh_muc">
+                <option value="0">Tất cả danh mục</option>
+                <?php foreach ($danhMuc as $dm): ?>
+                    <option value="<?= (int) $dm['id'] ?>" <?= $chonDanhMuc === (int) $dm['id'] ? 'selected' : '' ?>><?= e($dm['ten']) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Lọc món ăn</button>
         </form>
-
-        <ul class="ket-qua-mon-an">
-            <?php foreach ($monAnHienThi as $mon): ?>
-                <li>
-                    <strong>
-                        <a
-                            href="<?= e($goc) ?>chi-tiet.php?id=<?= e($mon->id) ?>"
-                            style="color:inherit;text-decoration:none;"
-                        >
-                            <?= e($mon->ten) ?>
-                        </a>
-                    </strong>
-
-                    — Danh mục:
-                    <em><?= e($mon->danhMuc) ?></em>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-
-        <?php if (count($monAnHienThi) === 0): ?>
-            <p>
-                Không tìm thấy món ăn nào thuộc danh mục này.
-            </p>
+        <?php if ($monAnHienThi === []): ?>
+            <p>Chưa có đánh giá thuộc danh mục này.</p>
+        <?php else: ?>
+            <ul class="ket-qua-mon-an">
+                <?php foreach ($monAnHienThi as $mon): ?>
+                    <li>
+                        <strong><a href="<?= e($goc) ?>chi-tiet.php?id=<?= e($mon['slug']) ?>"><?= e($mon['ten_mon']) ?></a></strong>
+                        — Danh mục: <em><?= e($mon['danh_muc']) ?></em>
+                        — Đánh giá: <?= (int) $mon['so_sao'] ?>/5 ⭐
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         <?php endif; ?>
     </section>
 
-    <!-- CHỨC NĂNG 2: ĐÁNH GIÁ MÓN ĂN -->
-    <section
-        class="chuc-nang-php"
-        aria-labelledby="tieu-de-danh-gia"
-    >
-        <h2 id="tieu-de-danh-gia">
-            2. Đánh giá công thức món ăn (PHP POST)
-        </h2>
-
-        <p>
-            Chia sẻ cảm nhận và đánh giá chất lượng
-            các công thức món ăn.
-        </p>
-
-        <form method="post" action="gioithieu.php">
-            <div>
-                <label for="id_mon">
-                    Chọn món ăn muốn đánh giá:
-                </label>
-
-                <select name="id_mon" id="id_mon" required>
-                    <option value="">
-                        -- Chọn món ăn --
-                    </option>
-
-                    <?php foreach ($danhSachTatCa as $mon): ?>
-                        <option value="<?= e($mon->id) ?>">
-                            <?= e($mon->ten) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div>
-                <label for="so_sao">
-                    Chấm điểm chất lượng:
-                </label>
-
-                <select name="so_sao" id="so_sao" required>
-                    <option value="">
-                        -- Chọn số sao --
-                    </option>
-                    <option value="5">
-                        ⭐⭐⭐⭐⭐ (5 sao - Tuyệt vời)
-                    </option>
-                    <option value="4">
-                        ⭐⭐⭐⭐ (4 sao - Rất ngon)
-                    </option>
-                    <option value="3">
-                        ⭐⭐⭐ (3 sao - Tạm ổn)
-                    </option>
-                    <option value="2">
-                        ⭐⭐ (2 sao - Cần cải thiện)
-                    </option>
-                    <option value="1">
-                        ⭐ (1 sao - Không đạt)
-                    </option>
-                </select>
-            </div>
-
-            <div>
-                <label for="nhan_xet">
-                    Nhận xét chi tiết (5–500 ký tự):
-                </label>
-
-                <textarea
-                    name="nhan_xet"
-                    id="nhan_xet"
-                    rows="4"
-                    maxlength="500"
-                    placeholder="Viết cảm nhận về hương vị, nguyên liệu, cách làm..."
-                    required
-                ></textarea>
-            </div>
-
-            <button
-                type="submit"
-                name="gui_danh_gia"
-                value="1"
-            >
-                Gửi đánh giá
-            </button>
-        </form>
+    <!-- CHỨC NĂNG 2: QUẢN LÝ ĐÁNH GIÁ TRÊN MYSQL -->
+    <section class="chuc-nang-php" aria-labelledby="tieu-de-danh-gia">
+        <h2 id="tieu-de-danh-gia">2. Đánh giá công thức món ăn (MySQL, POST)</h2>
+        <p>Đánh giá được lưu trong bảng <code>tv_binh_danh_gia</code>. Chỉ chủ trang được thêm, sửa hoặc xóa.</p>
+        <?php if ($laChuTrang): ?>
+            <form method="post" action="gioithieu.php">
+                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                <input type="hidden" name="hanh_dong" value="them">
+                <div>
+                    <label for="id_mon">Chọn món ăn muốn đánh giá:</label>
+                    <select name="id_mon" id="id_mon" required>
+                        <option value="">-- Chọn món ăn --</option>
+                        <?php foreach ($danhSachTatCa as $mon): ?>
+                            <option value="<?= (int) $mon['id'] ?>"><?= e($mon['ten']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="so_sao">Chấm điểm chất lượng:</label>
+                    <select name="so_sao" id="so_sao" required>
+                        <option value="">-- Chọn số sao --</option>
+                        <?php for ($sao = 5; $sao >= 1; $sao--): ?>
+                            <option value="<?= $sao ?>"><?= $sao ?> sao</option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="nhan_xet">Nhận xét chi tiết (5–500 ký tự):</label>
+                    <textarea name="nhan_xet" id="nhan_xet" rows="4" minlength="5" maxlength="500" required></textarea>
+                </div>
+                <button type="submit">Gửi đánh giá</button>
+            </form>
+        <?php else: ?>
+            <p>Chỉ chủ trang đã đăng nhập và liên kết tài khoản mới được quản lý đánh giá.
+            <a href="<?= e($goc) ?>dang-nhap.php">Đăng nhập</a></p>
+        <?php endif; ?>
 
         <h3>Lịch sử đánh giá gần đây</h3>
-
-        <?php if (count($danhSachDanhGia) === 0): ?>
+        <?php if ($danhSachDanhGia === []): ?>
             <p>Chưa có đánh giá nào được ghi nhận.</p>
         <?php else: ?>
             <ul class="danh-sach-danh-gia">
-                <?php foreach (array_reverse($danhSachDanhGia) as $dg): ?>
+                <?php foreach ($danhSachDanhGia as $dg): ?>
                     <li>
-                        <strong>
-                            <?= e($dg['ten_mon'] ?? '') ?>
-                        </strong>
-
-                        — Đánh giá:
-                        <strong>
-                            <?= e($dg['so_sao'] ?? '') ?>/5 ⭐
-                        </strong>
-
-                        <p>
-                            <?= nl2br(e($dg['nhan_xet'] ?? '')) ?>
-                        </p>
-
-                        <small>
-                            <?= e($dg['thoi_gian'] ?? '') ?>
-                        </small>
+                        <strong><?= e($dg['ten_mon']) ?></strong>
+                        — Đánh giá: <strong><?= (int) $dg['so_sao'] ?>/5 ⭐</strong>
+                        <p><?= nl2br(e($dg['nhan_xet'])) ?></p>
+                        <small><?= e($dg['thoi_gian']) ?></small>
+                        <?php if ($laChuTrang): ?>
+                            <form method="post" action="gioithieu.php">
+                                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                                <input type="hidden" name="hanh_dong" value="sua">
+                                <input type="hidden" name="danh_gia_id" value="<?= (int) $dg['id'] ?>">
+                                <label for="sao-sua-<?= (int) $dg['id'] ?>">Sửa số sao:</label>
+                                <select id="sao-sua-<?= (int) $dg['id'] ?>" name="so_sao">
+                                    <?php for ($sao = 1; $sao <= 5; $sao++): ?>
+                                        <option value="<?= $sao ?>" <?= (int) $dg['so_sao'] === $sao ? 'selected' : '' ?>><?= $sao ?> sao</option>
+                                    <?php endfor; ?>
+                                </select>
+                                <label for="nx-sua-<?= (int) $dg['id'] ?>">Sửa nhận xét:</label>
+                                <textarea id="nx-sua-<?= (int) $dg['id'] ?>" name="nhan_xet" rows="2" minlength="5" maxlength="500" required><?= e($dg['nhan_xet']) ?></textarea>
+                                <button type="submit">Lưu sửa</button>
+                            </form>
+                            <form method="post" action="gioithieu.php">
+                                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                                <input type="hidden" name="hanh_dong" value="xoa">
+                                <input type="hidden" name="danh_gia_id" value="<?= (int) $dg['id'] ?>">
+                                <button type="submit">Xóa đánh giá</button>
+                            </form>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
