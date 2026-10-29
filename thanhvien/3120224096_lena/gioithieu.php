@@ -540,7 +540,7 @@ require_once __DIR__ . '/../../inc/header.php';
     <?php if (empty($danhSachDuAn)): ?>
         <p>Không có dự án nào phù hợp.</p>
     <?php else: ?>
-        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
             <thead>
                 <tr style="background: #f4f4f4;">
                     <th>Tên dự án</th>
