@@ -242,8 +242,3 @@ CREATE TABLE tv_binh_danh_gia (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
-
-    FOREIGN KEY (mssv)
-        REFERENCES thanh_vien(mssv)
-        ON DELETE CASCADE
-) ENGINE=InnoDB;
