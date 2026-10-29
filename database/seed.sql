@@ -1672,3 +1672,45 @@ VALUES
     ('3120224155', '2026-10-25', 8),
     ('3120224155', '2026-10-26', 12),
     ('3120224155', '2026-10-27', 5);
+
+-- ==========================================
+-- PHAN B - DU LIEU MAU NGUYEN THI NGOC BINH
+-- MSSV: 3120224013
+-- ==========================================
+
+-- 1. Them thong tin thanh vien Binh
+INSERT INTO thanh_vien (mssv, ho_ten, nguoi_dung_id)
+VALUES (
+    '3120224013',
+    'Nguyễn Thị Ngọc Bình',
+    (
+        SELECT id FROM nguoi_dung
+        WHERE email = 'ngocbinh@cookwithme.com'
+        LIMIT 1
+    )
+);
+
+-- 2. Danh gia mon Banh xeo - 5 sao
+INSERT INTO tv_binh_danh_gia
+(mssv, mon_an_id, so_sao, nhan_xet)
+SELECT '3120224013', id, 5,
+       'Món ăn ngon, dễ thực hiện và phù hợp với gia đình.'
+FROM mon_an
+WHERE slug = 'banh-xeo';
+
+-- 3. Danh gia mon Cao lau - 4 sao
+INSERT INTO tv_binh_danh_gia
+(mssv, mon_an_id, so_sao, nhan_xet)
+SELECT '3120224013', id, 4,
+       'Hương vị đậm đà, nguyên liệu dễ chuẩn bị.'
+FROM mon_an
+WHERE slug = 'cao-lau';
+
+-- 4. Danh gia mon Pho bo - 5 sao
+INSERT INTO tv_binh_danh_gia
+(mssv, mon_an_id, so_sao, nhan_xet)
+SELECT '3120224013', id, 5,
+       'Món ăn hấp dẫn, rất đáng thử.'
+FROM mon_an
+WHERE slug = 'pho-bo';
+
