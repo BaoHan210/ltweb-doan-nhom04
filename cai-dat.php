@@ -11,10 +11,9 @@ declare(strict_types=1);
 require __DIR__ . '/inc/config.php';
 
 // 1. Kiểm tra nếu chưa đăng nhập -> Chuyển hướng sang trang đăng nhập
-if (!isset($_SESSION['user'])) {
-    chuyen_huong('dang-nhap.php'); 
-    exit;
-}
+require_once __DIR__ . '/inc/db.php';
+require_once __DIR__ . '/inc/xac-thuc.php';
+$nguoiDung = yeuCauDangNhap();           // chưa đăng nhập → dang-nhap.php
 
 // Thiết lập thông số header
 $tieuDe = 'Cài đặt tài khoản - Cook with Me';
@@ -57,12 +56,14 @@ require __DIR__ . '/inc/header.php';
           <div class="khoi-input-ca-nhan">
             <div class="dong-form-ngang">
               <label for="fullname">Tên hiển thị</label>
-              <input type="text" id="fullname" name="fullname" value="<?= e($_SESSION['user']['hoTen'] ?? $_SESSION['user']['ho_ten'] ?? 'Người dùng') ?>" required>
+              <input type="text" id="fullname" name="fullname"
+       value="<?= e($nguoiDung['ho_ten'] ?? 'Người dùng') ?>" required>
             </div>
 
             <div class="dong-form-ngang">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" value="<?= e($_SESSION['user']['email'] ?? '') ?>" required>
+              <input type="email" id="email" name="email"
+       value="<?= e($nguoiDung['email'] ?? '') ?>" required>
             </div>
 
             <div class="dong-form-ngang">

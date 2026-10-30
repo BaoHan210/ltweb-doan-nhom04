@@ -60,7 +60,9 @@
       body: JSON.stringify({ ...payload, csrf_token: csrf }),
     });
     const body = await resp.json();
-    if (!resp.ok || !body.success) throw new Error(body.error || `HTTP ${resp.status}`);
+    if (!resp.ok || !body.success) {
+  throw new Error(body.loi || body.error || `HTTP ${resp.status}`);
+}
     csrf = body.csrf_token;
     sync(body.data);
   }

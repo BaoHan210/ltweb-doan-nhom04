@@ -1,8 +1,12 @@
 <?php
+/**
+ * Tệp: src/Models/MonAn.php
+ * Mục đích: Đối tượng món ăn, tạo từ mảng dữ liệu của KhoMonAn.
+ */
 
 namespace App\Models;
 
-class MonAn
+class MonAn implements \JsonSerializable
 {
     public function __construct(
         public string $id = '',
@@ -18,7 +22,8 @@ class MonAn
         public string $moTa = '',
         public array $nguyenLieu = [],
         public array $cacBuoc = [],
-        public string $video = ''
+        public string $video = '',
+        public int $tonKho = 0
     ) {}
 
     public static function tuMang(array $data): self
@@ -37,7 +42,32 @@ class MonAn
             moTa: (string)($data['moTa'] ?? ''),
             nguyenLieu: (array)($data['nguyenLieu'] ?? []),
             cacBuoc: (array)($data['cacBuoc'] ?? []),
-            video: (string)($data['video'] ?? '')
+            video: (string)($data['video'] ?? ''),
+            tonKho: (int)($data['tonKho'] ?? 0)
         );
+    }
+
+    /**
+     * Chuyển đối tượng món ăn thành dữ liệu JSON.
+     * Chỉ công khai những thuộc tính cần thiết cho phía giao diện.
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'ten' => $this->ten,
+            'danh_muc' => $this->danhMuc,
+            'thoi_gian' => $this->thoiGian,
+            'khau_phan' => $this->khauPhan,
+            'do_kho' => $this->doKho,
+            'ngan_sach' => $this->nganSach,
+            'hinh_anh' => $this->hinhAnh,
+            'danh_gia' => $this->danhGia,
+            'so_luot_danh_gia' => $this->soLuotDanhGia,
+            'mo_ta' => $this->moTa,
+            'nguyen_lieu' => $this->nguyenLieu,
+            'cac_buoc' => $this->cacBuoc,
+            'video' => $this->video,
+        ];
     }
 }

@@ -7,60 +7,36 @@
 
 declare(strict_types=1);
 
-
 require __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
+require_once __DIR__ . '/inc/xac-thuc.php';   // cung cấp nguoiDungHienTai()
 
 use App\Data\KhoMonAn;
 use App\Services\YeuThichService;
 
-$kho = new KhoMonAn(db());
+$kho             = new KhoMonAn(db());
 $yeuThichService = new YeuThichService();
-$daDangNhap = !empty($_SESSION['user']) || !empty($_SESSION['nguoi_dung']);
+$daDangNhap      = nguoiDungHienTai() !== null;   // kiểm tra từ MySQL
 
-// 1. THAM SỐ GET, KIỂM TRA BẰNG WHITELIST
-
-$tuKhoa  = trim((string) ($_GET['keyword'] ?? $_GET['q'] ?? ''));
-$danhMuc = trim((string) ($_GET['dm'] ?? ''));
-$sapXep  = trim((string) ($_GET['sapXep'] ?? $_GET['sx'] ?? 'ten-az'));
-$giaRaw  = trim((string) ($_GET['gia'] ?? ''));
-$giaToiDa = ($giaRaw !== '' && ctype_digit($giaRaw) && (float) $giaRaw <= 4294967295)
-    ? (int) $giaRaw : null;
-
-$danhMucHopLe = [
-    '',
-    'Món chính',
-    'Món canh',
-    'Món xào',
-    'Món rau',
-    'Món khai vị',
-    'Đồ uống',
-    'Món tráng miệng',
-    'Món chay',
-];
-
-$sapXepHopLe = [
-    'ten-az',
-    'ten-za',
-    'thoiGianTang',
-    'danhGiaGiam',
-    'nganSachTang',
-];
-
-if (!in_array($danhMuc, $danhMucHopLe, true)) {
-    $danhMuc = '';
-}
-
-if (!in_array($sapXep, $sapXepHopLe, true)) {
+// 1. THAM SỐ GET: lay_chuoi() bỏ qua mảng nên không gây Warning
+$tuKhoa  = lay_chuoi($_GET, 'keyword', 200) ?: lay_chuoi($_GET, 'q', 200);
+$danhMuc = lay_chuoi($_GET, 'dm', 100);   // danh mục lạ → 0 kết quả
+$sapXep  = lay_chuoi($_GET, 'sapXep', 20) ?: lay_chuoi($_GET, 'sx', 20);
+if (!in_array($sapXep, ['ten-az', 'ten-za', 'thoiGianTang', 'danhGiaGiam', 'nganSachTang'], true)) {
     $sapXep = 'ten-az';
 }
 
-$trangYeuCau = filter_var($_GET['page'] ?? 1, FILTER_VALIDATE_INT);
-$trangYeuCau = ($trangYeuCau === false || $trangYeuCau < 1) ? 1 : $trangYeuCau;
+$giaRaw   = lay_chuoi($_GET, 'gia', 20);
+$giaToiDa = ($giaRaw !== '' && ctype_digit($giaRaw) && (float) $giaRaw <= 4294967295)
+    ? (int) $giaRaw
+    : null;
+
+$trangYeuCau = filter_var($_GET['trang'] ?? 1, FILTER_VALIDATE_INT, [
+    'options' => ['min_range' => 1, 'default' => 1],
+]);
 
 /**
  * Dựng URL của trang danh sách, bỏ các tham số rỗng.
- * Chỉ dùng giá trị đã kiểm tra ở trên, không dùng trực tiếp $_GET.
  */
 function urlDanhSach(array $thamSo): string
 {
@@ -69,25 +45,23 @@ function urlDanhSach(array $thamSo): string
     return 'danh-sach.php' . ($thamSo ? '?' . http_build_query($thamSo) : '');
 }
 
-// Bộ lọc hiện tại, dùng lại cho form, phân trang và redirect sau POST
+// Bộ lọc hiện tại, dùng cho form, phân trang và redirect sau POST
 $thamSoGoc = [
     'keyword' => $tuKhoa,
     'dm'      => $danhMuc,
     'sapXep'  => $sapXep,
     'gia'     => $giaToiDa,
-    'page'    => $trangYeuCau,
+    'trang'   => $trangYeuCau,
 ];
 
 // 2. XỬ LÝ POST: THÊM HOẶC BỎ YÊU THÍCH
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Yêu thích là phần riêng tư: khách phải đăng nhập
     if (!$daDangNhap) {
         chuyen_huong('dang-nhap.php');
     }
 
-    $idMonAn = trim((string) ($_POST['doi_yeu_thich'] ?? ''));
+    $idMonAn = lay_chuoi($_POST, 'doi_yeu_thich', 255);
 
     if ($idMonAn !== '' && $kho->timTheoId($idMonAn) !== null) {
         if ($yeuThichService->co($idMonAn)) {
@@ -119,7 +93,7 @@ $danhSachHienThi = $kho->timKiemPhanTrang(
 );
 
 // Điều chỉnh URL sau POST theo trang thực tế đang hiển thị.
-$thamSoGoc['page'] = $trangHienTai;
+$thamSoGoc['trang'] = $trangHienTai;
 
 // 4. HIỂN THỊ
 
@@ -228,7 +202,7 @@ require __DIR__ . '/inc/header.php';
                        step="1000" placeholder="Ví dụ: 100000"
                        value="<?= $giaToiDa !== null ? $giaToiDa : '' ?>">
                 <button class="nut" type="submit">Áp dụng bộ lọc</button>
-                <a class="nut" href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['gia' => null, 'page' => 1]))) ?>">Bỏ lọc giá</a>
+                <a class="nut" href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['gia' => null, 'trang' => 1]))) ?>">Bỏ lọc giá</a>
             </form>
 
             <!-- Lọc danh mục: liên kết thường, không cần JavaScript -->
@@ -250,7 +224,7 @@ require __DIR__ . '/inc/header.php';
                     $dangChon = ($danhMuc === $maDanhMuc);
                 ?>
                     <a
-                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['dm' => $maDanhMuc, 'page' => 1]))) ?>"
+                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['dm' => $maDanhMuc, 'trang' => 1]))) ?>"
                         class="nut-bo-loc <?= $dangChon ? 'dang-loc active' : '' ?>"
                     >
                         <?= e($tenDanhMuc) ?>
@@ -319,14 +293,14 @@ require __DIR__ . '/inc/header.php';
                                         <?= (int) $mon->thoiGian ?> phút
                                     </span>
 
-                                    <span class="cham-phan-cach">•</span>
+                                    <span class="cham-phan-cach" aria-hidden="true">•</span>
 
                                     <span class="item-thong-tin">
                                         <img src="images/icons/icon-ngan-sach.svg" alt="" class="icon-phu">
                                         <?= number_format($mon->nganSach, 0, ',', '.') ?>đ
                                     </span>
 
-                                    <span class="cham-phan-cach">•</span>
+                                    <span class="cham-phan-cach" aria-hidden="true">•</span>
 
                                     <span class="item-thong-tin">
                                         <img src="images/icons/icon-do-kho.svg" alt="" class="icon-phu">
@@ -356,7 +330,7 @@ require __DIR__ . '/inc/header.php';
 
                 <?php if ($trangHienTai > 1): ?>
                     <a
-                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['page' => $trangHienTai - 1]))) ?>"
+                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['trang' => $trangHienTai - 1]))) ?>"
                         class="nut-phan-trang"
                         aria-label="Trang trước"
                     >‹</a>
@@ -364,7 +338,7 @@ require __DIR__ . '/inc/header.php';
 
                 <?php for ($i = 1; $i <= $tongSoTrang; $i++): ?>
                     <a
-                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['page' => $i]))) ?>"
+                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['trang' => $i]))) ?>"
                         class="nut-phan-trang <?= $i === $trangHienTai ? 'active dang-chon' : '' ?>"
                         <?= $i === $trangHienTai ? 'aria-current="page"' : '' ?>
                     ><?= $i ?></a>
@@ -372,7 +346,7 @@ require __DIR__ . '/inc/header.php';
 
                 <?php if ($trangHienTai < $tongSoTrang): ?>
                     <a
-                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['page' => $trangHienTai + 1]))) ?>"
+                        href="<?= e(urlDanhSach(array_merge($thamSoGoc, ['trang' => $trangHienTai + 1]))) ?>"
                         class="nut-phan-trang"
                         aria-label="Trang sau"
                     >›</a>

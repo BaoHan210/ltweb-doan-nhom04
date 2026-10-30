@@ -5971,3 +5971,18 @@ body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt.active {
         border-bottom: none;
     }
 }
+
+/* Tương phản đạt WCAG AA (≥ 4.5:1) */
+.thong-bao-loi, .thong-bao-loi-truong { color: #b42318; font-size: 14px; }
+.thong-bao-loi-dang-nhap { color: #8a1c1c; }
+.trang-trang-chu .mon-noi-bat .danh-gia-mon { color: #8a6a12; }   /* trước: #B28A1E, không đạt */
+.cham-phan-cach { color: #767676; }                                 /* trước: #AAAAAA, không đạt */
+
+/* Tiện ích cho trình đọc màn hình */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Tên người dùng trên header */
+.ten-nguoi-dung-header { font-size: 14px; font-weight: 600; color: var(--mau-chu); }

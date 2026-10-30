@@ -26,14 +26,14 @@ $nguoiDung = yeuCauQuyen('quan_tri');
 
 // Chống CSRF, kể cả bước xác nhận.
 $tokenLuu = (string) ($_SESSION['csrf_xoa_mon_an'] ?? '');
-$tokenGui = (string) ($_POST['csrf_token'] ?? '');
+$tokenGui = lay_chuoi($_POST, 'csrf_token', 128);
 if ($tokenLuu === '' || !hash_equals($tokenLuu, $tokenGui)) {
     http_response_code(403);
     exit('Phiên làm việc hoặc mã xác thực không hợp lệ. Tải lại trang quản trị.');
 }
 
 // Trong giao diện Cook with me, MonAn->id là slug, không phải ID số nguyên.
-$slug = trim((string) ($_POST['id'] ?? ''));
+$slug = lay_chuoi($_POST, 'id', 190);
 if ($slug === '' || strlen($slug) > 190 || !preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) {
     http_response_code(400);
     exit('Mã món ăn không hợp lệ.');
@@ -48,7 +48,7 @@ if ($mon === null) {
 }
 
 // Khi JavaScript tắt, vẫn có trang xác nhận riêng bằng PHP.
-if (($_POST['xac_nhan'] ?? '') !== '1') {
+if (lay_chuoi($_POST, 'xac_nhan', 1) !== '1') {
     $tieuDe = 'Xác nhận xóa món ăn - Cook with me';
     $trang = 'quan-tri';
     require __DIR__ . '/inc/header.php';

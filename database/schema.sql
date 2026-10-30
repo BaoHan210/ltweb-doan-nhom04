@@ -1,7 +1,9 @@
-
 -- BAI TAP NHOM 6 - NHOM 04
 -- Website Cook with me
 -- Khoi tao CSDL MySQL
+
+-- chi_tiet_don.don_gia: LƯU LẶP có chủ đích. Giá món có thể đổi sau này,
+-- nhưng tổng tiền của đơn đã đặt phải giữ nguyên giá tại thời điểm đặt.
 
 SET NAMES utf8mb4;
 
@@ -61,6 +63,9 @@ CREATE TABLE mon_an (
 
     CONSTRAINT chk_mon_an_khau_phan
         CHECK (khau_phan > 0),
+
+    CONSTRAINT chk_mon_an_ngan_sach
+        CHECK (ngan_sach >= 1000),
 
     INDEX idx_mon_an_danh_muc_ngan_sach
         (danh_muc_id, ngan_sach)
@@ -160,6 +165,24 @@ CREATE TABLE buoc_nau (
 ) ENGINE=InnoDB;
 
 
+-- Giỏ đi chợ: mỗi người dùng một danh sách (quan hệ 1 – 1 với nguoi_dung)
+CREATE TABLE danh_sach_di_cho (
+    id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nguoi_dung_id INT UNSIGNED NOT NULL UNIQUE,   -- UNIQUE để ON DUPLICATE KEY hoạt động
+    FOREIGN KEY (nguoi_dung_id) REFERENCES nguoi_dung(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- Quan hệ n – n giữa danh sách và món, khóa chính ghép
+CREATE TABLE chi_tiet_di_cho (
+    danh_sach_id INT UNSIGNED NOT NULL,
+    mon_an_id    INT UNSIGNED NOT NULL,
+    so_suat      SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+    PRIMARY KEY (danh_sach_id, mon_an_id),
+    CONSTRAINT chk_di_cho_so_suat CHECK (so_suat BETWEEN 1 AND 10),
+    FOREIGN KEY (danh_sach_id) REFERENCES danh_sach_di_cho(id) ON DELETE CASCADE,
+    FOREIGN KEY (mon_an_id)    REFERENCES mon_an(id)           ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 -- Phần B - Bảng thanh_vien (mỗi thành viên một dòng)
 CREATE TABLE thanh_vien (
   mssv          CHAR(10) PRIMARY KEY,
@@ -213,7 +236,12 @@ CREATE TABLE tv_trinh_luot_xem (
     so_luot INT UNSIGNED NOT NULL DEFAULT 0,
 
     PRIMARY KEY (mssv, ngay),
-    
+
+    FOREIGN KEY (mssv)
+        REFERENCES thanh_vien(mssv)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 -- =====================================================
 -- PHAN B - BANG RIENG CUA NGUYEN THI NGOC BINH
 -- MSSV: 3120224013

@@ -1,5 +1,7 @@
 <?php
-// 403.php - trang tĩnh: KHÔNG truy vấn CSDL
+// 403.php: không truy vấn CSDL, không gọi nguoiDung() hay header có session
+$goc = defined('URL_GOC') ? URL_GOC : './';
+
 if (!headers_sent()) {
     http_response_code(403);
 }
@@ -10,8 +12,6 @@ if (!headers_sent()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Không có quyền truy cập - Cook with me</title>
-  <link rel="stylesheet" href="/ltweb-doan-nhom04-main/css/01-bien.css">
-  <link rel="stylesheet" href="/ltweb-doan-nhom04-main/css/02-chuan-hoa.css">
   <style>
     body { font-family: system-ui, sans-serif; margin: 0; color: #222; background: #fff; }
     .trang-loi { max-width: 40rem; margin: 0 auto; padding: 4rem 1rem; text-align: center; }
@@ -27,8 +27,7 @@ if (!headers_sent()) {
     <p class="ma">403</p>
     <h1>Bạn không có quyền truy cập trang này</h1>
     <p>Trang này chỉ dành cho tài khoản có quyền phù hợp. Hãy đăng nhập bằng tài khoản khác hoặc quay về trang chủ.</p>
-    <a href="/ltweb-doan-nhom04-main/index.php">Về trang chủ</a>
-    <a href="/ltweb-doan-nhom04-main/dang-nhap.php">Đăng nhập</a>
+    <a href="<?= htmlspecialchars($goc, ENT_QUOTES, 'UTF-8') ?>index.php">Về trang chủ</a>
   </main>
 </body>
 </html>

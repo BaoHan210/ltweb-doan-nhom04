@@ -25,7 +25,7 @@ function nguoiDungHienTai(): ?array
     $nguoiDung = (new KhoNguoiDung(db()))->timTheoId($id);
     if ($nguoiDung === null) {
         // Tài khoản đã bị xóa/không còn hợp lệ.
-        unset($_SESSION['uid'], $_SESSION['user'], $_SESSION['nguoi_dung']);
+        unset($_SESSION['uid']);
         return null;
     }
     return $nguoiDung;
@@ -45,11 +45,11 @@ function yeuCauDangNhap(): array
 
 function yeuCauQuyen(string $vaiTro): array
 {
-    $nguoiDung = yeuCauDangNhap();
+    $nguoiDung = yeuCauDangNhap();              // chưa đăng nhập → dang-nhap.php
     if (($nguoiDung['vai_tro'] ?? '') !== $vaiTro) {
         http_response_code(403);
-        header('Content-Type: text/plain; charset=UTF-8');
-        exit('403 - Bạn không có quyền truy cập chức năng này.');
+        require __DIR__ . '/../403.php';        // trang 403 chuẩn, không để văn bản thô
+        exit;
     }
     return $nguoiDung;
 }

@@ -25,10 +25,10 @@ use App\Services\DanhSachDiChoService;
 function duongDanGoiY(): string
 {
     $thamSo = array_filter([
-        'ingredients'  => trim((string) ($_POST['ingredients'] ?? '')),
-        'budget'       => trim((string) ($_POST['budget'] ?? '')),
-        'cooking_time' => trim((string) ($_POST['cooking_time'] ?? '')),
-        'servings'     => trim((string) ($_POST['servings'] ?? '')),
+        'ingredients'  => lay_chuoi($_POST, 'ingredients', 200),
+'budget'       => lay_chuoi($_POST, 'budget', 20),
+'cooking_time' => lay_chuoi($_POST, 'cooking_time', 20),
+'servings'     => lay_chuoi($_POST, 'servings', 20),
     ], fn($giaTri) => $giaTri !== '');
 
     return 'goi-y-mon-an.php' . ($thamSo ? '?' . http_build_query($thamSo) : '');
@@ -78,10 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $danhSach = $kho->layTatCa();
 
-$nguyenLieu = trim($_GET['ingredients'] ?? '');
-$nganSach   = trim($_GET['budget'] ?? '');
-$thoiGian   = trim($_GET['cooking_time'] ?? '');
-$khauPhan   = trim($_GET['servings'] ?? '');
+$nguyenLieu = lay_chuoi($_GET, 'ingredients', 200);
+$nganSach   = lay_chuoi($_GET, 'budget', 20);
+$thoiGian   = lay_chuoi($_GET, 'cooking_time', 20);
+$khauPhan   = lay_chuoi($_GET, 'servings', 20);
 
 $danhSachGoiY = [];
 
@@ -328,6 +328,7 @@ require __DIR__ . '/inc/header.php';
             <h3><?= e($mon->ten) ?></h3>
 
             <form method="post" action="goi-y-mon-an.php">
+              <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_di_cho']) ?>">
               <input type="hidden" name="id_mon" value="<?= e($mon->id) ?>">
 
               <?php foreach ([
@@ -363,6 +364,7 @@ require __DIR__ . '/inc/header.php';
         <?php endforeach; ?>
 
         <form method="post" action="goi-y-mon-an.php">
+          <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_di_cho']) ?>">
           <?php foreach ([
               'ingredients'  => $nguyenLieu,
               'budget'       => $nganSach,

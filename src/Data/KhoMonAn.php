@@ -1,4 +1,8 @@
 <?php
+/**
+ * Tệp: src/Data/KhoMonAn.php
+ * Mục đích: Lớp truy cập dữ liệu món ăn bằng PDO. Mọi câu SQL về món ăn nằm ở đây.
+ */
 
 namespace App\Data;
 
@@ -15,25 +19,28 @@ class KhoMonAn
     private function chuyenMonAn(array $dong): MonAn
     {
         return MonAn::tuMang([
-            'id' => $dong['slug'],
-            'ten' => $dong['ten'],
-            'danhMuc' => $dong['danh_muc'],
-            'thoiGian' => $dong['thoi_gian'],
-            'khauPhan' => $dong['khau_phan'],
-            'doKho' => $dong['do_kho'],
-            'nganSach' => $dong['ngan_sach'],
-            'hinhAnh' => $dong['hinh_anh'] ?? '',
-            'danhGia' => $dong['danh_gia'] ?? 0,
+            'id'            => $dong['slug'],
+            'ten'           => $dong['ten'],
+            'danhMuc'       => $dong['danh_muc'],
+            'thoiGian'      => $dong['thoi_gian'],
+            'khauPhan'      => $dong['khau_phan'],
+            'doKho'         => $dong['do_kho'],
+            'nganSach'      => $dong['ngan_sach'],
+            'hinhAnh'       => $dong['hinh_anh'] ?? '',
+            'danhGia'       => $dong['danh_gia'] ?? 0,
             'soLuotDanhGia' => $dong['so_luot_danh_gia'] ?? 0,
-            'moTa' => $dong['mo_ta'] ?? '',
-            'nguyenLieu' => [],
-            'cacBuoc' => [],
-            'video' => $dong['video'] ?? ''
+            'moTa'          => $dong['mo_ta'] ?? '',
+            'nguyenLieu'    => [],
+            'cacBuoc'       => [],
+            'video'         => $dong['video'] ?? '',
+            'tonKho'        => (int) ($dong['ton_kho'] ?? 0),
         ]);
     }
 
     /**
-     * Nạp nguyên liệu và các bước nấu theo nhóm ID, tránh N+1 queries.
+     * Nạp nguyên liệu và bước nấu cho nhiều món bằng hai câu IN (...),
+     * tránh truy vấn lặp trong vòng lặp (N+1).
+     *
      * @return MonAn[]
      */
     private function taoDanhSach(array $cacDong): array
@@ -42,7 +49,7 @@ class KhoMonAn
             return [];
         }
 
-        $danhSach = [];
+        $danhSach  = [];
         $monTheoId = [];
 
         foreach ($cacDong as $dong) {
@@ -51,7 +58,7 @@ class KhoMonAn
             $monTheoId[(int) $dong['id']] = $mon;
         }
 
-        $cacId = array_keys($monTheoId);
+        $cacId  = array_keys($monTheoId);
         $dauHoi = implode(', ', array_fill(0, count($cacId), '?'));
 
         $sqlNguyenLieu = "
@@ -61,7 +68,6 @@ class KhoMonAn
             WHERE mnl.mon_an_id IN ($dauHoi)
             ORDER BY mnl.mon_an_id, mnl.nguyen_lieu_id
         ";
-
         $stmt = $this->db->prepare($sqlNguyenLieu);
         $stmt->execute($cacId);
 
@@ -71,8 +77,8 @@ class KhoMonAn
                 continue;
             }
             $monTheoId[$idMon]->nguyenLieu[] = [
-                'ten' => (string) $dong['ten_nguyen_lieu'],
-                'soLuong' => (string) ($dong['so_luong'] ?? '')
+                'ten'     => (string) $dong['ten_nguyen_lieu'],
+                'soLuong' => (string) ($dong['so_luong'] ?? ''),
             ];
         }
 
@@ -82,7 +88,6 @@ class KhoMonAn
             WHERE mon_an_id IN ($dauHoi)
             ORDER BY mon_an_id, thu_tu
         ";
-
         $stmt = $this->db->prepare($sqlBuocNau);
         $stmt->execute($cacId);
 
@@ -110,33 +115,15 @@ class KhoMonAn
         return $this->taoDanhSach($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Phương thức cũ, giữ tương thích các trang hiện tại. @return MonAn[] */
+    /**
+     * Giữ tương thích với API cũ, dùng chung logic với trang danh sách
+     * để cùng một từ khóa cho cùng kết quả (kể cả không dấu).
+     *
+     * @return MonAn[]
+     */
     public function timKiem(string $tuKhoa = '', string $danhMuc = ''): array
     {
-        $sql = "
-            SELECT m.*, d.ten AS danh_muc
-            FROM mon_an AS m
-            INNER JOIN danh_muc AS d ON d.id = m.danh_muc_id
-            WHERE 1 = 1
-        ";
-        $params = [];
-
-        if (trim($tuKhoa) !== '') {
-            $sql .= ' AND (m.ten LIKE :ten OR m.mo_ta LIKE :mo_ta)';
-            // Escape ky tu dai dien LIKE de tu khoa %, _ duoc tim theo nghia den.
-            $mau = '%' . addcslashes(trim($tuKhoa), '%_\\') . '%';
-            $params['ten'] = $mau;
-            $params['mo_ta'] = $mau;
-        }
-        if ($danhMuc !== '') {
-            $sql .= ' AND d.ten = :danh_muc';
-            $params['danh_muc'] = $danhMuc;
-        }
-        $sql .= ' ORDER BY m.id';
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        return $this->taoDanhSach($stmt->fetchAll(PDO::FETCH_ASSOC));
+        return $this->timKiemPhanTrang($tuKhoa, $danhMuc, null, 'ten-az', 1, 50);
     }
 
     public function timTheoId(string $id): ?MonAn
@@ -176,7 +163,9 @@ class KhoMonAn
     }
 
     /**
-     * Tìm nhiều món bằng một truy vấn WHERE IN theo slug.
+     * Tìm nhiều món bằng một truy vấn WHERE IN theo slug,
+     * giữ thứ tự của mảng đầu vào.
+     *
      * @param string[] $cacSlug
      * @return MonAn[]
      */
@@ -189,6 +178,7 @@ class KhoMonAn
         if ($cacSlug === []) {
             return [];
         }
+
         $dauHoi = implode(', ', array_fill(0, count($cacSlug), '?'));
         $sql = "
             SELECT m.*, d.ten AS danh_muc
@@ -198,11 +188,12 @@ class KhoMonAn
         ";
         $stmt = $this->db->prepare($sql);
         $stmt->execute($cacSlug);
-        $ketQua = $this->taoDanhSach($stmt->fetchAll(PDO::FETCH_ASSOC));
+
         $theoSlug = [];
-        foreach ($ketQua as $mon) {
+        foreach ($this->taoDanhSach($stmt->fetchAll(PDO::FETCH_ASSOC)) as $mon) {
             $theoSlug[$mon->id] = $mon;
         }
+
         $daSapXep = [];
         foreach ($cacSlug as $slug) {
             if (isset($theoSlug[$slug])) {
@@ -233,45 +224,55 @@ class KhoMonAn
     }
 
     /**
-     * Dựng WHERE từ các đoạn cố định và tham số rời, đúng slide 29.
+     * Dựng mệnh đề WHERE từ mảng điều kiện và mảng tham số.
+     * Từ khóa được chuẩn hóa đ/Đ thành d ở cả từ khóa lẫn cột để tìm không dấu.
+     *
      * @return array{0:string,1:array<int,int|string>}
      */
     private function boLocNangCao(string $tuKhoa, string $danhMuc, ?int $giaToiDa): array
     {
         $dieuKien = [];
-        $thamSo = [];
-        $tuKhoa = trim($tuKhoa);
+        $thamSo   = [];
+        $tuKhoa   = trim($tuKhoa);
 
         if ($tuKhoa !== '') {
-            $mau = '%' . addcslashes($tuKhoa, '%_\\') . '%';
-            $dieuKien[] = '(m.ten COLLATE utf8mb4_unicode_ci LIKE ? OR m.mo_ta COLLATE utf8mb4_unicode_ci LIKE ?)';
-            $thamSo[] = $mau;
-            $thamSo[] = $mau;
+            $mau  = '%' . addcslashes(str_replace(['đ', 'Đ'], 'd', $tuKhoa), '%_\\') . '%';
+            $ten  = "REPLACE(REPLACE(m.ten, 'đ', 'd'), 'Đ', 'd')";
+            $moTa = "REPLACE(REPLACE(m.mo_ta, 'đ', 'd'), 'Đ', 'd')";
+
+            $dieuKien[] = "($ten COLLATE utf8mb4_unicode_ci LIKE ? OR $moTa COLLATE utf8mb4_unicode_ci LIKE ?)";
+            $thamSo[]   = $mau;
+            $thamSo[]   = $mau;
         }
+
         if ($danhMuc !== '') {
             $dieuKien[] = 'd.ten = ?';
-            $thamSo[] = $danhMuc;
+            $thamSo[]   = $danhMuc;
         }
+
         if ($giaToiDa !== null) {
             $dieuKien[] = 'm.ngan_sach <= ?';
-            $thamSo[] = $giaToiDa;
+            $thamSo[]   = $giaToiDa;
         }
 
         return [$dieuKien ? ' WHERE ' . implode(' AND ', $dieuKien) : '', $thamSo];
     }
 
-    /** Đếm số kết quả trước khi phân trang: SELECT COUNT(*). */
+    /** Đếm số kết quả khớp bộ lọc, dùng để tính số trang. */
     public function demTimKiemNangCao(string $tuKhoa = '', string $danhMuc = '', ?int $giaToiDa = null): int
     {
         [$where, $thamSo] = $this->boLocNangCao($tuKhoa, $danhMuc, $giaToiDa);
-        $sql = 'SELECT COUNT(*) FROM mon_an AS m INNER JOIN danh_muc AS d ON d.id = m.danh_muc_id' . $where;
+
+        $sql  = 'SELECT COUNT(*) FROM mon_an AS m INNER JOIN danh_muc AS d ON d.id = m.danh_muc_id' . $where;
         $stmt = $this->db->prepare($sql);
         $stmt->execute($thamSo);
         return (int) $stmt->fetchColumn();
     }
 
     /**
-     * SQL tìm kiếm + ORDER BY an toàn + LIMIT/OFFSET, đúng slide 28–32.
+     * Tìm, lọc, sắp xếp và phân trang trong MySQL.
+     * ORDER BY chỉ lấy từ danh sách cho phép, không ghép chuỗi từ người dùng.
+     *
      * @return MonAn[]
      */
     public function timKiemPhanTrang(
@@ -293,8 +294,9 @@ class KhoMonAn
         };
 
         $soMonTrenTrang = max(1, min(100, $soMonTrenTrang));
-        $trang = max(1, $trang);
-        $offset = ($trang - 1) * $soMonTrenTrang;
+        $trang          = max(1, $trang);
+        $offset         = ($trang - 1) * $soMonTrenTrang;
+
         $sql = 'SELECT m.*, d.ten AS danh_muc '
             . 'FROM mon_an AS m INNER JOIN danh_muc AS d ON d.id = m.danh_muc_id'
             . $where . ' ORDER BY ' . $orderBy . ' LIMIT ? OFFSET ?';
@@ -310,21 +312,27 @@ class KhoMonAn
         return $this->taoDanhSach($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Đếm tổng số món ăn để tính số trang quản trị. */
+    /** Tổng số món ăn trong CSDL. */
     public function demTatCa(): int
     {
         return (int) $this->db->query('SELECT COUNT(*) FROM mon_an')->fetchColumn();
     }
 
-    /** Đọc một trang món ăn (không nạp toàn bộ bảng vào PHP). @return MonAn[] */
+    /**
+     * Đọc một trang món ăn cho trang quản trị, không nạp cả bảng vào PHP.
+     *
+     * @return MonAn[]
+     */
     public function layTrangQuanTri(int $trang = 1, int $kichThuoc = 10): array
     {
-        $trang = max(1, $trang);
+        $trang     = max(1, $trang);
         $kichThuoc = max(1, min(50, $kichThuoc));
-        $offset = ($trang - 1) * $kichThuoc;
-        $sql = 'SELECT m.*, d.ten AS danh_muc FROM mon_an m '
-            . 'INNER JOIN danh_muc d ON d.id = m.danh_muc_id '
+        $offset    = ($trang - 1) * $kichThuoc;
+
+        $sql = 'SELECT m.*, d.ten AS danh_muc FROM mon_an AS m '
+            . 'INNER JOIN danh_muc AS d ON d.id = m.danh_muc_id '
             . 'ORDER BY m.id DESC LIMIT ? OFFSET ?';
+
         $st = $this->db->prepare($sql);
         $st->bindValue(1, $kichThuoc, PDO::PARAM_INT);
         $st->bindValue(2, $offset, PDO::PARAM_INT);
@@ -332,37 +340,43 @@ class KhoMonAn
         return $this->taoDanhSach($st->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Các danh mục dùng cho biểu mẫu quản trị. */
+    /** Danh mục dùng cho biểu mẫu quản trị. */
     public function layDanhMucQuanTri(): array
     {
-        return $this->db->query('SELECT id, ten FROM danh_muc ORDER BY ten')->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query('SELECT id, ten FROM danh_muc ORDER BY ten')
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /** Thêm món ăn; trả về khóa chính vừa tạo. */
+    /**
+     * Thêm món ăn. Dữ liệu đã được kiểm tra ở tầng trang (kiemTraDuLieuMonAn).
+     * Trả về khóa chính vừa tạo.
+     */
     public function themMonAn(array $duLieu): int
     {
         $sql = 'INSERT INTO mon_an
             (danh_muc_id, slug, ten, thoi_gian, khau_phan, do_kho, ngan_sach,
-             hinh_anh, mo_ta, video)
+             ton_kho, hinh_anh, mo_ta, video)
             VALUES (:danh_muc_id, :slug, :ten, :thoi_gian, :khau_phan, :do_kho,
-                    :ngan_sach, :hinh_anh, :mo_ta, :video)';
+                    :ngan_sach, :ton_kho, :hinh_anh, :mo_ta, :video)';
+
         $st = $this->db->prepare($sql);
         $st->execute([
-            'danh_muc_id' => $duLieu['danh_muc_id'],
-            'slug' => $duLieu['slug'],
-            'ten' => $duLieu['ten'],
-            'thoi_gian' => $duLieu['thoi_gian'],
-            'khau_phan' => $duLieu['khau_phan'],
-            'do_kho' => $duLieu['do_kho'],
-            'ngan_sach' => $duLieu['ngan_sach'],
-            'hinh_anh' => $duLieu['hinh_anh'],
-            'mo_ta' => $duLieu['mo_ta'],
-            'video' => $duLieu['video'],
+            'danh_muc_id' => (int) $duLieu['danh_muc_id'],
+            'slug'        => $duLieu['slug'],
+            'ten'         => $duLieu['ten'],
+            'thoi_gian'   => (int) $duLieu['thoi_gian'],
+            'khau_phan'   => (int) $duLieu['khau_phan'],
+            'do_kho'      => $duLieu['do_kho'],
+            'ngan_sach'   => (int) $duLieu['ngan_sach'],
+            'ton_kho'     => (int) $duLieu['ton_kho'],
+            'hinh_anh'    => $duLieu['hinh_anh'],
+            'mo_ta'       => $duLieu['mo_ta'],
+            'video'       => $duLieu['video'],
         ]);
         return (int) $this->db->lastInsertId();
     }
 
-    /** Dữ liệu gốc từ MySQL để điền sẵn vào biểu mẫu sửa. */
+    /** Dữ liệu gốc của một món theo khóa chính, để điền sẵn biểu mẫu sửa. */
     public function layDongQuanTriTheoId(int $id): ?array
     {
         $st = $this->db->prepare('SELECT * FROM mon_an WHERE id = ? LIMIT 1');
@@ -371,39 +385,7 @@ class KhoMonAn
         return $dong === false ? null : $dong;
     }
 
-    /** Cập nhật món ăn theo khóa chính số nguyên. */
-    public function capNhatMonAn(int $id, array $d): bool
-    {
-        $sql = 'UPDATE mon_an SET
-                    ten = :ten, slug = :slug, danh_muc_id = :danh_muc_id,
-                    thoi_gian = :thoi_gian, khau_phan = :khau_phan,
-                    do_kho = :do_kho, ngan_sach = :ngan_sach,
-                    hinh_anh = :hinh_anh, mo_ta = :mo_ta, video = :video
-                WHERE id = :id';
-        $st = $this->db->prepare($sql);
-        $st->execute([
-            'ten' => $d['ten'], 'slug' => $d['slug'],
-            'danh_muc_id' => (int) $d['danh_muc_id'],
-            'thoi_gian' => (int) $d['thoi_gian'],
-            'khau_phan' => (int) $d['khau_phan'],
-            'do_kho' => $d['do_kho'],
-            'ngan_sach' => (int) $d['ngan_sach'],
-            'hinh_anh' => $d['hinh_anh'],
-            'mo_ta' => $d['mo_ta'], 'video' => $d['video'],
-            'id' => $id,
-        ]);
-        return $st->rowCount() > 0;
-    }
-
-    /** Xóa món theo slug; không truy vấn SQL trực tiếp tại trang giao diện. */
-    public function xoaMonAnTheoSlug(string $slug): bool
-    {
-        $stmt = $this->db->prepare('DELETE FROM mon_an WHERE slug = :slug');
-        $stmt->execute(['slug' => $slug]);
-        return $stmt->rowCount() > 0;
-    }
-
-    /** Tìm bản ghi theo slug, dùng khi liên kết Sửa từ dashboard truyền slug. */
+    /** Dữ liệu gốc của một món theo slug. */
     public function layDongQuanTriTheoSlug(string $slug): ?array
     {
         $st = $this->db->prepare('SELECT * FROM mon_an WHERE slug = ? LIMIT 1');
@@ -412,4 +394,42 @@ class KhoMonAn
         return $dong === false ? null : $dong;
     }
 
+    /**
+     * Cập nhật món ăn theo khóa chính số nguyên.
+     * Trả về false khi không dòng nào thay đổi (ví dụ lưu mà không sửa gì).
+     */
+    public function capNhatMonAn(int $id, array $d): bool
+    {
+        $sql = 'UPDATE mon_an SET
+                    ten = :ten, slug = :slug, danh_muc_id = :danh_muc_id,
+                    thoi_gian = :thoi_gian, khau_phan = :khau_phan,
+                    do_kho = :do_kho, ngan_sach = :ngan_sach, ton_kho = :ton_kho,
+                    hinh_anh = :hinh_anh, mo_ta = :mo_ta, video = :video
+                WHERE id = :id';
+
+        $st = $this->db->prepare($sql);
+        $st->execute([
+            'ten'         => $d['ten'],
+            'slug'        => $d['slug'],
+            'danh_muc_id' => (int) $d['danh_muc_id'],
+            'thoi_gian'   => (int) $d['thoi_gian'],
+            'khau_phan'   => (int) $d['khau_phan'],
+            'do_kho'      => $d['do_kho'],
+            'ngan_sach'   => (int) $d['ngan_sach'],
+            'ton_kho'     => (int) $d['ton_kho'],
+            'hinh_anh'    => $d['hinh_anh'],
+            'mo_ta'       => $d['mo_ta'],
+            'video'       => $d['video'],
+            'id'          => $id,
+        ]);
+        return $st->rowCount() > 0;
+    }
+
+    /** Xóa món theo slug. Lỗi 1451 (khóa ngoại) do trang gọi xử lý. */
+    public function xoaMonAnTheoSlug(string $slug): bool
+    {
+        $stmt = $this->db->prepare('DELETE FROM mon_an WHERE slug = :slug');
+        $stmt->execute(['slug' => $slug]);
+        return $stmt->rowCount() > 0;
+    }
 }

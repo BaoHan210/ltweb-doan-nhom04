@@ -40,36 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             && password_verify($matKhau, (string) ($nguoiDung['mat_khau'] ?? ''));
 
         if ($hopLe) {
-            $id = (int) $nguoiDung['id'];
-            // Chỉ nâng cấp mã băm SAU KHI xác thực mật khẩu thành công.
-            if (password_needs_rehash((string) $nguoiDung['mat_khau'], PASSWORD_DEFAULT)) {
-                $hashMoi = password_hash($matKhau, PASSWORD_DEFAULT);
-                $khoNguoiDung->capNhatMatKhauDaBam($id, $hashMoi);
-            }
-
-            session_regenerate_id(true);
-            unset($_SESSION['user'], $_SESSION['nguoi_dung']);
-            $_SESSION['uid'] = $id;
-
-            // Tương thích tạm thời: các trang hiện có (header, quan-tri.php,
-            // yeu-thich.php...) vẫn đọc $_SESSION['user']. Cần bỏ khi
-            // tất cả trang chuyển sang dùng duy nhất uid + đọc vai trò từ DB.
-            $_SESSION['user'] = [
-                'id' => $id,
-                'ho_ten' => (string) $nguoiDung['ho_ten'],
-                'email' => (string) $nguoiDung['email'],
-                'vai_tro' => (string) $nguoiDung['vai_tro'],
-            ];
-            unset($_SESSION['csrf_dang_nhap']);
-            gan_thong_bao('success', 'Đăng nhập thành công!');
-
-            if (($nguoiDung['vai_tro'] ?? '') === 'quan_tri') {
-                chuyen_huong('quan-tri.php');
-            } else {
-                chuyen_huong('ca-nhan.php');
-            }
-            exit;
-        }
+    $id = (int) $nguoiDung['id'];
+    if (password_needs_rehash((string) $nguoiDung['mat_khau'], PASSWORD_DEFAULT)) {
+        $khoNguoiDung->capNhatMatKhauDaBam($id, password_hash($matKhau, PASSWORD_DEFAULT));
+    }
+    session_regenerate_id(true);          // chống session fixation
+    $_SESSION['uid'] = $id;               // CHỈ lưu uid
+    unset($_SESSION['csrf_dang_nhap']);
+    gan_thong_bao('success', 'Đăng nhập thành công!');
+    chuyen_huong(($nguoiDung['vai_tro'] ?? '') === 'quan_tri' ? 'quan-tri.php' : 'ca-nhan.php');
+}
 
         // Không phân biệt email chưa đăng ký với mật khẩu không đúng.
         $loiChung = 'Email hoặc mật khẩu không chính xác!';

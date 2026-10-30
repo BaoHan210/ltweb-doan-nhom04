@@ -249,7 +249,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['ho_ten'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['ho_ten']) ?>
                         </span>
@@ -278,7 +278,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['email'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['email']) ?>
                         </span>
@@ -306,7 +306,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['mat_khau'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['mat_khau']) ?>
                         </span>
@@ -333,7 +333,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['xac_nhan_mat_khau'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['xac_nhan_mat_khau']) ?>
                         </span>
@@ -368,7 +368,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['dong_y'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['dong_y']) ?>
                         </span>

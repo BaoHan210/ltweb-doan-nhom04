@@ -1,4 +1,3 @@
-
 <?php
 /**
  * inc/db.php

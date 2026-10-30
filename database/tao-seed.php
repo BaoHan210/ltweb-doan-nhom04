@@ -1,4 +1,3 @@
-
 <?php
 // Cong cu tam de chuyen mon-an.json thanh SQL.
 // Chay bang PHP CLI, khong dung tren website cong khai.

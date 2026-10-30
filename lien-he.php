@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Tệp: lien-he.php
@@ -296,7 +295,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['ho_ten'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['ho_ten']) ?>
                         </span>
@@ -324,7 +323,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['email'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['email']) ?>
                         </span>
@@ -387,7 +386,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['subject'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['subject']) ?>
                         </span>
@@ -412,7 +411,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['anh_dinh_kem'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['anh_dinh_kem']) ?>
                         </span>
@@ -440,7 +439,7 @@ require __DIR__ . '/inc/header.php';
                     <?php if (isset($loi['noi_dung'])): ?>
                         <span
                             class="thong-bao-loi"
-                            style="color:red; font-size:14px;"
+
                         >
                             <?= e($loi['noi_dung']) ?>
                         </span>

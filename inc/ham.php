@@ -86,3 +86,15 @@ if (!function_exists('tao_ten_file_ngau_nhien')) {
         return bin2hex(random_bytes(16)) . '.' . strtolower($ext);
     }
 }
+
+if (!function_exists('lay_chuoi')) {
+    /** Lấy chuỗi từ $_GET/$_POST: không phải chuỗi (mảng, số…) → ''. Cắt độ dài tối đa. */
+    function lay_chuoi(array $nguon, string $khoa, int $doDaiToiDa = 255): string
+    {
+        $giaTri = $nguon[$khoa] ?? '';
+        if (!is_string($giaTri)) {
+            return '';
+        }
+        return mb_substr(trim($giaTri), 0, $doDaiToiDa, 'UTF-8');
+    }
+}

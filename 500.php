@@ -1,8 +1,12 @@
 <?php
-// 500.php - trang tĩnh: KHÔNG require header, KHÔNG truy vấn CSDL
+/**
+ * Tệp: 500.php
+ * Trang lỗi máy chủ. Không truy vấn CSDL, không gọi nguoiDungHienTai().
+ */
 if (!headers_sent()) {
     http_response_code(500);
 }
+$goc = defined('URL_GOC') ? URL_GOC : './';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -10,8 +14,6 @@ if (!headers_sent()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lỗi máy chủ - Cook with me</title>
-  <link rel="stylesheet" href="/ltweb-doan-nhom04-main/css/01-bien.css">
-  <link rel="stylesheet" href="/ltweb-doan-nhom04-main/css/02-chuan-hoa.css">
   <style>
     body { font-family: system-ui, sans-serif; margin: 0; color: #222; background: #fff; }
     .trang-loi { max-width: 40rem; margin: 0 auto; padding: 4rem 1rem; text-align: center; }
@@ -27,7 +29,7 @@ if (!headers_sent()) {
     <p class="ma">500</p>
     <h1>Xin lỗi, đã xảy ra lỗi máy chủ</h1>
     <p>Hệ thống đang gặp sự cố tạm thời. Lỗi đã được ghi nhận để khắc phục. Bạn vui lòng thử lại sau.</p>
-    <a href="/ltweb-doan-nhom04-main/index.php">Quay lại trang chủ</a>
+    <a href="<?= htmlspecialchars($goc, ENT_QUOTES, 'UTF-8') ?>index.php">Quay lại trang chủ</a>
   </main>
 </body>
 </html>

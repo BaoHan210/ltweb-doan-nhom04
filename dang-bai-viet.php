@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Tệp: dang-bai-viet.php
