@@ -69,7 +69,7 @@ require __DIR__ . '/inc/header.php';
           <?php $tong = 0; foreach ($lan['cac_mon'] as $dong): ?>
             <?php $tong += (int) $dong['so_suat'] * (int) $dong['ngan_sach_tham_khao']; ?>
             <tr>
-              <td><a href="chi-tiet.php?id=<?= e($dong['mon_an_id']) ?>"><?= e($dong['ten_mon']) ?></a></td>
+              <td><a href="chi-tiet.php?id=<?= (int) $dong['mon_an_id'] ?>"><?= e($dong['ten_mon']) ?></a></td>
               <td><?= (int) $dong['so_suat'] ?></td>
               <td><?= vnd((int) $dong['ngan_sach_tham_khao'] * (int) $dong['so_suat']) ?></td>
             </tr>

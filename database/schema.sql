@@ -2,8 +2,8 @@
 -- Website Cook with me
 -- Khoi tao CSDL MySQL
 
--- chi_tiet_don.don_gia: LƯU LẶP có chủ đích. Giá món có thể đổi sau này,
--- nhưng tổng tiền của đơn đã đặt phải giữ nguyên giá tại thời điểm đặt.
+-- chi_tiet_lan_di_cho.ten_mon và ngan_sach_tham_khao: LƯU LẶP có chủ đích.
+-- Tên và giá món có thể đổi sau này, nhưng lịch sử đi chợ phải giữ đúng giá lúc chốt.
 
 SET NAMES utf8mb4;
 
@@ -71,42 +71,26 @@ CREATE TABLE mon_an (
         (danh_muc_id, ngan_sach)
 ) ENGINE=InnoDB;
 
--- 4. BANG DON HANG
-CREATE TABLE don_hang (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nguoi_dung_id INT UNSIGNED NOT NULL,
-    trang_thai ENUM(
-        'cho_xac_nhan',
-        'da_xac_nhan',
-        'da_huy',
-        'hoan_thanh'
-    ) NOT NULL DEFAULT 'cho_xac_nhan',
-    ngay_dat DATETIME NOT NULL
-        DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (nguoi_dung_id)
-        REFERENCES nguoi_dung(id)
-        ON DELETE RESTRICT
+-- 4. BẢNG LẦN ĐI CHỢ
+CREATE TABLE lan_di_cho (
+  id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nguoi_dung_id INT UNSIGNED NOT NULL,
+  ngay_chot     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  trang_thai    ENUM('moi','da_di_cho','da_huy') NOT NULL DEFAULT 'moi',
+  FOREIGN KEY (nguoi_dung_id) REFERENCES nguoi_dung(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
--- 5. BANG CHI TIET DON HANG
-CREATE TABLE chi_tiet_don (
-    don_hang_id INT UNSIGNED NOT NULL,
-    mon_an_id INT UNSIGNED NOT NULL,
-    so_luong SMALLINT UNSIGNED NOT NULL,
-    don_gia INT UNSIGNED NOT NULL,
-
-    PRIMARY KEY (don_hang_id, mon_an_id),
-
-    FOREIGN KEY (don_hang_id)
-        REFERENCES don_hang(id)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (mon_an_id)
-        REFERENCES mon_an(id)
-        ON DELETE RESTRICT,
-
-    CHECK (so_luong > 0)
+-- 5. BANG CHI TIET LAN DI CHO
+CREATE TABLE chi_tiet_lan_di_cho (
+  lan_id              INT UNSIGNED NOT NULL,
+  mon_an_id           INT UNSIGNED NOT NULL,
+  ten_mon             VARCHAR(200) NOT NULL,
+  so_suat             TINYINT UNSIGNED NOT NULL,
+  ngan_sach_tham_khao INT UNSIGNED NOT NULL,
+  PRIMARY KEY (lan_id, mon_an_id),
+  FOREIGN KEY (lan_id)    REFERENCES lan_di_cho(id) ON DELETE CASCADE,
+  FOREIGN KEY (mon_an_id) REFERENCES mon_an(id) ON DELETE RESTRICT,
+  CHECK (so_suat BETWEEN 1 AND 10)
 ) ENGINE=InnoDB;
 
 -- 6. BANG LIEN HE
@@ -270,3 +254,13 @@ CREATE TABLE tv_binh_danh_gia (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
+-- Phần B - Dự án cá nhân của Lê Thị A Na
+CREATE TABLE tv_du_an_ca_nhan (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mssv CHAR(10) NOT NULL,
+    ten_du_an VARCHAR(150) NOT NULL,
+    cong_nghe VARCHAR(255) NOT NULL,
+    trang_thai VARCHAR(50) NOT NULL,
+    mo_ta TEXT NULL,
+    FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

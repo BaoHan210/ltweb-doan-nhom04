@@ -1578,21 +1578,16 @@ VALUES
  '$2y$12$3ZoP8Zw46/1SUlmMu/unR.ZIvgTjCuo2NGWs2F9ttQBE.FmFo83bO',
  'khach_hang');
 
--- Moi khach hang co mot don hang
-
-INSERT INTO don_hang
-(id, nguoi_dung_id, trang_thai)
+-- Tai khoan quan tri cua Phan Thi Bao Han
+INSERT INTO nguoi_dung
+    (email, ho_ten, mat_khau, vai_tro)
 VALUES
-(1, 2, 'cho_xac_nhan'),
-(2, 3, 'cho_xac_nhan');
-
--- Chi tiet don hang
-
-INSERT INTO chi_tiet_don
-(don_hang_id, mon_an_id, so_luong, don_gia)
-VALUES
-(1, 2, 1, 100000),
-(2, 3, 1, 70000);
+    (
+        'baohan@cookwithme.com',
+        'Phan Thị Bảo Hân',
+        '$2y$10$GP1mY/fooY8pymImErMbDOMqRtmy6uQhiWvfm5rre./ljnHp2zZWm',
+        'quan_tri'
+    );
 
 -- Phần B - Dòng thành viên của Phan Thị Bảo Hân
 INSERT INTO thanh_vien (mssv, ho_ten, nguoi_dung_id) VALUES
@@ -1618,16 +1613,15 @@ INSERT INTO tv_phien_ban (mssv, ma, ten, ngay, nhom, mo_ta) VALUES
 -- MSSV: 3120224155
 -- ==========================================
 
--- 1. Tai khoan thu nghiem cua Trinh
--- Mat khau duoc bam bang PHP password_hash (BCrypt)
+-- 1. Tai khoan quan tri cua Nguyen Thi Trinh
 INSERT INTO nguoi_dung
     (email, ho_ten, mat_khau, vai_tro)
 VALUES
     (
         'ngoctrinh@cookwithme.com',
-        'Trinh Trinh',
-        '$2y$12$gvdwmVVIiOuMyMft3z3sIehDwiVBLhKZt/5j5P6v7rXiQr/PnF2BK',
-        'khach_hang'
+        'Nguyễn Thị Trinh',
+        '$2y$10$kgWqdjLrKOLs15uuJ80U6uz8dVKjKJhZTt.HEtgC9rp8RQ7F/qnbi',
+        'quan_tri'
     );
 
 -- 2. Thong tin thanh vien va lien ket tai khoan
@@ -1677,7 +1671,16 @@ VALUES
 -- PHAN B - DU LIEU MAU NGUYEN THI NGOC BINH
 -- MSSV: 3120224013
 -- ==========================================
-
+-- Tai khoan quan tri cua Nguyen Thi Ngoc Binh
+INSERT INTO nguoi_dung
+    (email, ho_ten, mat_khau, vai_tro)
+VALUES
+    (
+        'ngocbinh@cookwithme.com',
+        'Nguyễn Thị Ngọc Bình',
+        '$2y$10$Hsxn4Ac.liKJFTLQcKdkP.9KDZLjbEankdQm3qu8e7j7sWx52ffRm',
+        'quan_tri'
+    );
 -- 1. Them thong tin thanh vien Binh
 INSERT INTO thanh_vien (mssv, ho_ten, nguoi_dung_id)
 VALUES (
@@ -1714,3 +1717,89 @@ SELECT '3120224013', id, 5,
 FROM mon_an
 WHERE slug = 'pho-bo';
 
+-- ==========================================
+-- TAI KHOAN QUAN TRI CUA LE THI A NA
+-- ==========================================
+
+INSERT INTO nguoi_dung
+    (email, ho_ten, mat_khau, vai_tro)
+VALUES
+    (
+        'ana@cookwithme.com',
+        'Lê Thị A Na',
+        '$2y$10$xyQfcZRcRIucwB7j3MIMkuGFSY4XC2hrBQDKyc03rdElqOJw1ew96',
+        'quan_tri'
+    );
+
+-- ==========================================
+-- CHUC NANG 5 - DU LIEU MAU DANH SACH DI CHO
+-- ==========================================
+
+-- 1. Tao danh sach di cho cho Nguyen Thi Lan
+INSERT INTO danh_sach_di_cho (nguoi_dung_id)
+SELECT id
+FROM nguoi_dung
+WHERE email = 'lan@ued.vn';
+
+-- 2. Them mon an vao danh sach di cho cua Lan
+INSERT INTO chi_tiet_di_cho
+    (danh_sach_id, mon_an_id, so_suat)
+SELECT ds.id, ma.id, 2
+FROM danh_sach_di_cho ds
+JOIN nguoi_dung nd
+    ON nd.id = ds.nguoi_dung_id
+JOIN mon_an ma
+    ON ma.slug = 'cao-lau'
+WHERE nd.email = 'lan@ued.vn';
+
+INSERT INTO chi_tiet_di_cho
+    (danh_sach_id, mon_an_id, so_suat)
+SELECT ds.id, ma.id, 1
+FROM danh_sach_di_cho ds
+JOIN nguoi_dung nd
+    ON nd.id = ds.nguoi_dung_id
+JOIN mon_an ma
+    ON ma.slug = 'banh-xeo'
+WHERE nd.email = 'lan@ued.vn';
+
+
+-- 3. Tao lich su di cho cho Tran Van An
+INSERT INTO lan_di_cho
+    (nguoi_dung_id, ngay_chot, trang_thai)
+SELECT id, '2026-11-05 08:00:00', 'da_di_cho'
+FROM nguoi_dung
+WHERE email = 'an@ued.vn';
+
+
+-- 4. Luu chi tiet mon an trong lich su
+INSERT INTO chi_tiet_lan_di_cho
+    (lan_id, mon_an_id, ten_mon, so_suat, ngan_sach_tham_khao)
+SELECT
+    ld.id,
+    ma.id,
+    ma.ten,
+    2,
+    ma.ngan_sach
+FROM lan_di_cho ld
+JOIN nguoi_dung nd
+    ON nd.id = ld.nguoi_dung_id
+JOIN mon_an ma
+    ON ma.slug = 'cao-lau'
+WHERE nd.email = 'an@ued.vn'
+  AND ld.ngay_chot = '2026-11-05 08:00:00';
+
+INSERT INTO chi_tiet_lan_di_cho
+    (lan_id, mon_an_id, ten_mon, so_suat, ngan_sach_tham_khao)
+SELECT
+    ld.id,
+    ma.id,
+    ma.ten,
+    1,
+    ma.ngan_sach
+FROM lan_di_cho ld
+JOIN nguoi_dung nd
+    ON nd.id = ld.nguoi_dung_id
+JOIN mon_an ma
+    ON ma.slug = 'banh-xeo'
+WHERE nd.email = 'an@ued.vn'
+  AND ld.ngay_chot = '2026-11-05 08:00:00';
