@@ -83,7 +83,9 @@ final class DanhSachDiChoService
         $st->execute([$this->uid]); $dong=$st->fetchAll(PDO::FETCH_ASSOC);
         if (!$dong) return [];
         $monTheoSlug=[];
-        foreach ($kho->timNhieuTheoSlug(array_column($dong,'slug')) as $mon) { $monTheoSlug[$mon->id]=$mon; }
+        foreach ($kho->timNhieuTheoSlug(array_column($dong, 'slug')) as $mon) {
+    $monTheoSlug[$mon->id] = $mon;
+}
         $ketQua=[];
         foreach ($dong as $d) { if(isset($monTheoSlug[$d['slug']])) $ketQua[]=['monAn'=>$monTheoSlug[$d['slug']], 'soLuong'=>(int)$d['so_suat']]; }
         return $ketQua;

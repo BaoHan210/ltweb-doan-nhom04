@@ -11,7 +11,7 @@
 
 use App\Data\KhoNguoiDung;
 use App\Data\KhoMonAn;
-use App\Data\KhoDonHang;
+use App\Data\KhoLanDiCho;
 use App\Services\LienHeService;
 
 // 1. NẠP CẤU HÌNH VÀ CÁC LỚP DỮ LIỆU
@@ -20,7 +20,7 @@ require_once __DIR__ . '/inc/db.php';
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 require_once __DIR__ . '/src/Services/LienHeService.php';
-require_once __DIR__ . '/src/Data/KhoDonHang.php';
+require_once __DIR__ . '/src/Data/KhoLanDiCho.php';
 
 // 2. KHỞI TẠO SESSION
 if (session_status() === PHP_SESSION_NONE) {
@@ -37,17 +37,18 @@ if (empty($_SESSION['csrf_xoa_mon_an'])) {
     $_SESSION['csrf_xoa_mon_an'] = bin2hex(random_bytes(32));
 }
 
-// CSRF và dữ liệu quản trị đơn hàng từ MySQL.
-if (empty($_SESSION['csrf_trang_thai_don'])) {
-    $_SESSION['csrf_trang_thai_don'] = bin2hex(random_bytes(32));
+// CSRF và dữ liệu quản trị lịch sử đi chợ.
+if (empty($_SESSION['csrf_quan_tri_di_cho'])) {
+    $_SESSION['csrf_quan_tri_di_cho'] = bin2hex(random_bytes(32));
 }
-$khoDonHang = new KhoDonHang(db());
-$danhSachDonQuanTri = $khoDonHang->layDanhSachQuanTri(100);
+
+$khoLanDiCho = new KhoLanDiCho(db());
+$danhSachLanDiCho = $khoLanDiCho->danhSachQuanTri(100);
+
 $nhanTrangThai = [
-    'cho_xac_nhan' => 'Chờ xác nhận',
-    'da_xac_nhan' => 'Đã xác nhận',
-    'da_huy' => 'Đã hủy',
-    'hoan_thanh' => 'Hoàn thành',
+    'moi'       => 'Mới',
+    'da_di_cho' => 'Đã đi chợ',
+    'da_huy'    => 'Đã hủy',
 ];
 
 // 5. ĐỌC DANH SÁCH LIÊN HỆ TỪ MYSQL
@@ -280,61 +281,106 @@ require_once __DIR__ . '/inc/header.php';
                 <?php endif; ?>
             </section>
 
-            <!-- QUẢN LÝ ĐƠN HÀNG – CHỨC NĂNG 5 -->
-            <section class="khung-noi-dung-qt" id="quan-ly-don-hang">
+
+            <!-- QUẢN LÝ LỊCH SỬ ĐI CHỢ – CHỨC NĂNG 5 -->
+            <section class="khung-noi-dung-qt" id="quan-ly-di-cho">
                 <div class="thanh-tieu-de-dashboard">
-                    <h2>Quản lý đơn hàng (<?= count($danhSachDonQuanTri) ?> đơn gần nhất)</h2>
+                    <h2>Quản lý lịch sử đi chợ (<?= count($danhSachLanDiCho) ?> lần gần nhất)</h2>
                 </div>
+
                 <?= hien_thi_thong_bao() ?>
-                <?php if (empty($danhSachDonQuanTri)): ?>
-                    <p class="thong-bao-chua-co-du-lieu">Chưa có đơn hàng.</p>
+
+                <?php if (empty($danhSachLanDiCho)): ?>
+                    <p class="thong-bao-chua-co-du-lieu">
+                        Chưa có lịch sử đi chợ.
+                    </p>
                 <?php else: ?>
-                <div class="khu-vuc-bang-du-lieu">
-                    <table class="bang-du-lieu-qt" style="width:100%">
-                        <thead><tr>
-                            <th>Mã đơn</th><th>Người đặt</th><th>Ngày đặt</th>
-                            <th>Số phần</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th>
-                        </tr></thead>
-                        <tbody>
-                        <?php foreach ($danhSachDonQuanTri as $don): ?>
-                            <?php $tt = (string) $don['trang_thai']; ?>
-                            <tr>
-                                <td>#<?= (int) $don['id'] ?></td>
-                                <td><?= e($don['ho_ten']) ?><small style="display:block"><?= e($don['email']) ?></small></td>
-                                <td><?= e($don['ngay_dat']) ?></td>
-                                <td><?= (int) $don['tong_so_phan'] ?></td>
-                                <td><?= vnd((int) $don['tong_tien']) ?></td>
-                                <td><?= e($nhanTrangThai[$tt] ?? $tt) ?></td>
-                                <td>
-                                    <?php if (in_array($tt, ['cho_xac_nhan', 'da_xac_nhan'], true)): ?>
-                                        <form action="cap-nhat-trang-thai-don.php" method="post" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-                                            <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_trang_thai_don']) ?>">
-                                            <input type="hidden" name="don_hang_id" value="<?= (int) $don['id'] ?>">
-                                            <label>
-                                                <span class="sr-only">Trạng thái mới</span>
-                                                <select name="trang_thai_moi" required>
-                                                    <option value="">-- Chọn thao tác --</option>
-                                                    <?php if ($tt === 'cho_xac_nhan'): ?>
-                                                        <option value="da_xac_nhan">Xác nhận</option>
-                                                    <?php else: ?>
-                                                        <option value="hoan_thanh">Hoàn thành</option>
-                                                    <?php endif; ?>
-                                                    <option value="da_huy">Hủy và hoàn kho</option>
-                                                </select>
-                                            </label>
-                                            <button type="submit" class="nut">Cập nhật</button>
-                                        </form>
-                                    <?php else: ?>
-                                        <span>Đã kết thúc</span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="khu-vuc-bang-du-lieu">
+                        <table class="bang-du-lieu-qt" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Mã lần đi chợ</th>
+                                    <th>Người dùng</th>
+                                    <th>Ngày chốt</th>
+                                    <th>Số món</th>
+                                    <th>Tổng số suất</th>
+                                    <th>Ngân sách tham khảo</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($danhSachLanDiCho as $lan): ?>
+                                    <?php $tt = (string) $lan['trang_thai']; ?>
+
+                                    <tr>
+                                        <td>#<?= (int) $lan['id'] ?></td>
+
+                                        <td>
+                                            <?= e($lan['ho_ten']) ?>
+                                            <small style="display:block">
+                                                <?= e($lan['email']) ?>
+                                            </small>
+                                        </td>
+
+                                        <td><?= e($lan['ngay_chot']) ?></td>
+
+                                        <td><?= (int) $lan['so_mon'] ?></td>
+
+                                        <td><?= (int) $lan['tong_so_suat'] ?></td>
+
+                                        <td>
+                                            <?= vnd((float) $lan['tong_ngan_sach']) ?>
+                                        </td>
+
+                                        <td><?= e($nhanTrangThai[$tt] ?? $tt) ?></td>
+
+                                        <td>
+                                            <?php if ($tt === 'moi'): ?>
+                                                <form
+                                                    action="cap-nhat-trang-thai-di-cho.php"
+                                                    method="post"
+                                                    style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"
+                                                >
+                                                    <input
+                                                        type="hidden"
+                                                        name="csrf_token"
+                                                        value="<?= e($_SESSION['csrf_quan_tri_di_cho']) ?>"
+                                                    >
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="lan_di_cho_id"
+                                                        value="<?= (int) $lan['id'] ?>"
+                                                    >
+
+                                                    <label>
+                                                        <span class="sr-only">Trạng thái mới</span>
+
+                                                        <select name="trang_thai_moi" required>
+                                                            <option value="">-- Chọn thao tác --</option>
+                                                            <option value="da_di_cho">Đánh dấu đã đi chợ</option>
+                                                            <option value="da_huy">Hủy lần đi chợ</option>
+                                                        </select>
+                                                    </label>
+
+                                                    <button type="submit" class="nut">
+                                                        Cập nhật
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <span>Đã kết thúc</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php endif; ?>
             </section>
+
 
             <!-- DANH SÁCH THƯ LIÊN HỆ -->
             <section class="khung-noi-dung-qt">

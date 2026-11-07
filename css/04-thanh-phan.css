@@ -5986,3 +5986,49 @@ body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt.active {
 
 /* Tên người dùng trên header */
 .ten-nguoi-dung-header { font-size: 14px; font-weight: 600; color: var(--mau-chu); }
+
+/* Liên kết mở danh sách đi chợ */
+.nut-mo-danh-sach-di-cho {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+.nut-mo-danh-sach-di-cho .nut {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Phân trang món ăn */
+.phan-trang-goi-y {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 30px 0;
+}
+
+.phan-trang-goi-y a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.phan-trang-goi-y a.dang-chon {
+    background-color: var(--mau-chinh, #4b8b52);
+    color: white;
+    border-color: var(--mau-chinh, #4b8b52);
+    font-weight: 600;
+}
+
+.phan-trang-goi-y a:hover {
+    background-color: #edf5ed;
+}
