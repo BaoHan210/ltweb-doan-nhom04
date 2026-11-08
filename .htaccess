@@ -1,0 +1,13 @@
+# Tắt hiển thị danh sách thư mục.
+Options -Indexes
+
+# Chặn truy cập các thư mục nội bộ và tệp nhạy cảm.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Chặn tệp cấu hình và dữ liệu nhạy cảm.
+    RewriteRule (^|/)(\.env[^/]*|\.git[^/]*|\.htaccess|\.htpasswd|composer\.(json|lock)|[^/]+\.(sql|log|bak|zip|old|ini|lock))$ - [R=404,L,NC]
+
+    # Chặn các thư mục nội bộ.
+    RewriteRule ^(\.git|\.vscode|inc|src|vendor|database|logs|storage|kiemtra)(/|$) - [R=404,L,NC]
+</IfModule>

@@ -1,0 +1,17 @@
+# Tắt hiển thị danh sách tệp tải lên.
+Options -Indexes
+
+# Không cho phép thực thi mã trong thư mục upload.
+<FilesMatch "(?i)\.(php[0-9]*|phtml|phar|phps|cgi|pl|py|sh|asp|aspx|jsp|shtml)$">
+    Require all denied
+</FilesMatch>
+
+# Không cho phép truy cập tệp ẩn.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Ngăn trình duyệt tự nhận diện và thực thi nội dung tải lên.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
