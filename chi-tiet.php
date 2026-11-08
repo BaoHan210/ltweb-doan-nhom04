@@ -144,6 +144,10 @@ setcookie(
     [
         'expires'  => time() + (30 * 24 * 60 * 60),
         'path'     => '/',
+        'secure'   => (
+            !empty($_SERVER['HTTPS'])
+            && strtolower((string) $_SERVER['HTTPS']) !== 'off'
+        ),
         'httponly' => true,
         'samesite' => 'Lax',
     ]
