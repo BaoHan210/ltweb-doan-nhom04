@@ -146,7 +146,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !csrfHopLe()) {
         echo '<p>Mã bảo vệ CSRF không hợp lệ hoặc đã hết hạn. Vui lòng tải lại trang.</p>';
         echo '</body></html>';
     }
-
+    ghiLogBaoMat('csrf_sai');
     exit;
 }
 

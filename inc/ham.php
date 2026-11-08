@@ -98,3 +98,60 @@ if (!function_exists('lay_chuoi')) {
         return mb_substr(trim($giaTri), 0, $doDaiToiDa, 'UTF-8');
     }
 }
+
+if (!function_exists('ghiLogBaoMat')) {
+    /**
+     * Ghi nhật ký sự kiện bảo mật.
+     * Không lưu mật khẩu, session ID hoặc CSRF token.
+     */
+    function ghiLogBaoMat(string $suKien, array $chiTiet = []): void
+    {
+        $cacSuKienChoPhep = [
+            'csrf_sai',
+            'cam_truy_cap',
+            'dang_nhap_sai'
+        ];
+
+        if (!in_array($suKien, $cacSuKienChoPhep, true)) {
+            return;
+        }
+
+        $duongDanLog = dirname(__DIR__) . '/logs/bao-mat.log';
+
+        $duLieu = [
+            'thoi_gian' => date('Y-m-d H:i:s'),
+            'su_kien' => $suKien,
+            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            'duong_dan' => parse_url(
+                $_SERVER['REQUEST_URI'] ?? '/',
+                PHP_URL_PATH
+            )
+        ];
+
+        // Chỉ cho phép ghi các trường thông tin đã xác định.
+        foreach (['email_hash', 'so_lan', 'ly_do'] as $khoa) {
+            if (isset($chiTiet[$khoa])) {
+                $duLieu[$khoa] = is_scalar($chiTiet[$khoa])
+                    ? (string) $chiTiet[$khoa]
+                    : '';
+            }
+        }
+
+        $dongLog = json_encode(
+            $duLieu,
+            JSON_UNESCAPED_UNICODE
+            | JSON_UNESCAPED_SLASHES
+            | JSON_INVALID_UTF8_SUBSTITUTE
+        );
+
+        if ($dongLog === false) {
+            return;
+        }
+
+        file_put_contents(
+            $duongDanLog,
+            $dongLog . PHP_EOL,
+            FILE_APPEND | LOCK_EX
+        );
+    }
+}

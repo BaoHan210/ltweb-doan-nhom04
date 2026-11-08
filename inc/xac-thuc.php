@@ -46,9 +46,13 @@ function yeuCauDangNhap(): array
 function yeuCauQuyen(string $vaiTro): array
 {
     $nguoiDung = yeuCauDangNhap();              // chưa đăng nhập → dang-nhap.php
-    if (($nguoiDung['vai_tro'] ?? '') !== $vaiTro) {
+        if (($nguoiDung['vai_tro'] ?? '') !== $vaiTro) {
+        ghiLogBaoMat('cam_truy_cap', [
+            'ly_do' => 'khong_du_quyen'
+        ]);
+
         http_response_code(403);
-        require __DIR__ . '/../403.php';        // trang 403 chuẩn, không để văn bản thô
+        require __DIR__ . '/../403.php';
         exit;
     }
     return $nguoiDung;
