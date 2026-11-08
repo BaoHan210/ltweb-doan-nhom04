@@ -1,8 +1,8 @@
 <?php
 /**
  * inc/db.php
- * Ket noi co so du lieu MySQL bang PDO.
- * Website Cook with me - Nhom 04.
+ * Kết nối cơ sở dữ liệu MySQL bằng PDO.
+ * Thông tin kết nối được lấy từ tệp .env.
  */
 
 function db(): PDO
@@ -10,11 +10,23 @@ function db(): PDO
     static $pdo = null;
 
     if ($pdo === null) {
-       $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=ltweb_nhom04;charset=utf8mb4';
+        $host = $_ENV['DB_HOST'];
+        $port = $_ENV['DB_PORT'];
+        $database = $_ENV['DB_DATABASE'];
+        $username = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
+
+        $dsn = sprintf(
+            'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+            $host,
+            $port,
+            $database
+        );
+
         $pdo = new PDO(
             $dsn,
-            'root',
-            '',
+            $username,
+            $password,
             [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

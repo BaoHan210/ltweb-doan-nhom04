@@ -12,3 +12,9 @@
 # Bỏ qua tất cả ảnh upload, chỉ giữ lại tệp giữ thư mục .gitkeep
 /uploads/*
 !/uploads/.gitkeep
+!/uploads/.htaccess
+
+# Bảo vệ thông tin cấu hình môi trường
+/.env
+/.env.*
+!/.env.example

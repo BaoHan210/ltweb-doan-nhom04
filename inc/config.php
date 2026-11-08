@@ -4,7 +4,30 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/ham.php';
 
-const MOI_TRUONG = 'dev'; // Giữ 'dev' khi nộp bài
+// Nạp biến môi trường từ tệp .env tại thư mục gốc.
+$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->safeLoad();
+
+// Kiểm tra các biến cấu hình CSDL bắt buộc.
+$dotenv->required([
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME'
+])->notEmpty();
+
+// DB_PASSWORD được phép để trống khi dùng MySQL root trên XAMPP.
+if (!array_key_exists('DB_PASSWORD', $_ENV)) {
+    throw new RuntimeException('Thiếu biến môi trường DB_PASSWORD.');
+}
+
+// APP_DEBUG mặc định tắt nếu không được khai báo.
+$batLoiChiTiet = filter_var(
+    $_ENV['APP_DEBUG'] ?? 'false',
+    FILTER_VALIDATE_BOOLEAN
+);
+
+define('MOI_TRUONG', $batLoiChiTiet ? 'dev' : 'production');
 
 // Cấu hình xử lý lỗi.
 error_reporting(E_ALL);
