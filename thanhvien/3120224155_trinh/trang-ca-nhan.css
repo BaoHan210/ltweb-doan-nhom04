@@ -370,3 +370,97 @@ button.tag-mon-an:focus-visible,
 .tieu-de-ho-so {
   border-radius: 12px;
 }
+
+/* =========================================================
+   BỘ ĐẾM LƯỢT XEM
+   ========================================================= */
+
+.khu-vuc-luot-xem {
+    margin: 15px 0;
+    padding: 15px;
+    background: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+}
+
+.bang-luot-xem {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.bang-luot-xem th,
+.bang-luot-xem td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* =========================================================
+   SỔ LƯU BÚT
+   ========================================================= */
+
+.so-luu-but {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.thong-bao-luu-but {
+    padding: 10px;
+    background: #d4edda;
+    color: #155724;
+}
+
+.form-luu-but {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.form-luu-but input,
+.form-luu-but textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.nut-gui-loi-nhan {
+    padding: 8px 18px;
+    background: #e67e22;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.loi-luu-but {
+    color: #b91c1c;
+}
+
+.danh-sach-luu-but {
+    list-style: none;
+    padding-left: 0;
+}
+
+.danh-sach-luu-but > li {
+    padding: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.form-xoa-loi-nhan {
+    margin-top: 6px;
+}
+
+.phan-trang-luu-but {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.quay-lai-trang-chu {
+    margin-top: 20px;
+}

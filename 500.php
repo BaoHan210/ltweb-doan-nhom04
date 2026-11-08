@@ -14,18 +14,10 @@ $goc = defined('URL_GOC') ? URL_GOC : './';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lỗi máy chủ - Cook with me</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; color: #222; background: #fff; }
-    .trang-loi { max-width: 40rem; margin: 0 auto; padding: 4rem 1rem; text-align: center; }
-    .trang-loi .ma { font-size: 5rem; font-weight: 700; color: #b3261e; margin: 0; }
-    .trang-loi h1 { font-size: 1.5rem; margin: 1rem 0; }
-    .trang-loi p { color: #555; line-height: 1.6; }
-    .trang-loi a { display: inline-block; margin-top: 1.5rem; padding: .75rem 1.5rem;
-      background: #1e6b2e; color: #fff; text-decoration: none; border-radius: .25rem; }
-  </style>
+  <link rel="stylesheet" href="<?= htmlspecialchars($goc, ENT_QUOTES, 'UTF-8') ?>css/06-trang-loi.css">
 </head>
-<body>
-  <main class="trang-loi">
+<body class="trang-loi-body">
+  <main class="trang-loi trang-loi-500">
     <p class="ma">500</p>
     <h1>Xin lỗi, đã xảy ra lỗi máy chủ</h1>
     <p>Hệ thống đang gặp sự cố tạm thời. Lỗi đã được ghi nhận để khắc phục. Bạn vui lòng thử lại sau.</p>

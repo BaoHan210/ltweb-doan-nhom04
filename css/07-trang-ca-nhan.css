@@ -1,0 +1,16 @@
+/* Bố cục riêng cho trang cá nhân */
+.trang-ca-nhan-noi-dung {
+    padding-top: 16px;
+    padding-bottom: 40px;
+}
+
+/* Liên kết tiêu đề món ăn trên trang cá nhân */
+.lien-ket-tieu-de-mon-cn {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Thông báo khi người dùng chưa có bài viết */
+.thong-bao-chua-co-bai-viet {
+    padding: 0 28px 28px;
+}

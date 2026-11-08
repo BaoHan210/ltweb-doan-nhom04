@@ -1,0 +1,33 @@
+/* Biểu mẫu thêm và sửa món ăn */
+.form-mon-an-trang {
+    max-width: 920px;
+    margin: 24px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-mon-an-luoi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+}
+
+.o-nhap-mon-an {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.anh-hien-tai-mon-an {
+    max-width: 180px;
+    max-height: 130px;
+    object-fit: cover;
+}
+
+/* Trang xác nhận xóa món ăn */
+.xac-nhan-xoa-mon-an {
+    max-width: 720px;
+    margin: 32px auto;
+    padding: 24px;
+    box-sizing: border-box;
+}

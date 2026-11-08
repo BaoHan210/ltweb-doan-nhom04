@@ -20,10 +20,6 @@ require_once __DIR__ . '/inc/db.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 
 // 1. KHỞI TẠO SESSION
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Tạo mã chống gửi biểu mẫu giả mạo (CSRF)
 if (empty($_SESSION['csrf_dang_ky'])) {
     $_SESSION['csrf_dang_ky'] = bin2hex(random_bytes(32));
@@ -180,6 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $tieuDe = 'Đăng ký';
 $trang = 'dang-ky';
 $customJS = 'js/trang-dang-ky.js';
+$cssRieng = 'css/09-dang-ky.css';
 
 require __DIR__ . '/inc/header.php';
 ?>
@@ -205,10 +202,9 @@ require __DIR__ . '/inc/header.php';
             <!-- THÔNG BÁO LỖI CHUNG -->
             <?php if ($loiChung !== ''): ?>
                 <div
-                    class="thong-bao-loi-dang-nhap"
-                    role="alert"
-                    style="color:#b42318; margin-bottom:16px;"
-                >
+    class="thong-bao-loi-dang-nhap thong-bao-loi-dang-ky"
+    role="alert"
+>
                     <?= e($loiChung) ?>
                 </div>
             <?php endif; ?>

@@ -1,0 +1,75 @@
+/* =========================================================
+   GIAO DIỆN CÁC TRANG LỖI 403, 404 VÀ 500
+   ========================================================= */
+
+/* Trang lỗi 403 và 500 */
+.trang-loi {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+}
+
+body.trang-loi-body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    color: #222;
+    background: #fff;
+}
+
+.trang-loi .ma {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #b3261e;
+    margin: 0;
+}
+
+.trang-loi h1 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.trang-loi p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.trang-loi a {
+    display: inline-block;
+    margin: 1.5rem .5rem 0;
+    padding: .75rem 1.5rem;
+    background: #1e6b2e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: .25rem;
+}
+
+.trang-loi-500 a {
+    margin-top: 1.5rem;
+}
+
+/* Trang lỗi 404 */
+.trang-loi-404 {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.trang-loi-404 .ma {
+    font-size: 80px;
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+.trang-loi-404 p {
+    margin: 20px 0;
+    color: #666;
+}
+
+.trang-loi-404 .nut-trang-chu {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}

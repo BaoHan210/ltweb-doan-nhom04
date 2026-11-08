@@ -256,7 +256,6 @@ require __DIR__ . '/inc/header.php';
                 <p
                     class="thong-bao-loi"
                     role="alert"
-                    style="color:#b42318;"
                 >
                     <?= e($loi['luu_du_lieu']) ?>
                 </p>

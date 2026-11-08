@@ -1,0 +1,29 @@
+/* Định dạng riêng cho trang quản trị */
+
+.mau-chu-bai-viet {
+    color: #198754;
+}
+
+.mau-chu-luot-thich {
+    color: #ffc107;
+}
+
+.anh-mon-an-quan-tri {
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.form-xoa-mon-an-quan-tri {
+    display: inline;
+}
+
+.email-nguoi-dung-quan-tri {
+    display: block;
+}
+
+.form-cap-nhat-di-cho-quan-tri {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}

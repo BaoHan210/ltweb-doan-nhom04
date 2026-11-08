@@ -139,6 +139,7 @@ $danhSachDanhGia = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $tieuDe = 'Thong tin ca nhan - Nguyen Thi Ngoc Binh';
 $trang = 'gioi-thieu';
 $cssRieng = $goc . 'thanhvien/3120224013_binh/trang-ca-nhan.css';
+$customJS = 'thanhvien/3120224013_binh/js/canhan.js';
 require_once __DIR__ . '/../../inc/header.php';
 ?>
 
@@ -443,88 +444,6 @@ require_once __DIR__ . '/../../inc/header.php';
     </p>
 
 </main>
-
-<script>
-(function () {
-    function khoiTaoTuongTac() {
-
-        // Thu gọn / mở rộng Dự án và sở thích
-        const nutMoRong =
-            document.getElementById('nut-mo-rong');
-
-        const noiDungDuAn =
-            document.getElementById('noi-dung-du-an');
-
-        if (nutMoRong && noiDungDuAn) {
-            nutMoRong.onclick = function () {
-                const dangMo =
-                    noiDungDuAn.style.display !== 'none';
-
-                if (dangMo) {
-                    noiDungDuAn.style.display = 'none';
-                    nutMoRong.setAttribute(
-                        'aria-expanded', 'false'
-                    );
-                    nutMoRong.textContent = '▼ Mở rộng';
-                } else {
-                    noiDungDuAn.style.display = 'block';
-                    nutMoRong.setAttribute(
-                        'aria-expanded', 'true'
-                    );
-                    nutMoRong.textContent = '▲ Thu gọn';
-                }
-            };
-        }
-
-        // Tìm kiếm kỹ năng
-        const oTimKyNang =
-            document.getElementById('tim-ky-nang');
-
-        const danhSachKyNang =
-            document.querySelectorAll(
-                '#danh-sach-ky-nang li'
-            );
-
-        const thongBaoKhongCo =
-            document.getElementById('khong-co-ky-nang');
-
-        if (oTimKyNang && danhSachKyNang.length > 0) {
-            oTimKyNang.oninput = function () {
-                const tuKhoa =
-                    oTimKyNang.value.toLowerCase().trim();
-
-                let soLuongKhop = 0;
-
-                danhSachKyNang.forEach(function (item) {
-                    const noiDung =
-                        item.textContent.toLowerCase();
-
-                    if (noiDung.includes(tuKhoa)) {
-                        item.style.display = '';
-                        soLuongKhop++;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-
-                if (thongBaoKhongCo) {
-                    thongBaoKhongCo.hidden =
-                        soLuongKhop > 0;
-                }
-            };
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            khoiTaoTuongTac
-        );
-    } else {
-        khoiTaoTuongTac();
-    }
-})();
-</script>
 
 <?php
 require_once __DIR__ . '/../../inc/footer.php';

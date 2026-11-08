@@ -148,9 +148,11 @@ $truongSo = [
 
 $doKhoHopLe = ['Dễ', 'Trung bình', 'Khó'];
 
+$cssRieng = 'css/12-form-quan-ly-mon-an.css';
+
 require __DIR__ . '/inc/header.php';
 ?>
-<main class="noi-dung-trang" style="max-width:920px;margin:24px auto;padding:20px">
+<main class="noi-dung-trang form-mon-an-trang">
     <p><a href="quan-tri.php">← Quay lại quản trị</a></p>
     <h1>Sửa món ăn #<?= $id ?></h1>
     <p>Chỉnh sửa thông tin món ăn. Để trống phần chọn ảnh nếu muốn giữ ảnh hiện tại.</p>
@@ -158,7 +160,7 @@ require __DIR__ . '/inc/header.php';
     <form action="sua-mon-an.php?id=<?= $id ?>" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_sua_mon_an']) ?>">
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px">
+        <div class="form-mon-an-luoi">
 
             <?php foreach ($truongChu as $cot => [$nhan, $doDaiToiDa]): ?>
                 <div>
@@ -166,14 +168,15 @@ require __DIR__ . '/inc/header.php';
                     <input type="text" id="<?= e($cot) ?>" name="<?= e($cot) ?>" required
                         maxlength="<?= $doDaiToiDa ?>"
                         <?= $cot === 'slug' ? 'pattern="[a-z0-9]+(-[a-z0-9]+)*"' : '' ?>
-                        value="<?= e($duLieu[$cot]) ?>" style="width:100%;padding:10px">
+                        value="<?= e($duLieu[$cot]) ?>"
+                        class="o-nhap-mon-an">
                     <?php $hienLoi($cot); ?>
                 </div>
             <?php endforeach; ?>
 
             <div>
                 <label for="danh_muc_id">Danh mục *</label><br>
-                <select id="danh_muc_id" name="danh_muc_id" required style="width:100%;padding:10px">
+                <select id="danh_muc_id" name="danh_muc_id" required class="o-nhap-mon-an">
                     <option value="">-- Chọn danh mục --</option>
                     <?php foreach ($dsDanhMuc as $dm): ?>
                         <option value="<?= (int) $dm['id'] ?>"
@@ -190,14 +193,14 @@ require __DIR__ . '/inc/header.php';
                     <label for="<?= e($cot) ?>"><?= e($nhan) ?> *</label><br>
                     <input type="number" id="<?= e($cot) ?>" name="<?= e($cot) ?>" required
                         min="<?= $min ?>" step="1" value="<?= e($duLieu[$cot]) ?>"
-                        style="width:100%;padding:10px">
+                        class="o-nhap-mon-an">
                     <?php $hienLoi($cot); ?>
                 </div>
             <?php endforeach; ?>
 
             <div>
                 <label for="do_kho">Độ khó *</label><br>
-                <select id="do_kho" name="do_kho" required style="width:100%;padding:10px">
+                <select id="do_kho" name="do_kho" required class="o-nhap-mon-an">
                     <?php foreach ($doKhoHopLe as $muc): ?>
                         <option value="<?= e($muc) ?>" <?= $muc === $duLieu['do_kho'] ? 'selected' : '' ?>>
                             <?= e($muc) ?>
@@ -210,8 +213,13 @@ require __DIR__ . '/inc/header.php';
             <div>
                 <label for="hinh_anh">Ảnh mới (không bắt buộc; JPG, PNG hoặc WebP, tối đa 3 MB)</label><br>
                 <?php if ($anhCu !== ''): ?>
-                    <p><img src="<?= e($anhCu) ?>" alt="Ảnh hiện tại của món ăn"
-                            style="max-width:180px;max-height:130px;object-fit:cover"></p>
+                    <p>
+                        <img
+                            src="<?= e($anhCu) ?>"
+                            alt="Ảnh hiện tại của món ăn"
+                            class="anh-hien-tai-mon-an"
+                        >
+                    </p>
                 <?php endif; ?>
                 <input type="file" id="hinh_anh" name="hinh_anh"
                     accept="image/jpeg,image/png,image/webp">
@@ -222,14 +230,15 @@ require __DIR__ . '/inc/header.php';
 
         <p>
             <label for="mo_ta">Mô tả</label><br>
-            <textarea id="mo_ta" name="mo_ta" rows="5" style="width:100%;padding:10px"><?= e($duLieu['mo_ta']) ?></textarea>
+            <textarea id="mo_ta" name="mo_ta" rows="5" class="o-nhap-mon-an"><?= e($duLieu['mo_ta']) ?></textarea>
             <?php $hienLoi('mo_ta'); ?>
         </p>
 
         <p>
             <label for="video">Đường dẫn video (nếu có)</label><br>
             <input type="text" id="video" name="video" maxlength="255"
-                value="<?= e($duLieu['video']) ?>" style="width:100%;padding:10px">
+                value="<?= e($duLieu['video']) ?>"
+                class="o-nhap-mon-an">
             <?php $hienLoi('video'); ?>
         </p>
 

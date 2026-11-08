@@ -6,25 +6,51 @@
  * Sử dụng session và PRG để xử lý kết quả sau khi gửi biểu mẫu.
  */
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
-
 require_once __DIR__ . '/../../inc/config.php';
-if (!isset($pdo)) {
-    try {
-        $pdo = new PDO('mysql:host=localhost;dbname=ltweb_nhom04;charset=utf8mb4', 'root', '');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die('Kết nối CSDL thất bại: ' . $e->getMessage());
-    }
-}
+require_once __DIR__ . '/../../inc/db.php';
+require_once __DIR__ . '/../../inc/xac-thuc.php';
+
+$pdo = db();
 
 $tieuDe = 'Thông tin cá nhân - Lê Thị A Na';
 $trang = 'gioi-thieu';
 $goc = '../../';
 $customJS = 'thanhvien/3120224096_lena/js/canhan.js';
-$mssv = '3120224096'; // MSSV của bạn
+$mssv = '3120224096';
+
+// Xác định chủ hồ sơ từ quan hệ tài khoản - thành viên trong CSDL.
+$nguoiDung = nguoiDungHienTai();
+$stmtChuTrang = $pdo->prepare(
+    'SELECT nguoi_dung_id FROM thanh_vien WHERE mssv = ? LIMIT 1'
+);
+$stmtChuTrang->execute([$mssv]);
+$chuTrangId = $stmtChuTrang->fetchColumn();
+
+$laChuTrang = $nguoiDung !== null
+    && $chuTrangId !== false
+    && $chuTrangId !== null
+    && (int) $nguoiDung['id'] === (int) $chuTrangId;
+
+$laQuanTri = $nguoiDung !== null
+    && ($nguoiDung['vai_tro'] ?? '') === 'quan_tri';
+
+$duocThemDuAn = $laChuTrang || $laQuanTri;
+
+// CSRF token dùng chung cho các biểu mẫu POST trên trang.
+if (!isset($_SESSION['csrf_lena']) || !is_string($_SESSION['csrf_lena'])) {
+    $_SESSION['csrf_lena'] = bin2hex(random_bytes(32));
+}
+$csrfLena = $_SESSION['csrf_lena'];
+
+// Từ chối POST thiếu token hoặc token không hợp lệ.
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    $tokenGuiLen = $_POST['csrf_token'] ?? null;
+
+    if (!is_string($tokenGuiLen) || !hash_equals($csrfLena, $tokenGuiLen)) {
+        http_response_code(403);
+        exit('403 - Phiên làm việc không hợp lệ. Vui lòng tải lại trang.');
+    }
+}
 
 $congThuc = [
     'thit-kho' => [
@@ -159,17 +185,47 @@ if (
     exit;
 }
 
-// Xử lý Form CSDL mới: Thêm dự án cá nhân (tv_du_an_ca_nhan)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['them_du_an'])) {
-    $tenDuAn = trim($_POST['ten_du_an'] ?? '');
-    $congNghe = trim($_POST['cong_nghe'] ?? '');
-    $trangThai = trim($_POST['trang_thai'] ?? '');
-    $moTa = trim($_POST['mo_ta'] ?? '');
-
-    if (!empty($tenDuAn) && !empty($congNghe) && !empty($trangThai)) {
-        $stmtInsert = $pdo->prepare("INSERT INTO tv_du_an_ca_nhan (mssv, ten_du_an, cong_nghe, trang_thai, mo_ta) VALUES (?, ?, ?, ?, ?)");
-        $stmtInsert->execute([$mssv, $tenDuAn, $congNghe, $trangThai, $moTa]);
+// Chỉ chủ hồ sơ hoặc quản trị viên được thêm dự án.
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['them_du_an'])) {
+    if (!$duocThemDuAn) {
+        http_response_code(403);
+        exit('403 - Chỉ chủ hồ sơ hoặc quản trị viên được thêm dự án.');
     }
+
+    $tenDuAnInput = $_POST['ten_du_an'] ?? null;
+    $congNgheInput = $_POST['cong_nghe'] ?? null;
+    $trangThaiInput = $_POST['trang_thai'] ?? null;
+    $moTaInput = $_POST['mo_ta'] ?? null;
+
+    $tenDuAn = is_string($tenDuAnInput) ? trim($tenDuAnInput) : '';
+    $congNghe = is_string($congNgheInput) ? trim($congNgheInput) : '';
+    $trangThai = is_string($trangThaiInput) ? trim($trangThaiInput) : '';
+    $moTa = is_string($moTaInput) ? trim($moTaInput) : '';
+
+    if ($tenDuAn === '' || mb_strlen($tenDuAn, 'UTF-8') > 150) {
+        gan_thong_bao('error', 'Tên dự án phải từ 1 đến 150 ký tự.');
+    } elseif ($congNghe === '' || mb_strlen($congNghe, 'UTF-8') > 255) {
+        gan_thong_bao('error', 'Công nghệ sử dụng phải từ 1 đến 255 ký tự.');
+    } elseif (!in_array($trangThai, ['Đang thực hiện', 'Đã hoàn thành'], true)) {
+        gan_thong_bao('error', 'Trạng thái dự án không hợp lệ.');
+    } elseif (mb_strlen($moTa, 'UTF-8') > 2000) {
+        gan_thong_bao('error', 'Mô tả không được vượt quá 2000 ký tự.');
+    } else {
+        $stmtInsert = $pdo->prepare(
+            'INSERT INTO tv_du_an_ca_nhan
+             (mssv, ten_du_an, cong_nghe, trang_thai, mo_ta)
+             VALUES (?, ?, ?, ?, ?)'
+        );
+        $stmtInsert->execute([
+            $mssv,
+            $tenDuAn,
+            $congNghe,
+            $trangThai,
+            $moTa === '' ? null : $moTa
+        ]);
+        gan_thong_bao('success', 'Đã thêm dự án.');
+    }
+
     header('Location: ' . $_SERVER['SCRIPT_NAME'] . '#quan-ly-du-an');
     exit;
 }
@@ -498,53 +554,63 @@ require_once __DIR__ . '/../../inc/header.php';
     <?php endif; ?>
 </section>
 
-<!-- QUẢN LÝ DỰ ÁN CÁ NHÂN (2 Chức năng CSDL mới: Thêm & Lọc dự án) -->
-<section class="quan-ly-du-an" id="quan-ly-du-an" style="margin-top: 30px; padding: 20px; background: #fff; border-radius: 8px;">
+<!-- QUẢN LÝ DỰ ÁN CÁ NHÂN -->
+<section class="quan-ly-du-an" id="quan-ly-du-an">
     <h2>Quản lý dự án cá nhân (Dữ liệu từ CSDL)</h2>
     <p>Thêm dự án mới và lọc danh sách dự án trực tiếp từ cơ sở dữ liệu.</p>
 
-    <!-- Form thêm dự án mới -->
-    <form method="POST" action="#quan-ly-du-an" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+    <!-- Chỉ chủ hồ sơ hoặc quản trị viên được thêm dự án -->
+    <?php if ($duocThemDuAn): ?>
+    <form method="POST" action="#quan-ly-du-an" class="form-them-du-an">
         <input type="hidden" name="csrf_token" value="<?= e($csrfLena) ?>">
         <h3>Thêm dự án mới</h3>
-        <div style="margin-bottom: 10px;">
+
+        <div class="truong-du-an">
             <label>Tên dự án:</label><br>
-            <input type="text" name="ten_du_an" required style="width: 100%; padding: 6px;">
+            <input type="text" name="ten_du_an" required class="o-nhap-du-an">
         </div>
-        <div style="margin-bottom: 10px;">
+
+        <div class="truong-du-an">
             <label>Công nghệ sử dụng:</label><br>
-            <input type="text" name="cong_nghe" required style="width: 100%; padding: 6px;">
+            <input type="text" name="cong_nghe" required class="o-nhap-du-an">
         </div>
-        <div style="margin-bottom: 10px;">
+
+        <div class="truong-du-an">
             <label>Trạng thái:</label><br>
-            <select name="trang_thai" style="width: 100%; padding: 6px;">
+            <select name="trang_thai" class="o-nhap-du-an">
                 <option value="Đang thực hiện">Đang thực hiện</option>
                 <option value="Đã hoàn thành">Đã hoàn thành</option>
             </select>
         </div>
-        <div style="margin-bottom: 10px;">
+
+        <div class="truong-du-an">
             <label>Mô tả:</label><br>
-            <textarea name="mo_ta" rows="2" required style="width: 100%; padding: 6px;"></textarea>
+            <textarea name="mo_ta" rows="2" required class="o-nhap-du-an"></textarea>
         </div>
-        <button type="submit" name="them_du_an" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Thêm dự án</button>
+
+        <button type="submit" name="them_du_an" class="nut-them-du-an">
+            Thêm dự án
+        </button>
     </form>
+    <?php endif; ?>
 
     <!-- Bộ lọc trạng thái dự án -->
-    <div style="margin-bottom: 15px;">
+    <div class="bo-loc-du-an">
         <strong>Lọc theo trạng thái: </strong>
-        <a href="gioithieu.php#quan-ly-du-an" style="margin-right: 10px;">Tất cả</a>
-        <a href="gioithieu.php?trang_thai_loc=Đang+thực+hiện#quan-ly-du-an" style="margin-right: 10px;">Đang thực hiện</a>
+        <a href="gioithieu.php#quan-ly-du-an">Tất cả</a>
+        <a href="gioithieu.php?trang_thai_loc=Đang+thực+hiện#quan-ly-du-an">Đang thực hiện</a>
         <a href="gioithieu.php?trang_thai_loc=Đã+hoàn+thành#quan-ly-du-an">Đã hoàn thành</a>
     </div>
 
     <!-- Hiển thị danh sách dự án -->
     <h3>Danh sách dự án của tôi</h3>
+
     <?php if (empty($danhSachDuAn)): ?>
         <p>Không có dự án nào phù hợp.</p>
     <?php else: ?>
-        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+        <table class="bang-du-an">
             <thead>
-                <tr style="background: #f4f4f4;">
+                <tr>
                     <th>Tên dự án</th>
                     <th>Công nghệ</th>
                     <th>Trạng thái</th>

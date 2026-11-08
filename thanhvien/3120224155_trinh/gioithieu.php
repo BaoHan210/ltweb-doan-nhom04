@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Trang cá nhân Nguyễn Thị Trinh - MSSV 3120224155.
@@ -22,14 +21,14 @@ $du = ['ten' => '', 'loinhan' => ''];
 $thongBao = $_SESSION['flash_trinh'] ?? '';
 unset($_SESSION['flash_trinh']);
 
-// Token bảo vệ biểu mẫu
+// Khởi tạo token bảo vệ biểu mẫu.
 if (empty($_SESSION['csrf_trinh'])) {
     $_SESSION['csrf_trinh'] = bin2hex(random_bytes(32));
 }
 
 $csrfTrinh = $_SESSION['csrf_trinh'];
 
-// Lấy tài khoản chủ trang
+// Lấy tài khoản chủ trang.
 $st = db()->prepare(
     'SELECT nguoi_dung_id
      FROM thanh_vien
@@ -44,21 +43,21 @@ if ($thanhVien === false) {
     exit('Chưa tìm thấy thông tin thành viên.');
 }
 
-// Chỉ chủ trang đã đăng nhập mới được xóa
+// Chỉ chủ trang đã đăng nhập mới được xóa.
 $nguoiDung = nguoiDungHienTai();
 
 $laChuTrang = $nguoiDung !== null
     && $thanhVien['nguoi_dung_id'] !== null
     && (int) $nguoiDung['id'] === (int) $thanhVien['nguoi_dung_id'];
 
-// Xử lý gửi và xóa lời nhắn
+// Xử lý gửi và xóa lời nhắn.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $tokenGui = $_POST['csrf'] ?? null;
 
     if (
-        !is_string($tokenGui) ||
-        !hash_equals($csrfTrinh, $tokenGui)
+        !is_string($tokenGui)
+        || !hash_equals($csrfTrinh, $tokenGui)
     ) {
         http_response_code(403);
         exit('Phiên gửi biểu mẫu không hợp lệ.');
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $hanhDong = $_POST['hanh_dong'] ?? '';
 
-    // XÓA LỜI NHẮN
+    // XÓA LỜI NHẮN.
     if ($hanhDong === 'xoa') {
 
         if (!$laChuTrang) {
@@ -108,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // GỬI LỜI NHẮN
+    // GỬI LỜI NHẮN.
     if ($hanhDong !== 'gui') {
         http_response_code(400);
         exit('Thao tác không hợp lệ.');
@@ -125,17 +124,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ? trim($nhanNhap)
         : '';
 
-    // Kiểm tra dữ liệu phía server
+    // Kiểm tra dữ liệu phía máy chủ.
     if (
-        $du['ten'] === '' ||
-        mb_strlen($du['ten']) > 50
+        $du['ten'] === ''
+        || mb_strlen($du['ten']) > 50
     ) {
         $loi['ten'] = 'Họ tên phải dài từ 1 đến 50 ký tự.';
     }
 
     if (
-        $du['loinhan'] === '' ||
-        mb_strlen($du['loinhan']) > 500
+        $du['loinhan'] === ''
+        || mb_strlen($du['loinhan']) > 500
     ) {
         $loi['loinhan'] = 'Lời nhắn phải dài từ 1 đến 500 ký tự.';
     }
@@ -156,13 +155,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash_trinh'] = 'Đã gửi lời nhắn thành công!';
 
-        // PRG tránh gửi lại khi nhấn F5
+        // PRG tránh gửi lại biểu mẫu khi nhấn F5.
         header('Location: gioithieu.php?trang=1#so-luu-but');
         exit;
     }
 }
 
-// PHÂN TRANG: MỖI TRANG 5 LỜI NHẮN
+// PHÂN TRANG: MỖI TRANG 5 LỜI NHẮN.
 $soMoiTrang = 5;
 
 $st = db()->prepare(
@@ -172,7 +171,6 @@ $st = db()->prepare(
 );
 
 $st->execute([MSSV_TRINH]);
-
 $tongLoiNhan = (int) $st->fetchColumn();
 
 $soTrang = max(
@@ -188,7 +186,7 @@ $trangYeuCau = filter_var(
 
 $hienTai = min($trangYeuCau, $soTrang);
 
-// Lấy danh sách lời nhắn
+// Lấy danh sách lời nhắn.
 $st = db()->prepare(
     'SELECT id, ten_khach, loi_nhan, thoi_gian
      FROM tv_trinh_luu_but
@@ -213,7 +211,7 @@ $danhSachLuuBut = $st->fetchAll();
 // CHỨC NĂNG 2: BỘ ĐẾM LƯỢT XEM THEO NGÀY MYSQL
 // ==================================================
 
-// Mỗi phiên chỉ tăng lượt xem một lần
+// Mỗi phiên chỉ tăng lượt xem một lần.
 if (empty($_SESSION['da_xem_trinh_mysql'])) {
 
     $stTangLuot = db()->prepare(
@@ -229,7 +227,7 @@ if (empty($_SESSION['da_xem_trinh_mysql'])) {
     $_SESSION['da_xem_trinh_mysql'] = true;
 }
 
-// TỔNG LƯỢT XEM
+// TỔNG LƯỢT XEM.
 $stTongLuot = db()->prepare(
     'SELECT COALESCE(SUM(so_luot), 0)
      FROM tv_trinh_luot_xem
@@ -237,11 +235,9 @@ $stTongLuot = db()->prepare(
 );
 
 $stTongLuot->execute([MSSV_TRINH]);
-
 $luotXem = (int) $stTongLuot->fetchColumn();
 
-
-// THỐNG KÊ 7 NGÀY GẦN NHẤT
+// THỐNG KÊ 7 NGÀY GẦN NHẤT.
 $stBayNgay = db()->prepare(
     'SELECT ngay, so_luot
      FROM tv_trinh_luot_xem
@@ -260,12 +256,12 @@ foreach ($stBayNgay->fetchAll() as $dong) {
     $luotTheoNgay[$dong['ngay']] = (int) $dong['so_luot'];
 }
 
-// Lấy ngày hiện tại theo máy chủ MySQL
+// Lấy ngày hiện tại theo máy chủ MySQL.
 $ngayHomNay = new DateTimeImmutable(
     (string) db()->query('SELECT CURDATE()')->fetchColumn()
 );
 
-// Tạo đủ 7 dòng, kể cả ngày có 0 lượt xem
+// Tạo đủ 7 dòng, kể cả ngày có 0 lượt xem.
 $thongKeBayNgay = [];
 
 for ($i = 0; $i < 7; $i++) {
@@ -288,11 +284,12 @@ for ($i = 0; $i < 7; $i++) {
 $goc = '../../';
 $tieuDe = 'Thông tin cá nhân - Nguyễn Thị Trinh';
 $trang = '';
+$customJS = 'thanhvien/3120224155_trinh/js/canhan.js';
 
 require __DIR__ . '/../../inc/header.php';
 ?>
 
-<link rel="stylesheet" href="trang-ca-nhan.css">
+<link rel="stylesheet" href="<?= e($goc) ?>thanhvien/3120224155_trinh/trang-ca-nhan.css">
 
 <main class="ho-so-trang">
 
@@ -302,13 +299,8 @@ require __DIR__ . '/../../inc/header.php';
 
     <!-- BỘ ĐẾM LƯỢT XEM MYSQL -->
     <section
+        class="khu-vuc-luot-xem"
         aria-labelledby="tieu-de-luot-xem"
-        style="
-            margin:15px 0;
-            padding:15px;
-            background:#e8f5e9;
-            border-left:4px solid #2e7d32;
-        "
     >
 
         <h2 id="tieu-de-luot-xem">
@@ -323,12 +315,7 @@ require __DIR__ . '/../../inc/header.php';
             (mỗi phiên làm việc chỉ tính một lần).
         </p>
 
-        <!-- BẢNG THỐNG KÊ 7 NGÀY -->
-        <table style="
-            width:100%;
-            border-collapse:collapse;
-            background:#fff;
-        ">
+        <table class="bang-luot-xem">
 
             <caption>
                 Thống kê lượt xem trong 7 ngày gần nhất
@@ -336,46 +323,25 @@ require __DIR__ . '/../../inc/header.php';
 
             <thead>
                 <tr>
-                    <th
-                        scope="col"
-                        style="padding:8px; border:1px solid #ccc;"
-                    >
-                        Ngày
-                    </th>
-
-                    <th
-                        scope="col"
-                        style="padding:8px; border:1px solid #ccc;"
-                    >
-                        Số lượt xem
-                    </th>
+                    <th scope="col">Ngày</th>
+                    <th scope="col">Số lượt xem</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($thongKeBayNgay as $dong): ?>
-
                     <tr>
-                        <td style="
-                            padding:8px;
-                            border:1px solid #ccc;
-                            text-align:center;
-                        ">
+                        <td>
                             <?= e(date(
                                 'd/m/Y',
                                 strtotime($dong['ngay'])
                             )) ?>
                         </td>
 
-                        <td style="
-                            padding:8px;
-                            border:1px solid #ccc;
-                            text-align:center;
-                        ">
+                        <td>
                             <?= e((string) $dong['so_luot']) ?>
                         </td>
                     </tr>
-
                 <?php endforeach; ?>
             </tbody>
 
@@ -531,13 +497,6 @@ require __DIR__ . '/../../inc/header.php';
     <section
         id="so-luu-but"
         class="so-luu-but"
-        style="
-            margin-top:30px;
-            padding:20px;
-            border:1px solid #ddd;
-            border-radius:8px;
-            background:#fafafa;
-        "
     >
 
         <h2>✍️ Sổ lưu bút</h2>
@@ -545,12 +504,8 @@ require __DIR__ . '/../../inc/header.php';
         <?php if ($thongBao !== ''): ?>
 
             <p
+                class="thong-bao-luu-but"
                 role="status"
-                style="
-                    padding:10px;
-                    background:#d4edda;
-                    color:#155724;
-                "
             >
                 <?= e($thongBao) ?>
             </p>
@@ -561,12 +516,7 @@ require __DIR__ . '/../../inc/header.php';
         <form
             method="post"
             action="gioithieu.php#so-luu-but"
-            style="
-                display:flex;
-                flex-direction:column;
-                gap:12px;
-                margin-bottom:25px;
-            "
+            class="form-luu-but"
         >
 
             <input
@@ -590,15 +540,10 @@ require __DIR__ . '/../../inc/header.php';
                     name="ten"
                     maxlength="50"
                     value="<?= e($du['ten']) ?>"
-                    style="
-                        width:100%;
-                        padding:8px;
-                        border:1px solid #ccc;
-                    "
                 >
 
                 <?php if (isset($loi['ten'])): ?>
-                    <p style="color:#b91c1c;">
+                    <p class="loi-luu-but">
                         <?= e($loi['ten']) ?>
                     </p>
                 <?php endif; ?>
@@ -612,15 +557,10 @@ require __DIR__ . '/../../inc/header.php';
                     name="loinhan"
                     rows="3"
                     maxlength="500"
-                    style="
-                        width:100%;
-                        padding:8px;
-                        border:1px solid #ccc;
-                    "
                 ><?= e($du['loinhan']) ?></textarea>
 
                 <?php if (isset($loi['loinhan'])): ?>
-                    <p style="color:#b91c1c;">
+                    <p class="loi-luu-but">
                         <?= e($loi['loinhan']) ?>
                     </p>
                 <?php endif; ?>
@@ -628,15 +568,7 @@ require __DIR__ . '/../../inc/header.php';
 
             <button
                 type="submit"
-                class="nut"
-                style="
-                    padding:8px 18px;
-                    background:#e67e22;
-                    color:white;
-                    border:0;
-                    border-radius:4px;
-                    cursor:pointer;
-                "
+                class="nut nut-gui-loi-nhan"
             >
                 Gửi lời nhắn
             </button>
@@ -656,14 +588,11 @@ require __DIR__ . '/../../inc/header.php';
 
         <?php else: ?>
 
-            <ul style="list-style:none; padding-left:0;">
+            <ul class="danh-sach-luu-but">
 
                 <?php foreach ($danhSachLuuBut as $lb): ?>
 
-                    <li style="
-                        padding:10px;
-                        border-bottom:1px dashed #ccc;
-                    ">
+                    <li>
 
                         <strong>
                             <?= e($lb['ten_khach']) ?>
@@ -686,7 +615,8 @@ require __DIR__ . '/../../inc/header.php';
                             <form
                                 method="post"
                                 action="gioithieu.php"
-                                style="margin-top:6px;"
+                                class="form-xoa-loi-nhan"
+                                data-confirm="Bạn muốn xóa lời nhắn này?"
                             >
 
                                 <input
@@ -713,10 +643,7 @@ require __DIR__ . '/../../inc/header.php';
                                     value="<?= e($csrfTrinh) ?>"
                                 >
 
-                                <button
-                                    type="submit"
-                                    onclick="return confirm('Bạn muốn xóa lời nhắn này?')"
-                                >
+                                <button type="submit">
                                     Xóa
                                 </button>
 
@@ -737,12 +664,7 @@ require __DIR__ . '/../../inc/header.php';
 
             <nav
                 aria-label="Phân trang sổ lưu bút"
-                style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:10px;
-                    margin-top:14px;
-                "
+                class="phan-trang-luu-but"
             >
 
                 <?php for ($i = 1; $i <= $soTrang; $i++): ?>
@@ -764,15 +686,13 @@ require __DIR__ . '/../../inc/header.php';
 
     </section>
 
-    <p class="quay-lai" style="margin-top:20px;">
+    <p class="quay-lai quay-lai-trang-chu">
         <a href="<?= e($goc) ?>index.php">
             Quay lại trang chủ
         </a>
     </p>
 
 </main>
-
-<script type="module" src="js/canhan.js"></script>
 
 <?php
 require __DIR__ . '/../../inc/footer.php';

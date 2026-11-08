@@ -14,90 +14,179 @@ const khuVucCongThuc = document.querySelector('.khu-vuc-cong-thuc-ca-nhan');
 const khuVucMonDaLuu = document.querySelector('.khu-vuc-mon-da-luu');
 const cacTab = document.querySelectorAll('.tab-ca-nhan');
 
+const ANH_MON_AN_MAC_DINH = 'images/cao-lau.jpg';
+
 /* 2. HIỂN THỊ THÔNG TIN NGƯỜI DÙNG */
 const hienThiThongTinNguoiDung = (nguoiDung) => {
-    if (!nguoiDung || typeof nguoiDung !== 'object') return;
+    if (!nguoiDung || typeof nguoiDung !== 'object') {
+        return;
+    }
+
     const hoTen = String(nguoiDung.hoTen || '').trim();
-    
-    // Chỉ cập nhật lại bằng JS nếu localStorage có lưu tên, tránh ghi đè chữ "Người dùng" khi rỗng
+
+    // Không ghi đè tên mặc định nếu localStorage không có tên.
     if (hoTen && tenNguoiDung) {
         tenNguoiDung.textContent = hoTen;
     }
-    if (emailNguoiDung) emailNguoiDung.textContent = String(nguoiDung.email || '');
-    if (chuCaiDaiDien && hoTen) chuCaiDaiDien.textContent = hoTen.charAt(0).toUpperCase();
+
+    if (emailNguoiDung) {
+        emailNguoiDung.textContent = String(nguoiDung.email || '');
+    }
+
+    if (chuCaiDaiDien && hoTen) {
+        chuCaiDaiDien.textContent = hoTen.charAt(0).toUpperCase();
+    }
 };
 
-/* 3. TẠO THẺ BÀI VIẾT / MÓN ĂN */
+/* 3. LẤY ĐƯỜNG DẪN ẢNH */
+const layDuongDanHinhAnh = (baiViet) => {
+    if (!baiViet || typeof baiViet !== 'object') {
+        return ANH_MON_AN_MAC_DINH;
+    }
+
+    let hinhAnh = baiViet.hinhAnh;
+
+    if (Array.isArray(hinhAnh)) {
+        hinhAnh = hinhAnh.length > 0 ? hinhAnh[0] : '';
+    }
+
+    if (typeof hinhAnh !== 'string' || hinhAnh.trim() === '') {
+        return ANH_MON_AN_MAC_DINH;
+    }
+
+    hinhAnh = hinhAnh.trim();
+
+    // Chỉ chấp nhận đường dẫn tương đối hoặc URL HTTPS.
+    if (
+        hinhAnh.startsWith('https://')
+        || hinhAnh.startsWith('images/')
+        || hinhAnh.startsWith('uploads/')
+    ) {
+        return hinhAnh;
+    }
+
+    return ANH_MON_AN_MAC_DINH;
+};
+
+/* 4. TẠO THẺ BÀI VIẾT / MÓN ĂN */
 const taoTheBaiVietNguoiDung = (baiViet) => {
     const article = document.createElement('article');
     article.className = 'the-mon-an-cn';
 
-    const id = baiViet.id || '';
-    const ten = baiViet.tenMon || baiViet.ten || 'Món ăn';
-    
-    let hinhAnh = 'images/cao-lau.jpg';
-    if (Array.isArray(baiViet.hinhAnh) && baiViet.hinhAnh.length > 0) {
-        hinhAnh = baiViet.hinhAnh[0];
-    } else if (typeof baiViet.hinhAnh === 'string' && baiViet.hinhAnh) {
-        hinhAnh = baiViet.hinhAnh;
-    }
+    const id = String(baiViet.id || '');
+    const ten = String(baiViet.tenMon || baiViet.ten || 'Món ăn');
+
+    const hinhAnh = document.createElement('img');
+    hinhAnh.src = layDuongDanHinhAnh(baiViet);
+    hinhAnh.alt = ten;
+
+    // Ảnh lỗi sẽ được thay bằng ảnh mặc định.
+    hinhAnh.addEventListener('error', () => {
+        if (hinhAnh.src !== new URL(ANH_MON_AN_MAC_DINH, document.baseURI).href) {
+            hinhAnh.src = ANH_MON_AN_MAC_DINH;
+        }
+    }, { once: true });
+
+    const lienKetAnh = document.createElement('a');
+    lienKetAnh.href = `chi-tiet.php?id=${encodeURIComponent(id)}`;
+    lienKetAnh.appendChild(hinhAnh);
+
+    const khungAnh = document.createElement('div');
+    khungAnh.className = 'khung-anh-mon-cn';
+    khungAnh.appendChild(lienKetAnh);
+
+    const nutYeuThich = document.createElement('button');
+    nutYeuThich.className = 'nut-yeu-thich-cn';
+    nutYeuThich.type = 'button';
+    nutYeuThich.setAttribute('aria-label', 'Yêu thích');
+
+    nutYeuThich.innerHTML = `
+        <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+        >
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    `;
+
+    khungAnh.appendChild(nutYeuThich);
+
+    const noiDung = document.createElement('div');
+    noiDung.className = 'noi-dung-mon-cn';
+
+    const tieuDe = document.createElement('h3');
+    tieuDe.className = 'tieu-de-mon-cn';
+
+    const lienKetTieuDe = document.createElement('a');
+    lienKetTieuDe.href = `chi-tiet.php?id=${encodeURIComponent(id)}`;
+    lienKetTieuDe.textContent = ten;
+
+    tieuDe.appendChild(lienKetTieuDe);
+
+    const thongTinMeta = document.createElement('div');
+    thongTinMeta.className = 'thong-tin-meta-cn';
 
     const thoiGian = baiViet.thoiGianNau || baiViet.thoiGian || 30;
     const khauPhan = baiViet.soNguoiAn || baiViet.khauPhan || 2;
 
-    article.innerHTML = `
-        <div class="khung-anh-mon-cn">
-            <a href="chi-tiet.php?id=${encodeURIComponent(id)}">
-                <img src="${hinhAnh}" alt="${ten}" onerror="this.src='images/cao-lau.jpg'">
-            </a>
-            <button class="nut-yeu-thich-cn" type="button" aria-label="Yêu thích">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </button>
-        </div>
-        <div class="noi-dung-mon-cn">
-            <h3 class="tieu-de-mon-cn">
-                <a href="chi-tiet.php?id=${encodeURIComponent(id)}" style="color:inherit;text-decoration:none;">${ten}</a>
-            </h3>
-            <div class="thong-tin-meta-cn">
-                <span class="item-meta-cn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    ${thoiGian} phút
-                </span>
-                <span class="item-meta-cn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 1 0 7.75"/></svg>
-                    ${khauPhan} người
-                </span>
-            </div>
-        </div>
-    `;
+    const itemThoiGian = document.createElement('span');
+    itemThoiGian.className = 'item-meta-cn';
+    itemThoiGian.textContent = `${thoiGian} phút`;
+
+    const itemKhauPhan = document.createElement('span');
+    itemKhauPhan.className = 'item-meta-cn';
+    itemKhauPhan.textContent = `${khauPhan} người`;
+
+    thongTinMeta.append(itemThoiGian, itemKhauPhan);
+    noiDung.append(tieuDe, thongTinMeta);
+
+    article.append(khungAnh, noiDung);
 
     return article;
 };
 
-/* 4. HIỂN THỊ BÀI VIẾT CỦA TÔI */
+/* 5. HIỂN THỊ BÀI VIẾT CỦA TÔI */
 const hienThiBaiVietCuaToi = (nguoiDung) => {
-    if (!danhSachBaiViet) return;
+    if (!danhSachBaiViet) {
+        return;
+    }
+
     danhSachBaiViet.replaceChildren();
 
     const tatCaBaiViet = docBaiViet();
-    const baiVietCuaToi = tatCaBaiViet.filter((baiViet) => {
-        if (!baiViet || typeof baiViet !== 'object') return false;
-        return String(baiViet.userId) === String(nguoiDung?.id);
-    });
+
+    const baiVietCuaToi = Array.isArray(tatCaBaiViet)
+        ? tatCaBaiViet.filter((baiViet) => {
+            if (!baiViet || typeof baiViet !== 'object') {
+                return false;
+            }
+
+            return String(baiViet.userId) === String(nguoiDung?.id);
+        })
+        : [];
 
     const soBaiDang = document.querySelector('.so-bai-dang');
-    if (soBaiDang) soBaiDang.textContent = String(baiVietCuaToi.length);
+
+    if (soBaiDang) {
+        soBaiDang.textContent = String(baiVietCuaToi.length);
+    }
 
     if (baiVietCuaToi.length === 0) {
         const thongBao = document.createElement('p');
-        thongBao.style.padding = '0 28px 28px';
+        thongBao.className = 'thong-bao-chua-co-bai-viet';
         thongBao.textContent = 'Bạn chưa có bài viết nào.';
+
         danhSachBaiViet.appendChild(thongBao);
         return;
     }
 
     baiVietCuaToi.forEach((baiViet) => {
-        danhSachBaiViet.appendChild(taoTheBaiVietNguoiDung(baiViet));
+        danhSachBaiViet.appendChild(
+            taoTheBaiVietNguoiDung(baiViet)
+        );
     });
 };
 
@@ -105,6 +194,7 @@ const hienThiBaiVietCuaToi = (nguoiDung) => {
 const chuyenTab = (tabDuocChon) => {
     cacTab.forEach((tab) => {
         const dangChon = tab === tabDuocChon;
+
         tab.classList.toggle('dang-chon', dangChon);
         tab.setAttribute('aria-selected', String(dangChon));
     });
@@ -112,18 +202,30 @@ const chuyenTab = (tabDuocChon) => {
     const viTriTab = Array.from(cacTab).indexOf(tabDuocChon);
 
     if (viTriTab === 0) {
-        if (khuVucCongThuc) khuVucCongThuc.hidden = false;
-        if (khuVucMonDaLuu) khuVucMonDaLuu.hidden = true;
+        if (khuVucCongThuc) {
+            khuVucCongThuc.hidden = false;
+        }
+
+        if (khuVucMonDaLuu) {
+            khuVucMonDaLuu.hidden = true;
+        }
     } else if (viTriTab === 1) {
-        if (khuVucCongThuc) khuVucCongThuc.hidden = true;
-        if (khuVucMonDaLuu) khuVucMonDaLuu.hidden = false;
+        if (khuVucCongThuc) {
+            khuVucCongThuc.hidden = true;
+        }
+
+        if (khuVucMonDaLuu) {
+            khuVucMonDaLuu.hidden = false;
+        }
     }
 };
 
 /* 7. KHỞI TẠO TAB */
 const khoiTaoTab = () => {
     cacTab.forEach((tab) => {
-        tab.addEventListener('click', () => chuyenTab(tab));
+        tab.addEventListener('click', () => {
+            chuyenTab(tab);
+        });
     });
 
     if (cacTab.length > 0) {
@@ -134,6 +236,7 @@ const khoiTaoTab = () => {
 /* 8. KHỞI TẠO TRANG */
 const khoiTaoTrangCaNhan = () => {
     const nguoiDung = docNguoiDungHienTai();
+
     hienThiThongTinNguoiDung(nguoiDung);
     hienThiBaiVietCuaToi(nguoiDung);
     khoiTaoTab();

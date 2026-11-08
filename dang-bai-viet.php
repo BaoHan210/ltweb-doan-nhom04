@@ -4,21 +4,22 @@
  * Website: Cook with me - Nhóm 04
  *
  * Chức năng:
- * - Hiển thị biểu mẫu đăng bài viết
- * - Kiểm tra phiên đăng nhập
- * - Lấy thông tin người dùng từ session
- * - Giữ nguyên xử lý JavaScript của Bài thực hành 5
+ * - Hiển thị biểu mẫu đăng bài viết.
+ * - Kiểm tra phiên đăng nhập.
+ * - Lấy thông tin người dùng từ MySQL.
+ * - Truyền dữ liệu người dùng sang JavaScript.
  *
  * Bài thực hành 6:
- * - Không sử dụng data/mon-an.json
- * - Không phụ thuộc inc/bao-ve.php
- * - Không viết SQL trực tiếp trong trang
+ * - Không sử dụng data/mon-an.json.
+ * - Không phụ thuộc inc/bao-ve.php.
+ * - Không viết SQL trực tiếp trong trang.
  */
 
+// 1. KHỞI TẠO VÀ XÁC THỰC
 require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/xac-thuc.php';
 
-// Xác thực lại từ MySQL, không tin thông tin vai trò trong Session.
+// Xác thực lại thông tin người dùng từ MySQL.
 $user = yeuCauDangNhap();
 
 $emailNguoiDung = (string) ($user['email'] ?? '');
@@ -38,7 +39,7 @@ $avatarUser = (string) (
     ?? 'images/icons/avt-default.svg'
 );
 
-// Chỉ đưa thông tin cần thiết sang JavaScript
+// 2. CHUẨN BỊ DỮ LIỆU CHO JAVASCRIPT
 $thongTinNguoiDungJS = [
     'id' => (int) $user['id'],
     'ho_ten' => $tenHienThi,
@@ -51,31 +52,25 @@ $thongTinNguoiDungJS = [
 $tieuDe = 'Đăng bài viết';
 $trang = 'dang-bai-viet';
 $customJS = 'js/trang-dang-bai-viet.js';
+$cssRieng = 'css/08-dang-bai-viet.css';
 
 // 4. NHÚNG HEADER
 require __DIR__ . '/inc/header.php';
 ?>
 
-<!-- ĐỒNG BỘ THÔNG TIN NGƯỜI DÙNG SANG JAVASCRIPT -->
-<script>
-    localStorage.setItem(
-        'nguoiDungHienTai',
-        JSON.stringify(
-            <?= json_encode(
-                $thongTinNguoiDungJS,
-                JSON_UNESCAPED_UNICODE
-                | JSON_HEX_TAG
-                | JSON_HEX_AMP
-                | JSON_HEX_APOS
-                | JSON_HEX_QUOT
-            ) ?>
-        )
-    );
-</script>
+<main
+    class="dang-bai-viet-trang"
+    data-nguoi-dung="<?= e(json_encode(
+        $thongTinNguoiDungJS,
+        JSON_UNESCAPED_UNICODE
+        | JSON_HEX_TAG
+        | JSON_HEX_AMP
+        | JSON_HEX_APOS
+        | JSON_HEX_QUOT
+    )) ?>"
+>
 
-<main class="dang-bai-viet-trang">
-
-    <h1 style="display:none;">
+    <h1 class="sr-only">
         Đăng bài viết
     </h1>
 
@@ -101,7 +96,7 @@ require __DIR__ . '/inc/header.php';
                     <img
                         src="<?= e($avatarUser) ?>"
                         alt="Avatar"
-                        onerror="this.onerror=null; this.src='images/icons/avt-default.svg';"
+                        data-fallback-src="images/icons/avt-default.svg"
                     >
 
                 </div>
@@ -128,7 +123,7 @@ require __DIR__ . '/inc/header.php';
                 enctype="multipart/form-data"
                 novalidate
             >
-            <?= csrfField() ?>
+                <?= csrfField() ?>
 
                 <!-- MÔ TẢ BÀI VIẾT -->
                 <div class="khu-vuc-caption">
@@ -276,10 +271,7 @@ require __DIR__ . '/inc/header.php';
                     </div>
 
                     <!-- THỜI GIAN, KHẨU PHẦN, NGÂN SÁCH -->
-                    <div
-                        class="thong-tin-mon-an-grid"
-                        style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;"
-                    >
+                    <div class="thong-tin-mon-an-grid thong-tin-mon-an-grid-ba-cot">
 
                         <!-- THỜI GIAN NẤU -->
                         <div class="nhom-truong">
@@ -352,7 +344,7 @@ require __DIR__ . '/inc/header.php';
 
                         <label
                             for="nguyen-lieu"
-                            style="display:none;"
+                            class="sr-only"
                         >
                             Danh sách nguyên liệu
                         </label>
@@ -380,7 +372,7 @@ require __DIR__ . '/inc/header.php';
 
                         <label
                             for="cach-lam"
-                            style="display:none;"
+                            class="sr-only"
                         >
                             Các bước thực hiện
                         </label>

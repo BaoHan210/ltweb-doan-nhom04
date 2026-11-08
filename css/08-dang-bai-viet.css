@@ -1,0 +1,6 @@
+/* Bố cục thông tin món ăn trên trang đăng bài */
+.thong-tin-mon-an-grid-ba-cot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}

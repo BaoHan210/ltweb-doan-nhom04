@@ -9,13 +9,10 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/../src/Services/YeuThichService.php';
 
 use App\Services\YeuThichService;
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 $yeuThichService = new YeuThichService();
 
@@ -139,7 +136,7 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
               src="<?= e($duongDanAvatar) ?>"
               alt="Ảnh đại diện"
               class="avatar-header"
-              onerror="this.onerror=null; this.src='<?= e($goc) ?>images/icons/avt-default.svg';"
+              data-fallback-src="<?= e($goc) ?>images/icons/avt-default.svg"
             >
 
             <svg class="mui-ten-down-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">

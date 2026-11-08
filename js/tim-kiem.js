@@ -11,7 +11,7 @@
   goiY.id = 'goi-y-mon-an-api';
   goiY.setAttribute('role', 'status');
   goiY.setAttribute('aria-live', 'polite');
-  goiY.style.cssText = 'padding:8px 0;max-width:550px;';
+  goiY.className = 'goi-y-mon-an-api';
   form.insertAdjacentElement('afterend', goiY);
 
   let timer;
@@ -22,7 +22,7 @@
   function taoKetQua(mon) {
     const link = document.createElement('a');
     link.href = new URL('chi-tiet.php?id=' + encodeURIComponent(mon.id), document.baseURI).href;
-    link.style.cssText = 'display:block;padding:8px 10px;border-bottom:1px solid #eee;';
+    link.className = 'lien-ket-goi-y-mon-an-api';
     // textContent: khong bien du lieu tu API thanh HTML.
     link.textContent = `${mon.ten} · ${mon.thoi_gian} phút · ${donGia(mon.ngan_sach)}`;
     return link;

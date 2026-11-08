@@ -18,6 +18,44 @@ import {
 } from './tai-khoan.js';
 
 /* =========================================================
+   XỬ LÝ ẢNH KHÔNG TẢI ĐƯỢC
+   ========================================================= */
+
+const xuLyAnhLoi = (anh) => {
+    if (!(anh instanceof HTMLImageElement)) {
+        return;
+    }
+
+    // Ẩn ảnh nếu không có ảnh thay thế.
+    if (anh.hasAttribute('data-hide-on-error')) {
+        anh.hidden = true;
+        return;
+    }
+
+    // Chuyển sang ảnh thay thế nếu được cấu hình.
+    const anhThayThe = anh.dataset.fallbackSrc;
+
+    if (anhThayThe) {
+        anh.removeAttribute('data-fallback-src');
+        anh.src = anhThayThe;
+    }
+};
+
+// Lắng nghe lỗi tải ảnh trên toàn trang.
+document.addEventListener('error', (event) => {
+    if (event.target instanceof HTMLImageElement) {
+        xuLyAnhLoi(event.target);
+    }
+}, true);
+
+// Kiểm tra những ảnh đã lỗi trước khi JavaScript được nạp.
+document.querySelectorAll('img').forEach((anh) => {
+    if (anh.complete && anh.naturalWidth === 0) {
+        xuLyAnhLoi(anh);
+    }
+});
+
+/* =========================================================
    TẠO KHU VỰC TÀI KHOẢN
    ========================================================= */
 
@@ -393,11 +431,11 @@ const duongDanTrangCaNhan = đangỞThưMụcThànhViên
         'avatar-header';
 
     // Tự động quay về avatar mặc định nếu ảnh bị hỏng
-    avatar.onerror = () => {
-        avatar.src = đangỞThưMụcThànhViên
-            ? '../../images/icons/avt-default.svg'
-            : 'images/icons/avt-default.svg';
-    };
+avatar.addEventListener('error', () => {
+    avatar.src = đangỞThưMụcThànhViên
+        ? '../../images/icons/avt-default.svg'
+        : 'images/icons/avt-default.svg';
+}, { once: true });
 
 
     lienKetAvatar.append(
@@ -508,8 +546,7 @@ const duongDanTrangCaNhan = đangỞThưMụcThànhViên
                 'hien-thi'
             );
 
-            chamThongBao.style.display =
-                'none';
+            chamThongBao.hidden = true;
         }
     );
 
@@ -809,12 +846,23 @@ const khoiTaoMenuMobile = () => {
 const khoiTaoKiemTraBieuMau = () => {
     // Tìm các form có class form-kiem-tra hoặc form đăng nhập/đăng ký
     const cácBiểuMẫu = document.querySelectorAll(
-        '.form-kiem-tra, form[action*="dang-nhap"], form[action*="dang-ky"]'
-    );
+    '.form-kiem-tra, form[action*="dang-nhap"], form[action*="dang-ky"], form[data-confirm]'
+);
 
     cácBiểuMẫu.forEach((form) => {
         form.addEventListener('submit', (e) => {
-            let hợpLệ = true;
+    // Xác nhận trước khi thực hiện thao tác nếu có cấu hình.
+    const noiDungXacNhan = form.dataset.confirm;
+
+    if (
+        noiDungXacNhan
+        && !window.confirm(noiDungXacNhan)
+    ) {
+        e.preventDefault();
+        return;
+    }
+
+    let hợpLệ = true;
             const cácTrườngBắtBuộc = form.querySelectorAll('[required]');
 
             cácTrườngBắtBuộc.forEach((input) => {
@@ -875,7 +923,7 @@ const khoiTaoToggleHeaderPHP = () => {
             bangThongBao.classList.toggle('hien-thi');
 
             const chamThongBao = nutThongBao.querySelector('.cham-thong-bao');
-            if (chamThongBao) chamThongBao.style.display = 'none';
+            if (chamThongBao) chamThongBao.hidden = true;
         });
     }
 

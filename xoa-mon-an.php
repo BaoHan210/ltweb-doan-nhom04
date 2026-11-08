@@ -9,10 +9,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\Data\KhoMonAn;
 use App\Data\KhoNguoiDung;
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Không cho xóa bằng GET hoặc liên kết trực tiếp.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Allow: POST');
@@ -51,9 +47,11 @@ if ($mon === null) {
 if (lay_chuoi($_POST, 'xac_nhan', 1) !== '1') {
     $tieuDe = 'Xác nhận xóa món ăn - Cook with me';
     $trang = 'quan-tri';
+    $cssRieng = 'css/12-form-quan-ly-mon-an.css';
+
     require __DIR__ . '/inc/header.php';
     ?>
-    <main class="noi-dung-trang" style="max-width:720px;margin:32px auto;padding:24px">
+    <main class="noi-dung-trang xac-nhan-xoa-mon-an">
         <h1>Xác nhận xóa món ăn</h1>
         <p>Bạn có chắc chắn muốn xóa món <strong><?= e($mon->ten) ?></strong>?</p>
         <p>Thao tác này không thể hoàn tác. Nếu món ăn đã có dữ liệu liên quan được bảo vệ bằng khóa ngoại, hệ thống sẽ từ chối xóa.</p>

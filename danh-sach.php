@@ -182,7 +182,7 @@ require __DIR__ . '/inc/header.php';
 
                     <label for="sap-xep">Sắp xếp</label>
 
-                    <select id="sap-xep" name="sapXep" onchange="this.form.submit()">
+                    <select id="sap-xep" name="sapXep">
                         <option value="ten-az"        <?= $sapXep === 'ten-az' ? 'selected' : '' ?>>Mặc định (A → Z)</option>
                         <option value="danhGiaGiam"   <?= $sapXep === 'danhGiaGiam' ? 'selected' : '' ?>>Đánh giá cao nhất</option>
                         <option value="thoiGianTang"  <?= $sapXep === 'thoiGianTang' ? 'selected' : '' ?>>Thời gian ngắn nhất</option>

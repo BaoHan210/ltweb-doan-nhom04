@@ -56,10 +56,21 @@ const capNhatTrangThaiBanDau = () => {
    KHỞI TẠO TRANG DANH SÁCH
    ========================================================= */
 const khoiTaoTrangDanhSach = () => {
-    const khuVucDanhSach = document.querySelector('#danh-sach-mon-an, .danh-sach-mon-an');
+    const khuVucDanhSach = document.querySelector(
+        '#danh-sach-mon-an, .danh-sach-mon-an'
+    );
 
     if (khuVucDanhSach !== null) {
         khuVucDanhSach.addEventListener('click', xuLyYeuThich);
+    }
+
+    // Tự động gửi biểu mẫu khi thay đổi cách sắp xếp.
+    const sapXep = document.querySelector('#sap-xep');
+
+    if (sapXep !== null) {
+        sapXep.addEventListener('change', () => {
+            sapXep.form?.requestSubmit();
+        });
     }
 
     capNhatTrangThaiBanDau();

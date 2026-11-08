@@ -361,3 +361,54 @@
   border-color: var(--mau-chinh);
   color: var(--mau-nen);
 }
+/* Khu vực quản lý dự án cá nhân */
+.quan-ly-du-an {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.form-them-du-an {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.truong-du-an {
+    margin-bottom: 10px;
+}
+
+.o-nhap-du-an {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.nut-them-du-an {
+    padding: 8px 16px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bo-loc-du-an {
+    margin-bottom: 15px;
+}
+
+.bo-loc-du-an a {
+    margin-right: 10px;
+}
+
+.bang-du-an {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+.bang-du-an thead tr {
+    background: #f4f4f4;
+}

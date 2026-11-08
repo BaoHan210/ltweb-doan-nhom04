@@ -22,12 +22,7 @@ require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 require_once __DIR__ . '/src/Services/LienHeService.php';
 require_once __DIR__ . '/src/Data/KhoLanDiCho.php';
 
-// 2. KHỞI TẠO SESSION
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// 3. XÁC THỰC VÀ PHÂN QUYỀN BẰNG DỮ LIỆU MYSQL
+// 2. XÁC THỰC VÀ PHÂN QUYỀN BẰNG DỮ LIỆU MYSQL
 require_once __DIR__ . '/inc/xac-thuc.php';
 $nguoiDung = yeuCauQuyen('quan_tri');
 $userLog = $nguoiDung;
@@ -51,9 +46,8 @@ $nhanTrangThai = [
     'da_huy'    => 'Đã hủy',
 ];
 
-// 5. ĐỌC DANH SÁCH LIÊN HỆ TỪ MYSQL
+// 3. ĐỌC DANH SÁCH LIÊN HỆ TỪ MYSQL
 $lienHeService = new LienHeService(db());
-
 $danhSachPhanHoi = $lienHeService->layDanhSach(100);
 
 // Quản lý món ăn: COUNT(*) và LIMIT/OFFSET đều được thực hiện trong KhoMonAn.
@@ -66,15 +60,14 @@ $trangMon = ($trangMonYeuCau === false || $trangMonYeuCau < 1)
     ? 1 : min($trangMonYeuCau, $tongTrangMon);
 $danhSachMonQuanTri = $khoMonAn->layTrangQuanTri($trangMon, $soMonMoiTrang);
 
-
-// 6. SỐ LIỆU MINH HỌA CỦA DASHBOARD
-// Giữ nguyên dữ liệu mẫu từ Bài thực hành 5
+// 4. SỐ LIỆU MINH HỌA CỦA DASHBOARD
+// Giữ nguyên dữ liệu mẫu từ Bài thực hành 5.
 $tongNguoiDung = 1248;
-$tongMonAn = $tongMonTrongCSDL; // Số món thực tế từ MySQL
+$tongMonAn = $tongMonTrongCSDL;
 $tongBaiViet = 624;
 $tongBinhLuan = 2341;
 
-// 7. MÓN ĂN YÊU THÍCH (DỮ LIỆU MẪU)
+// 5. MÓN ĂN YÊU THÍCH (DỮ LIỆU MẪU)
 $topMonAnYeuThich = [
     [
         'ten' => 'Phở bò',
@@ -93,19 +86,20 @@ $topMonAnYeuThich = [
     ]
 ];
 
-// 8. THÔNG TIN QUẢN TRỊ VIÊN
+// 6. THÔNG TIN QUẢN TRỊ VIÊN
 $tenAdmin = (string) $userLog['ho_ten'];
 
 $avatarAdmin = !empty($userLog['avatar'])
     ? (string) $userLog['avatar']
     : 'images/icons/avt-default.svg';
 
-// 9. THÔNG SỐ TRANG
+// 7. THÔNG SỐ TRANG
 $tieuDe = 'Trang quản trị - Cook with Me';
 $trang = 'quan-tri';
+$cssRieng = 'css/11-quan-tri.css';
 $customJS = 'js/trang-quan-tri.js';
 
-// 10. NHÚNG HEADER
+// 8. NHÚNG HEADER
 require_once __DIR__ . '/inc/header.php';
 ?>
 
@@ -121,7 +115,7 @@ require_once __DIR__ . '/inc/header.php';
                 <img
                     src="<?= e($avatarAdmin) ?>"
                     alt="Ảnh đại diện quản trị viên"
-                    onerror="this.onerror=null; this.src='images/icons/avt-default.svg'"
+                    data-fallback-src="images/icons/avt-default.svg"
                 >
                 <div class="thong-tin-admin">
                     <p class="ten-admin"><?= e($tenAdmin) ?></p>
@@ -187,15 +181,15 @@ require_once __DIR__ . '/inc/header.php';
 
                     <div class="chu-thich-bieu-do">
                         <span>
-                            <strong style="color: #198754;">—</strong> Bài viết
+                            <strong class="mau-chu-bai-viet">—</strong> Bài viết
                         </span>
                         <span>
-                            <strong style="color: #ffc107;">—</strong> Lượt thích
+                            <strong class="mau-chu-luot-thich">—</strong> Lượt thích
                         </span>
                     </div>
                 </div>
 
-                <div class="khung-bieu-do-hoat-dong" style="height: 260px;">
+                <div class="khung-bieu-do-hoat-dong">
                     <canvas
                         id="bieuDoHoatDong"
                         role="img"
@@ -218,7 +212,7 @@ require_once __DIR__ . '/inc/header.php';
                                     src="<?= e($mon['hinh']) ?>"
                                     alt=""
                                     class="hinh-mon-an-yeu-thich"
-                                    onerror="this.onerror=null; this.src='images/cao-lau.jpg'"
+                                    data-fallback-src="images/cao-lau.jpg"
                                 >
 
                                 <strong class="ten-mon-an-yeu-thich"><?= e($mon['ten']) ?></strong>
@@ -242,29 +236,55 @@ require_once __DIR__ . '/inc/header.php';
                 <?php else: ?>
                     <div class="khu-vuc-bang-du-lieu">
                         <table class="bang-du-lieu-qt">
-                            <thead><tr>
-                                <th>Ảnh</th><th>Món ăn</th><th>Danh mục</th>
-                                <th>Ngân sách</th><th>Thời gian</th><th>Thao tác</th>
-                            </tr></thead>
-                            <tbody>
-                            <?php foreach ($danhSachMonQuanTri as $monQuanTri): ?>
+                            <thead>
                                 <tr>
-                                    <td><img src="<?= e($monQuanTri->hinhAnh ?: 'images/default.jpg') ?>"
-                                        alt="" width="64" height="48" loading="lazy" style="object-fit:cover;border-radius:6px"></td>
-                                    <td><?= e($monQuanTri->ten) ?></td>
-                                    <td><?= e($monQuanTri->danhMuc) ?></td>
-                                    <td><?= number_format((int) $monQuanTri->nganSach, 0, ',', '.') ?>đ</td>
-                                    <td><?= (int) $monQuanTri->thoiGian ?> phút</td>
-                                    <td>
-                                        <a class="nut" href="sua-mon-an.php?id=<?= rawurlencode((string) $monQuanTri->id) ?>">Sửa</a>
-                                        <form action="xoa-mon-an.php" method="post" style="display:inline">
-                                            <input type="hidden" name="id" value="<?= e($monQuanTri->id) ?>">
-                                            <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_xoa_mon_an']) ?>">
-                                            <button class="nut" type="submit">Xóa</button>
-                                        </form>
-                                    </td>
+                                    <th>Ảnh</th>
+                                    <th>Món ăn</th>
+                                    <th>Danh mục</th>
+                                    <th>Ngân sách</th>
+                                    <th>Thời gian</th>
+                                    <th>Thao tác</th>
                                 </tr>
-                            <?php endforeach; ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($danhSachMonQuanTri as $monQuanTri): ?>
+                                    <tr>
+                                        <td>
+                                            <img
+                                                src="<?= e($monQuanTri->hinhAnh ?: 'images/default.jpg') ?>"
+                                                alt=""
+                                                width="64"
+                                                height="48"
+                                                loading="lazy"
+                                                class="anh-mon-an-quan-tri"
+                                            >
+                                        </td>
+                                        <td><?= e($monQuanTri->ten) ?></td>
+                                        <td><?= e($monQuanTri->danhMuc) ?></td>
+                                        <td><?= number_format((int) $monQuanTri->nganSach, 0, ',', '.') ?>đ</td>
+                                        <td><?= (int) $monQuanTri->thoiGian ?> phút</td>
+                                        <td>
+                                            <a
+                                                class="nut"
+                                                href="sua-mon-an.php?id=<?= rawurlencode((string) $monQuanTri->id) ?>"
+                                            >Sửa</a>
+
+                                            <form
+                                                action="xoa-mon-an.php"
+                                                method="post"
+                                                class="form-xoa-mon-an-quan-tri"
+                                            >
+                                                <input type="hidden" name="id" value="<?= e($monQuanTri->id) ?>">
+                                                <input
+                                                    type="hidden"
+                                                    name="csrf_token"
+                                                    value="<?= e($_SESSION['csrf_xoa_mon_an']) ?>"
+                                                >
+                                                <button class="nut" type="submit">Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -273,14 +293,15 @@ require_once __DIR__ . '/inc/header.php';
                 <?php if ($tongTrangMon > 1): ?>
                     <nav class="phan-trang" aria-label="Phân trang quản trị món ăn">
                         <?php for ($i = 1; $i <= $tongTrangMon; $i++): ?>
-                            <a class="nut-phan-trang <?= $i === $trangMon ? 'active dang-chon' : '' ?>"
-                               href="quan-tri.php?trang_mon=<?= $i ?>#quan-ly-mon-an"
-                               <?= $i === $trangMon ? 'aria-current="page"' : '' ?>><?= $i ?></a>
+                            <a
+                                class="nut-phan-trang <?= $i === $trangMon ? 'active dang-chon' : '' ?>"
+                                href="quan-tri.php?trang_mon=<?= $i ?>#quan-ly-mon-an"
+                                <?= $i === $trangMon ? 'aria-current="page"' : '' ?>
+                            ><?= $i ?></a>
                         <?php endfor; ?>
                     </nav>
                 <?php endif; ?>
             </section>
-
 
             <!-- QUẢN LÝ LỊCH SỬ ĐI CHỢ – CHỨC NĂNG 5 -->
             <section class="khung-noi-dung-qt" id="quan-ly-di-cho">
@@ -296,7 +317,7 @@ require_once __DIR__ . '/inc/header.php';
                     </p>
                 <?php else: ?>
                     <div class="khu-vuc-bang-du-lieu">
-                        <table class="bang-du-lieu-qt" style="width:100%">
+                        <table class="bang-du-lieu-qt">
                             <thead>
                                 <tr>
                                     <th>Mã lần đi chợ</th>
@@ -319,15 +340,13 @@ require_once __DIR__ . '/inc/header.php';
 
                                         <td>
                                             <?= e($lan['ho_ten']) ?>
-                                            <small style="display:block">
+                                            <small class="email-nguoi-dung-quan-tri">
                                                 <?= e($lan['email']) ?>
                                             </small>
                                         </td>
 
                                         <td><?= e($lan['ngay_chot']) ?></td>
-
                                         <td><?= (int) $lan['so_mon'] ?></td>
-
                                         <td><?= (int) $lan['tong_so_suat'] ?></td>
 
                                         <td>
@@ -341,7 +360,7 @@ require_once __DIR__ . '/inc/header.php';
                                                 <form
                                                     action="cap-nhat-trang-thai-di-cho.php"
                                                     method="post"
-                                                    style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"
+                                                    class="form-cap-nhat-di-cho-quan-tri"
                                                 >
                                                     <input
                                                         type="hidden"
@@ -381,19 +400,15 @@ require_once __DIR__ . '/inc/header.php';
                 <?php endif; ?>
             </section>
 
-
             <!-- DANH SÁCH THƯ LIÊN HỆ -->
             <section class="khung-noi-dung-qt">
                 <h2>Danh sách thư liên hệ đã nhận</h2>
 
                 <?php if (empty($danhSachPhanHoi)): ?>
-
                     <p class="thong-bao-chua-co-du-lieu">
                         Chưa có thư liên hệ nào trong hệ thống.
                     </p>
-
                 <?php else: ?>
-
                     <div class="khu-vuc-bang-du-lieu">
                         <table class="bang-du-lieu-qt">
                             <thead>
@@ -413,7 +428,7 @@ require_once __DIR__ . '/inc/header.php';
                                     $hoTen      = (string) ($phanHoi['ho_ten'] ?? 'Khách');
                                     $email      = (string) ($phanHoi['email'] ?? 'N/A');
                                     $noiDung    = (string) ($phanHoi['noi_dung'] ?? '');
-                                    // Chỉ lấy tên tệp, ảnh nằm trong thư mục uploads/
+                                    // Chỉ lấy tên tệp, ảnh nằm trong thư mục uploads/.
                                     $anh        = basename((string) ($phanHoi['anh'] ?? ''));
                                     $emailHopLe = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
                                     ?>
@@ -424,7 +439,10 @@ require_once __DIR__ . '/inc/header.php';
 
                                         <td>
                                             <?php if ($emailHopLe): ?>
-                                                <a class="email-lien-he" href="mailto:<?= e($email) ?>"><?= e($email) ?></a>
+                                                <a
+                                                    class="email-lien-he"
+                                                    href="mailto:<?= e($email) ?>"
+                                                ><?= e($email) ?></a>
                                             <?php else: ?>
                                                 <?= e($email) ?>
                                             <?php endif; ?>
@@ -438,7 +456,7 @@ require_once __DIR__ . '/inc/header.php';
                                                     src="uploads/<?= e($anh) ?>"
                                                     alt="Ảnh đính kèm"
                                                     class="anh-lien-he"
-                                                    onerror="this.onerror=null; this.style.display='none'"
+                                                    data-hide-on-error
                                                 >
                                             <?php else: ?>
                                                 <span class="khong-co-anh-lien-he">Không</span>
@@ -449,7 +467,6 @@ require_once __DIR__ . '/inc/header.php';
                             </tbody>
                         </table>
                     </div>
-
                 <?php endif; ?>
             </section>
 

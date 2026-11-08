@@ -117,6 +117,32 @@ const dangSua =
    3. NGƯỜI DÙNG HIỆN TẠI
    ========================================================= */
 
+// Đồng bộ dữ liệu tài khoản từ PHP vào localStorage.
+const trangDangBai =
+    document.querySelector('.dang-bai-viet-trang');
+
+if (trangDangBai) {
+    try {
+        const duLieuNguoiDung =
+            trangDangBai.dataset.nguoiDung;
+
+        if (duLieuNguoiDung) {
+            const nguoiDung =
+                JSON.parse(duLieuNguoiDung);
+
+            localStorage.setItem(
+                'nguoiDungHienTai',
+                JSON.stringify(nguoiDung)
+            );
+        }
+    } catch (error) {
+        console.error(
+            'Không thể đồng bộ thông tin tài khoản:',
+            error
+        );
+    }
+}
+
 const nguoiDungHienTai =
     docNguoiDungHienTai();
 
@@ -1684,7 +1710,7 @@ if (
    ========================================================= */
 
 if (oChonHinhAnh !== null) {
-    oChonHinhAnh.onchange = function() {
+    oChonHinhAnh.addEventListener('change', () => {
         xuLyChonHinhAnh();
-    };
+    });
 }

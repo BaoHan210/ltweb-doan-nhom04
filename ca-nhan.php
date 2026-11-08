@@ -29,11 +29,12 @@ $cacMonYeuThich = $gioHang['mon'];
 $tieuDe   = 'Trang cá nhân - Cook with Me';
 $trang    = 'ca-nhan';
 $customJS = 'js/trang-ca-nhan.js';
+$cssRieng = 'css/07-trang-ca-nhan.css';
 
 require __DIR__ . '/inc/header.php';
 ?>
 
-<main class="ca-nhan-trang bao" style="padding-top: 16px; padding-bottom: 40px;">
+<main class="ca-nhan-trang bao trang-ca-nhan-noi-dung">
   <div class="khung-ca-nhan-card">
 
     <!-- 1. Banner -->
@@ -50,7 +51,7 @@ require __DIR__ . '/inc/header.php';
               src="<?= e($avatar) ?>"
               alt="<?= e($hoTen) ?>"
               class="avatar-img-cn"
-              onerror="this.onerror=null; this.src='images/icons/avt-default.svg';"
+              data-fallback-src="images/icons/avt-default.svg"
             >
           </div>
           <div class="noi-dung-ca-nhan">

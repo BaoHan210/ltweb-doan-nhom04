@@ -188,6 +188,7 @@ $nhanTrangThai = [
 
 $tieuDe = 'Đi chợ của tôi';
 $trang = 'di-cho-cua-toi';
+$cssRieng = 'css/10-di-cho-cua-toi.css';
 
 require __DIR__ . '/inc/header.php';
 ?>
@@ -343,8 +344,7 @@ require __DIR__ . '/inc/header.php';
                                         value="<?= $soLuong ?>"
                                         min="1"
                                         max="<?= DanhSachDiChoService::SO_SUAT_TOI_DA ?>"
-                                        class="form-control"
-                                        style="width: 85px;"
+                                        class="form-control o-nhap-so-luong-di-cho"
                                         required
                                     >
 
@@ -359,7 +359,7 @@ require __DIR__ . '/inc/header.php';
                                 <form
                                     method="POST"
                                     action="di-cho-cua-toi.php?tab=hien-tai"
-                                    onsubmit="return confirm('Bạn có chắc muốn xóa món ăn này?');"
+                                    data-confirm="Bạn có chắc muốn xóa món ăn này?"
                                 >
 
                                     <input
@@ -403,7 +403,7 @@ require __DIR__ . '/inc/header.php';
                 <form
                     method="POST"
                     action="di-cho-cua-toi.php?tab=hien-tai"
-                    onsubmit="return confirm('Bạn có chắc muốn xóa toàn bộ danh sách?');"
+                    data-confirm="Bạn có chắc muốn xóa toàn bộ danh sách?"
                 >
 
                     <input
@@ -427,7 +427,7 @@ require __DIR__ . '/inc/header.php';
                 <form
                     method="POST"
                     action="chot-di-cho.php"
-                    onsubmit="return confirm('Bạn muốn chốt danh sách đi chợ này?');"
+                    data-confirm="Bạn muốn chốt danh sách đi chợ này?"
                 >
 
                     <input

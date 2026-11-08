@@ -6032,3 +6032,14 @@ body.trang-quan-tri-body .menu-dieu-huong-quan-tri .item-menu-qt.active {
 .phan-trang-goi-y a:hover {
     background-color: #edf5ed;
 }
+/* Khu vực gợi ý tìm kiếm món ăn qua API */
+.goi-y-mon-an-api {
+    padding: 8px 0;
+    max-width: 550px;
+}
+
+.lien-ket-goi-y-mon-an-api {
+    display: block;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+}

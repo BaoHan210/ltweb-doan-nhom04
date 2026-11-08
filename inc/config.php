@@ -94,10 +94,29 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !csrfHopLe()) {
 
 // Thiết lập HTTP security headers.
 if (!headers_sent()) {
+    // Xóa thông tin phiên bản PHP khỏi response header.
+    header_remove('X-Powered-By');
+
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: SAMEORIGIN');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+
+    // CSP ở chế độ báo cáo: chỉ ghi nhận vi phạm, chưa chặn tài nguyên.
+    $csp = implode('; ', [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "frame-ancestors 'self'",
+        "form-action 'self'",
+        "script-src 'self' https://cdn.jsdelivr.net",
+        "style-src 'self'",
+        "img-src 'self' data: https:",
+        "connect-src 'self' https://api.quotable.io https://www.themealdb.com",
+        "font-src 'self' data:"
+    ]);
+
+    header('Content-Security-Policy-Report-Only: ' . $csp);
 
     // HSTS chỉ áp dụng khi website đang chạy HTTPS.
     if (
