@@ -42,6 +42,7 @@ require __DIR__ . '/inc/header.php';
       method="post"
       novalidate
     >
+    <?= csrfField() ?>
 
       <!-- KHỐI 1: THÔNG TIN CÁ NHÂN -->
       <section class="card-cai-dat card-thong-tin-ca-nhan">

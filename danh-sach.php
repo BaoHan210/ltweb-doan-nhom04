@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
-require_once __DIR__ . '/inc/xac-thuc.php';   // cung cấp nguoiDungHienTai()
+require_once __DIR__ . '/inc/xac-thuc.php';
 
 use App\Data\KhoMonAn;
 use App\Services\YeuThichService;
@@ -59,6 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$daDangNhap) {
         chuyen_huong('dang-nhap.php');
+    }
+
+    if (!cook_csrf_validate('csrf_danh_sach')) {
+        http_response_code(403);
+        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
     }
 
     $idMonAn = lay_chuoi($_POST, 'doi_yeu_thich', 255);
@@ -265,6 +270,7 @@ require __DIR__ . '/inc/header.php';
 
                                 <?php if ($daDangNhap): ?>
                                     <form action="<?= e(urlDanhSach($thamSoGoc)) ?>" method="post">
+                                        <?= cook_csrf_field('csrf_danh_sach') ?>
                                         <button
                                             class="nut-yeu-thich"
                                             type="submit"

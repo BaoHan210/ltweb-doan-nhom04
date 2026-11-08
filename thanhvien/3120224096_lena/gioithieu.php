@@ -436,6 +436,7 @@ require_once __DIR__ . '/../../inc/header.php';
     </p>
 
     <form method="post" action="#tinh-khau-phan">
+        <input type="hidden" name="csrf_token" value="<?= e($csrfLena) ?>">
         <div>
             <label for="ma_mon">Chọn món ăn:</label>
             <select id="ma_mon" name="ma_mon" required>
@@ -504,6 +505,7 @@ require_once __DIR__ . '/../../inc/header.php';
 
     <!-- Form thêm dự án mới -->
     <form method="POST" action="#quan-ly-du-an" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+        <input type="hidden" name="csrf_token" value="<?= e($csrfLena) ?>">
         <h3>Thêm dự án mới</h3>
         <div style="margin-bottom: 10px;">
             <label>Tên dự án:</label><br>

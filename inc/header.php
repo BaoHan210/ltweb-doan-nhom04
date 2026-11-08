@@ -56,6 +56,7 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<?= e(csrfToken()) ?>">
   <title><?= e($tieuDe ?? 'Cook with me') ?> | Cook with me</title>
 
   <link rel="stylesheet" href="<?= e($goc) ?>css/01-bien.css">

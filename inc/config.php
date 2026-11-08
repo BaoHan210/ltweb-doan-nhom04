@@ -15,6 +15,48 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . '/csrf.php';
+
+// Kiểm tra CSRF tập trung đối với mọi yêu cầu POST.
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !csrfHopLe()) {
+    http_response_code(403);
+
+    $contentType = strtolower((string) ($_SERVER['CONTENT_TYPE'] ?? ''));
+    $accept = strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? ''));
+
+    $laYeuCauJson = (
+        str_contains($contentType, 'application/json')
+        || str_contains($accept, 'application/json')
+    );
+
+    if ($laYeuCauJson) {
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-store');
+
+        echo json_encode(
+            [
+                'success' => false,
+                'loi' => 'Yêu cầu không hợp lệ. Vui lòng tải lại trang.'
+            ],
+            JSON_UNESCAPED_UNICODE
+            | JSON_UNESCAPED_SLASHES
+            | JSON_INVALID_UTF8_SUBSTITUTE
+        );
+    } else {
+        header('Content-Type: text/html; charset=utf-8');
+
+        echo '<!DOCTYPE html>';
+        echo '<html lang="vi">';
+        echo '<head><meta charset="UTF-8"><title>Yêu cầu không hợp lệ</title></head>';
+        echo '<body>';
+        echo '<h1>403 - Yêu cầu không hợp lệ</h1>';
+        echo '<p>Mã bảo vệ CSRF không hợp lệ hoặc đã hết hạn. Vui lòng tải lại trang.</p>';
+        echo '</body></html>';
+    }
+
+    exit;
+}
+
 if (!defined('URL_GOC')) {
     // Tự động lấy thư mục gốc linh hoạt dù chạy trên XAMPP/Laragon hay bất kỳ máy nào
     $thuMucGoc = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');

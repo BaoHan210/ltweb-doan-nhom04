@@ -128,6 +128,7 @@ require __DIR__ . '/inc/header.php';
                 enctype="multipart/form-data"
                 novalidate
             >
+            <?= csrfField() ?>
 
                 <!-- MÔ TẢ BÀI VIẾT -->
                 <div class="khu-vuc-caption">
