@@ -145,14 +145,14 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
 
-            <div class="menu-drop-tai-khoan" aria-label="Menu tài khoản">
+                        <nav class="menu-drop-tai-khoan" aria-label="Menu tài khoản">
               <a href="<?= e($goc) ?>ca-nhan.php" class="item-menu-drop">Trang cá nhân</a>
               <?php if (($userHeader['vai_tro'] ?? '') === 'quan_tri'): ?>
                 <a href="<?= e($goc) ?>quan-tri.php" class="item-menu-drop">Trang quản trị</a>
               <?php endif; ?>
               <a href="<?= e($goc) ?>cai-dat.php" class="item-menu-drop">Cài đặt</a>
               <button type="submit" form="form-dang-xuat-toan-cuc" class="item-menu-drop nut-dang-xuat-drop">Đăng xuất</button>
-            </div>
+            </nav>
           </div>
 
         </div>

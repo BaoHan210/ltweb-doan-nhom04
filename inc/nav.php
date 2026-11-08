@@ -3,37 +3,51 @@
  * Tệp: inc/nav.php
  * Mục đích: Thanh điều hướng chính dùng chung cho các trang công khai.
  * Dùng bởi: inc/header.php
- * Biến đầu vào: $goc (string), $trang (string), $yeuThichService (YeuThichService|null)
+ * Biến đầu vào: $goc, $trang, $yeuThichService, $isLoggedIn
  */
 
 declare(strict_types=1);
 
-// Gán giá trị mặc định để file không lỗi khi thiếu biến đầu vào
 $goc   ??= '';
 $trang ??= '';
 
 /** @var \App\Services\YeuThichService|null $yeuThichService */
 $yeuThichService ??= null;
 
-// Tránh gọi phương thức trên null khi service chưa được truyền vào
 $soYeuThich = $yeuThichService?->soLuong() ?? 0;
 
 $menuChinh = [
-    'index'        => 'Trang chủ',
-    'danh-sach'    => 'Khám phá',
-    'goi-y-mon-an' => 'Gợi ý món ăn',
-    'cai-dat'      => 'Cài đặt',
-    'gioi-thieu'   => 'Giới thiệu',
-    'lien-he'      => 'Liên hệ',
+    'index'          => 'Trang chủ',
+    'danh-sach'      => 'Khám phá',
+    'goi-y-mon-an'   => 'Gợi ý món ăn',
+    'di-cho-cua-toi' => 'Đi chợ của tôi',
+    'cai-dat'        => 'Cài đặt',
+    'gioi-thieu'     => 'Giới thiệu',
+    'lien-he'        => 'Liên hệ',
 ];
 ?>
 <nav class="thanh-dieu-huong" aria-label="Điều hướng chính">
     <ul class="menu">
         <?php foreach ($menuChinh as $tep => $nhan): ?>
-            <?php $dangChon = ($tep === $trang); ?>
+
+            <?php
+            // Chức năng đi chợ chỉ dành cho người dùng đã đăng nhập.
+            if ($tep === 'di-cho-cua-toi' && empty($isLoggedIn)) {
+                continue;
+            }
+
+            $dangChon = ($tep === $trang);
+
+            $duongDan = $goc . $tep . '.php';
+
+            if ($tep === 'di-cho-cua-toi') {
+                $duongDan .= '?tab=hien-tai';
+            }
+            ?>
+
             <li>
                 <a
-                    href="<?= e($goc . $tep . '.php') ?>"
+                    href="<?= e($duongDan) ?>"
                     class="icon-<?= e($tep) ?><?= $dangChon ? ' dang-chon' : '' ?>"
                     <?= $dangChon ? 'aria-current="page"' : '' ?>
                 ><?= e($nhan) ?></a>

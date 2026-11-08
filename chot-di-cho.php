@@ -32,7 +32,7 @@ if (!is_string($csrf) || empty($_SESSION['csrf_di_cho'])
 try {
     $idLan = (new KhoLanDiCho(db()))->chot((int) $nguoiDung['id']);
     gan_thong_bao('success', 'Đã chốt danh sách đi chợ (lần #' . $idLan . ').');
-    header('Location: di-cho-cua-toi.php?id=' . $idLan, true, 303);
+    header('Location: di-cho-cua-toi.php?tab=lich-su&id=' . $idLan, true, 303);
     exit;
 } catch (DomainException $e) {
     gan_thong_bao('error', $e->getMessage());

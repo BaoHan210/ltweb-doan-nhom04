@@ -289,12 +289,9 @@ require __DIR__ . '/inc/header.php';
                                 <?= e($monAn->ten) ?>
                             </h3>
 
-                            <p
-                                class="danh-gia-mon"
-                                aria-label="Đánh giá món ăn"
-                            >
-                                ★★★★★
-                            </p>
+                            <p class="danh-gia-mon">
+    ★★★★★
+</p>
 
                             <p class="danh-muc-mon">
                                 <?= e($monAn->danhMuc) ?>

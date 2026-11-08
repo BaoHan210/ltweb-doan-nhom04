@@ -190,10 +190,10 @@ require __DIR__ . '/inc/header.php';
 
     <?= hien_thi_thong_bao() ?>
 
-    <!-- LIÊN KẾT DANH SÁCH ĐI CHỢ -->
+        <!-- LIÊN KẾT ĐI CHỢ CỦA TÔI -->
     <div class="nut-mo-danh-sach-di-cho">
-        <a href="danh-sach-di-cho.php" class="nut">
-            Danh sách đi chợ
+        <a href="di-cho-cua-toi.php?tab=hien-tai" class="nut">
+            Đi chợ của tôi
             <span>(<?= $soMonTrongDanhSach ?> món)</span>
         </a>
     </div>
