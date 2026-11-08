@@ -72,6 +72,41 @@ if (session_status() === PHP_SESSION_NONE) {
     $_SESSION['last_activity'] = $thoiGianHienTai;
 }
 
+// Thiết lập HTTP security headers.
+if (!headers_sent()) {
+    // Xóa thông tin phiên bản PHP khỏi response header.
+    header_remove('X-Powered-By');
+
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+
+    // CSP ở chế độ báo cáo: chỉ ghi nhận vi phạm, chưa chặn tài nguyên.
+    $csp = implode('; ', [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "frame-ancestors 'self'",
+        "form-action 'self'",
+        "script-src 'self' https://cdn.jsdelivr.net",
+        "style-src 'self'",
+        "img-src 'self' data: https:",
+        "connect-src 'self' https://api.quotable.io https://www.themealdb.com",
+        "font-src 'self' data:"
+    ]);
+
+    header('Content-Security-Policy-Report-Only: ' . $csp);
+
+    // HSTS chỉ áp dụng khi website đang chạy HTTPS.
+    if (
+        !empty($_SERVER['HTTPS'])
+        && strtolower((string) $_SERVER['HTTPS']) !== 'off'
+    ) {
+        header('Strict-Transport-Security: max-age=31536000');
+    }
+}
+
 require_once __DIR__ . '/csrf.php';
 
 // Kiểm tra CSRF tập trung đối với mọi yêu cầu POST.
@@ -113,41 +148,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !csrfHopLe()) {
     }
 
     exit;
-}
-
-// Thiết lập HTTP security headers.
-if (!headers_sent()) {
-    // Xóa thông tin phiên bản PHP khỏi response header.
-    header_remove('X-Powered-By');
-
-    header('X-Content-Type-Options: nosniff');
-    header('X-Frame-Options: SAMEORIGIN');
-    header('Referrer-Policy: strict-origin-when-cross-origin');
-    header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-
-    // CSP ở chế độ báo cáo: chỉ ghi nhận vi phạm, chưa chặn tài nguyên.
-    $csp = implode('; ', [
-        "default-src 'self'",
-        "base-uri 'self'",
-        "object-src 'none'",
-        "frame-ancestors 'self'",
-        "form-action 'self'",
-        "script-src 'self' https://cdn.jsdelivr.net",
-        "style-src 'self'",
-        "img-src 'self' data: https:",
-        "connect-src 'self' https://api.quotable.io https://www.themealdb.com",
-        "font-src 'self' data:"
-    ]);
-
-    header('Content-Security-Policy-Report-Only: ' . $csp);
-
-    // HSTS chỉ áp dụng khi website đang chạy HTTPS.
-    if (
-        !empty($_SERVER['HTTPS'])
-        && strtolower((string) $_SERVER['HTTPS']) !== 'off'
-    ) {
-        header('Strict-Transport-Security: max-age=31536000');
-    }
 }
 
 // Xác định URL gốc của website.
