@@ -23,9 +23,12 @@ if (!match) {
 client.global.set("csrfLogin", match[1]);
 %}
 
-### ĐĂNG NHẬP - BƯỚC 2: Kiểm tra phản hồi trang đăng nhập
-GET {{host}}/dang-nhap.php
+### ĐĂNG NHẬP - BƯỚC 2: Gửi thông tin đăng nhập
+POST {{host}}/dang-nhap.php
+Content-Type: application/x-www-form-urlencoded
 Accept: text/html
+
+email={{email}}&mat_khau={{matKhau}}&csrf={{csrfLogin}}
 
 ###############################################################
 # API 1: /api/mon-an.php  (chi cho phep GET, khong can dang nhap)
