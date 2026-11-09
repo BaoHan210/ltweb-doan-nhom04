@@ -104,10 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'Tệp tải lên không hợp lệ.';
                 } elseif (
                     !is_int($file['size'] ?? null) ||
+                    $file['size'] <= 0 ||
                     $file['size'] > 2 * 1024 * 1024
                 ) {
                     $loi['anh_dinh_kem'] =
-                        'Dung lượng ảnh không được vượt quá 2 MB!';
+                        'Dung lượng ảnh phải lớn hơn 0 và không vượt quá 2 MB!';
                 } else {
                     $finfo = new finfo(FILEINFO_MIME_TYPE);
                     $mime = $finfo->file($file['tmp_name']);
@@ -118,9 +119,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'image/webp' => '.webp'
                     ];
 
-                    if (!isset($mimeHopLe[$mime])) {
+                    $thongTinAnh = @getimagesize($file['tmp_name']);
+
+                    if (
+                        !isset($mimeHopLe[$mime]) ||
+                        $thongTinAnh === false ||
+                        ($thongTinAnh['mime'] ?? '') !== $mime
+                    ) {
                         $loi['anh_dinh_kem'] =
-                            'Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP!';
+                            'Chỉ chấp nhận ảnh JPG, PNG hoặc WEBP hợp lệ!';
                     } else {
                         $tepAnhHopLe = $file['tmp_name'];
                         $duoiAnh = $mimeHopLe[$mime];
@@ -293,10 +300,7 @@ require __DIR__ . '/inc/header.php';
                     >
 
                     <?php if (isset($loi['ho_ten'])): ?>
-                        <span
-                            class="thong-bao-loi"
-
-                        >
+                        <span class="thong-bao-loi" role="alert">
                             <?= e($loi['ho_ten']) ?>
                         </span>
                     <?php endif; ?>
@@ -321,10 +325,7 @@ require __DIR__ . '/inc/header.php';
                     >
 
                     <?php if (isset($loi['email'])): ?>
-                        <span
-                            class="thong-bao-loi"
-
-                        >
+                        <span class="thong-bao-loi" role="alert">
                             <?= e($loi['email']) ?>
                         </span>
                     <?php endif; ?>
@@ -384,10 +385,7 @@ require __DIR__ . '/inc/header.php';
                     </select>
 
                     <?php if (isset($loi['subject'])): ?>
-                        <span
-                            class="thong-bao-loi"
-
-                        >
+                        <span class="thong-bao-loi" role="alert">
                             <?= e($loi['subject']) ?>
                         </span>
                     <?php endif; ?>
@@ -409,10 +407,7 @@ require __DIR__ . '/inc/header.php';
                     >
 
                     <?php if (isset($loi['anh_dinh_kem'])): ?>
-                        <span
-                            class="thong-bao-loi"
-
-                        >
+                        <span class="thong-bao-loi" role="alert">
                             <?= e($loi['anh_dinh_kem']) ?>
                         </span>
                     <?php endif; ?>
@@ -437,10 +432,7 @@ require __DIR__ . '/inc/header.php';
                     ><?= e($duLieu['noi_dung']) ?></textarea>
 
                     <?php if (isset($loi['noi_dung'])): ?>
-                        <span
-                            class="thong-bao-loi"
-
-                        >
+                        <span class="thong-bao-loi" role="alert">
                             <?= e($loi['noi_dung']) ?>
                         </span>
                     <?php endif; ?>
