@@ -224,7 +224,7 @@ require __DIR__ . '/inc/header.php';
         <div class="khu-vuc-hinh-anh">
             <figure class="hinh-anh-mon-an">
                 <img
-                    src="<?= e($monAn->hinhAnh ?: 'images/default.jpg') ?>"
+                    src="<?= e($monAn->hinhAnh ?: 'images/mon-an-nhanh.jpg') ?>"
                     alt="<?= e($tenMon) ?>"
                 >
             </figure>
@@ -392,7 +392,7 @@ require __DIR__ . '/inc/header.php';
 
                 <div class="video-preview-card">
                     <img
-                        src="<?= e($monAn->hinhAnh ?: 'images/default.jpg') ?>"
+                        src="<?= e($monAn->hinhAnh ?: 'images/mon-an-nhanh.jpg') ?>"
                         alt="Video hướng dẫn <?= e($tenMon) ?>"
                     >
                     <div class="nut-play-video" aria-hidden="true">▶</div>
@@ -434,7 +434,7 @@ require __DIR__ . '/inc/header.php';
 
                         <div class="khung-anh-mon">
                             <img
-                                src="<?= e($monLienQuan->hinhAnh ?: 'images/default.jpg') ?>"
+                                src="<?= e($monLienQuan->hinhAnh ?: 'images/mon-an-nhanh.jpg') ?>"
                                 alt="<?= e($monLienQuan->ten) ?>"
                                 loading="lazy"
                             >

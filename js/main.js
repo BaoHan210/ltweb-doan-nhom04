@@ -881,22 +881,39 @@ const khoiTaoKiemTraBieuMau = () => {
    ========================================================= */
 const khoiTaoRestApiTrangChu = () => {
     const khốiApi = document.getElementById('khoi-rest-api');
+
     if (khốiApi === null) {
         return;
     }
 
     fetch('https://api.quotable.io/random')
-        .then((res) => res.json())
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Không thể tải dữ liệu trích dẫn.');
+            }
+
+            return res.json();
+        })
         .then((data) => {
-            khốiApi.innerHTML = `
-                <blockquote class="blockquote mb-0">
-                    <p>"${data.content}"</p>
-                    <footer class="blockquote-footer">${data.author}</footer>
-                </blockquote>
-            `;
+            const trichDan = document.createElement('blockquote');
+            trichDan.className = 'blockquote mb-0';
+
+            const noiDung = document.createElement('p');
+            noiDung.textContent = `"${String(data.content ?? '')}"`;
+
+            const tacGia = document.createElement('footer');
+            tacGia.className = 'blockquote-footer';
+            tacGia.textContent = String(data.author ?? '');
+
+            trichDan.append(noiDung, tacGia);
+            khốiApi.replaceChildren(trichDan);
         })
         .catch(() => {
-            khốiApi.innerHTML = '<p class="text-muted">Chúc bạn một ngày nấu ăn vui vẻ!</p>';
+            const thongBao = document.createElement('p');
+            thongBao.className = 'text-muted';
+            thongBao.textContent = 'Chúc bạn một ngày nấu ăn vui vẻ!';
+
+            khốiApi.replaceChildren(thongBao);
         });
 };
 

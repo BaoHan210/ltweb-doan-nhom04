@@ -275,7 +275,7 @@ require __DIR__ . '/inc/header.php';
                         <img
                             src="<?= e(
                                 $monAn->hinhAnh
-                                ?: 'images/default.jpg'
+                                ?: 'images/mon-an-nhanh.jpg'
                             ) ?>"
                             alt="<?= e($monAn->ten) ?>"
                             width="300"
@@ -467,7 +467,7 @@ require __DIR__ . '/inc/header.php';
                             <img
                                 src="<?= e(
                                     $monAn->hinhAnh
-                                    ?: 'images/default.jpg'
+                                    ?: 'images/mon-an-nhanh.jpg'
                                 ) ?>"
                                 alt="<?= e($monAn->ten) ?>"
                                 width="300"

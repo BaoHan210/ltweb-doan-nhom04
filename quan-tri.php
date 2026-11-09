@@ -67,12 +67,12 @@ $topMonAnYeuThich = [
     [
         'ten' => 'Gà rán giòn',
         'luotThich' => '856',
-        'hinh' => 'images/ga-ran.jpg'
+        'hinh' => 'images/ga-nuong-mac-khen.jpg'
     ],
     [
         'ten' => 'Trà sữa trân châu',
         'luotThich' => '742',
-        'hinh' => 'images/tra-sua.jpg'
+        'hinh' => 'images/do-uong.jpg'
     ]
 ];
 
@@ -94,7 +94,7 @@ require_once __DIR__ . '/inc/header.php';
 ?>
 
 <!-- Chart.js phiên bản cố định. Script này là classic nên nạp trước js/trang-quan-tri.js (module). -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script src="js/vendor/chart.umd.js"></script>
 
 <main class="noi-dung-quan-tri">
     <div class="khung-quan-tri-layout">
@@ -241,7 +241,7 @@ require_once __DIR__ . '/inc/header.php';
                                     <tr>
                                         <td>
                                             <img
-                                                src="<?= e($monQuanTri->hinhAnh ?: 'images/default.jpg') ?>"
+                                                src="<?= e($monQuanTri->hinhAnh ?: 'images/mon-an-nhanh.jpg') ?>"
                                                 alt=""
                                                 width="64"
                                                 height="48"

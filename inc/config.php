@@ -89,14 +89,14 @@ if (!headers_sent()) {
         "object-src 'none'",
         "frame-ancestors 'self'",
         "form-action 'self'",
-        "script-src 'self' https://cdn.jsdelivr.net",
+        "script-src 'self'",
         "style-src 'self'",
-        "img-src 'self' data: https:",
+        "img-src 'self' data: https://www.themealdb.com",
         "connect-src 'self' https://api.quotable.io https://www.themealdb.com",
-        "font-src 'self' data:"
+        "font-src 'self'"
     ]);
 
-    header('Content-Security-Policy-Report-Only: ' . $csp);
+    header('Content-Security-Policy: ' . $csp);
 
     // HSTS chỉ áp dụng khi website đang chạy HTTPS.
     if (

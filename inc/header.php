@@ -55,6 +55,7 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="<?= e(csrfToken()) ?>">
   <title><?= e($tieuDe ?? 'Cook with me') ?> | Cook with me</title>
+  <link rel="icon" type="image/svg+xml" href="<?= e($goc) ?>images/logo-chef.svg">
 
   <link rel="stylesheet" href="<?= e($goc) ?>css/01-bien.css">
   <link rel="stylesheet" href="<?= e($goc) ?>css/02-chuan-hoa.css">
