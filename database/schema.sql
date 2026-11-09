@@ -264,16 +264,14 @@ CREATE TABLE tv_du_an_ca_nhan (
     mo_ta TEXT NULL,
     FOREIGN KEY (mssv) REFERENCES thanh_vien(mssv) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
--- 13. Bang theo doi so lan dang nhap that bai
+-- 13. Bang theo doi tung lan dang nhap that bai
 CREATE TABLE dang_nhap_sai (
-    email_hash CHAR(64) NOT NULL PRIMARY KEY,
-    so_lan_sai TINYINT UNSIGNED NOT NULL DEFAULT 0,
-    bat_dau DATETIME NOT NULL,
-    khoa_den DATETIME NULL,
-    cap_nhat DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(254) NOT NULL,
+    ip VARCHAR(45) NOT NULL,
+    thoi_gian DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    INDEX idx_dang_nhap_sai_khoa_den (khoa_den)
+    INDEX idx_dang_nhap_sai_email_thoi_gian (email, thoi_gian)
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;

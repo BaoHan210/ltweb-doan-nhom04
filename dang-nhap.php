@@ -9,152 +9,120 @@ use App\Data\KhoNguoiDung;
 
 require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
+require_once __DIR__ . '/inc/xac-thuc.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 
 $loiChung = '';
 $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = is_string($_POST['email'] ?? null)
-        ? trim($_POST['email'])
-        : '';
 
-    $matKhau = is_string($_POST['mat_khau'] ?? null)
-        ? $_POST['mat_khau']
-        : '';
-
-    if (
-        $email === ''
-        || strlen($email) > 150
-        || !filter_var($email, FILTER_VALIDATE_EMAIL)
-        || $matKhau === ''
-    ) {
-        $loiChung = 'Vui lòng nhập email và mật khẩu hợp lệ.';
+    // 1. Kiểm tra CSRF trước khi xử lý thông tin đăng nhập.
+    if (!csrfHopLe()) {
+        http_response_code(403);
+        $loiChung = 'Yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.';
     } else {
-        $pdo = db();
+        $email = is_string($_POST['email'] ?? null)
+            ? trim($_POST['email'])
+            : '';
 
-        // Dùng mã băm email để theo dõi số lần đăng nhập sai.
-        $emailHash = hash('sha256', strtolower($email));
+        $matKhau = is_string($_POST['mat_khau'] ?? null)
+            ? $_POST['mat_khau']
+            : '';
 
-        // Kiểm tra trạng thái khóa và thời gian của bộ đếm.
-        $stmt = $pdo->prepare(
-            'SELECT so_lan_sai, bat_dau, khoa_den,
-                    (khoa_den IS NOT NULL AND khoa_den > NOW()) AS dang_bi_khoa,
-                    (bat_dau < DATE_SUB(NOW(), INTERVAL 15 MINUTE)) AS het_han
-             FROM dang_nhap_sai
-             WHERE email_hash = :email_hash'
-        );
-
-        $stmt->execute(['email_hash' => $emailHash]);
-        $theoDoi = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Đang trong thời gian khóa.
-        if ($theoDoi && (int) $theoDoi['dang_bi_khoa'] === 1) {
-            http_response_code(429);
-
-            ghiLogBaoMat('dang_nhap_sai', [
-                'email_hash' => $emailHash,
-                'so_lan' => (int) $theoDoi['so_lan_sai'],
-                'ly_do' => 'tam_khoa'
-            ]);
-
-            $loiChung = 'Bạn đã đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 15 phút.';
+        // 2. Kiểm tra dữ liệu đầu vào.
+        if (
+            $email === ''
+            || strlen($email) > 150
+            || !filter_var($email, FILTER_VALIDATE_EMAIL)
+            || $matKhau === ''
+        ) {
+            $loiChung = 'Vui lòng nhập email và mật khẩu hợp lệ.';
         } else {
-            // Xóa bộ đếm nếu chu kỳ 15 phút đã hết.
-            if ($theoDoi && (int) $theoDoi['het_han'] === 1) {
-                $stmt = $pdo->prepare(
-                    'DELETE FROM dang_nhap_sai WHERE email_hash = :email_hash'
-                );
-                $stmt->execute(['email_hash' => $emailHash]);
+            $pdo = db();
+            $emailChuan = strtolower($email);
+            $emailHash = hash('sha256', $emailChuan);
 
-                $theoDoi = null;
-            }
+            // 3. Xóa các bản ghi đã hết thời hạn theo dõi.
+            $stmt = $pdo->prepare(
+                'DELETE FROM dang_nhap_sai
+                 WHERE email = :email
+                   AND thoi_gian < DATE_SUB(NOW(), INTERVAL 15 MINUTE)'
+            );
 
-            $khoNguoiDung = new KhoNguoiDung($pdo);
-            $nguoiDung = $khoNguoiDung->timTheoEmail($email);
+            $stmt->execute(['email' => $emailChuan]);
 
-            $hopLe = $nguoiDung !== null
-                && password_verify(
-                    $matKhau,
-                    (string) ($nguoiDung['mat_khau'] ?? '')
-                );
+            // 4. Kiểm tra số lần đăng nhập sai trong 15 phút.
+            $soLanSaiHienTai = soLanSai($emailChuan);
 
-            if ($hopLe) {
-                $id = (int) $nguoiDung['id'];
-
-                if (
-                    password_needs_rehash(
-                        (string) $nguoiDung['mat_khau'],
-                        PASSWORD_DEFAULT
-                    )
-                ) {
-                    $khoNguoiDung->capNhatMatKhauDaBam(
-                        $id,
-                        password_hash($matKhau, PASSWORD_DEFAULT)
-                    );
-                }
-
-                // Xóa bộ đếm đăng nhập sai khi xác thực thành công.
-                $stmt = $pdo->prepare(
-                    'DELETE FROM dang_nhap_sai WHERE email_hash = :email_hash'
-                );
-                $stmt->execute(['email_hash' => $emailHash]);
-
-                session_regenerate_id(true);
-                $_SESSION['uid'] = $id;
-
-                gan_thong_bao('success', 'Đăng nhập thành công!');
-
-                chuyen_huong(
-                    ($nguoiDung['vai_tro'] ?? '') === 'quan_tri'
-                        ? 'quan-tri.php'
-                        : 'ca-nhan.php'
-                );
-            } else {
-                // Tăng số lần đăng nhập sai trong chu kỳ 15 phút.
-                $soLanSai = $theoDoi
-                    ? (int) $theoDoi['so_lan_sai'] + 1
-                    : 1;
-
-                $batDau = $theoDoi
-                    ? $theoDoi['bat_dau']
-                    : null;
-
-                $stmt = $pdo->prepare(
-                    'INSERT INTO dang_nhap_sai
-                        (email_hash, so_lan_sai, bat_dau, khoa_den)
-                     VALUES
-                        (:hash_insert, :so_lan_insert, COALESCE(:bat_dau, NOW()),
-                         CASE WHEN :so_lan_khoa >= 5
-                              THEN DATE_ADD(NOW(), INTERVAL 15 MINUTE)
-                              ELSE NULL END)
-                     ON DUPLICATE KEY UPDATE
-                        so_lan_sai = :so_lan_update,
-                        bat_dau = COALESCE(:bat_dau_update, bat_dau),
-                        khoa_den = CASE WHEN :so_lan_khoa_update >= 5
-                                        THEN DATE_ADD(NOW(), INTERVAL 15 MINUTE)
-                                        ELSE NULL END'
-                );
-
-                $stmt->execute([
-                    'hash_insert' => $emailHash,
-                    'so_lan_insert' => $soLanSai,
-                    'bat_dau' => $batDau,
-                    'so_lan_khoa' => $soLanSai,
-                    'so_lan_update' => $soLanSai,
-                    'bat_dau_update' => $batDau,
-                    'so_lan_khoa_update' => $soLanSai
-                ]);
+            if ($soLanSaiHienTai >= 5) {
+                http_response_code(429);
 
                 ghiLogBaoMat('dang_nhap_sai', [
                     'email_hash' => $emailHash,
-                    'so_lan' => $soLanSai
+                    'so_lan' => $soLanSaiHienTai,
+                    'ly_do' => 'tam_khoa'
                 ]);
 
-                if ($soLanSai >= 5) {
-                    http_response_code(429);
-                    $loiChung = 'Bạn đã đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 15 phút.';
+                $loiChung = 'Bạn đã đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 15 phút.';
+            } else {
+                // 5. Xác thực tài khoản và mật khẩu.
+                $khoNguoiDung = new KhoNguoiDung($pdo);
+                $nguoiDung = $khoNguoiDung->timTheoEmail($email);
+
+                $hopLe = $nguoiDung !== null
+                    && password_verify(
+                        $matKhau,
+                        (string) ($nguoiDung['mat_khau'] ?? '')
+                    );
+
+                if ($hopLe) {
+                    $id = (int) $nguoiDung['id'];
+
+                    // Cập nhật hàm băm nếu thuật toán mặc định thay đổi.
+                    if (
+                        password_needs_rehash(
+                            (string) $nguoiDung['mat_khau'],
+                            PASSWORD_DEFAULT
+                        )
+                    ) {
+                        $khoNguoiDung->capNhatMatKhauDaBam(
+                            $id,
+                            password_hash($matKhau, PASSWORD_DEFAULT)
+                        );
+                    }
+
+                    // Xóa lịch sử đăng nhập sai khi đăng nhập thành công.
+                    $stmt = $pdo->prepare(
+                        'DELETE FROM dang_nhap_sai
+                         WHERE email = :email'
+                    );
+
+                    $stmt->execute(['email' => $emailChuan]);
+
+                    session_regenerate_id(true);
+                    $_SESSION['uid'] = $id;
+
+                    gan_thong_bao('success', 'Đăng nhập thành công!');
+
+                    chuyen_huong(
+                        ($nguoiDung['vai_tro'] ?? '') === 'quan_tri'
+                            ? 'quan-tri.php'
+                            : 'ca-nhan.php'
+                    );
                 } else {
+                    // 6. Ghi nhận lần đăng nhập sai.
+                    ghiLanSai($emailChuan);
+
+                    $soLanSaiMoi = $soLanSaiHienTai + 1;
+
+                    ghiLogBaoMat('dang_nhap_sai', [
+                        'email_hash' => $emailHash,
+                        'so_lan' => $soLanSaiMoi
+                    ]);
+
+                    // Năm lần sai vẫn trả về thông báo chung.
+                    // Lần thử tiếp theo mới bị chặn ở bước kiểm tra phía trên.
                     $loiChung = 'Email hoặc mật khẩu không chính xác!';
                 }
             }

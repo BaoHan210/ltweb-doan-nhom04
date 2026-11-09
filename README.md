@@ -88,6 +88,9 @@ DB_PASSWORD=MAT_KHAU_DA_TAO
 Giá trị MAT_KHAU_DA_TAO trong ví dụ chỉ là nội dung minh họa. Cần thay bằng mật khẩu thực tế đã sử dụng khi tạo tài khoản MySQL. Không gửi mật khẩu thật lên GitHub hoặc đưa vào tài liệu công khai.
 
 Tệp .env đã được cấu hình trong .gitignore, không được đưa lên GitHub. Chỉ chia sẻ .env.example với các giá trị mẫu.
+
+Giá trị `DB_PASSWORD` trong `.env` phải trùng với mật khẩu đã thiết lập cho tài khoản `nhom04_app` trong `database/tai-khoan.sql`.
+
 2.6. Chạy website bằng PHP
 Mở terminal tại thư mục gốc dự án:
 php -S localhost:8000
@@ -96,6 +99,9 @@ Truy cập:
 http://localhost:8000
 
 Dừng máy chủ bằng Ctrl + C.
+
+**Lưu ý:** Máy chủ tích hợp của PHP (`php -S`) không xử lý tệp `.htaccess`. Các quy tắc bảo vệ truy cập tệp và thư mục trong `.htaccess` chỉ có hiệu lực khi chạy bằng Apache (XAMPP). Vì vậy, nên sử dụng XAMPP để kiểm tra đầy đủ các cấu hình bảo mật của dự án.
+
 2.7. Chạy website bằng XAMPP
 Sao chép thư mục dự án vào htdocs của XAMPP, sau đó khởi động Apache và MySQL.
 
@@ -106,15 +112,18 @@ http://localhost/ltweb-doan-nhom04/
 Đường dẫn thực tế phụ thuộc vào tên thư mục được đặt trong htdocs.
 
 Khi chạy bằng XAMPP, tệp .htaccess của dự án được Apache sử dụng để áp dụng các quy tắc bảo vệ thư mục và tệp. Khi chạy bằng máy chủ tích hợp php -S, các quy tắc .htaccess không được áp dụng.
-3. Tài khoản kiểm thử
-Thành viên	Email	Mật khẩu
-Phan Thị Bảo Hân	baohan@cookwithme.com	Han@2026Cook
-Nguyễn Thị Trinh	ngoctrinh@cookwithme.com	Trinh@2026Cook
-Nguyễn Thị Ngọc Bình	ngocbinh@cookwithme.com	Binh@2026Cook
-Lê Thị A Na	ana@cookwithme.com	Na@2026Cook
+## 3. Tài khoản kiểm thử
 
+| Thành viên | Email |
+|---|---|
+| Phan Thị Bảo Hân | baohan@cookwithme.com |
+| Nguyễn Thị Trinh | ngoctrinh@cookwithme.com |
+| Nguyễn Thị Ngọc Bình | ngocbinh@cookwithme.com |
+| Lê Thị A Na | ana@cookwithme.com |
 
-Lưu ý: Đây là thông tin tài khoản kiểm thử được ghi trong README của nhóm. Cần xác nhận các tài khoản hoạt động sau khi import seed.sql. Không sử dụng mật khẩu thật hoặc mật khẩu cá nhân của thành viên làm mật khẩu kiểm thử. Nếu tài khoản kiểm thử được công khai trên GitHub, chỉ sử dụng chúng trong môi trường demo và không tái sử dụng mật khẩu ở dịch vụ khác.
+Các tài khoản trên được sử dụng để kiểm thử chức năng đăng nhập, phân quyền và các chức năng dành cho thành viên.
+
+Mật khẩu kiểm thử không được công khai trong README hoặc trên GitHub. Khi cần kiểm thử, sử dụng thông tin đăng nhập được nhóm cung cấp riêng.
 4. Bảng chức năng – URL – Tệp PHP
 Chức năng	URL	Tệp PHP
 Trang chủ	/	index.php

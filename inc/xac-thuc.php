@@ -57,3 +57,45 @@ function yeuCauQuyen(string $vaiTro): array
     }
     return $nguoiDung;
 }
+
+/**
+ * Đếm số lần đăng nhập sai theo email trong 15 phút gần nhất.
+ */
+function soLanSai(string $email): int
+{
+    $email = strtolower(trim($email));
+
+    $stmt = db()->prepare(
+        'SELECT COUNT(*)
+         FROM dang_nhap_sai
+         WHERE email = :email
+           AND thoi_gian >= DATE_SUB(NOW(), INTERVAL 15 MINUTE)'
+    );
+
+    $stmt->execute(['email' => $email]);
+
+    return (int) $stmt->fetchColumn();
+}
+
+/**
+ * Ghi nhận một lần đăng nhập sai, kèm địa chỉ IP.
+ */
+function ghiLanSai(string $email): void
+{
+    $email = strtolower(trim($email));
+
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+        $ip = 'unknown';
+    }
+
+    $stmt = db()->prepare(
+        'INSERT INTO dang_nhap_sai (email, ip, thoi_gian)
+         VALUES (:email, :ip, NOW())'
+    );
+
+    $stmt->execute([
+        'email' => $email,
+        'ip' => $ip
+    ]);
+}

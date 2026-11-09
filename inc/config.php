@@ -22,16 +22,17 @@ if (!array_key_exists('DB_PASSWORD', $_ENV)) {
 }
 
 // APP_DEBUG mặc định tắt nếu không được khai báo.
-$batLoiChiTiet = filter_var(
-    $_ENV['APP_DEBUG'] ?? 'false',
-    FILTER_VALIDATE_BOOLEAN
+define(
+    'APP_DEBUG',
+    filter_var(
+        $_ENV['APP_DEBUG'] ?? 'false',
+        FILTER_VALIDATE_BOOLEAN
+    )
 );
-
-define('MOI_TRUONG', $batLoiChiTiet ? 'dev' : 'production');
 
 // Cấu hình xử lý lỗi.
 error_reporting(E_ALL);
-ini_set('display_errors', MOI_TRUONG === 'dev' ? '1' : '0');
+ini_set('display_errors', APP_DEBUG ? '1' : '0');
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/../logs/php-error.log');
 
@@ -173,7 +174,7 @@ set_exception_handler(function (Throwable $e) {
     error_log((string) $e);
     http_response_code(500);
 
-    if (MOI_TRUONG === 'dev') {
+    if (APP_DEBUG) {
         echo '<pre>' . htmlspecialchars((string) $e) . '</pre>';
     } else {
         require __DIR__ . '/../500.php';
