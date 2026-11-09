@@ -21,14 +21,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit('Chỉ chấp nhận POST.');
 }
 
-// Dùng chung token với trang goi-y-mon-an.php (khóa csrf_di_cho).
-$csrf = $_POST['csrf_token'] ?? '';
-if (!is_string($csrf) || empty($_SESSION['csrf_di_cho'])
-    || !hash_equals((string) $_SESSION['csrf_di_cho'], $csrf)) {
-    http_response_code(403);
-    exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-}
-
 try {
     $idLan = (new KhoLanDiCho(db()))->chot((int) $nguoiDung['id']);
     gan_thong_bao('success', 'Đã chốt danh sách đi chợ (lần #' . $idLan . ').');

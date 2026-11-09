@@ -36,22 +36,6 @@ $laQuanTri = $nguoiDung !== null
 
 $duocThemDuAn = $laChuTrang || $laQuanTri;
 
-// CSRF token dùng chung cho các biểu mẫu POST trên trang.
-if (!isset($_SESSION['csrf_lena']) || !is_string($_SESSION['csrf_lena'])) {
-    $_SESSION['csrf_lena'] = bin2hex(random_bytes(32));
-}
-$csrfLena = $_SESSION['csrf_lena'];
-
-// Từ chối POST thiếu token hoặc token không hợp lệ.
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    $tokenGuiLen = $_POST['csrf_token'] ?? null;
-
-    if (!is_string($tokenGuiLen) || !hash_equals($csrfLena, $tokenGuiLen)) {
-        http_response_code(403);
-        exit('403 - Phiên làm việc không hợp lệ. Vui lòng tải lại trang.');
-    }
-}
-
 $congThuc = [
     'thit-kho' => [
         'ten' => 'Thịt kho trứng',
@@ -492,7 +476,7 @@ require_once __DIR__ . '/../../inc/header.php';
     </p>
 
     <form method="post" action="#tinh-khau-phan">
-        <input type="hidden" name="csrf_token" value="<?= e($csrfLena) ?>">
+        <?= csrfField() ?>
         <div>
             <label for="ma_mon">Chọn món ăn:</label>
             <select id="ma_mon" name="ma_mon" required>
@@ -562,7 +546,7 @@ require_once __DIR__ . '/../../inc/header.php';
     <!-- Chỉ chủ hồ sơ hoặc quản trị viên được thêm dự án -->
     <?php if ($duocThemDuAn): ?>
     <form method="POST" action="#quan-ly-du-an" class="form-them-du-an">
-        <input type="hidden" name="csrf_token" value="<?= e($csrfLena) ?>">
+        <?= csrfField() ?>
         <h3>Thêm dự án mới</h3>
 
         <div class="truong-du-an">

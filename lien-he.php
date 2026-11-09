@@ -24,11 +24,6 @@ $loi = [];
 // XỬ LÝ BIỂU MẪU POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (!cook_csrf_validate('csrf_lien_he')) {
-        http_response_code(403);
-        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-    }
-
     $duLieu['ho_ten'] = trim(
         is_string($_POST['ho_ten'] ?? null)
             ? $_POST['ho_ten'] : ''
@@ -278,7 +273,7 @@ require __DIR__ . '/inc/header.php';
                 enctype="multipart/form-data"
                 novalidate
             >
-                <?= cook_csrf_field('csrf_lien_he') ?>
+                <?= csrfField() ?>
 
                 <!-- HỌ VÀ TÊN -->
                 <div class="truong-form">

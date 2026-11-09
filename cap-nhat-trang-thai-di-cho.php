@@ -21,14 +21,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit('Chỉ chấp nhận POST.');
 }
 
-// Token được tạo trong quan-tri.php (khóa csrf_quan_tri_di_cho).
-$csrf = $_POST['csrf_token'] ?? '';
-if (!is_string($csrf) || empty($_SESSION['csrf_quan_tri_di_cho'])
-    || !hash_equals((string) $_SESSION['csrf_quan_tri_di_cho'], $csrf)) {
-    http_response_code(403);
-    exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-}
-
 $id = filter_var($_POST['lan_di_cho_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $trangThaiMoi = $_POST['trang_thai_moi'] ?? '';
 

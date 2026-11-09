@@ -1240,24 +1240,24 @@ const xuLyDoiMatKhau = (
  * Đăng xuất tài khoản.
  */
 const xuLyDangXuat = () => {
+    const dongY = window.confirm(
+        'Bạn có chắc muốn đăng xuất không?'
+    );
 
-    const dongY =
-        window.confirm(
-            'Bạn có chắc muốn đăng xuất không?'
-        );
-
-
-    if (
-        dongY === false
-    ) {
+    if (dongY === false) {
         return;
     }
 
+    const formDangXuat = document.getElementById(
+        'form-dang-xuat-toan-cuc'
+    );
 
-    dangXuat();
+    if (formDangXuat === null) {
+        console.error('Không tìm thấy biểu mẫu đăng xuất.');
+        return;
+    }
 
-    window.location.href =
-        'index.php';
+    formDangXuat.requestSubmit();
 };
 
 

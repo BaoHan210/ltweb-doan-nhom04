@@ -61,11 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         chuyen_huong('dang-nhap.php');
     }
 
-    if (!cook_csrf_validate('csrf_danh_sach')) {
-        http_response_code(403);
-        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-    }
-
     $idMonAn = lay_chuoi($_POST, 'doi_yeu_thich', 255);
 
     if ($idMonAn !== '' && $kho->timTheoId($idMonAn) !== null) {
@@ -270,7 +265,7 @@ require __DIR__ . '/inc/header.php';
 
                                 <?php if ($daDangNhap): ?>
                                     <form action="<?= e(urlDanhSach($thamSoGoc)) ?>" method="post">
-                                        <?= cook_csrf_field('csrf_danh_sach') ?>
+                                        <?= csrfField() ?>
                                         <button
                                             class="nut-yeu-thich"
                                             type="submit"

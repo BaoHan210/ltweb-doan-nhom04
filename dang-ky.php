@@ -20,10 +20,6 @@ require_once __DIR__ . '/inc/db.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 
 // 1. KHỞI TẠO SESSION
-// Tạo mã chống gửi biểu mẫu giả mạo (CSRF)
-if (empty($_SESSION['csrf_dang_ky'])) {
-    $_SESSION['csrf_dang_ky'] = bin2hex(random_bytes(32));
-}
 
 // 2. KHAI BÁO DỮ LIỆU BIỂU MẪU
 $duLieu = [
@@ -54,18 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         : '';
 
     $dongY = ($_POST['dong_y'] ?? '') === '1';
-
-    $csrf = is_string($_POST['csrf_token'] ?? null)
-        ? $_POST['csrf_token']
-        : '';
-
-    // 4. KIỂM TRA CSRF
-    if (
-        $csrf === '' ||
-        !hash_equals($_SESSION['csrf_dang_ky'], $csrf)
-    ) {
-        $loiChung = 'Phiên biểu mẫu không hợp lệ. Vui lòng tải lại trang.';
-    }
 
     // 5. KIỂM TRA HỌ TÊN
     $doDaiHoTen = mb_strlen($duLieu['ho_ten'], 'UTF-8');
@@ -131,10 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
 
                 if ($daTao) {
-
-                    // Tạo mã CSRF mới sau khi đăng ký
-                    $_SESSION['csrf_dang_ky'] =
-                        bin2hex(random_bytes(32));
 
                     gan_thong_bao(
                         'success',
@@ -218,11 +198,7 @@ require __DIR__ . '/inc/header.php';
             >
 
                 <!-- CHỐNG CSRF -->
-                <input
-                    type="hidden"
-                    name="csrf_token"
-                    value="<?= e($_SESSION['csrf_dang_ky']) ?>"
-                >
+<?= csrfField() ?>
 
                 <!-- HỌ VÀ TÊN -->
                 <div class="nhom-truong">

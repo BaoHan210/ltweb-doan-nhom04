@@ -69,9 +69,14 @@ if (is_array($userHeader) && !empty($userHeader['avatar'])) {
 
 <body class="trang <?= e($bodyClass) ?><?= $trang === 'quan-tri' ? ' trang-quan-tri-body' : '' ?>">
 <?php if ($isLoggedIn): ?>
-  <?php if (empty($_SESSION['csrf_dang_xuat'])) $_SESSION['csrf_dang_xuat'] = bin2hex(random_bytes(32)); ?>
-  <form id="form-dang-xuat-toan-cuc" action="<?= e($goc) ?>dang-xuat.php" method="post" hidden>
-    <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_dang_xuat']) ?>">
+  <form
+      id="form-dang-xuat-toan-cuc"
+      action="<?= e($goc) ?>dang-xuat.php"
+      method="post"
+      hidden
+  >
+      <?= csrfField() ?>
+      <button type="submit">Đăng xuất</button>
   </form>
 <?php endif; ?>
 

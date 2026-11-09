@@ -8,12 +8,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     http_response_code(405);
     exit('Chỉ chấp nhận POST.');
 }
-$token = $_POST['csrf_token'] ?? null;
-if (!is_string($token) || !isset($_SESSION['csrf_dang_xuat'])
-    || !hash_equals((string) $_SESSION['csrf_dang_xuat'], $token)) {
-    http_response_code(403);
-    exit('Yêu cầu đăng xuất không hợp lệ.');
-}
 
 
 // Xóa mọi dữ liệu phiên, gồm uid và session tương thích cũ.

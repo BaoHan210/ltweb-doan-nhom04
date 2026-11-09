@@ -20,11 +20,6 @@ $nguoiDungId = idNguoiDungHienTai();
 $laChuTrang = $chuTrangId !== false && $chuTrangId !== null
     && $nguoiDungId > 0 && (int) $chuTrangId === $nguoiDungId;
 
-if (!isset($_SESSION['csrf_binh']) || !is_string($_SESSION['csrf_binh'])) {
-    $_SESSION['csrf_binh'] = bin2hex(random_bytes(32));
-}
-$csrfBinh = $_SESSION['csrf_binh'];
-
 // Danh muc lay truc tiep tu MySQL, khong can mang ten co dinh.
 $stmt = $pdo->query('SELECT id, ten FROM danh_muc ORDER BY ten ASC');
 $danhMuc = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -45,11 +40,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     if (!$laChuTrang) {
         http_response_code(403);
         exit('403 - Chi chu trang moi duoc quan ly danh gia.');
-    }
-    $token = $_POST['csrf_token'] ?? null;
-    if (!is_string($token) || !hash_equals($csrfBinh, $token)) {
-        http_response_code(403);
-        exit('403 - CSRF token khong hop le.');
     }
 
     $hanhDong = $_POST['hanh_dong'] ?? 'them';
@@ -294,7 +284,7 @@ require_once __DIR__ . '/../../inc/header.php';
         <p>Đánh giá được lưu trong bảng <code>tv_binh_danh_gia</code>. Chỉ chủ trang được thêm, sửa hoặc xóa.</p>
         <?php if ($laChuTrang): ?>
             <form method="post" action="gioithieu.php">
-                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                <?= csrfField() ?>
                 <input type="hidden" name="hanh_dong" value="them">
                 <div>
                     <label for="id_mon">Chọn món ăn muốn đánh giá:</label>
@@ -338,7 +328,7 @@ require_once __DIR__ . '/../../inc/header.php';
                         <small><?= e($dg['thoi_gian']) ?></small>
                         <?php if ($laChuTrang): ?>
                             <form method="post" action="gioithieu.php">
-                                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                                <?= csrfField() ?>
                                 <input type="hidden" name="hanh_dong" value="sua">
                                 <input type="hidden" name="danh_gia_id" value="<?= (int) $dg['id'] ?>">
                                 <label for="sao-sua-<?= (int) $dg['id'] ?>">Sửa số sao:</label>
@@ -352,7 +342,7 @@ require_once __DIR__ . '/../../inc/header.php';
                                 <button type="submit">Lưu sửa</button>
                             </form>
                             <form method="post" action="gioithieu.php">
-                                <input type="hidden" name="csrf_token" value="<?= e($csrfBinh) ?>">
+                                <?= csrfField() ?>
                                 <input type="hidden" name="hanh_dong" value="xoa">
                                 <input type="hidden" name="danh_gia_id" value="<?= (int) $dg['id'] ?>">
                                 <button type="submit">Xóa đánh giá</button>

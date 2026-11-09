@@ -21,13 +21,6 @@ $du = ['ten' => '', 'loinhan' => ''];
 $thongBao = $_SESSION['flash_trinh'] ?? '';
 unset($_SESSION['flash_trinh']);
 
-// Khởi tạo token bảo vệ biểu mẫu.
-if (empty($_SESSION['csrf_trinh'])) {
-    $_SESSION['csrf_trinh'] = bin2hex(random_bytes(32));
-}
-
-$csrfTrinh = $_SESSION['csrf_trinh'];
-
 // Lấy tài khoản chủ trang.
 $st = db()->prepare(
     'SELECT nguoi_dung_id
@@ -52,16 +45,6 @@ $laChuTrang = $nguoiDung !== null
 
 // Xử lý gửi và xóa lời nhắn.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $tokenGui = $_POST['csrf'] ?? null;
-
-    if (
-        !is_string($tokenGui)
-        || !hash_equals($csrfTrinh, $tokenGui)
-    ) {
-        http_response_code(403);
-        exit('Phiên gửi biểu mẫu không hợp lệ.');
-    }
 
     $hanhDong = $_POST['hanh_dong'] ?? '';
 
@@ -519,16 +502,12 @@ require __DIR__ . '/../../inc/header.php';
             class="form-luu-but"
         >
 
+            <?= csrfField() ?>
+
             <input
                 type="hidden"
                 name="hanh_dong"
                 value="gui"
-            >
-
-            <input
-                type="hidden"
-                name="csrf"
-                value="<?= e($csrfTrinh) ?>"
             >
 
             <div>
@@ -619,6 +598,8 @@ require __DIR__ . '/../../inc/header.php';
                                 data-confirm="Bạn muốn xóa lời nhắn này?"
                             >
 
+                                <?= csrfField() ?>
+
                                 <input
                                     type="hidden"
                                     name="hanh_dong"
@@ -635,12 +616,6 @@ require __DIR__ . '/../../inc/header.php';
                                     type="hidden"
                                     name="trang"
                                     value="<?= $hienTai ?>"
-                                >
-
-                                <input
-                                    type="hidden"
-                                    name="csrf"
-                                    value="<?= e($csrfTrinh) ?>"
                                 >
 
                                 <button type="submit">

@@ -26,10 +26,6 @@ use App\Services\DanhSachDiChoService;
 $nguoiDung = yeuCauDangNhap();
 $uid = (int) $nguoiDung['id'];
 
-if (empty($_SESSION['csrf_di_cho'])) {
-    $_SESSION['csrf_di_cho'] = bin2hex(random_bytes(32));
-}
-
 $tab = $_GET['tab'] ?? 'hien-tai';
 if (!is_string($tab) || !in_array($tab, ['hien-tai', 'lich-su'], true)) {
     $tab = 'hien-tai';
@@ -55,18 +51,7 @@ $danhSachDiChoService = new DanhSachDiChoService(
 // ======================================
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-    $csrf = $_POST['csrf_token'] ?? '';
-
-    if (
-        !is_string($csrf)
-        || empty($_SESSION['csrf_di_cho'])
-        || !hash_equals((string) $_SESSION['csrf_di_cho'], $csrf)
-    ) {
-        http_response_code(403);
-        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-    }
-
-    try {
+        try {
         $hanhDong = $_POST['hanh_dong'] ?? '';
 
         switch ($hanhDong) {
@@ -320,12 +305,7 @@ require __DIR__ . '/inc/header.php';
                                     class="d-flex align-items-center gap-2"
                                 >
 
-                                    <input
-                                        type="hidden"
-                                        name="csrf_token"
-                                        value="<?= e($_SESSION['csrf_di_cho']) ?>"
-                                    >
-
+                                    <?= csrfField() ?>
                                     <input
                                         type="hidden"
                                         name="hanh_dong"
@@ -362,11 +342,7 @@ require __DIR__ . '/inc/header.php';
                                     data-confirm="Bạn có chắc muốn xóa món ăn này?"
                                 >
 
-                                    <input
-                                        type="hidden"
-                                        name="csrf_token"
-                                        value="<?= e($_SESSION['csrf_di_cho']) ?>"
-                                    >
+                                    <?= csrfField() ?>
 
                                     <input
                                         type="hidden"
@@ -406,11 +382,7 @@ require __DIR__ . '/inc/header.php';
                     data-confirm="Bạn có chắc muốn xóa toàn bộ danh sách?"
                 >
 
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e($_SESSION['csrf_di_cho']) ?>"
-                    >
+                    <?= csrfField() ?>
 
                     <input
                         type="hidden"
@@ -430,11 +402,7 @@ require __DIR__ . '/inc/header.php';
                     data-confirm="Bạn muốn chốt danh sách đi chợ này?"
                 >
 
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e($_SESSION['csrf_di_cho']) ?>"
-                    >
+                    <?= csrfField() ?>
 
                     <button type="submit" class="nut">
                         Chốt danh sách đi chợ

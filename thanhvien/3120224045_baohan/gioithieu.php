@@ -100,11 +100,6 @@ $laChuTrang = $nguoiDung !== null
     && $thanhVien['nguoi_dung_id'] !== null
     && (int) $nguoiDung['id'] === (int) $thanhVien['nguoi_dung_id'];
 
-if (empty($_SESSION['csrf_tv'])) {
-    $_SESSION['csrf_tv'] = bin2hex(random_bytes(32));
-}
-$csrfTv = $_SESSION['csrf_tv'];
-
 /* =========================================================
    4. XỬ LÝ POST: THÊM / XÓA DỰ ÁN (tv_du_an)
    ========================================================= */
@@ -113,12 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'])) {
     if (!$laChuTrang) {
         http_response_code(403);
         exit('Chỉ chủ trang mới được thay đổi dữ liệu này.');
-    }
-
-    $csrf = is_string($_POST['csrf_token'] ?? null) ? $_POST['csrf_token'] : '';
-    if (!hash_equals($csrfTv, $csrf)) {
-        http_response_code(403);
-        exit('Phiên làm việc không hợp lệ. Hãy tải lại trang.');
     }
 
     $hanhDong = $_POST['hanh_dong'];
@@ -166,12 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['hanh_dong'])) {
     if (!$laChuTrang) {
         http_response_code(403);
         exit('Chỉ chủ trang mới được lưu hồ sơ.');
-    }
-
-    $csrf = is_string($_POST['csrf_token'] ?? null) ? $_POST['csrf_token'] : '';
-    if (!hash_equals($csrfTv, $csrf)) {
-        http_response_code(403);
-        exit('Phiên làm việc không hợp lệ. Hãy tải lại trang.');
     }
 
     $emailGui   = $_POST['email'] ?? null;
@@ -349,7 +332,7 @@ require __DIR__ . '/../../inc/header.php';
 
         <!-- Form nhận dữ liệu do canhan.js chuyển vào các input ẩn -->
         <form id="form-luu-ho-so" method="POST" hidden>
-            <input type="hidden" name="csrf_token" value="<?= e($csrfTv) ?>">
+            <?= csrfField() ?>
 
             <input type="hidden" name="email" id="du-lieu-email"
                    value="<?= e($hoSo['email']) ?>">
@@ -485,7 +468,7 @@ require __DIR__ . '/../../inc/header.php';
 
                         <?php if ($laChuTrang): ?>
                             <form method="post" action="gioithieu.php#du-an">
-                                <input type="hidden" name="csrf_token" value="<?= e($csrfTv) ?>">
+                                <?= csrfField() ?>
                                 <input type="hidden" name="hanh_dong" value="xoa">
                                 <input type="hidden" name="id" value="<?= (int) $da['id'] ?>">
                                 <button type="submit">Xóa</button>
@@ -499,7 +482,7 @@ require __DIR__ . '/../../inc/header.php';
         <?php if ($laChuTrang): ?>
             <h3>Thêm dự án</h3>
             <form method="post" action="gioithieu.php#du-an">
-                <input type="hidden" name="csrf_token" value="<?= e($csrfTv) ?>">
+                <?= csrfField() ?>
                 <input type="hidden" name="hanh_dong" value="them">
 
                 <label for="ten-da">Tên:</label>

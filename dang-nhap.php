@@ -11,10 +11,6 @@ require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/db.php';
 require_once __DIR__ . '/src/Data/KhoNguoiDung.php';
 
-if (empty($_SESSION['csrf_dang_nhap'])) {
-    $_SESSION['csrf_dang_nhap'] = bin2hex(random_bytes(32));
-}
-
 $loiChung = '';
 $email = '';
 
@@ -27,18 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ? $_POST['mat_khau']
         : '';
 
-    $token = is_string($_POST['csrf_token'] ?? null)
-        ? $_POST['csrf_token']
-        : '';
-
     if (
-        $token === ''
-        || !hash_equals((string) $_SESSION['csrf_dang_nhap'], $token)
-    ) {
-        http_response_code(403);
-        ghiLogBaoMat('csrf_sai');
-        $loiChung = 'Biểu mẫu hết hiệu lực. Vui lòng tải lại trang.';
-    } elseif (
         $email === ''
         || strlen($email) > 150
         || !filter_var($email, FILTER_VALIDATE_EMAIL)
@@ -117,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 session_regenerate_id(true);
                 $_SESSION['uid'] = $id;
-                unset($_SESSION['csrf_dang_nhap']);
 
                 gan_thong_bao('success', 'Đăng nhập thành công!');
 
@@ -248,7 +232,8 @@ require __DIR__ . '/inc/header.php';
             method="post"
             novalidate
         >
-            <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_dang_nhap']) ?>">
+            <!-- CHỐNG CSRF -->
+<?= csrfField() ?>
 
             <!-- EMAIL -->
             <div class="nhom-truong-nhap">

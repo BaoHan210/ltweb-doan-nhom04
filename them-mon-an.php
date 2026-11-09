@@ -19,10 +19,6 @@ yeuCauQuyen('quan_tri');
 $kho       = new KhoMonAn(db());
 $dsDanhMuc = $kho->layDanhMucQuanTri();
 
-if (empty($_SESSION['csrf_them_mon_an'])) {
-    $_SESSION['csrf_them_mon_an'] = bin2hex(random_bytes(32));
-}
-
 $cacTruong = [
     'ten', 'slug', 'danh_muc_id', 'thoi_gian', 'khau_phan',
     'do_kho', 'ngan_sach', 'ton_kho', 'mo_ta', 'video',
@@ -38,11 +34,6 @@ $loi = [];
 
 // 2. Xử lý gửi biểu mẫu
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!hash_equals((string) $_SESSION['csrf_them_mon_an'], lay_chuoi($_POST, 'csrf_token', 128))) {
-        http_response_code(403);
-        require __DIR__ . '/403.php';
-        exit;
-    }
 
     foreach ($cacTruong as $cot) {
         $duLieu[$cot] = lay_chuoi($_POST, $cot, $cot === 'mo_ta' ? 10001 : 255);
@@ -71,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $duLieu['hinh_anh'] = 'uploads/' . $tenAnh;
                 try {
                     $idMoi = $kho->themMonAn($duLieu);
-                    unset($_SESSION['csrf_them_mon_an']);
                     gan_thong_bao('success', 'Đã thêm món ăn #' . $idMoi . ' thành công.');
                     header('Location: quan-tri.php', true, 303); // PRG
                     exit;
@@ -122,7 +112,7 @@ require __DIR__ . '/inc/header.php';
     <p>Điền thông tin món ăn và chọn ảnh đại diện. Các mục có dấu * là bắt buộc.</p>
 
     <form action="them-mon-an.php" method="post" enctype="multipart/form-data" novalidate>
-        <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_them_mon_an']) ?>">
+        <?= csrfField() ?>
 
         <div class="form-mon-an-luoi">
 

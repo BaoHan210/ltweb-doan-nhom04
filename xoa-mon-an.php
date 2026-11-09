@@ -20,14 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once __DIR__ . '/inc/xac-thuc.php';
 $nguoiDung = yeuCauQuyen('quan_tri');
 
-// Chống CSRF, kể cả bước xác nhận.
-$tokenLuu = (string) ($_SESSION['csrf_xoa_mon_an'] ?? '');
-$tokenGui = lay_chuoi($_POST, 'csrf_token', 128);
-if ($tokenLuu === '' || !hash_equals($tokenLuu, $tokenGui)) {
-    http_response_code(403);
-    exit('Phiên làm việc hoặc mã xác thực không hợp lệ. Tải lại trang quản trị.');
-}
-
 // Trong giao diện Cook with me, MonAn->id là slug, không phải ID số nguyên.
 $slug = lay_chuoi($_POST, 'id', 190);
 if ($slug === '' || strlen($slug) > 190 || !preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) {
@@ -55,10 +47,12 @@ if (lay_chuoi($_POST, 'xac_nhan', 1) !== '1') {
         <h1>Xác nhận xóa món ăn</h1>
         <p>Bạn có chắc chắn muốn xóa món <strong><?= e($mon->ten) ?></strong>?</p>
         <p>Thao tác này không thể hoàn tác. Nếu món ăn đã có dữ liệu liên quan được bảo vệ bằng khóa ngoại, hệ thống sẽ từ chối xóa.</p>
+
         <form method="post" action="xoa-mon-an.php">
+            <?= csrfField() ?>
             <input type="hidden" name="id" value="<?= e($slug) ?>">
-            <input type="hidden" name="csrf_token" value="<?= e($tokenLuu) ?>">
             <input type="hidden" name="xac_nhan" value="1">
+
             <button class="nut nut-chinh" type="submit">Xác nhận xóa</button>
             <a class="nut" href="quan-tri.php">Hủy, quay lại quản trị</a>
         </form>

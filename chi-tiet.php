@@ -60,11 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         chuyen_huong('dang-nhap.php');
     }
 
-    if (!cook_csrf_validate('csrf_chi_tiet')) {
-        http_response_code(403);
-        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-    }
-
     if (isset($_POST['doi_yeu_thich'])) {
 
         if ($daYeuThich) {
@@ -293,13 +288,17 @@ require __DIR__ . '/inc/header.php';
                 <?php if ($daDangNhap): ?>
                     <form action="chi-tiet.php?id=<?= urlencode((string) $monAn->id) ?>" method="post"
                           class="form-them-gio" data-id-mon="<?= e($monAn->id) ?>">
-                        <?= cook_csrf_field('csrf_chi_tiet') ?>
+
+                        <?= csrfField() ?>
+
                         <input type="hidden" name="doi_yeu_thich" value="1">
+
                         <button type="submit" class="nut nut-yeu-thich"
                                 aria-pressed="<?= $daYeuThich ? 'true' : 'false' ?>">
                             <?= $daYeuThich ? '♥ Đã có trong giỏ' : '♡ Thêm vào giỏ' ?>
                         </button>
                     </form>
+
                     <p class="thong-bao-gio" role="status" aria-live="polite"></p>
                 <?php else: ?>
                     <a href="dang-nhap.php" class="nut nut-yeu-thich">♡ Đăng nhập để thêm vào giỏ</a>

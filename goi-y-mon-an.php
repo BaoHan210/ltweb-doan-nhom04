@@ -18,10 +18,6 @@ use App\Services\DanhSachDiChoService;
 
 $nguoiDung = yeuCauDangNhap();
 
-if (empty($_SESSION['csrf_di_cho'])) {
-    $_SESSION['csrf_di_cho'] = bin2hex(random_bytes(32));
-}
-
 /**
  * Dựng URL trở về trang gợi ý, giữ nguyên bộ lọc và số trang.
  */
@@ -58,16 +54,6 @@ $danhSachDiChoService = new DanhSachDiChoService(
 
 // Xử lý thêm món vào danh sách đi chợ.
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-    $csrf = $_POST['csrf_token'] ?? null;
-
-    if (
-        !is_string($csrf)
-        || empty($_SESSION['csrf_di_cho'])
-        || !hash_equals((string) $_SESSION['csrf_di_cho'], $csrf)
-    ) {
-        http_response_code(403);
-        exit('CSRF không hợp lệ. Vui lòng tải lại trang.');
-    }
 
     try {
         $them = $_POST['them_danh_sach'] ?? '';
@@ -190,7 +176,7 @@ require __DIR__ . '/inc/header.php';
 
     <?= hien_thi_thong_bao() ?>
 
-        <!-- LIÊN KẾT ĐI CHỢ CỦA TÔI -->
+    <!-- LIÊN KẾT ĐI CHỢ CỦA TÔI -->
     <div class="nut-mo-danh-sach-di-cho">
         <a href="di-cho-cua-toi.php?tab=hien-tai" class="nut">
             Đi chợ của tôi
@@ -366,17 +352,13 @@ require __DIR__ . '/inc/header.php';
 
                             <form action="goi-y-mon-an.php" method="post">
 
-                                <input
-                                    type="hidden"
-                                    name="csrf_token"
-                                    value="<?= e($_SESSION['csrf_di_cho']) ?>"
-                                >
+                                <?= csrfField() ?>
 
                                 <input
-    type="hidden"
-    name="them_danh_sach"
-    value="<?= e($monAn->id) ?>"
->
+                                    type="hidden"
+                                    name="them_danh_sach"
+                                    value="<?= e($monAn->id) ?>"
+                                >
 
                                 <?php foreach ([
                                     'ingredients'  => $nguyenLieu,

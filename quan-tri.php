@@ -27,16 +27,6 @@ require_once __DIR__ . '/inc/xac-thuc.php';
 $nguoiDung = yeuCauQuyen('quan_tri');
 $userLog = $nguoiDung;
 
-// Token CSRF cho biểu mẫu xóa trong bảng quản trị.
-if (empty($_SESSION['csrf_xoa_mon_an'])) {
-    $_SESSION['csrf_xoa_mon_an'] = bin2hex(random_bytes(32));
-}
-
-// CSRF và dữ liệu quản trị lịch sử đi chợ.
-if (empty($_SESSION['csrf_quan_tri_di_cho'])) {
-    $_SESSION['csrf_quan_tri_di_cho'] = bin2hex(random_bytes(32));
-}
-
 $khoLanDiCho = new KhoLanDiCho(db());
 $danhSachLanDiCho = $khoLanDiCho->danhSachQuanTri(100);
 
@@ -274,12 +264,15 @@ require_once __DIR__ . '/inc/header.php';
                                                 method="post"
                                                 class="form-xoa-mon-an-quan-tri"
                                             >
-                                                <input type="hidden" name="id" value="<?= e($monQuanTri->id) ?>">
                                                 <input
                                                     type="hidden"
-                                                    name="csrf_token"
-                                                    value="<?= e($_SESSION['csrf_xoa_mon_an']) ?>"
+                                                    name="id"
+                                                    value="<?= e($monQuanTri->id) ?>"
                                                 >
+
+                                                <?= csrfField() ?>
+
+
                                                 <button class="nut" type="submit">Xóa</button>
                                             </form>
                                         </td>
@@ -362,11 +355,7 @@ require_once __DIR__ . '/inc/header.php';
                                                     method="post"
                                                     class="form-cap-nhat-di-cho-quan-tri"
                                                 >
-                                                    <input
-                                                        type="hidden"
-                                                        name="csrf_token"
-                                                        value="<?= e($_SESSION['csrf_quan_tri_di_cho']) ?>"
-                                                    >
+                                                    <?= csrfField() ?>
 
                                                     <input
                                                         type="hidden"

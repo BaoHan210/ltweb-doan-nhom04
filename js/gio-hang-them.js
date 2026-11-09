@@ -11,7 +11,7 @@
   const nut = form.querySelector('button');
   const thongBao = document.querySelector('.thong-bao-gio');
   const idMon = form.dataset.idMon;
-  const api = new URL('api/gio-hang.php', document.baseURI);
+  const api = new URL('api/mon-an-yeu-thich.php', document.baseURI);
   let csrf = '';
   let dang = false;
 
@@ -33,8 +33,12 @@
       method: payload ? 'POST' : 'GET',
       credentials: 'same-origin',
       headers: payload
-        ? { 'Content-Type': 'application/json', Accept: 'application/json' }
-        : { Accept: 'application/json' },
+  ? {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-CSRF-Token': csrf
+    }
+  : { Accept: 'application/json' },
       body: payload ? JSON.stringify({ ...payload, csrf_token: csrf }) : undefined,
     });
     const body = await resp.json();

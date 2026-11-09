@@ -506,26 +506,20 @@ avatar.addEventListener('error', () => {
        ===================================================== */
 
     nutDangXuatDrop.addEventListener(
-        'click',
-        () => {
+    'click',
+    () => {
+        const formDangXuat = document.getElementById(
+            'form-dang-xuat-toan-cuc'
+        );
 
-            dangXuat();
-
-            const duongDanHienTai =
-                window.location.pathname;
-
-            if (
-                duongDanHienTai.endsWith('index.php')
-                ||
-                duongDanHienTai === '/'
-            ) {
-                window.location.reload();
-            } else {
-                window.location.href =
-                    'index.php';
-            }
+        if (formDangXuat === null) {
+            console.error('Không tìm thấy biểu mẫu đăng xuất.');
+            return;
         }
-    );
+
+        formDangXuat.requestSubmit();
+    }
+);
 
 
     /* =====================================================

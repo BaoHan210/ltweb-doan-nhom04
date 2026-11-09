@@ -109,8 +109,19 @@ if (!headers_sent()) {
 
 require_once __DIR__ . '/csrf.php';
 
-// Kiểm tra CSRF tập trung đối với mọi yêu cầu POST.
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !csrfHopLe()) {
+// API danh sách món ăn chỉ hỗ trợ GET, tự xử lý phương thức không hợp lệ.
+$laApiMonAnChiDoc = str_ends_with(
+    str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? '')),
+    '/api/mon-an.php'
+);
+
+// Kiểm tra CSRF tập trung đối với mọi yêu cầu POST,
+// ngoại trừ API chỉ đọc đã có kiểm tra phương thức riêng.
+if (
+    ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST'
+    && !$laApiMonAnChiDoc
+    && !csrfHopLe()
+) {
     http_response_code(403);
 
     // Xác định yêu cầu cần nhận phản hồi JSON.

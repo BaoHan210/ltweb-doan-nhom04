@@ -39,10 +39,6 @@ $id        = (int) $monCu['id'];          // UPDATE luôn dùng khóa chính s�
 $dsDanhMuc = $kho->layDanhMucQuanTri();
 $anhCu     = (string) ($monCu['hinh_anh'] ?? '');
 
-if (empty($_SESSION['csrf_sua_mon_an'])) {
-    $_SESSION['csrf_sua_mon_an'] = bin2hex(random_bytes(32));
-}
-
 $cacTruong = [
     'ten', 'slug', 'danh_muc_id', 'thoi_gian', 'khau_phan',
     'do_kho', 'ngan_sach', 'ton_kho', 'mo_ta', 'video',
@@ -57,11 +53,6 @@ $loi = [];
 
 // 3. Xử lý gửi biểu mẫu
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!hash_equals((string) $_SESSION['csrf_sua_mon_an'], lay_chuoi($_POST, 'csrf_token', 128))) {
-        http_response_code(403);
-        require __DIR__ . '/403.php';
-        exit;
-    }
 
     foreach ($cacTruong as $cot) {
         $duLieu[$cot] = lay_chuoi($_POST, $cot, $cot === 'mo_ta' ? 10001 : 255);
@@ -105,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 @unlink(__DIR__ . '/uploads/' . basename($anhCu));
             }
 
-            unset($_SESSION['csrf_sua_mon_an']);
             gan_thong_bao('success', 'Đã cập nhật món ăn #' . $id . ' thành công.');
             header('Location: quan-tri.php', true, 303); // PRG
             exit;
@@ -158,7 +148,7 @@ require __DIR__ . '/inc/header.php';
     <p>Chỉnh sửa thông tin món ăn. Để trống phần chọn ảnh nếu muốn giữ ảnh hiện tại.</p>
 
     <form action="sua-mon-an.php?id=<?= $id ?>" method="post" enctype="multipart/form-data" novalidate>
-        <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_sua_mon_an']) ?>">
+        <?= csrfField() ?>
 
         <div class="form-mon-an-luoi">
 

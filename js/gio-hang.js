@@ -6,7 +6,7 @@
   const main = document.querySelector('.trang-yeu-thich');
   const table = main?.querySelector('.bang-gio-hang');
   if (!table) return;
-  const endpoint = new URL('api/gio-hang.php', document.baseURI);
+  const endpoint = new URL('api/mon-an-yeu-thich.php', document.baseURI);
   let csrf = '';
   let sanSang = false;
   let busy = false;
@@ -55,7 +55,11 @@
   async function callApi(payload) {
     const resp = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'X-CSRF-Token': csrf
+},
       credentials: 'same-origin',
       body: JSON.stringify({ ...payload, csrf_token: csrf }),
     });
