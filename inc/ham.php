@@ -12,6 +12,16 @@ if (!function_exists('e')) {
     }
 }
 
+if (!function_exists('chuoi')) {
+    /**
+     * Chỉ nhận dữ liệu chuỗi; dữ liệu khác kiểu trả về chuỗi rỗng.
+     */
+    function chuoi(mixed $v): string
+    {
+        return is_string($v) ? $v : '';
+    }
+}
+
 if (!function_exists('vnd')) {
     /**
      * Định dạng số thành chuỗi tiền tệ Việt Nam Đồng (VND)

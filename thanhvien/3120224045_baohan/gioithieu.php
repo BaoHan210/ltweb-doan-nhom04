@@ -77,13 +77,13 @@ foreach (array_keys($hoSoMacDinh) as $khoa) {
 $nhomPhienBanHopLe = ['tat-ca', 'giao-dien', 'tinh-nang', 'sua-loi'];
 $nhomCongNgheHopLe = ['tat-ca', 'frontend', 'backend', 'co-so-du-lieu', 'cong-cu'];
 
-$nhomPhienBan = $_GET['nhom_phien_ban'] ?? 'tat-ca';
-if (!is_string($nhomPhienBan) || !in_array($nhomPhienBan, $nhomPhienBanHopLe, true)) {
+$nhomPhienBan = chuoi($_GET['nhom_phien_ban'] ?? 'tat-ca');
+if (!in_array($nhomPhienBan, $nhomPhienBanHopLe, true)) {
     $nhomPhienBan = 'tat-ca';
 }
 
-$nhomCongNghe = $_GET['nhom_cong_nghe'] ?? 'tat-ca';
-if (!is_string($nhomCongNghe) || !in_array($nhomCongNghe, $nhomCongNgheHopLe, true)) {
+$nhomCongNghe = chuoi($_GET['nhom_cong_nghe'] ?? 'tat-ca');
+if (!in_array($nhomCongNghe, $nhomCongNgheHopLe, true)) {
     $nhomCongNghe = 'tat-ca';
 }
 
@@ -110,20 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'])) {
         exit('Chỉ chủ trang mới được thay đổi dữ liệu này.');
     }
 
-    $hanhDong = $_POST['hanh_dong'];
+    $hanhDong = chuoi($_POST['hanh_dong'] ?? '');
 
-    if ($hanhDong === 'them') {
-        $ten  = is_string($_POST['ten'] ?? null) ? trim($_POST['ten']) : '';
-        $moTa = is_string($_POST['mo_ta'] ?? null) ? trim($_POST['mo_ta']) : '';
-        $nam  = filter_var($_POST['nam'] ?? '', FILTER_VALIDATE_INT,
-                    ['options' => ['min_range' => 2000, 'max_range' => 2100]]);
+if ($hanhDong === 'them') {
+    $ten = trim(chuoi($_POST['ten'] ?? ''));
 
+    // Vẫn phải kiểm tra kiểu dữ liệu để không chấp nhận mo_ta[].
+    $moTaHopLe = is_string($_POST['mo_ta'] ?? null);
+    $moTa = trim(chuoi($_POST['mo_ta'] ?? ''));
+
+    $nam = filter_var($_POST['nam'] ?? '', FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 2000, 'max_range' => 2100]]);
         if ($ten === '' || doDaiChuoi($ten) > 100) {
             gan_thong_bao('error', 'Tên dự án dài 1 đến 100 ký tự.');
         } elseif ($nam === false) {
             gan_thong_bao('error', 'Năm phải từ 2000 đến 2100.');
-        } elseif (doDaiChuoi($moTa) > 500) {
-            gan_thong_bao('error', 'Mô tả tối đa 500 ký tự.');
+        } elseif (!$moTaHopLe) {
+    gan_thong_bao('error', 'Mô tả không hợp lệ.');
+} elseif (doDaiChuoi($moTa) > 500) {
+    gan_thong_bao('error', 'Mô tả tối đa 500 ký tự.');
         } else {
             db()->prepare('INSERT INTO tv_du_an (mssv, ten, mo_ta, nam) VALUES (?, ?, ?, ?)')
                 ->execute([MSSV, $ten, $moTa === '' ? null : $moTa, $nam]);
@@ -157,76 +162,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['hanh_dong'])) {
         exit('Chỉ chủ trang mới được lưu hồ sơ.');
     }
 
-    $emailGui   = $_POST['email'] ?? null;
-    $hoTenGui   = $_POST['ho_ten'] ?? null;
-    $vaiTroGui  = $_POST['vai_tro'] ?? null;
-    $nhiemVuGui = $_POST['nhiem_vu'] ?? null;
+    // Lấy và chuẩn hóa dữ liệu đầu vào
+    $email   = trim(chuoi($_POST['email'] ?? ''));
+$hoTen   = trim(chuoi($_POST['ho_ten'] ?? ''));
+$vaiTro  = trim(chuoi($_POST['vai_tro'] ?? ''));
+$nhiemVu = trim(chuoi($_POST['nhiem_vu'] ?? ''));
 
-    if (
-        !is_string($emailGui)
-        || !is_string($hoTenGui)
-        || !is_string($vaiTroGui)
-        || !is_string($nhiemVuGui)
+    // Kiểm tra dữ liệu
+    if ($email === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        $loiBieuMau = 'Vui lòng nhập địa chỉ email hợp lệ.';
+    } elseif ($hoTen === '' || $vaiTro === '' || $nhiemVu === '') {
+        $loiBieuMau = 'Các trường thông tin không được để trống.';
+    } elseif (
+        strlen($email) > 254
+        || doDaiChuoi($hoTen) > 100
+        || doDaiChuoi($vaiTro) > 100
+        || doDaiChuoi($nhiemVu) > 1000
     ) {
-        $loiBieuMau = 'Dữ liệu gửi lên không hợp lệ.';
+        $loiBieuMau = 'Một hoặc nhiều trường vượt quá độ dài cho phép.';
     } else {
-        $email   = trim($emailGui);
-        $hoTen   = trim($hoTenGui);
-        $vaiTro  = trim($vaiTroGui);
-        $nhiemVu = trim($nhiemVuGui);
+        $hoSoMoi = [
+            'email'    => $email,
+            'ho_ten'   => $hoTen,
+            'vai_tro'  => $vaiTro,
+            'nhiem_vu' => $nhiemVu
+        ];
 
-        if ($email === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            $loiBieuMau = 'Vui lòng nhập địa chỉ email hợp lệ.';
-        } elseif ($hoTen === '' || $vaiTro === '' || $nhiemVu === '') {
-            $loiBieuMau = 'Các trường thông tin không được để trống.';
-        } elseif (
-            strlen($email) > 254
-            || doDaiChuoi($hoTen) > 100
-            || doDaiChuoi($vaiTro) > 100
-            || doDaiChuoi($nhiemVu) > 1000
+        $noiDungJson = json_encode(
+            $hoSoMoi,
+            JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+        );
+
+        $daGhiDuLieu = false;
+
+        if (
+            $noiDungJson !== false
+            && is_dir($thuMucStorage)
+            && is_writable($thuMucStorage)
         ) {
-            $loiBieuMau = 'Một hoặc nhiều trường vượt quá độ dài cho phép.';
-        } else {
-            $hoSoMoi = [
-                'email'    => $email,
-                'ho_ten'   => $hoTen,
-                'vai_tro'  => $vaiTro,
-                'nhiem_vu' => $nhiemVu
-            ];
-
-            $noiDungJson = json_encode($hoSoMoi, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
-            $daGhiDuLieu = false;
-
-            if ($noiDungJson !== false && is_dir($thuMucStorage) && is_writable($thuMucStorage)) {
-                $soByteDaGhi = file_put_contents($tepHoSo, $noiDungJson, LOCK_EX);
-                $daGhiDuLieu = $soByteDaGhi !== false;
-            }
-
-            if ($daGhiDuLieu) {
-                // PRG: chuyển hướng sau POST thành công, giữ bộ lọc GET
-                $chuoiTruyVan = http_build_query([
-                    'da_luu'         => '1',
-                    'nhom_phien_ban' => $nhomPhienBan,
-                    'nhom_cong_nghe' => $nhomCongNghe
-                ]);
-
-                $duongDanTrang = $_SERVER['SCRIPT_NAME'] ?? 'gioithieu.php';
-
-                header('Location: ' . $duongDanTrang . '?' . $chuoiTruyVan, true, 303);
-                exit;
-            }
-
-            $loiBieuMau = 'Không thể lưu thông tin. Hãy kiểm tra quyền ghi của thư mục storage.';
+            $soByteDaGhi = file_put_contents($tepHoSo, $noiDungJson, LOCK_EX);
+            $daGhiDuLieu = $soByteDaGhi !== false;
         }
+
+        if ($daGhiDuLieu) {
+            // PRG: chuyển hướng sau POST thành công, giữ bộ lọc GET
+            $chuoiTruyVan = http_build_query([
+                'da_luu'         => '1',
+                'nhom_phien_ban' => $nhomPhienBan,
+                'nhom_cong_nghe' => $nhomCongNghe
+            ]);
+
+            $duongDanTrang = $_SERVER['SCRIPT_NAME'] ?? 'gioithieu.php';
+
+            header('Location: ' . $duongDanTrang . '?' . $chuoiTruyVan, true, 303);
+            exit;
+        }
+
+        $loiBieuMau = 'Không thể lưu thông tin. Hãy kiểm tra quyền ghi của thư mục storage.';
     }
 
-    // Khi dữ liệu không hợp lệ: hiển thị lại dữ liệu đã nhập, không ghi file
+    // Khi dữ liệu không hợp lệ: hiển thị lại dữ liệu đã nhập
     if ($loiBieuMau !== '') {
-        $hoSo['email']    = trim($emailGui);
-        $hoSo['ho_ten']   = trim($hoTenGui);
-        $hoSo['vai_tro']  = trim($vaiTroGui);
-        $hoSo['nhiem_vu'] = trim($nhiemVuGui);
+        $hoSo['email']    = $email;
+        $hoSo['ho_ten']   = $hoTen;
+        $hoSo['vai_tro']  = $vaiTro;
+        $hoSo['nhiem_vu'] = $nhiemVu;
     }
 }
 
@@ -239,12 +239,12 @@ if (isset($_GET['da_luu']) && $_GET['da_luu'] === '1') {
    ========================================================= */
 
 // 6a. Dự án: tìm theo tên, lọc theo năm, sắp xếp (ORDER BY lấy từ whitelist)
-$q = is_string($_GET['q'] ?? null) ? trim($_GET['q']) : '';
+$q = trim(chuoi($_GET['q'] ?? ''));
 
 $namLoc = filter_var($_GET['nam'] ?? '', FILTER_VALIDATE_INT,
             ['options' => ['min_range' => 2000, 'max_range' => 2100]]);
 
-$sxKey = is_string($_GET['sx'] ?? null) ? $_GET['sx'] : 'moi';
+$sxKey = chuoi($_GET['sx'] ?? 'moi');
 
 // Chỉ các chuỗi cố định trong mảng này được nối vào SQL
 $cauSapXepDuAn = [

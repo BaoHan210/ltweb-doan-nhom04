@@ -31,9 +31,15 @@ $giaToiDa = ($giaRaw !== '' && ctype_digit($giaRaw) && (float) $giaRaw <= 429496
     ? (int) $giaRaw
     : null;
 
-$trangYeuCau = filter_var($_GET['trang'] ?? 1, FILTER_VALIDATE_INT, [
-    'options' => ['min_range' => 1, 'default' => 1],
-]);
+$trangRaw = $_GET['trang'] ?? '1';
+
+$trangYeuCau = is_string($trangRaw)
+    ? filter_var($trangRaw, FILTER_VALIDATE_INT, [
+        'options' => ['min_range' => 1],
+    ])
+    : false;
+
+$trangYeuCau = ($trangYeuCau !== false) ? $trangYeuCau : 1;
 
 /**
  * Dựng URL của trang danh sách, bỏ các tham số rỗng.
