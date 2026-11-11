@@ -19,7 +19,7 @@ function kiemTraDuLieuMonAn(array $duLieu, array $dsDanhMuc): array
     if ($dm === false || !in_array($dm, $dmIds, true)) {
         $loi['danh_muc_id'] = 'Hãy chọn danh mục có trong cơ sở dữ liệu.';
     }
-    foreach (['thoi_gian' => 1, 'khau_phan' => 1, 'ngan_sach' => 0] as $cot => $min) {
+    foreach (['thoi_gian' => 1, 'khau_phan' => 1, 'ngan_sach' => 1000] as $cot => $min) {
         $so = filter_var($duLieu[$cot] ?? '', FILTER_VALIDATE_INT, [
             'options' => ['min_range' => $min, 'max_range' => 100000000]
         ]);

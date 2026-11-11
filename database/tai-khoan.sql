@@ -3,7 +3,7 @@
 -- Khong dua mat khau that vao Git.
 
 CREATE USER IF NOT EXISTS 'nhom04_app'@'localhost'
-IDENTIFIED BY 'THAY_BANG_MAT_KHAU_RIENG';
+IDENTIFIED BY 'Hi123456';
 
 -- Chi cap cac quyen CRUD tren co so du lieu cua du an.
 GRANT SELECT, INSERT, UPDATE, DELETE
