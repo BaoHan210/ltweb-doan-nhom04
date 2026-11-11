@@ -1,9 +1,10 @@
+
 <?php
 /**
  * Trang cá nhân Nguyễn Thị Trinh - MSSV 3120224155.
  * BT6 Phần B: Sổ lưu bút MySQL (thêm, phân trang, chủ trang xóa).
  * Chức năng 2: Bộ đếm lượt xem theo ngày và thống kê 7 ngày MySQL.
- * Cách thử: gửi lời nhắn, phân trang, xóa, tải lại và mở phiên mới.
+ * BT7 Phần B: Rà soát CSRF, XSS, phân quyền và phương thức HTTP.
  */
 require_once __DIR__ . '/../../inc/config.php';
 require_once __DIR__ . '/../../inc/db.php';
@@ -43,19 +44,69 @@ $laChuTrang = $nguoiDung !== null
     && $thanhVien['nguoi_dung_id'] !== null
     && (int) $nguoiDung['id'] === (int) $thanhVien['nguoi_dung_id'];
 
-// Xử lý gửi và xóa lời nhắn.
+// ==================================================
+// XỬ LÝ POST - CSRF ĐƯỢC KIỂM TRA TRONG inc/config.php
+// ==================================================
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $hanhDong = $_POST['hanh_dong'] ?? '';
+    $hanhDong = chuoi($_POST['hanh_dong'] ?? '');
 
-    // XÓA LỜI NHẮN.
+    // ----------------------------------------------
+    // BT7: GHI LƯỢT XEM BẰNG POST THAY VÌ GET
+    // ----------------------------------------------
+
+    if ($hanhDong === 'ghi_luot_xem') {
+
+        // Mỗi phiên chỉ tính một lượt.
+        if (empty($_SESSION['da_xem_trinh_mysql'])) {
+
+            $stTangLuot = db()->prepare(
+                'INSERT INTO tv_trinh_luot_xem
+                    (mssv, ngay, so_luot)
+                 VALUES (?, CURDATE(), 1)
+                 ON DUPLICATE KEY UPDATE
+                    so_luot = so_luot + 1'
+            );
+
+            $stTangLuot->execute([MSSV_TRINH]);
+
+            $_SESSION['da_xem_trinh_mysql'] = true;
+        }
+
+        $trangVe = filter_var(
+            $_POST['trang'] ?? 1,
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]]
+        ) ?: 1;
+
+        // PRG: POST xong chuyển về GET.
+        header(
+            'Location: gioithieu.php?trang=' . $trangVe,
+            true,
+            303
+        );
+        exit;
+    }
+
+    // ----------------------------------------------
+    // XÓA LỜI NHẮN - CHỈ CHỦ TRANG
+    // ----------------------------------------------
+
     if ($hanhDong === 'xoa') {
 
         if (!$laChuTrang) {
+
+            ghiLogBaoMat(
+                'cam_truy_cap',
+                ['ly_do' => 'xoa_luu_but_khong_co_quyen']
+            );
+
             http_response_code(403);
             exit('Chỉ chủ trang đăng nhập mới được xóa lời nhắn.');
         }
 
+        // Chỉ chấp nhận ID là số nguyên dương.
         $idXoa = filter_var(
             $_POST['id'] ?? null,
             FILTER_VALIDATE_INT,
@@ -67,12 +118,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit('Mã lời nhắn không hợp lệ.');
         }
 
+        // Ràng buộc ID với MSSV trên máy chủ.
         $st = db()->prepare(
             'DELETE FROM tv_trinh_luu_but
              WHERE id = ? AND mssv = ?'
         );
 
         $st->execute([$idXoa, MSSV_TRINH]);
+
+        // Không xóa được ID thuộc trang thành viên khác.
+        if ($st->rowCount() === 0) {
+            http_response_code(404);
+            exit('Không tìm thấy lời nhắn thuộc trang này.');
+        }
 
         $_SESSION['flash_trinh'] = 'Đã xóa lời nhắn.';
 
@@ -85,29 +143,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header(
             'Location: gioithieu.php?trang=' .
             $trangVe .
-            '#so-luu-but'
+            '#so-luu-but',
+            true,
+            303
         );
         exit;
     }
 
-    // GỬI LỜI NHẮN.
+    // ----------------------------------------------
+    // GỬI LỜI NHẮN
+    // ----------------------------------------------
+
     if ($hanhDong !== 'gui') {
         http_response_code(400);
         exit('Thao tác không hợp lệ.');
     }
 
-    $tenNhap = $_POST['ten'] ?? '';
-    $nhanNhap = $_POST['loinhan'] ?? '';
+    // BT7: Chỉ nhận kiểu chuỗi, không nhận mảng.
+    $du['ten'] = trim(chuoi($_POST['ten'] ?? ''));
+    $du['loinhan'] = trim(chuoi($_POST['loinhan'] ?? ''));
 
-    $du['ten'] = is_string($tenNhap)
-        ? trim($tenNhap)
-        : '';
-
-    $du['loinhan'] = is_string($nhanNhap)
-        ? trim($nhanNhap)
-        : '';
-
-    // Kiểm tra dữ liệu phía máy chủ.
+    // Kiểm tra phía máy chủ.
     if (
         $du['ten'] === ''
         || mb_strlen($du['ten']) > 50
@@ -124,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$loi) {
 
+        // Prepared statement ngăn SQL Injection.
         $st = db()->prepare(
             'INSERT INTO tv_trinh_luu_but
                 (mssv, ten_khach, loi_nhan)
@@ -139,12 +196,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['flash_trinh'] = 'Đã gửi lời nhắn thành công!';
 
         // PRG tránh gửi lại biểu mẫu khi nhấn F5.
-        header('Location: gioithieu.php?trang=1#so-luu-but');
+        header(
+            'Location: gioithieu.php?trang=1#so-luu-but',
+            true,
+            303
+        );
         exit;
     }
 }
 
-// PHÂN TRANG: MỖI TRANG 5 LỜI NHẮN.
+// ==================================================
+// PHÂN TRANG SỔ LƯU BÚT
+// ==================================================
+
 $soMoiTrang = 5;
 
 $st = db()->prepare(
@@ -161,6 +225,7 @@ $soTrang = max(
     (int) ceil($tongLoiNhan / $soMoiTrang)
 );
 
+// BT7: Tham số số dùng filter_var().
 $trangYeuCau = filter_var(
     $_GET['trang'] ?? 1,
     FILTER_VALIDATE_INT,
@@ -189,26 +254,12 @@ $st->bindValue(
 $st->execute();
 $danhSachLuuBut = $st->fetchAll();
 
-
 // ==================================================
-// CHỨC NĂNG 2: BỘ ĐẾM LƯỢT XEM THEO NGÀY MYSQL
+// CHỨC NĂNG 2: THỐNG KÊ LƯỢT XEM MYSQL
 // ==================================================
 
-// Mỗi phiên chỉ tăng lượt xem một lần.
-if (empty($_SESSION['da_xem_trinh_mysql'])) {
-
-    $stTangLuot = db()->prepare(
-        'INSERT INTO tv_trinh_luot_xem
-            (mssv, ngay, so_luot)
-         VALUES (?, CURDATE(), 1)
-         ON DUPLICATE KEY UPDATE
-            so_luot = so_luot + 1'
-    );
-
-    $stTangLuot->execute([MSSV_TRINH]);
-
-    $_SESSION['da_xem_trinh_mysql'] = true;
-}
+// BT7: GET chỉ truy vấn đọc dữ liệu.
+// Việc INSERT/UPDATE lượt xem đã chuyển sang POST ở trên.
 
 // TỔNG LƯỢT XEM.
 $stTongLuot = db()->prepare(
@@ -239,12 +290,12 @@ foreach ($stBayNgay->fetchAll() as $dong) {
     $luotTheoNgay[$dong['ngay']] = (int) $dong['so_luot'];
 }
 
-// Lấy ngày hiện tại theo máy chủ MySQL.
+// Lấy ngày hiện tại từ MySQL.
 $ngayHomNay = new DateTimeImmutable(
     (string) db()->query('SELECT CURDATE()')->fetchColumn()
 );
 
-// Tạo đủ 7 dòng, kể cả ngày có 0 lượt xem.
+// Tạo đủ 7 ngày, kể cả ngày không có lượt xem.
 $thongKeBayNgay = [];
 
 for ($i = 0; $i < 7; $i++) {
@@ -259,9 +310,8 @@ for ($i = 0; $i < 7; $i++) {
     ];
 }
 
-
 // ==================================================
-// NẠP HEADER NHÓM
+// NẠP HEADER CỦA NHÓM
 // ==================================================
 
 $goc = '../../';
@@ -272,13 +322,55 @@ $customJS = 'thanhvien/3120224155_trinh/js/canhan.js';
 require __DIR__ . '/../../inc/header.php';
 ?>
 
-<link rel="stylesheet" href="<?= e($goc) ?>thanhvien/3120224155_trinh/trang-ca-nhan.css">
+<link
+    rel="stylesheet"
+    href="<?= e($goc) ?>thanhvien/3120224155_trinh/trang-ca-nhan.css"
+>
 
 <main class="ho-so-trang">
 
     <h1 class="tieu-de-ho-so">
         Hồ sơ thành viên: Nguyễn Thị Trinh
     </h1>
+
+    <!--
+        BT7: Ghi lượt xem bằng POST có mã CSRF.
+        JavaScript tự gửi form một lần trong mỗi phiên.
+        Khi tắt JavaScript, có thể bấm nút thủ công.
+    -->
+
+    <?php if (
+        ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET'
+        && empty($_SESSION['da_xem_trinh_mysql'])
+    ): ?>
+
+        <form
+            id="form-ghi-luot-xem"
+            method="post"
+            action="gioithieu.php"
+        >
+
+            <?= csrfField() ?>
+
+            <input
+                type="hidden"
+                name="hanh_dong"
+                value="ghi_luot_xem"
+            >
+
+            <input
+                type="hidden"
+                name="trang"
+                value="<?= e((string) $hienTai) ?>"
+            >
+
+            <button type="submit">
+                Ghi nhận lượt xem
+            </button>
+
+        </form>
+
+    <?php endif; ?>
 
     <!-- BỘ ĐẾM LƯỢT XEM MYSQL -->
     <section
@@ -313,6 +405,7 @@ require __DIR__ . '/../../inc/header.php';
 
             <tbody>
                 <?php foreach ($thongKeBayNgay as $dong): ?>
+
                     <tr>
                         <td>
                             <?= e(date(
@@ -325,6 +418,7 @@ require __DIR__ . '/../../inc/header.php';
                             <?= e((string) $dong['so_luot']) ?>
                         </td>
                     </tr>
+
                 <?php endforeach; ?>
             </tbody>
 
@@ -353,19 +447,23 @@ require __DIR__ . '/../../inc/header.php';
         </figure>
 
         <ul class="thong-tin-ca-nhan">
+
             <li>
                 <strong>Họ và tên:</strong>
                 Nguyễn Thị Trinh
             </li>
+
             <li>
                 <strong>Vai trò:</strong>
                 Thành viên
             </li>
+
             <li>
                 <strong>Nhiệm vụ chính:</strong>
                 Xây dựng cấu trúc HTML5 ngữ nghĩa và
                 thực hiện kiểm chuẩn chất lượng mã nguồn.
             </li>
+
         </ul>
 
     </section>
@@ -402,13 +500,20 @@ require __DIR__ . '/../../inc/header.php';
         <h2>Kỹ năng</h2>
 
         <ul class="danh-sach-ky-nang">
+
             <li>Ngôn ngữ HTML5 chuẩn ngữ nghĩa W3C</li>
-            <li>Sử dụng hệ thống quản lý mã nguồn Git và GitHub</li>
+
+            <li>
+                Sử dụng hệ thống quản lý mã nguồn Git và GitHub
+            </li>
+
             <li>
                 Kiểm thử khả năng tiếp cận (Accessibility)
                 và SEO bằng Google Lighthouse
             </li>
+
             <li>Làm việc nhóm và thiết kế giao diện web cơ bản</li>
+
         </ul>
 
     </section>
@@ -442,6 +547,7 @@ require __DIR__ . '/../../inc/header.php';
                 </thead>
 
                 <tbody>
+
                     <tr>
                         <th scope="row">Buổi sáng</th>
                         <td>Lập trình Web (Lý thuyết)</td>
@@ -468,6 +574,7 @@ require __DIR__ . '/../../inc/header.php';
                         <td>Kiểm tra W3C</td>
                         <td>Kiểm tra Lighthouse</td>
                     </tr>
+
                 </tbody>
 
             </table>
@@ -511,6 +618,7 @@ require __DIR__ . '/../../inc/header.php';
             >
 
             <div>
+
                 <label for="ten">Họ tên của bạn (*):</label>
 
                 <input
@@ -522,13 +630,17 @@ require __DIR__ . '/../../inc/header.php';
                 >
 
                 <?php if (isset($loi['ten'])): ?>
+
                     <p class="loi-luu-but">
                         <?= e($loi['ten']) ?>
                     </p>
+
                 <?php endif; ?>
+
             </div>
 
             <div>
+
                 <label for="loinhan">Lời nhắn (*):</label>
 
                 <textarea
@@ -539,10 +651,13 @@ require __DIR__ . '/../../inc/header.php';
                 ><?= e($du['loinhan']) ?></textarea>
 
                 <?php if (isset($loi['loinhan'])): ?>
+
                     <p class="loi-luu-but">
                         <?= e($loi['loinhan']) ?>
                     </p>
+
                 <?php endif; ?>
+
             </div>
 
             <button
@@ -557,8 +672,8 @@ require __DIR__ . '/../../inc/header.php';
         <!-- DANH SÁCH LỜI NHẮN -->
         <h3>
             Lời nhắn
-            (<?= $tongLoiNhan ?> lời nhắn -
-            trang <?= $hienTai ?>/<?= $soTrang ?>)
+            (<?= e((string) $tongLoiNhan) ?> lời nhắn -
+            trang <?= e((string) $hienTai) ?>/<?= e((string) $soTrang) ?>)
         </h3>
 
         <?php if (!$danhSachLuuBut): ?>
@@ -585,7 +700,7 @@ require __DIR__ . '/../../inc/header.php';
                         </small>
 
                         <p>
-                            <?= e($lb['loi_nhan']) ?>
+                            <?= nl2br(e($lb['loi_nhan'])) ?>
                         </p>
 
                         <!-- CHỈ CHỦ TRANG ĐƯỢC XÓA -->
@@ -609,13 +724,13 @@ require __DIR__ . '/../../inc/header.php';
                                 <input
                                     type="hidden"
                                     name="id"
-                                    value="<?= (int) $lb['id'] ?>"
+                                    value="<?= e((string) (int) $lb['id']) ?>"
                                 >
 
                                 <input
                                     type="hidden"
                                     name="trang"
-                                    value="<?= $hienTai ?>"
+                                    value="<?= e((string) $hienTai) ?>"
                                 >
 
                                 <button type="submit">
@@ -643,15 +758,15 @@ require __DIR__ . '/../../inc/header.php';
             >
 
                 <?php for ($i = 1; $i <= $soTrang; $i++): ?>
+<a
+    href="?trang=<?= e((string) $i) ?>#so-luu-but"
+    <?= $i === $hienTai
+        ? 'aria-current="page"'
+        : '' ?>
+>
+    Trang <?= e((string) $i) ?>
+</a>
 
-                    <a
-                        href="?trang=<?= $i ?>#so-luu-but"
-                        <?= $i === $hienTai
-                            ? 'aria-current="page"'
-                            : '' ?>
-                    >
-                        Trang <?= $i ?>
-                    </a>
 
                 <?php endfor; ?>
 
