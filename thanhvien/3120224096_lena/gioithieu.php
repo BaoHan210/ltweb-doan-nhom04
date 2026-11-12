@@ -216,6 +216,33 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['them_du_an
     exit;
 }
 
+// Xóa dự án: chỉ chủ hồ sơ hoặc quản trị viên, giới hạn theo MSSV.
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['xoa_du_an'])) {
+    if (!$duocThemDuAn) {
+        http_response_code(403);
+        exit('403 - Chỉ chủ hồ sơ hoặc quản trị viên được xóa dự án.');
+    }
+
+    $idXoa = filter_var($_POST['id'] ?? '', FILTER_VALIDATE_INT);
+
+    if ($idXoa === false || $idXoa <= 0) {
+        gan_thong_bao('error', 'Mã dự án không hợp lệ.');
+    } else {
+        $stmtXoa = $pdo->prepare(
+            'DELETE FROM tv_du_an_ca_nhan WHERE id = ? AND mssv = ?'
+        );
+        $stmtXoa->execute([$idXoa, $mssv]);
+
+        if ($stmtXoa->rowCount() > 0) {
+            gan_thong_bao('success', 'Đã xóa dự án.');
+        } else {
+            gan_thong_bao('error', 'Không tìm thấy dự án thuộc trang này.');
+        }
+    }
+
+    header('Location: ' . $_SERVER['SCRIPT_NAME'] . '#quan-ly-du-an');
+    exit;
+}
 $khauPhanLoi = $_SESSION['khauPhanLoi'] ?? '';
 $khauPhanKetQua = $_SESSION['khauPhanKetQua'] ?? null;
 
@@ -607,6 +634,7 @@ require_once __DIR__ . '/../../inc/header.php';
                     <th>Công nghệ</th>
                     <th>Trạng thái</th>
                     <th>Mô tả</th>
+                     <?php if ($duocThemDuAn): ?><th>Thao tác</th><?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -615,7 +643,16 @@ require_once __DIR__ . '/../../inc/header.php';
                         <td><strong><?= e($da['ten_du_an']) ?></strong></td>
                         <td><?= e($da['cong_nghe']) ?></td>
                         <td><?= e($da['trang_thai']) ?></td>
-                        <td><?= e($da['mo_ta']) ?></td>
+                        <td><?= nl2br(e($da['mo_ta'] ?? '')) ?></td>
+                        <?php if ($duocThemDuAn): ?>
+                        <td>
+                            <form method="post" action="#quan-ly-du-an">
+                                <?= csrfField() ?>
+                                <input type="hidden" name="id" value="<?= (int) $da['id'] ?>">
+                                <button type="submit" name="xoa_du_an" value="1">Xóa</button>
+                            </form>
+                        </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
