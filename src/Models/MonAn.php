@@ -23,7 +23,6 @@ class MonAn implements \JsonSerializable
         public array $nguyenLieu = [],
         public array $cacBuoc = [],
         public string $video = '',
-        public int $tonKho = 0
     ) {}
 
     public static function tuMang(array $data): self
@@ -42,8 +41,7 @@ class MonAn implements \JsonSerializable
             moTa: (string)($data['moTa'] ?? ''),
             nguyenLieu: (array)($data['nguyenLieu'] ?? []),
             cacBuoc: (array)($data['cacBuoc'] ?? []),
-            video: (string)($data['video'] ?? ''),
-            tonKho: (int)($data['tonKho'] ?? 0)
+            video: (string)($data['video'] ?? '')
         );
     }
 

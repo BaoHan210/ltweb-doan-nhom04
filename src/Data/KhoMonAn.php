@@ -33,7 +33,6 @@ class KhoMonAn
             'nguyenLieu'    => [],
             'cacBuoc'       => [],
             'video'         => $dong['video'] ?? '',
-            'tonKho'        => (int) ($dong['ton_kho'] ?? 0),
         ]);
     }
 
@@ -348,32 +347,50 @@ class KhoMonAn
     }
 
     /**
-     * Thêm món ăn. Dữ liệu đã được kiểm tra ở tầng trang (kiemTraDuLieuMonAn).
+     * Thêm món ăn và danh sách nguyên liệu trong cùng transaction.
      * Trả về khóa chính vừa tạo.
      */
-    public function themMonAn(array $duLieu): int
-    {
+    public function themMonAn(
+        array $duLieu,
+        array $danhSachNguyenLieu = []
+    ): int {
         $sql = 'INSERT INTO mon_an
             (danh_muc_id, slug, ten, thoi_gian, khau_phan, do_kho, ngan_sach,
-             ton_kho, hinh_anh, mo_ta, video)
-            VALUES (:danh_muc_id, :slug, :ten, :thoi_gian, :khau_phan, :do_kho,
-                    :ngan_sach, :ton_kho, :hinh_anh, :mo_ta, :video)';
+             hinh_anh, mo_ta, video)
+            VALUES (:danh_muc_id, :slug, :ten, :thoi_gian, :khau_phan,
+                    :do_kho, :ngan_sach, :hinh_anh, :mo_ta, :video)';
 
-        $st = $this->db->prepare($sql);
-        $st->execute([
-            'danh_muc_id' => (int) $duLieu['danh_muc_id'],
-            'slug'        => $duLieu['slug'],
-            'ten'         => $duLieu['ten'],
-            'thoi_gian'   => (int) $duLieu['thoi_gian'],
-            'khau_phan'   => (int) $duLieu['khau_phan'],
-            'do_kho'      => $duLieu['do_kho'],
-            'ngan_sach'   => (int) $duLieu['ngan_sach'],
-            'ton_kho'     => (int) $duLieu['ton_kho'],
-            'hinh_anh'    => $duLieu['hinh_anh'],
-            'mo_ta'       => $duLieu['mo_ta'],
-            'video'       => $duLieu['video'],
-        ]);
-        return (int) $this->db->lastInsertId();
+        $this->db->beginTransaction();
+
+        try {
+            $st = $this->db->prepare($sql);
+            $st->execute([
+                'danh_muc_id' => (int) $duLieu['danh_muc_id'],
+                'slug'        => $duLieu['slug'],
+                'ten'         => $duLieu['ten'],
+                'thoi_gian'   => (int) $duLieu['thoi_gian'],
+                'khau_phan'   => (int) $duLieu['khau_phan'],
+                'do_kho'      => $duLieu['do_kho'],
+                'ngan_sach'   => (int) $duLieu['ngan_sach'],
+                'hinh_anh'    => $duLieu['hinh_anh'],
+                'mo_ta'       => $duLieu['mo_ta'],
+                'video'       => $duLieu['video'],
+            ]);
+
+            $id = (int) $this->db->lastInsertId();
+
+            $this->luuNguyenLieu($id, $danhSachNguyenLieu);
+
+            $this->db->commit();
+
+            return $id;
+        } catch (\Throwable $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            throw $e;
+        }
     }
 
     /** Dữ liệu gốc của một món theo khóa chính, để điền sẵn biểu mẫu sửa. */
@@ -398,34 +415,155 @@ class KhoMonAn
      * Cập nhật món ăn theo khóa chính số nguyên.
      * Trả về false khi không dòng nào thay đổi (ví dụ lưu mà không sửa gì).
      */
-    public function capNhatMonAn(int $id, array $d): bool
-    {
+    /**
+     * Cập nhật món ăn và danh sách nguyên liệu trong cùng transaction.
+     */
+    public function capNhatMonAn(
+        int $id,
+        array $d,
+        array $danhSachNguyenLieu = []
+    ): bool {
         $sql = 'UPDATE mon_an SET
                     ten = :ten, slug = :slug, danh_muc_id = :danh_muc_id,
                     thoi_gian = :thoi_gian, khau_phan = :khau_phan,
-                    do_kho = :do_kho, ngan_sach = :ngan_sach, ton_kho = :ton_kho,
+                    do_kho = :do_kho, ngan_sach = :ngan_sach,
                     hinh_anh = :hinh_anh, mo_ta = :mo_ta, video = :video
                 WHERE id = :id';
 
-        $st = $this->db->prepare($sql);
-        $st->execute([
-            'ten'         => $d['ten'],
-            'slug'        => $d['slug'],
-            'danh_muc_id' => (int) $d['danh_muc_id'],
-            'thoi_gian'   => (int) $d['thoi_gian'],
-            'khau_phan'   => (int) $d['khau_phan'],
-            'do_kho'      => $d['do_kho'],
-            'ngan_sach'   => (int) $d['ngan_sach'],
-            'ton_kho'     => (int) $d['ton_kho'],
-            'hinh_anh'    => $d['hinh_anh'],
-            'mo_ta'       => $d['mo_ta'],
-            'video'       => $d['video'],
-            'id'          => $id,
-        ]);
-        return $st->rowCount() > 0;
+        $this->db->beginTransaction();
+
+        try {
+            $st = $this->db->prepare($sql);
+            $st->execute([
+                'ten'         => $d['ten'],
+                'slug'        => $d['slug'],
+                'danh_muc_id' => (int) $d['danh_muc_id'],
+                'thoi_gian'   => (int) $d['thoi_gian'],
+                'khau_phan'   => (int) $d['khau_phan'],
+                'do_kho'      => $d['do_kho'],
+                'ngan_sach'   => (int) $d['ngan_sach'],
+                'hinh_anh'    => $d['hinh_anh'],
+                'mo_ta'       => $d['mo_ta'],
+                'video'       => $d['video'],
+                'id'          => $id,
+            ]);
+
+            $coThayDoiMonAn = $st->rowCount() > 0;
+
+            $this->luuNguyenLieu($id, $danhSachNguyenLieu);
+
+            $this->db->commit();
+
+            return $coThayDoiMonAn;
+        } catch (\Throwable $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            throw $e;
+        }
     }
 
-    /** Xóa món theo slug. Lỗi 1451 (khóa ngoại) do trang gọi xử lý. */
+    /**
+     * Lấy danh sách nguyên liệu của một món ăn trong biểu mẫu quản trị.
+     */
+    public function layNguyenLieuQuanTri(int $monAnId): array
+    {
+        $sql = '
+            SELECT nl.ten, mnl.so_luong
+            FROM mon_an_nguyen_lieu AS mnl
+            INNER JOIN nguyen_lieu AS nl
+                ON nl.id = mnl.nguyen_lieu_id
+            WHERE mnl.mon_an_id = ?
+            ORDER BY nl.ten
+        ';
+
+        $st = $this->db->prepare($sql);
+        $st->execute([$monAnId]);
+
+        return array_map(
+            static fn (array $dong): array => [
+                'ten'     => (string) $dong['ten'],
+                'soLuong' => (string) $dong['so_luong'],
+            ],
+            $st->fetchAll(PDO::FETCH_ASSOC)
+        );
+    }
+
+    /**
+     * Lưu danh sách nguyên liệu và số lượng cho một món ăn.
+     * Hàm này được gọi bên trong transaction của thêm/sửa món ăn.
+     */
+    private function luuNguyenLieu(int $monAnId, array $danhSach): void
+    {
+        $xoaCu = $this->db->prepare(
+            'DELETE FROM mon_an_nguyen_lieu WHERE mon_an_id = ?'
+        );
+        $xoaCu->execute([$monAnId]);
+
+        $timNguyenLieu = $this->db->prepare(
+            'SELECT id FROM nguyen_lieu WHERE ten = ? LIMIT 1'
+        );
+
+        $themNguyenLieu = $this->db->prepare(
+            'INSERT IGNORE INTO nguyen_lieu (ten) VALUES (?)'
+        );
+
+        $themLienKet = $this->db->prepare(
+            'INSERT INTO mon_an_nguyen_lieu
+                (mon_an_id, nguyen_lieu_id, so_luong)
+             VALUES (?, ?, ?)
+             ON DUPLICATE KEY UPDATE so_luong = VALUES(so_luong)'
+        );
+
+        foreach ($danhSach as $nguyenLieu) {
+    if (
+        !is_array($nguyenLieu)
+        || !is_string($nguyenLieu['ten'] ?? null)
+        || !is_string($nguyenLieu['soLuong'] ?? null)
+    ) {
+        throw new \InvalidArgumentException(
+            'Dữ liệu nguyên liệu không hợp lệ.'
+        );
+    }
+
+    $ten = trim($nguyenLieu['ten']);
+    $soLuong = trim($nguyenLieu['soLuong']);
+
+            if ($ten === '' && $soLuong === '') {
+                continue;
+            }
+
+            if (
+                $ten === ''
+                || $soLuong === ''
+                || mb_strlen($ten) > 150
+                || mb_strlen($soLuong) > 100
+            ) {
+                throw new \InvalidArgumentException(
+                    'Tên nguyên liệu hoặc số lượng không hợp lệ.'
+                );
+            }
+
+            $themNguyenLieu->execute([$ten]);
+
+            $timNguyenLieu->execute([$ten]);
+            $idNguyenLieu = $timNguyenLieu->fetchColumn();
+
+            if ($idNguyenLieu === false) {
+                throw new \RuntimeException(
+                    'Không tìm thấy nguyên liệu vừa lưu.'
+                );
+            }
+
+            $themLienKet->execute([
+                $monAnId,
+                (int) $idNguyenLieu,
+                $soLuong,
+            ]);
+        }
+    }
+
     public function xoaMonAnTheoSlug(string $slug): bool
     {
         $stmt = $this->db->prepare('DELETE FROM mon_an WHERE slug = :slug');

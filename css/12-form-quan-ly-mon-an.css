@@ -31,3 +31,48 @@
     padding: 24px;
     box-sizing: border-box;
 }
+
+/* Khu vực quản lý nguyên liệu */
+.khu-vuc-nguyen-lieu {
+    margin: 24px 0;
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.danh-sach-nguyen-lieu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dong-nguyen-lieu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.dong-nguyen-lieu label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.nut-xoa-nguyen-lieu {
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.nut-them-nguyen-lieu {
+    margin-top: 14px;
+}
+
+@media (max-width: 600px) {
+    .dong-nguyen-lieu {
+        grid-template-columns: 1fr;
+    }
+
+    .nut-xoa-nguyen-lieu {
+        justify-self: start;
+    }
+}

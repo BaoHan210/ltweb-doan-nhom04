@@ -44,7 +44,6 @@ CREATE TABLE mon_an (
     khau_phan SMALLINT UNSIGNED NOT NULL,
     do_kho VARCHAR(30) NOT NULL,
     ngan_sach INT UNSIGNED NOT NULL,
-    ton_kho INT UNSIGNED NOT NULL DEFAULT 0,
     hinh_anh VARCHAR(255),
     mo_ta TEXT,
     video VARCHAR(255),

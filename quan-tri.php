@@ -121,6 +121,7 @@ require_once __DIR__ . '/inc/header.php';
 
         <!-- NỘI DUNG DASHBOARD -->
         <section class="noi-dung-dashboard">
+            <?= hien_thi_thong_bao() ?>
 
             <div class="thanh-tieu-de-dashboard">
                 <h1>Tổng quan</h1>
@@ -301,8 +302,6 @@ require_once __DIR__ . '/inc/header.php';
                 <div class="thanh-tieu-de-dashboard">
                     <h2>Quản lý lịch sử đi chợ (<?= count($danhSachLanDiCho) ?> lần gần nhất)</h2>
                 </div>
-
-                <?= hien_thi_thong_bao() ?>
 
                 <?php if (empty($danhSachLanDiCho)): ?>
                     <p class="thong-bao-chua-co-du-lieu">

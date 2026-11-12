@@ -31,22 +31,20 @@ foreach ($dsMon as $mon) {
     $moTa = sqlChuoi((string) ($mon['moTa'] ?? ''));
 
     $sql .= "INSERT INTO mon_an
-        (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
-         hinh_anh, mo_ta)
-        VALUES (
-          $stt,
-          $slug,
-          (SELECT id FROM danh_muc WHERE ten = $danhMuc),
-          $ten,
-          $thoiGian,
-          $khauPhan,
-          $doKho,
-          $nganSach,
-          10,
-          $hinhAnh,
-          $moTa
-        );\n\n";
+    (id, slug, danh_muc_id, ten, thoi_gian,
+     khau_phan, do_kho, ngan_sach, hinh_anh, mo_ta)
+    VALUES (
+      $stt,
+      $slug,
+      (SELECT id FROM danh_muc WHERE ten = $danhMuc),
+      $ten,
+      $thoiGian,
+      $khauPhan,
+      $doKho,
+      $nganSach,
+      $hinhAnh,
+      $moTa
+    );\n\n";
 
     $stt++;
 }

@@ -5,7 +5,7 @@ USE ltweb_nhom04;
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           1,
@@ -16,14 +16,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           120000,
-          10,
+
           'images/cao-lau.jpg',
           'Cao lầu là món ăn đặc trưng của Hội An với sợi mì đặc biệt, thịt xá xíu, rau sống và các nguyên liệu ăn kèm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           2,
@@ -34,14 +34,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           100000,
-          10,
+
           'images/ca-kho-to.jpg',
           'Cá kho tộ đậm đà với nước màu, nước mắm và các loại gia vị quen thuộc trong bữa cơm gia đình.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           3,
@@ -52,14 +52,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           70000,
-          10,
+
           'images/goi-ngo-sen.jpg',
           'Gỏi ngó sen giòn mát, kết hợp rau củ và nước trộn chua ngọt hài hòa.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           4,
@@ -70,14 +70,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           80000,
-          10,
+
           'images/banh-xeo.jpg',
           'Bánh xèo giòn vàng với nhân tôm thịt, giá đỗ và rau sống ăn kèm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           5,
@@ -88,14 +88,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           110000,
-          10,
+
           'images/mi-quang.jpg',
           'Mì Quảng với sợi mì vàng, thịt, tôm, rau sống và nước dùng đậm đà.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           6,
@@ -106,14 +106,14 @@ INSERT INTO mon_an
           4,
           'Khó',
           150000,
-          10,
+
           'images/pho-bo.jpg',
           'Phở bò với nước dùng trong, thơm mùi gia vị và thịt bò mềm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           7,
@@ -124,14 +124,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           90000,
-          10,
+
           'images/canh-chua-ca.jpg',
           'Canh chua cá có vị chua thanh, kết hợp cá và các loại rau củ.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           8,
@@ -142,14 +142,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           40000,
-          10,
+
           'images/rau-muong-xao-toi.jpg',
           'Rau muống xào tỏi đơn giản, nhanh gọn với rau xanh giòn và tỏi thơm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           9,
@@ -160,14 +160,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           85000,
-          10,
+
           'images/mon-an-nhanh.jpg',
           'Chả giò giòn rụm với nhân thịt và rau củ, thích hợp dùng trong các bữa ăn gia đình.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           10,
@@ -178,14 +178,14 @@ INSERT INTO mon_an
           2,
           'Dễ',
           45000,
-          10,
+
           'images/do-uong.jpg',
           'Sinh tố xoài thơm ngọt, mát lạnh và dễ thực hiện tại nhà.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           11,
@@ -196,14 +196,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           55000,
-          10,
+
           'images/che-dau-xanh.jpg',
           'Chè đậu xanh mềm thơm, có vị ngọt dịu và thích hợp dùng nóng hoặc lạnh.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           12,
@@ -214,14 +214,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           50000,
-          10,
+
           'images/mon-chay.jpg',
           'Đậu hũ sốt cà chua mềm béo, kết hợp với nước sốt cà chua đậm đà.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           13,
@@ -232,14 +232,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           70000,
-          10,
+
           'images/Banh-Xeo-Mien-Tay.jpg',
           'Bánh xèo vàng giòn rụm cuốn kèm rau sống và nước mắm chua ngọt.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           14,
@@ -250,14 +250,14 @@ INSERT INTO mon_an
           2,
           'Dễ',
           35000,
-          10,
+
           'images/com-hen.jpg',
           'Cơm hến đậm đà hương vị miền Trung cay nồng hấp dẫn.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           15,
@@ -268,14 +268,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           80000,
-          10,
+
           'images/Hu-tieu-nam-vang.jpg',
           'Hủ tiếu Nam Vang nước dùng thanh ngọt, topping phong phú.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           16,
@@ -286,14 +286,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           50000,
-          10,
+
           'images/Banh-canh-cha-ca.jpg',
           'Bánh canh chả cá dai ngọt đậm đà hương vị biển.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           17,
@@ -304,14 +304,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           60000,
-          10,
+
           'images/Bun-dau-mam-tom.jpg',
           'Đậu hũ giòn rụm ăn kèm bún, chả cốm, thịt luộc chấm mắm tôm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           18,
@@ -322,14 +322,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           100000,
-          10,
+
           'images/Goi-ca-trich-phu-quoc.jpg',
           'Gỏi cá trích tươi ngon trộn hành tây, dừa nạo và nước sốt đặc biệt.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           19,
@@ -340,14 +340,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           65000,
-          10,
+
           'images/Banh-khot-vung-tau.jpg',
           'Bánh khọt nhỏ tròn giòn rụm bên trên có tôm tươi và mỡ hành.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           20,
@@ -358,14 +358,14 @@ INSERT INTO mon_an
           6,
           'Khó',
           150000,
-          10,
+
           'images/Lau-mam-mien-tay.jpg',
           'Lẩu mắm đậm đà hương vị miền tây ăn kèm các loại rau đồng quê.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           21,
@@ -376,14 +376,14 @@ INSERT INTO mon_an
           2,
           'Dễ',
           45000,
-          10,
+
           'images/Com-tam-sai-gon.jpg',
           'Cơm tấm hạt nhuyễn ăn kèm sườn nướng mỡ hành và bì chả.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           22,
@@ -394,14 +394,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           75000,
-          10,
+
           'images/Banh-trang-cuon-thit-heo.jpg',
           'Thịt heo luộc hai đầu da cuốn bánh tráng kèm rau sống chấm mắm nêm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           23,
@@ -412,14 +412,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           60000,
-          10,
+
           'images/Banh-da-cua-hai-phong.jpg',
           'Bánh đa đỏ dai thơm hòa quyện với gạch cua và chả lá lốt.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           24,
@@ -430,14 +430,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           120000,
-          10,
+
           'images/Cha-muc-ha-long.jpg',
           'Chả mực giã tay dai giòn sần sật thơm lừng đặc sản Hạ Long.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           25,
@@ -448,14 +448,14 @@ INSERT INTO mon_an
           4,
           'Khó',
           150000,
-          10,
+
           'images/bun-bo-hue.jpg',
           'Bún bò Huế đậm đà với nước dùng thơm mùi sả, mắm ruốc và các loại gia vị đặc trưng.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           26,
@@ -466,14 +466,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           80000,
-          10,
+
           'images/com-chien-duong-chau.jpg',
           'Cơm chiên vàng thơm kết hợp trứng, thịt và rau củ nhiều màu sắc.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           27,
@@ -484,14 +484,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           140000,
-          10,
+
           'images/bo-luc-lac.jpg',
           'Thịt bò mềm thơm được áp chảo cùng hành tây và ớt chuông.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           28,
@@ -502,14 +502,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           100000,
-          10,
+
           'images/ga-kho-gung.jpg',
           'Gà kho mềm đậm đà kết hợp với vị cay thơm đặc trưng của gừng.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           29,
@@ -520,14 +520,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           120000,
-          10,
+
           'images/tom-rang-me.jpg',
           'Tôm rang sốt me chua ngọt, đậm đà và thơm ngon.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           30,
@@ -538,14 +538,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           90000,
-          10,
+
           'images/canh-bi-do-ham-xuong.jpg',
           'Canh bí đỏ mềm ngọt nấu cùng xương heo tạo nên món canh thanh nhẹ.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           31,
@@ -556,14 +556,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           45000,
-          10,
+
           'images/dau-que-xao-toi.jpg',
           'Đậu que xanh giòn xào cùng tỏi thơm, đơn giản và dễ thực hiện.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           32,
@@ -574,14 +574,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           110000,
-          10,
+
           'images/nem-nuong-nha-trang.jpg',
           'Nem nướng thơm mềm ăn kèm rau sống và bánh tráng cuốn.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           33,
@@ -592,14 +592,14 @@ INSERT INTO mon_an
           3,
           'Khó',
           70000,
-          10,
+
           'images/banh-cuon-nong.jpg',
           'Bánh cuốn mềm mỏng với nhân thịt băm và mộc nhĩ thơm ngon.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           34,
@@ -610,14 +610,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           60000,
-          10,
+
           'images/che-ba-mau.jpg',
           'Chè ba màu nhiều lớp với đậu xanh, đậu đỏ, thạch và nước cốt dừa.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           35,
@@ -628,14 +628,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           100000,
-          10,
+
           'images/panna-cotta-xoai.jpg',
           'Panna cotta mềm mịn kết hợp vị ngọt thơm tự nhiên của xoài.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           36,
@@ -646,14 +646,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           35000,
-          10,
+
           'images/nuoc-chanh-sa.jpg',
           'Nước chanh sả thanh mát, có vị chua nhẹ và hương thơm đặc trưng.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           37,
@@ -664,14 +664,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           150000,
-          10,
+
           'images/ga-nuong-mac-khen.jpg',
           'Thịt gà thả vườn da giòn rụm, thấm đượm hương vị cay tê thơm nồng của hạt mắc khén Tây Bắc.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           38,
@@ -682,14 +682,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           120000,
-          10,
+
           'images/ca-chem-hap-xi-dau.jpg',
           'Cá hấp giữ trọn vị ngọt thanh tự nhiên của thịt cá tươi hòa quyện sốt xì dầu thơm gừng hành.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           39,
@@ -700,14 +700,14 @@ INSERT INTO mon_an
           4,
           'Dễ',
           80000,
-          10,
+
           'images/canh-suon-nau-sau.jpg',
           'Món canh chua thanh tao đặc trưng của Hà Nội, nước canh trong ngọt xương điểm vị chua dịu của quả sấu.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           40,
@@ -718,14 +718,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           45000,
-          10,
+
           'images/canh-hen-hoa-thien-ly.jpg',
           'Thịt hến ngọt bùi tự nhiên kết hợp cùng bông thiên lý giòn thơm ngát, mang lại cảm giác dịu mát ngày oi ả.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           41,
@@ -736,14 +736,14 @@ INSERT INTO mon_an
           3,
           'Rất dễ',
           35000,
-          10,
+
           'images/bong-bi-xao-toi.jpg',
           'Những búp bông bí vàng ươm giòn ngọt, quyện trong vị tỏi phi thơm nức mũi dân dã.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           42,
@@ -754,14 +754,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           65000,
-          10,
+
           'images/nom-ngo-sen-tai-heo.jpg',
           'Ngó sen trắng nõn giòn tan kết hợp cùng tai heo sần sật trong nước mắm chua ngọt và lạc rang bùi ngậy.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           43,
@@ -772,14 +772,14 @@ INSERT INTO mon_an
           3,
           'Trung bình',
           55000,
-          10,
+
           'images/bao-tu-ca-xao-dua.jpg',
           'Bao tử cá ba sa giòn sần sật ngấm trọn vị chua thanh dịu của cải muối và cay ấm của gừng.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           44,
@@ -790,14 +790,14 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           110000,
-          10,
+
           'images/chao-tom-boc-mia.jpg',
           'Chả tôm giòn dai thơm lừng thấm đẫm vị mật ngọt tươm ra từ từng khúc mía nướng.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           45,
@@ -808,14 +808,14 @@ INSERT INTO mon_an
           3,
           'Dễ',
           30000,
-          10,
+
           'images/ca-tim-om-dau-chay.jpg',
           'Cà tím mềm ngọt tự nhiên om cùng đậu hũ chiên vàng và nấm đùi gà dậy mùi lá tía tô thơm ngát.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           46,
@@ -826,14 +826,14 @@ INSERT INTO mon_an
           2,
           'Dễ',
           40000,
-          10,
+
           'images/hu-tieu-xao-chay.jpg',
           'Sợi hủ tiếu mềm dai bóng bẩy, quyện cùng nấm rơm béo ngọt, cà rốt và cải ngọt thanh đạm.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           47,
@@ -844,14 +844,14 @@ INSERT INTO mon_an
           2,
           'Rất dễ',
           35000,
-          10,
+
           'images/tra-mang-cau.jpg',
           'Thức uống giải nhiệt mùa nắng với vị trà lài thơm nức kết hợp thịt mãng cầu chua ngọt mọng nước sần sật.'
         );
 
 INSERT INTO mon_an
         (id, slug, danh_muc_id, ten, thoi_gian,
-         khau_phan, do_kho, ngan_sach, ton_kho,
+         khau_phan, do_kho, ngan_sach,
          hinh_anh, mo_ta)
         VALUES (
           48,
@@ -862,7 +862,7 @@ INSERT INTO mon_an
           4,
           'Trung bình',
           55000,
-          10,
+
           'images/banh-chuoi-nuong.jpg',
           'Món tráng miệng dân dã thơm nức mùi nước cốt dừa béo ngậy quyện cùng vị ngọt đậm đà, dẻo mềm của chuối xiêm chín nướng vàng ươm.'
         );

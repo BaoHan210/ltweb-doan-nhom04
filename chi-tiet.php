@@ -64,14 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($daYeuThich) {
             $yeuThichService->xoa((string) $monAn->id);
-            gan_thong_bao('success', 'Đã bỏ món khỏi giỏ hàng.');
-
-        } elseif ($monAn->tonKho < 1) {
-            gan_thong_bao('error', 'Món này đã hết hàng.');
+            gan_thong_bao('success', 'Đã bỏ món khỏi danh sách yêu thích.');
 
         } else {
             $yeuThichService->them((string) $monAn->id);
-            gan_thong_bao('success', 'Đã thêm món vào giỏ hàng.');
+            gan_thong_bao('success', 'Đã thêm món vào danh sách yêu thích.');
         }
     }
 

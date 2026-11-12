@@ -35,13 +35,22 @@ if ($monCu === null) {
     exit;
 }
 
-$id        = (int) $monCu['id'];          // UPDATE luôn dùng khóa chính số
+$id        = (int) $monCu['id'];
 $dsDanhMuc = $kho->layDanhMucQuanTri();
 $anhCu     = (string) ($monCu['hinh_anh'] ?? '');
 
+// Lấy danh sách nguyên liệu hiện tại của món ăn
+$danhSachNguyenLieu = $kho->layNguyenLieuQuanTri($id);
+
+if ($danhSachNguyenLieu === []) {
+    $danhSachNguyenLieu = [
+        ['ten' => '', 'soLuong' => ''],
+    ];
+}
+
 $cacTruong = [
     'ten', 'slug', 'danh_muc_id', 'thoi_gian', 'khau_phan',
-    'do_kho', 'ngan_sach', 'ton_kho', 'mo_ta', 'video',
+    'do_kho', 'ngan_sach', 'mo_ta', 'video',
 ];
 
 // Điền sẵn dữ liệu cũ vào biểu mẫu
@@ -59,6 +68,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $loi = kiemTraDuLieuMonAn($duLieu, $dsDanhMuc);
+
+    // Tiếp nhận danh sách nguyên liệu từ biểu mẫu
+    $tenNguyenLieu = $_POST['nguyen_lieu_ten'] ?? [];
+    $soLuongNguyenLieu = $_POST['nguyen_lieu_so_luong'] ?? [];
+
+    if (!is_array($tenNguyenLieu) || !is_array($soLuongNguyenLieu)) {
+        $loi['nguyen_lieu'] = 'Dữ liệu nguyên liệu không hợp lệ.';
+    } elseif (
+        count($tenNguyenLieu) > 50 ||
+        count($soLuongNguyenLieu) > 50 ||
+        array_keys($tenNguyenLieu) !== array_keys($soLuongNguyenLieu)
+    ) {
+        $loi['nguyen_lieu'] = 'Danh sách nguyên liệu không hợp lệ hoặc vượt quá 50 dòng.';
+    } else {
+        $danhSachNguyenLieu = [];
+
+        foreach ($tenNguyenLieu as $i => $ten) {
+            $soLuong = $soLuongNguyenLieu[$i] ?? null;
+
+            if (!is_string($ten) || !is_string($soLuong)) {
+                $loi['nguyen_lieu'] = 'Dữ liệu tên hoặc số lượng nguyên liệu không hợp lệ.';
+                break;
+            }
+
+            $ten = trim($ten);
+            $soLuong = trim($soLuong);
+
+            if ($ten === '' && $soLuong === '') {
+                continue;
+            }
+
+            if ($ten === '' || $soLuong === '') {
+                $loi['nguyen_lieu'] = 'Vui lòng nhập đầy đủ tên và số lượng cho từng nguyên liệu.';
+                break;
+            }
+
+            if (mb_strlen($ten, 'UTF-8') > 150 || mb_strlen($soLuong, 'UTF-8') > 100) {
+                $loi['nguyen_lieu'] = 'Tên nguyên liệu tối đa 150 ký tự và số lượng tối đa 100 ký tự.';
+                break;
+            }
+
+            $danhSachNguyenLieu[] = [
+                'ten' => $ten,
+                'soLuong' => $soLuong,
+            ];
+        }
+
+        if ($danhSachNguyenLieu === []) {
+            $danhSachNguyenLieu = [
+                ['ten' => '', 'soLuong' => ''],
+            ];
+        }
+    }
 
     $anhMoi     = $_FILES['hinh_anh'] ?? null;
     $kiemTraAnh = kiemTraAnhMonAn(is_array($anhMoi) ? $anhMoi : null, false);
@@ -89,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($loi === []) {
         try {
-            $kho->capNhatMonAn($id, $duLieu);
+            $kho->capNhatMonAn($id, $duLieu, $danhSachNguyenLieu);
 
             // Xóa ảnh cũ do hệ thống tải lên (chỉ trong uploads/, không xóa ảnh mẫu)
             if ($duongDanMoi !== null && str_starts_with($anhCu, 'uploads/')) {
@@ -99,14 +161,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             gan_thong_bao('success', 'Đã cập nhật món ăn #' . $id . ' thành công.');
             header('Location: quan-tri.php', true, 303); // PRG
             exit;
-        } catch (PDOException $e) {
-            // Ghi CSDL thất bại: xóa ảnh vừa tải lên để không để lại tệp rác
+        } catch (Throwable $e) {
+            // Có lỗi khi cập nhật: xóa ảnh mới để không để lại tệp rác.
             if ($duongDanMoi !== null) {
                 @unlink($duongDanMoi);
             }
-            if ((int) ($e->errorInfo[1] ?? 0) !== 1062) {
+
+            // Chỉ chuyển lỗi trùng khóa PDO thành thông báo tại trường slug.
+            if (!$e instanceof PDOException || (int) ($e->errorInfo[1] ?? 0) !== 1062) {
                 throw $e;
             }
+
             $loi['slug'] = 'Slug này đã tồn tại, hãy nhập slug khác.';
         }
     } elseif ($duongDanMoi !== null) {
@@ -133,12 +198,12 @@ $truongSo = [
     'thoi_gian' => ['Thời gian (phút)', 1],
     'khau_phan' => ['Khẩu phần (người)', 1],
     'ngan_sach' => ['Ngân sách (đồng)', 1000],
-    'ton_kho'   => ['Tồn kho (phần)', 0],
 ];
 
 $doKhoHopLe = ['Dễ', 'Trung bình', 'Khó'];
 
 $cssRieng = 'css/12-form-quan-ly-mon-an.css';
+$customJS = 'js/trang-them-mon-an.js';
 
 require __DIR__ . '/inc/header.php';
 ?>
@@ -217,6 +282,59 @@ require __DIR__ . '/inc/header.php';
             </div>
 
         </div>
+
+        <section class="khu-vuc-nguyen-lieu">
+            <h2>Nguyên liệu</h2>
+            <p>Nhập tên và số lượng riêng cho từng nguyên liệu.</p>
+
+            <?php $hienLoi('nguyen_lieu'); ?>
+
+            <div id="danh-sach-nguyen-lieu" class="danh-sach-nguyen-lieu">
+                <?php foreach ($danhSachNguyenLieu as $nguyenLieu): ?>
+                    <div class="dong-nguyen-lieu">
+                        <div>
+                            <label>Tên nguyên liệu</label>
+                            <input
+                                type="text"
+                                name="nguyen_lieu_ten[]"
+                                maxlength="150"
+                                class="o-nhap-mon-an"
+                                placeholder="Ví dụ: Thịt bò"
+                                value="<?= e($nguyenLieu['ten']) ?>"
+                            >
+                        </div>
+
+                        <div>
+                            <label>Số lượng</label>
+                            <input
+                                type="text"
+                                name="nguyen_lieu_so_luong[]"
+                                maxlength="100"
+                                class="o-nhap-mon-an"
+                                placeholder="Ví dụ: 200 g"
+                                value="<?= e($nguyenLieu['soLuong']) ?>"
+                            >
+                        </div>
+
+                        <button
+                            type="button"
+                            class="nut nut-xoa-nguyen-lieu"
+                            data-hanh-dong="xoa-nguyen-lieu"
+                        >
+                            Xóa
+                        </button>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <button
+                type="button"
+                id="nut-them-nguyen-lieu"
+                class="nut nut-them-nguyen-lieu"
+            >
+                + Thêm nguyên liệu
+            </button>
+        </section>
 
         <p>
             <label for="mo_ta">Mô tả</label><br>
