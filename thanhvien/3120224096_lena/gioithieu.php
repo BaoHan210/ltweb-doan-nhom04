@@ -192,6 +192,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['them_du_an
         gan_thong_bao('error', 'Công nghệ sử dụng phải từ 1 đến 255 ký tự.');
     } elseif (!in_array($trangThai, ['Đang thực hiện', 'Đã hoàn thành'], true)) {
         gan_thong_bao('error', 'Trạng thái dự án không hợp lệ.');
+       } elseif ($moTaInput !== null && !is_string($moTaInput)) {
+        gan_thong_bao('error', 'Mô tả không hợp lệ.');
     } elseif (mb_strlen($moTa, 'UTF-8') > 2000) {
         gan_thong_bao('error', 'Mô tả không được vượt quá 2000 ký tự.');
     } else {
