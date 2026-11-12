@@ -221,7 +221,13 @@ unset($_SESSION['khauPhanLoi'], $_SESSION['khauPhanKetQua']);
 
 // Lấy danh sách dự án từ CSDL có hỗ trợ lọc theo trạng thái
 $filterStatus = $_GET['trang_thai_loc'] ?? '';
-if (!empty($filterStatus)) {
+if (
+    !is_string($filterStatus)
+    || !in_array($filterStatus, ['Đang thực hiện', 'Đã hoàn thành'], true)
+) {
+    $filterStatus = '';
+}
+if ($filterStatus !== '') {
     $stmtDuAn = $pdo->prepare("SELECT * FROM tv_du_an_ca_nhan WHERE mssv = ? AND trang_thai = ? ORDER BY id DESC");
     $stmtDuAn->execute([$mssv, $filterStatus]);
 } else {
