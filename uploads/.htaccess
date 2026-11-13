@@ -1,15 +1,18 @@
 # Tắt hiển thị danh sách tệp tải lên.
 Options -Indexes
 
-# Không cho phép thực thi mã trong thư mục upload.
-<FilesMatch "(?i)\.(php[0-9]*|phtml|phar|phps|cgi|pl|py|sh|asp|aspx|jsp|shtml)$">
-    Require all denied
-</FilesMatch>
+# Chỉ chặn tệp thực sự tồn tại.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# Không cho phép truy cập tệp ẩn.
-<FilesMatch "^\.">
-    Require all denied
-</FilesMatch>
+    # Chặn thực thi mã nếu tệp tồn tại.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(php[0-9]*|phtml|phar|phps|cgi|pl|py|sh|asp|aspx|jsp|shtml)$ - [F,L,NC]
+
+    # Chặn truy cập tệp ẩn nếu tệp tồn tại.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule (^|/)\. - [F,L]
+</IfModule>
 
 # Ngăn trình duyệt tự nhận diện và thực thi nội dung tải lên.
 <IfModule mod_headers.c>
