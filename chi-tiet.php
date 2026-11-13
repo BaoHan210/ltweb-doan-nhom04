@@ -9,7 +9,7 @@
  * - Hiển thị tối đa 4 món cùng danh mục
  * - ID không hợp lệ trả về HTTP 404
  * - Không truy vấn MySQL trong vòng lặp
- * - Thêm/bỏ giỏ hàng bằng POST khi tắt JavaScript (PRG)
+ * - Thêm/bỏ yêu thích bằng POST khi tắt JavaScript (PRG)
  */
 
 declare(strict_types=1);
@@ -43,15 +43,15 @@ if ($monAn === null) {
 }
 
 // ======================================
-// 2. TRẠNG THÁI ĐĂNG NHẬP VÀ GIỎ HÀNG
+// 2. TRẠNG THÁI ĐĂNG NHẬP VÀ YÊU THÍCH
 // ======================================
 
-$daDangNhap      = nguoiDungHienTai() !== null;   // kiểm tra từ MySQL
+$daDangNhap      = nguoiDungHienTai() !== null;
 $yeuThichService = new YeuThichService();
 $daYeuThich      = $daDangNhap && $yeuThichService->co((string) $monAn->id);
 
 // ======================================
-// 3. XỬ LÝ POST: THÊM HOẶC BỎ GIỎ HÀNG
+// 3. XỬ LÝ POST: THÊM HOẶC BỎ YÊU THÍCH
 // ======================================
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,15 +60,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         chuyen_huong('dang-nhap.php');
     }
 
+    // Kiểm tra CSRF trước khi thay đổi dữ liệu.
+    if (!csrfHopLe()) {
+        http_response_code(403);
+        require __DIR__ . '/403.php';
+        exit;
+    }
+
     if (isset($_POST['doi_yeu_thich'])) {
 
         if ($daYeuThich) {
             $yeuThichService->xoa((string) $monAn->id);
-            gan_thong_bao('success', 'Đã bỏ món khỏi danh sách yêu thích.');
+            gan_thong_bao('success', 'Đã bỏ món khỏi yêu thích.');
 
         } else {
             $yeuThichService->them((string) $monAn->id);
-            gan_thong_bao('success', 'Đã thêm món vào danh sách yêu thích.');
+            gan_thong_bao('success', 'Đã thêm món vào yêu thích.');
         }
     }
 
@@ -106,7 +113,9 @@ if (!empty($_COOKIE['da_xem'])) {
             if (!is_string($idDaXem)) {
                 continue;
             }
+
             $idDaXem = trim($idDaXem);
+
             if ($idDaXem !== '' && strlen($idDaXem) <= 255) {
                 $daXemIds[] = $idDaXem;
             }
@@ -125,6 +134,7 @@ $daXemIds = array_slice(
 $danhSachDaXem = $khoMonAn->timNhieuTheoSlug($daXemIds);
 
 $daXemHopLe = [];
+
 foreach ($danhSachDaXem as $monDaXem) {
     $daXemHopLe[] = (string) $monDaXem->id;
 }
@@ -156,40 +166,56 @@ function layClassNguyenLieu(string $ten): string
     if (str_contains($tenLower, 'rau thơm') || str_contains($tenLower, 'rau sống')) {
         return 'nguyen-lieu-rau-thom';
     }
+
     if (str_contains($tenLower, 'rau')) {
         return 'nguyen-lieu-rau';
     }
+
     if (str_contains($tenLower, 'thịt')) {
         return 'nguyen-lieu-thit';
     }
+
     if (str_contains($tenLower, 'tỏi')) {
         return 'nguyen-lieu-toi';
     }
+
     if (str_contains($tenLower, 'hành')) {
         return 'nguyen-lieu-hanh';
     }
+
     if (str_contains($tenLower, 'nước mắm')) {
         return 'nguyen-lieu-nuoc-mam';
     }
+
     if (str_contains($tenLower, 'tiêu')) {
         return 'nguyen-lieu-tieu';
     }
+
     if (str_contains($tenLower, 'cá')) {
         return 'nguyen-lieu-ca';
     }
+
     if (str_contains($tenLower, 'tôm')) {
         return 'nguyen-lieu-tom';
     }
+
     if (str_contains($tenLower, 'ớt')) {
         return 'nguyen-lieu-ot';
     }
+
     if (str_contains($tenLower, 'đường')) {
         return 'nguyen-lieu-duong';
     }
+
     if (str_contains($tenLower, 'dầu')) {
         return 'nguyen-lieu-dau';
     }
-    if (str_contains($tenLower, 'sợi') || str_contains($tenLower, 'mì') || str_contains($tenLower, 'bún')) {
+
+    if (
+        str_contains($tenLower, 'sợi')
+        || str_contains($tenLower, 'mì')
+        || str_contains($tenLower, 'bún')
+    ) {
         return 'nguyen-lieu-soi';
     }
 
@@ -283,22 +309,32 @@ require __DIR__ . '/inc/header.php';
             <div class="khu-vuc-hanh-dong">
 
                 <?php if ($daDangNhap): ?>
-                    <form action="chi-tiet.php?id=<?= urlencode((string) $monAn->id) ?>" method="post"
-                          class="form-them-gio" data-id-mon="<?= e($monAn->id) ?>">
+                    <form
+                        action="chi-tiet.php?id=<?= urlencode((string) $monAn->id) ?>"
+                        method="post"
+                        class="form-them-gio"
+                        data-id-mon="<?= e($monAn->id) ?>"
+                    >
 
                         <?= csrfField() ?>
 
                         <input type="hidden" name="doi_yeu_thich" value="1">
 
-                        <button type="submit" class="nut nut-yeu-thich"
-                                aria-pressed="<?= $daYeuThich ? 'true' : 'false' ?>">
-                            <?= $daYeuThich ? '♥ Đã có trong giỏ' : '♡ Thêm vào giỏ' ?>
+                        <button
+                            type="submit"
+                            class="nut nut-yeu-thich"
+                            aria-pressed="<?= $daYeuThich ? 'true' : 'false' ?>"
+                        >
+                            <?= $daYeuThich ? '♥ Đã có trong yêu thích' : '♡ Thêm vào yêu thích' ?>
                         </button>
                     </form>
 
                     <p class="thong-bao-gio" role="status" aria-live="polite"></p>
+
                 <?php else: ?>
-                    <a href="dang-nhap.php" class="nut nut-yeu-thich">♡ Đăng nhập để thêm vào giỏ</a>
+                    <a href="dang-nhap.php" class="nut nut-yeu-thich">
+                        ♡ Đăng nhập để thêm vào yêu thích
+                    </a>
                 <?php endif; ?>
 
                 <button type="button" class="nut nut-chia-se">Chia sẻ</button>
@@ -324,9 +360,13 @@ require __DIR__ . '/inc/header.php';
                         <?php foreach ($monAn->nguyenLieu as $nl): ?>
 
                             <?php
-                                $tenNL = is_array($nl) ? (string) ($nl['ten'] ?? '') : (string) $nl;
+                                $tenNL = is_array($nl)
+                                    ? (string) ($nl['ten'] ?? '')
+                                    : (string) $nl;
 
-                                $luongNL = is_array($nl) ? (string) ($nl['soLuong'] ?? '') : '';
+                                $luongNL = is_array($nl)
+                                    ? (string) ($nl['soLuong'] ?? '')
+                                    : '';
 
                                 $classIcon = (is_array($nl) && isset($nl['class']))
                                     ? (string) $nl['class']
@@ -335,6 +375,7 @@ require __DIR__ . '/inc/header.php';
 
                             <li class="<?= e($classIcon) ?>">
                                 <span><?= e($tenNL) ?></span>
+
                                 <?php if ($luongNL !== ''): ?>
                                     <span class="so-luong-nl"><?= e($luongNL) ?></span>
                                 <?php endif; ?>
@@ -446,7 +487,10 @@ require __DIR__ . '/inc/header.php';
                                 <?= number_format((int) $monLienQuan->nganSach, 0, ',', '.') ?>đ
                             </p>
 
-                            <a class="nut" href="chi-tiet.php?id=<?= urlencode((string) $monLienQuan->id) ?>">
+                            <a
+                                class="nut"
+                                href="chi-tiet.php?id=<?= urlencode((string) $monLienQuan->id) ?>"
+                            >
                                 Xem công thức
                             </a>
 

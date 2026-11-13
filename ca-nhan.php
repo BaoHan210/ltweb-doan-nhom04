@@ -21,7 +21,7 @@ $avatar = !empty($user['avatar']) ? (string) $user['avatar'] : 'images/icons/avt
 $kho = new KhoMonAn(db());
 $yeuThichService = new YeuThichService();
 
-// Đồng bộ session với dữ liệu món hiện có, sau đó lấy giỏ hàng để hiển thị
+// Đồng bộ session với dữ liệu món hiện có, sau đó lấy yêu thích để hiển thị
 $yeuThichService->loaiBoMonKhongCon($kho);
 $gioHang        = $yeuThichService->layGioHang($kho);
 $cacMonYeuThich = $gioHang['mon'];

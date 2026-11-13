@@ -43,7 +43,7 @@ function traJson(int $maHttp, array $duLieu): never
 }
 
 /**
- * Chuẩn hóa dữ liệu giỏ hàng theo hợp đồng JSON của JavaScript.
+ * Chuẩn hóa dữ liệu yêu thích theo hợp đồng JSON của JavaScript.
  */
 function duLieuGioHang(
     YeuThichService $yeuThich,
@@ -89,7 +89,7 @@ $nguoiDung = nguoiDungHienTai();
 if ($nguoiDung === null) {
     traJson(401, [
         'success' => false,
-        'loi' => 'Vui lòng đăng nhập để sử dụng giỏ hàng.',
+        'loi' => 'Vui lòng đăng nhập để sử dụng danh sách yêu thích.',
     ]);
 }
 
@@ -97,7 +97,7 @@ if ($nguoiDung === null) {
 $kho = new KhoMonAn(db());
 $yeuThich = new YeuThichService();
 
-// GET: lấy giỏ hàng và CSRF token.
+// GET: lấy yêu thích và CSRF token.
 if ($phuongThuc === 'GET') {
     traJson(200, [
         'success' => true,
@@ -135,6 +135,14 @@ if (
 
 // Lấy hành động.
 $hanhDong = $duLieu['hanh_dong'] ?? '';
+
+// Kiểm tra CSRF trước khi thực hiện thao tác thay đổi dữ liệu.
+if (!csrfHopLe()) {
+    traJson(403, [
+        'success' => false,
+        'loi' => 'Yêu cầu không hợp lệ.',
+    ]);
+}
 
 if (!is_string($hanhDong)) {
     traJson(422, [

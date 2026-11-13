@@ -83,7 +83,7 @@ if (!headers_sent()) {
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
 
-    // CSP ở chế độ báo cáo: chỉ ghi nhận vi phạm, chưa chặn tài nguyên.
+    // CSP ở chế độ thực thi: trình duyệt chặn tài nguyên vi phạm chính sách.
     $csp = implode('; ', [
         "default-src 'self'",
         "base-uri 'self'",

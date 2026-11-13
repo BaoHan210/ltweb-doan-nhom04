@@ -2,7 +2,7 @@
 /**
  * Tệp: src/Services/YeuThichService.php
  * Mục đích: Quản lý danh sách món yêu thích trong session, dạng [id_mon => so_luong].
- *           Đóng vai trò giỏ hàng: tính thành tiền và tổng tiền khi hiển thị.
+ *           Đóng vai trò yêu thích: tính thành tiền và tổng tiền khi hiển thị.
  * Dùng bởi: inc/nav.php, danh-sach.php, chi-tiet.php, yeu-thich.php
  */
 
@@ -109,7 +109,7 @@ class YeuThichService
      */
    
     /**
-     * Lấy giỏ hàng bằng truy vấn nhóm WHERE IN.
+     * Lấy yêu thích bằng truy vấn nhóm WHERE IN.
      * Không truy vấn MySQL trong vòng lặp.
      */
     public function layGioHang(KhoMonAn $kho): array

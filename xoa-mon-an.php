@@ -62,6 +62,11 @@ if (lay_chuoi($_POST, 'xac_nhan', 1) !== '1') {
     exit;
 }
 
+if (!csrfHopLe()) {
+    http_response_code(403);
+    exit('Yêu cầu không hợp lệ.');
+}
+
 try {
     $daXoa = $kho->xoaMonAnTheoSlug($slug);
     if ($daXoa) {
